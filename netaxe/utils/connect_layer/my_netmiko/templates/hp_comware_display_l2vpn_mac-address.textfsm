@@ -1,0 +1,10 @@
+Value Required MACADDRESS (\w{4}-\w{4}-\w{4})
+Value VSI_NAME (\S+)
+Value STATE (\S+)
+Value LINK_ID_NAME (\S+)
+Value AGING (\S+)
+
+Start
+  ^MAC\s+Address
+  ^${MACADDRESS}\s*${STATE}\s+${VSI_NAME}\s+${LINK_ID_NAME}\s+${AGING} -> Record
+  #^${MACADDRESS}\s+${VLAN}\s+${STATE}\s+${INTERFACE}\s+${AGING} -> Record

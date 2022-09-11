@@ -1,0 +1,13 @@
+Value Interface (\S+)
+Value Status (\S+)
+Value Duplex (\S+)
+Value Speed (\S+)
+Value Mode (\S+)
+Value Type (\S+)
+Value Description ((\S+)?)
+
+
+Start
+  ^Port\s+Status\s+ -> Next
+  ^------+ -> Next
+  ^${Interface}\s+${Status}\s+${Duplex}\s+${Speed}\s+${Mode}\s+${Type}\s+${Description}\s*   -> Continue.Record

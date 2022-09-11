@@ -1,0 +1,38 @@
+Value Required LOCAL_INTERFACE (\S+)
+Value CHASSIS_ID (\S+)
+Value NEIGHBOR_PORT (.*)
+Value PortDescription (.*)
+Value NEIGHBORSYSNAME (\S+)
+Value MANAGEMENT_IP (\S+)
+Value MANAGEMENT_TYPE (\S+)
+
+Start
+  ^The\s+LLDP\s+service\s+is\s+not\s+running -> EOF
+  ^LLDP neighbor-information of port\s+\d+\[${LOCAL_INTERFACE}\]: -> LLDP
+
+LLDP
+  ^\s+Neighbor index\s*:\s*\S+
+  ^\s+Update time\s*:\s*\S+
+  ^\s+Chassis type\s*:\s*\S+
+  ^\s+Chassis ID\s*:\s*${CHASSIS_ID}
+  ^\s+Port ID type\s*:\s*\S+
+  ^\s+Port ID\s*:\s*${NEIGHBOR_PORT}
+  ^\s+Port description\s*:\s*${PortDescription} -> LLDPEXT
+  #^\s*%%-> Record Start
+  ^$$ -> Record Start
+
+LLDPEXT
+  ^\s+System name\s*:\s*${NEIGHBORSYSNAME}
+  ^\s+System description\s*:\s*\S+
+  ^\s+System capabilities supported\s*:\s*\S+
+  ^\s+System capabilities enabled\s*:\s*\S+
+  ^\s+Management address type\s*:\s*${MANAGEMENT_TYPE}
+  ^\s+Management address\s*:\s*${MANAGEMENT_IP}
+  ^\s+Management address interface type\s*:\s*\S+
+  ^\s+Management address interface ID\s*:\s*\S+
+  ^\s+Port VLAN ID(PVID)\s*:\s*\S+
+  ^\s+Port and protocol VLAN ID(PPVID)\s*:\s*\S+
+  ^\s+Port and protocol VLAN supported\s*:\s*\S+
+  ^\s+Port and protocol VLAN enabled\s*:\s*\S+
+  ^\s+Maximum -> Record Start
+

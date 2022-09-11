@@ -1,0 +1,52 @@
+Value INTF (\S+)
+Value LINE_STATUS (UP|DOWN|Administratively DOWN)
+#Value LINE_STATUS (\S+)
+Value PROTOCOL_STATUS (UP(\(spoofing\))?|DOWN)
+Value List IPADDR (\S+)
+Value List IP_TYPE ((\S+)?)
+Value MTU (\d+)
+
+
+
+
+Start
+  ^${INTF}\s+current\s+state\s*:\s*${LINE_STATUS}$$ -> Interface
+  #^. -> Error
+
+
+Interface
+  ^${INTF}\s+current\s+state\s*:\s*${LINE_STATUS}$$
+  ^Line\s+protocol\s+current\s+state\s*:\s*${PROTOCOL_STATUS}
+  ^The\s+Maximum\s+Transmit\s+Unit\s+:\s+${MTU}\s+bytes
+  ^Internet\s+Address\s+is\s+${IPADDR}\s*${IP_TYPE}
+  ^Broadcast\s+address\s*:\s*\S+ -> Continue.Record
+  #^TTL\sbeing\s\S+\spacket\snumber:\s+\d+
+  #^TTL\sinvalid\s\spacket\snumber:\s+\d+
+  #^ICMP packet input number:
+  #^DHCP\spacket\sdeal\smode:\s+\S+ -> Continue.Record
+  #^input\spackets\s:\s\d+,\sbytes\s:\s\d+,\smulticasts\s:\s\d+
+  #^output\spackets\s:\s\d+,\sbytes\s:\s\d+,\smulticasts\s:\s\d+
+  #^Directed-broadcast\spackets:
+  #^\s+received packets:
+  #^Internet\s+Address\s+is\s+${IPADDR}\s+${IP_TYPE}
+  #^Broadcast\s+address:\s\S+
+  #^TTL\sinvalid\spacket\snumber:\s+\d+
+  #^ICMP\spacket\sinput\snumber:\s+\d+
+  #^\s+Echo\sreply:\s+\d+
+  #^\s+Unreachable:\s+\d+
+  #^\s+Source\squench:\s+\d+
+  #^\s+Routing\sredirect:\s+\d+
+  #^\s+Echo\srequest:\s+\d+
+  #^\s+Router\sadvert:\s+\d+
+  #^\s+Router\ssolicit:\s+\d+
+  #^\s+Time\sexceed:\s+\d+
+  #^\s+IP\sheader\sbad:\s+\d+
+  #^\s+Timestamp\srequest:\s+\d+
+  #^\s+Timestamp\sreply:\s+\d+
+  #^\s+Information\srequest:\s+\d+
+  #^\s+Information\sreply:\s+\d+
+  #^\s+Netmask\srequest:\s+\d+
+  #^\s+Netmask\sreply:\s+\d+
+  #^\s+Unknown\stype:\s+\d+
+  ^\s*$$
+  #^. -> Error

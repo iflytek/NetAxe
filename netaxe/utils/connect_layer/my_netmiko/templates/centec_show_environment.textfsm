@@ -1,0 +1,35 @@
+Value Fanindex (\S+)
+Value FanStatus (\S+)
+Value FanSpeedRate (\S+)
+Value FanMode (\S+)
+Value Powerindex (\d+)
+Value PowerStatus (\S+)
+Value Power (\S+)
+Value PowerType (\S+)
+Value PowerAlert (\S+)
+Value SensorIndex (\d+)
+Value Temperature (\d+)
+Value Loweralarm (\S+)
+Value Upperalarm (\d+)
+Value Criticallimit (\d+)
+Value Position (\S+)
+
+Start
+  ^FanIndex\s+Status -> Fan
+  ^--------+
+  ^Sensor\s+status\s+ -> Sensor
+  ^Power\s+status: -> Power
+
+
+Fan
+  ^${Fanindex}\s+${FanStatus}\s+${FanSpeedRate}\s+${FanMode}$$ -> Continue.Record
+  ^--------+ -> Start
+
+Power
+  ^Index\s+Status
+  ^${Powerindex}\s+${PowerStatus}\s+${Power}\s+${PowerType}\s+${PowerAlert}\s+  -> Continue.Record
+  ^--------+ -> Start
+
+Sensor
+  ^Index\s+Temperature
+  ^${SensorIndex}\s+${Temperature}\s+${Loweralarm}\s+${Upperalarm}\s+${Criticallimit}\s+${Position}$$ -> Continue.Record

@@ -1,0 +1,12 @@
+Value Filldown service (\S+|\S+udp\s\S+)
+Value Required Protocol (\S+)
+Value Method (\S+port)
+Value Port (\d+(\s+\d+)?)
+
+Start
+  ^service\s+"${service}" -> SERVICE
+
+SERVICE
+  ^\s+description\s+ -> Next
+  ^\s+${Protocol}\s${Method}\s+${Port} -> Continue.Record
+  ^exit -> Record Start

@@ -1,0 +1,17 @@
+Value Filldown VPN_INSTANCE (\S+)
+Value Filldown VSI_INTERFACE (\S+)
+Value Required IPADDRESS (\d+.\d+.\d+.\d+)
+Value MACADDRESS (\w+-\w+-\w+)
+Value ROUTERMAC (\w+-\w+-\w+)
+Value VSI (\d+)
+Value FLAGS (\S+)
+
+Start
+  ^VPN instance:\s+${VPN_INSTANCE}\s+Interface:\s+${VSI_INTERFACE}\s+ -> Vpn_instance
+
+
+Vpn_instance
+  ^VPN instance:\s+ -> Continue
+  ^VPN instance:\s+${VPN_INSTANCE}\s+Interface:\s+${VSI_INTERFACE}\s+
+  ^${IPADDRESS}\s+${MACADDRESS}\s+${ROUTERMAC}\s+${VSI}\s+${FLAGS} -> Record
+

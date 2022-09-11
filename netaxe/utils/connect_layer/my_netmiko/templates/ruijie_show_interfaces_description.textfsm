@@ -1,0 +1,9 @@
+Value Interface (\S+\s+\S+)
+Value Status (\S+)
+Value ADM (\S+)
+Value Description ((\S+)?)
+
+Start
+  ^Interface\s+\S+ -> Next
+  ^-----------* -> Next
+  ^${Interface}\s+${Status}\s+${ADM}\s+${Description}\s*$$ -> Continue.Record

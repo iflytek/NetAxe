@@ -1,0 +1,9 @@
+Value IPADDR (\d+.\d+.\d+.\d+)
+Value TYPE (\S+\s\S+)
+Value MACADDRESS (\S{2}:\S{2}:\S{2}:\S{2}:\S{2}:\S{2})
+Value INTERFACE (\S+(\s\S+)?)
+
+
+Start
+  ^\s+${IPADDR}\s+${TYPE}\s+${MACADDRESS}\s+${INTERFACE}(\s+)*$$ -> Continue.Record
+

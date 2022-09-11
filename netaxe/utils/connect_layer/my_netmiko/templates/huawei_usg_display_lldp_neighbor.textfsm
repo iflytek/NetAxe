@@ -1,0 +1,26 @@
+Value LOCAL_INTERFACE (\S+)
+Value CHASSIS_ID (\S+)
+Value NEIGHBOR_PORT (\S+)
+Value PORTDESCRIPTION (\S+)
+Value NEIGHBORSYSNAME (\S+)
+Value MANAGEMENT_IP (\S+)
+Value MANAGEMENT_TYPE (\S+)
+
+Start
+  ^${LOCAL_INTERFACE}\s+has\s+\d\s+neighbor -> Neighbor
+
+Neighbor
+  ^Neighbor\s+\d+
+  #^Chassis\s+type
+  ^ChassisId:\s*${CHASSIS_ID}
+  ^PortId:\s*${NEIGHBOR_PORT}\s*$$
+  ^PortDesc:\s*${PORTDESCRIPTION}
+  ^SysName:\s*${NEIGHBORSYSNAME}
+  ^SysDesc:
+  ^SysCapSupported:
+  ^SysCapEnabled:
+  ^Management\saddress:\s${MANAGEMENT_TYPE}:\s+${MANAGEMENT_IP}
+  ^Port\sAvailable\spower\svalue:
+  ^Expired time: -> Record Start
+
+

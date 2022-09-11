@@ -1,0 +1,12 @@
+Value INTERFACE (\S+)
+Value IPADDR (\d+.\d+.\d+.\d+\/\d{1,2})
+Value ZONENAME (\S+)
+Value Vsys (\S+)
+Value HALP (\S\s\S\s\S\s\S)
+Value MACADDRESS (\w+.\w+.\w+|-+)
+Value DESCRIPTION (\S+)
+
+
+Start
+  ^${INTERFACE}\s+${IPADDR}\s+${ZONENAME}\s+${HALP}\s+${MACADDRESS}\s+${DESCRIPTION} -> Continue.Record
+  ^${INTERFACE}\s+${IPADDR}\s+${ZONENAME}\s+${Vsys}\s+${HALP}\s+${MACADDRESS}\s+${DESCRIPTION}  -> Continue.Record

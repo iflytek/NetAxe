@@ -1,0 +1,37 @@
+{
+  "Idc": [{"name": "默认机房", "address": "demo", "tel": "demo"}],
+  "IdcModel": [{"name": "默认模块", "floor": 1, "area": 1, "idc_id": 1}],
+  "Vendor": [
+    {"name": "华三", "alias": "H3C"},
+    {"name": "华为", "alias": "Huawei"},
+    {"name": "锐捷", "alias": "Ruijie"},
+    {"name": "山石网科", "alias": "Hillstone"},
+    {"name": "思科", "alias": "CISCO"}
+  ],
+  "Category": [
+    {"name": "交换机"},
+    {"name": "路由器"},
+    {"name": "防火墙"},
+    {"name": "负载均衡"}
+  ],
+  "Framework": [
+    {"name": "三层"},
+    {"name": "二层"},
+    {"name": "大二层"}
+  ],
+  "Attribute": [
+    {"name": "测试网络"},
+    {"name": "生产网络"}
+  ],
+  "Role": [
+    {"name": "接入"},
+    {"name": "汇聚"},
+    {"name": "spine"},
+    {"name": "leaf"}
+  ],
+  "NetZone": [
+    {"name": "外联区"},
+    {"name": "网络管理区"},
+    {"name": "IPMI区"}
+  ]
+}

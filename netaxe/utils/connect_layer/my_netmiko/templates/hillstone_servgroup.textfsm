@@ -1,0 +1,9 @@
+Value Filldown SERVGROUP (\S+)
+Value Required Service (\S+)
+
+Start
+  ^servgroup\s+"${SERVGROUP}" -> GROUP
+
+GROUP
+  ^\s+service\s+"${Service}" -> Continue.Record
+  ^\s*exit -> Start

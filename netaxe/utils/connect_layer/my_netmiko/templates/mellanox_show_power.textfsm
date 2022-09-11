@@ -1,0 +1,12 @@
+Value Module (PS\d+)
+Value Device (\S+)
+Value Sensor (\S+)
+Value Power (\S+)
+Value Voltage (\S+)
+Value Current (\S+)
+Value Capacity (\S+)
+Value Feed (\S+)
+Value Status (\S+)
+
+Start
+  ^${Module}\s+${Device}\s+${Sensor}\s+${Power}\s+${Voltage}\s+${Current}\s+${Capacity}\s+${Feed}\s+${Status}\s+ -> Continue.Record

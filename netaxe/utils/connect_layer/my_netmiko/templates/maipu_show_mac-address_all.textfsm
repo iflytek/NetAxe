@@ -1,0 +1,14 @@
+Value VLAN (\d+)
+Value MACADDRESS (\w{4}.\w{4}.\w{4})
+Value TYPE (DYNAMIC|STATIC)
+Value INTERFACE (\S+)
+Value STATE (\S+)
+Value FLAG (\S+)
+
+
+Start
+  ^-----------+ -> MACADDR
+
+MACADDR
+  ^----------+
+  ^\s+${VLAN}\s+${MACADDRESS}\s+${TYPE}\s+${INTERFACE}\s+${STATE}\s+${FLAG} -> Continue.Record

@@ -1,0 +1,6 @@
+Value Filldown Slot (\d)
+Value Required Version (\S+)
+
+Start
+  ^Active\s*packages\s*on\s*slot\s*${Slot}:
+  ^\s+flash:\/${Version} -> Record

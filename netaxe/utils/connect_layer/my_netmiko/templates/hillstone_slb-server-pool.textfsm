@@ -1,0 +1,13 @@
+Value Filldown POOLNAME (\S+|\S+udp\s\S+)
+Value LoadBalance (\S+)
+Value ADDRTYPE (ip|ip-range)
+Value Required SERVERIP (\d+.\d+.\d+.\d+/\d{1,2}|\d+.\d+.\d+.\d+\s+\d+.\d+.\d+.\d+)
+Value PORT (\d+)
+
+
+Start
+  ^slb-server-pool\s+"${POOLNAME}" -> POOL
+
+POOL
+  ^\s+server\s+${ADDRTYPE}\s+${SERVERIP}\s+(port\s+${PORT})? -> Continue.Record
+  ^exit -> Start

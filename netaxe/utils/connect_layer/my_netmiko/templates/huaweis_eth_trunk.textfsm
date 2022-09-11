@@ -1,0 +1,56 @@
+Value Required Interface (Eth-Trunk\S+)
+Value PortAttr (Switch|Route)
+Value List IPADDR (\d+.\d+.\d+.\d+\/\d{1,2})
+Value List IPTYPE ((\S+)?)
+Value Status (DOWN|UP|Administratively DOWN)
+Value ProtocolStatus (\S+)
+#Value LastChange (\S+[\s+\S+]+)
+Value Description ((\S+)?)
+Value MacAddress (\S+)
+#Value MTU (\S+[\s+\S+]+)
+#Value PVID (\d+([(].*[)])?)
+Value Speed (\S+)
+Value Duplex (\S+)
+Value List MemberPort (\S+)
+Value List MemberPortStatus (UP|DOWN)
+Value List MemberPortWeight (\d+)
+Value PortInTrunkNum (\d+)
+Value PortInTrunkUp (\d+)
+#Value HashArithmetic (\S+[\s+\S+]+)
+#Value MaximalBW (\S+)
+#Value CurrentBW (\S+)
+
+
+Start
+  ^${Interface}\s+current\s+state\s*:\s*${Status} -> INTF
+
+
+INTF
+  #^${Interface}\s+current\s+state\s*:\s*${Status} -> Continue.Record
+  ^Line\s+protocol\s+current\s+state\s*:\s*${ProtocolStatus}
+  #^Last\s+line\s+protocol\s+up\s+time\s*:\s*${LastChange}
+  ^Description\s*:\s*${Description}
+  ^${PortAttr}\s+Port,
+  #^TPID\s*:\s*\S+, The Maximum Frame Length is ${MTU}
+  ^IP\s+Sending\s+Frames' Format\s+is\s+\S+,\s+Hardware\s+address\s+is\s+${MacAddress}
+  #^Last\s+physical\s+up\s+time\s+:\s+${LastChange}
+  ^Speed\s*:\s*${Speed},
+  ^Duplex\s*:\s*${Duplex},
+  ^Current\s+system\s+time
+  ^\s+Input\s+bandwidth
+  ^\s+Output\s+bandwidth
+  ^-----+
+  ^PortName\s+Status\s+Weight -> AGGR
+  ^Internet\s+Address\s+is\s+${IPADDR}\s*${IPTYPE}$$
+  ^IP\s+Sending\s+Frames' Format\s+is\s+PKTFMT_ETHNT_2,\s+Hardware\s+address\s+is\s+${MacAddress}$$
+  ^PortName\s+Status\s+Weight
+  ^${MemberPort}\s+${MemberPortStatus}\s+${MemberPortWeight}
+  #^\s+Output\s+bandwidth\s+utilization\s*:\s* -> Record Start
+  ^\S+\s+current\s+state\s*:\s* -> Record Start
+  #^$$ -> Record Start
+
+
+AGGR
+  ^${MemberPort}\s+${MemberPortStatus}\s+${MemberPortWeight}
+  ^The\s+Number\s+of\s+Ports\s+in\s+Trunk\s*:\s*${PortInTrunkNum}
+  ^The\s+Number\s+of\s+UP\s+Ports\s+in\s+Trunk\s*:\s*${PortInTrunkUp} -> Record Start

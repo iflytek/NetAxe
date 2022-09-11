@@ -1,0 +1,11 @@
+Value Protocol (\S+)
+Value IP (\d+.\d+.\d+.\d+)
+Value Age (\S+)
+Value MACADDRESS (\w+.\w+.\w+|Incomplete)
+Value Interface (\S+)
+
+
+Start
+  ^\s+Protocol -> Next
+  ^\s+${Protocol}\s+${IP}\s+${Age}\s+${MACADDRESS}\s+${Interface}\s+ -> Continue.Record
+  ^\s+${Protocol}\s+${IP}\s+${Age}\s+${MACADDRESS}\s+${Interface}$$ -> Continue.Record

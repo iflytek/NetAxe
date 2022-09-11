@@ -1,0 +1,12 @@
+Value MacAddress (^[\d\w-]+)
+Value Vlan ([\d]+)
+Value CurrentPort (\S+)
+Value SourcePort (\S+)
+Value LastTime (\d+\-\d+\-\d+ \d+\:\d+\:\d+)
+Value Times (\d+)
+
+Start
+  ^MAC\s+address\s+VLAN\s+Current\s+port\s+Source\s+port\s+Last time\s+Times -> MacFlapping
+
+MacFlapping
+  ^${MacAddress}\s+${Vlan}\s+${CurrentPort}\s+${SourcePort}\s+${LastTime}\s+${Times} -> Record

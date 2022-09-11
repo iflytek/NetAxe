@@ -1,0 +1,8 @@
+Value MemberID (\d)
+Value Role (\S+)
+Value Priority (\d+)
+Value Mac (\w+-\w+-\w+)
+
+Start
+  ^MemberID.*
+  ^\s+(\S+)?${MemberID}\s+${Priority}\s+\S+\s+\S+ -> Continue.Record

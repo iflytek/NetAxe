@@ -1,0 +1,4 @@
+{
+  "NavigationProfile": [{"id": 1, "menuName": "资源管理", "menuUrl": "/cmdb", "icon": "detail", "parentPath": null, "badge": null, "iconPrefix": "iconfont", "showOrder": 1}, {"id": 2, "menuName": "配置中心", "menuUrl": "/config_manage", "icon": "detail", "parentPath": null, "badge": "new", "iconPrefix": "iconfont", "showOrder": 2}],
+  "NavigationSubProfile": [{"id": 1, "menuName": "网络设备", "menuUrl": "/cmdb/network_device", "badge": "new", "subParent_id": null, "parent_id": 1, "showOrder": 1, "cacheable": false}, {"id": 2, "menuName": "接口清单", "menuUrl": "/cmdb/interfaceused", "badge": "new", "subParent_id": null, "parent_id": 1, "showOrder": 2, "cacheable": false}, {"id": 3, "menuName": "配置差异", "menuUrl": "/config_manage/gitdiff", "badge": "dot", "subParent_id": null, "parent_id": 2, "showOrder": 1, "cacheable": false}]
+}

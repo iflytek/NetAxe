@@ -1,0 +1,15 @@
+Value Filldown Name (\S+)
+Value Required Protocol (\S+)
+Value DstPort ((Any|\d+|\d+-\d+|type:\S+))
+Value SrcPort (\S+)
+Value Timeout (\S+)
+
+
+Start
+  ^Name\s+Protocol
+  ^Total configured
+  ^Show predefine service:
+  #^${Name}\s+${Protocol}\s+${DstPort}\s+${SrcPort}\s+${Timeout} -> Record
+  ^${Name}\s+${Protocol}\s+(\S+\s/*\s+)?${DstPort}\s+${SrcPort}\s+${Timeout}\s*$$ -> Continue.Record
+  ^${Name}\s+${Protocol}\s+(\S+\s/*\s+)?${DstPort}\s+${SrcPort}\s*$$ -> Continue.Record
+  ^\s+${Protocol}\s+${DstPort}\s+${SrcPort}\s+${Timeout} -> Continue.Record

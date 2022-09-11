@@ -1,0 +1,12 @@
+Value Slot (\d)
+Value State (\w+)
+Value Temperature (\d+)
+Value DRAM (\d+)
+Value Buffer (\d+)
+Value TunnelName (Tunnel\d{1,2})
+Value TunnelId (\w+)
+
+Start
+  ^\s+${TunnelName}\s+  -> Record
+  #^\s+${Slot}\s+${State}\s+${Temperature}\s+\d+\s+\d+\s+${DRAM}\s+\d+\s+${Buffer} -> Record
+  # ^\s+${Slot}\s+${State} -> Record

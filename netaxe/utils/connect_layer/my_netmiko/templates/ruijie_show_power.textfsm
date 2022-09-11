@@ -1,0 +1,21 @@
+Value Filldown Device (\d+)
+Value Item (\d+)
+Value Name (RG\S+)
+Value Slot (\S+)
+Value Type (\S+(\s\S+)?)
+Value SerialNum (\S+)
+Value Ver (\S+)
+Value RatePower (\S+)
+Value OutPower (\S+)
+Value Vol (\S+)
+Value Temp (\S+)
+Value Status (\S+)
+
+Start
+  ^Device-${Device}: -> PowerDevice
+  ^\s+${Name}\s+${Slot}\s+${Status}\s+\S+\s+\S+\s+${Ver}\s+${SerialNum}\s+\d+\s+\S+ -> Continue.Record
+
+PowerDevice
+  ^Device-${Device}:
+  ^Power\s+Info:
+  ^\s+${Item}\s+${Type}\s+${SerialNum}\s+${Ver}\s+${RatePower}\s+${OutPower}\s+${Vol}\s+${Temp}\s+${Status}  -> Continue.Record

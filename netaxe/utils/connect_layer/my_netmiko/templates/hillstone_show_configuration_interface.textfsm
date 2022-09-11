@@ -1,0 +1,26 @@
+Value INTF (\S+)
+Value Required ZONE ("untrust"|'untrust')
+Value List IPADDRESS (\d+.\d+.\d+.\d+\s\d+.\d+.\d+.\d+)
+Value List MANAGE (\S+)
+
+
+Start
+  ^interface\s*${INTF} -> Interface
+
+Interface
+  ^interface\s*${INTF}
+  ^\s+zone\s+${ZONE}
+  ^\s+ip\s+address\s+${IPADDRESS}
+  ^\s+manage\s+${MANAGE}
+  ^exit -> Record
+
+
+
+
+
+
+
+
+
+
+

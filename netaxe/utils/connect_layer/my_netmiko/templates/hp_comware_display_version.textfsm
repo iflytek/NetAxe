@@ -1,0 +1,14 @@
+Value Required Slot (\d)
+Value BOARD_TYPE (\S+)
+Value Release_Ver (\S+\s\S+)
+Value Patch_Ver (Release\s\S+)
+
+Start
+  ^Slot\s${Slot} -> SLOT
+  #^Release\sVersion:\s+${Release_Ver} H3C S6860-54HF-2702
+
+SLOT
+  ^Slot\s${Slot}
+  ^BOARD\sTYPE:\s+${BOARD_TYPE}
+  ^Release\sVersion:\s+${Release_Ver}
+  ^Patch\sVersion:\s+${Patch_Ver} -> Record Start

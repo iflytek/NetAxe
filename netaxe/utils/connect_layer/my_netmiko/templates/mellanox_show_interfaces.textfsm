@@ -1,0 +1,47 @@
+Value Required Interface (\S+)
+Value AdminState (\S+)
+Value OperationalState (\S+)
+Value LastChange (\S+[\s+\S+]+)
+Value Description (\S+)
+Value MacAddress (\S+)
+Value MTU (\S+[\s+\S+]+)
+Value SupportedSpeeds (\S+[\s+\S+]+)
+Value AdvertisedSpeeds (\S+)
+Value ActualSpeed (\S+)
+Value MANAGEIP (\d+.\d+.\d+.\d+)
+Value List IPv4Address (\d+.\d+.\d+.\d+\/\d{1,2})
+Value List IPv4Type (\S+)
+
+
+Start
+  ^${Interface}: -> ETH
+  ^Interface\s+${Interface}\s+status: -> OTHERINTF
+
+OTHERINTF
+  ^Interface\s+${Interface}\s+status: -> Continue.Record
+  ^\s+Admin\s+up\s*:\s*${AdminState}
+  ^\s+Link\s+up\s*:\s*${OperationalState}
+  ^\s+IP\s+address\s*:\s*${MANAGEIP}
+  ^$$ -> Record Start
+
+ETH
+  ^${Interface}: -> Continue.Record
+  ^\s+Admin\s+state\s+:\s*${AdminState}
+  ^\s+Operational\s+state\s+:\s*${OperationalState}
+  ^\s+Last\s+change\s+in\s+operational\s+status\s*:\s*${LastChange}
+  ^\s+Description\s+:\s*${Description}
+  ^\s+Mac\s+address\s+:\s*${MacAddress}
+  ^\s+MTU\s+:\s*${MTU}
+  ^\s+Supported\s+speeds\s+:\s*${SupportedSpeeds}
+  ^\s+Advertised\s+speeds\s+:\s*${AdvertisedSpeeds}
+  ^\s+Actual\s+speed\s+:\s*${ActualSpeed}\s*
+  ^\s+IPv4 address: -> IPV4ADDR
+  ^\s*$$
+
+IPV4ADDR
+  ^\s+IPv4\s+address:\s*:
+  ^\s+${IPv4Address}\s+\[${IPv4Type}\]
+  #^\s+${IPv4Address}\s+[${IPv4Type}]$$
+  ^$$ -> Record Start
+
+

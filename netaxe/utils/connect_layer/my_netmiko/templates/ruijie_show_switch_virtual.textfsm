@@ -1,0 +1,17 @@
+Value MEMBER (\d)
+Value DOMAIN (\d+)
+Value PRIORITY (\d+)
+Value POSITION (\S+)
+Value STATUS (\S+)
+Value ROLE (\S+)
+
+Start
+  ^Switch_id\s+Domain_id\s+Priority\s+Position\s+Status\s+Role\s+Description -> model1
+  ^Switch_id\s+Domain_id\s+Priority\s+Status\s+Role\s+Description -> model2
+
+
+model1
+  ^${MEMBER}\(\d\)\s+${DOMAIN}\(\d\)\s+${PRIORITY}\(\d+\)\s+${POSITION}\s+${STATUS}\s+${ROLE}\s* -> Continue.Record
+
+model2
+  ^${MEMBER}\(\d\)\s+${DOMAIN}\(\d\)\s+${PRIORITY}\(\d+\)\s+${STATUS}\s+${ROLE}\s* -> Continue.Record

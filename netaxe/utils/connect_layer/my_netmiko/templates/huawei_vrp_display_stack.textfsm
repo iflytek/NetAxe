@@ -1,0 +1,7 @@
+Value SLOT (\d)
+Value ROLE (\S+)
+Value MACADDR (\w+-\w+-\w+)
+Value PRIORITY (\d+)
+
+Start
+  ^${SLOT}\s+${ROLE}\s+${MACADDR}\s+${PRIORITY}\s+ -> Continue.Record

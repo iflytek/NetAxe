@@ -1,0 +1,11 @@
+Value Interface (\S+\s+\S+)
+Value Status (\S+)
+Value Vlan (\S+)
+Value Duplex (\S+)
+Value Speed (\S+)
+Value Type ((\S+)?)
+
+Start
+  ^Interface\s+\S+ -> Next
+  ^-----------* -> Next
+  ^${Interface}\s+${Status}\s+${Vlan}\s+${Duplex}\s+${Speed}\s+${Type}$$ -> Continue.Record

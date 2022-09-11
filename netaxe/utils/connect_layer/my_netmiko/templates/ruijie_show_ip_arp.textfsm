@@ -1,0 +1,9 @@
+Value Protocol (\S+)
+Value Address (\d+.\d+.\d+.\d+)
+Value AgeMin (\d+|-+)
+Value Hardware (\w+.\w+.\w+)
+Value Type (\S+)
+Value Interface (\S+[\s+\S+]+)
+
+Start
+  ^${Protocol}\s+${Address}\s+${AgeMin}\s+${Hardware}\s+${Type}\s+${Interface}$$ -> Record

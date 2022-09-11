@@ -1,0 +1,28 @@
+Value Required,Filldown VROUTE (\S+)
+Value Required ID (\d+)
+Value INGRESS_INTERFACE (\S+)
+Value EGRESS_INTERFACE (\S+)
+Value FROM (\S+)
+Value TO (\S+)
+Value FROM_IP (\d+.\d+.\d+.\d+|\d+.\d+.\d+.\d+\/\d{1,2})
+Value TO_IP (\d+.\d+.\d+.\d+)
+Value SERVICE (\S+|\S+udp\s\S+)
+Value TRANSTO (\S+)
+Value TRANSTO_IP (\d+.\d+.\d+.\d+)
+Value TRANSTO_EIP (eif-ip)
+Value MODE (dynamicport(\ssticky)?|static|dynamicip)
+Value DESC (\S+(\s\S+)?)
+Value LOG (log)
+Value TRACK (\S+)
+Value DISABLE (disable)
+
+Start
+  ^ip vrouter\s"${VROUTE}" -> VRT
+
+VRT
+  #^\s+snatrule\s+id\s+${ID}\s+from\s+"${FROM}"\s+to\s+"${TO}"(\s*service\s+"${SERVICE}"\s*)?(\s*trans-to\s+"${TRANSTO}"|\s*trans-to\s*slb-server-pool\s+"${POOLNAME}"\s*|\s*port\s*${PORT}\s*|\s*${LOG}\s*|\s*description\s+"${DESC}"\s*|\s*${LOADBALANCE}\s*|\s*${TRACK}\s*|\s*${RULESTATE}\s*)* -> Continue.Record
+  ## 5.5r6
+  ^\s+snatrule\s+id\s+${ID}\s+(ingress-interface\s"${INGRESS_INTERFACE}"\s+)?from\s+(address-book\s"${FROM}"|ip\s${FROM_IP})\sto\s(address-book\s"${TO}"|ip\s${TO_IP})\s*service\s+"${SERVICE}"(\s*eif\s${EGRESS_INTERFACE})?(\s*trans-to\s(address-book\s"${TRANSTO}"|ip\s${TRANSTO_IP}|${TRANSTO_EIP}))?(\s*mode\s+${MODE})?(\s*${LOG})?(\s*${DISABLE})?(\s*track\s{TRACK})?(\s*description${DESC})? -> Continue.Record
+  ## 5.0
+  ^\s+snatrule\s+id\s+${ID}\s+from\s+("${FROM}"|ip\s${FROM_IP})\sto\s("${TO}"|ip\s${TO_IP})\s*service\s+"${SERVICE}"(\s*eif\s${EGRESS_INTERFACE})?(\s*trans-to\s(address-book\s"${TRANSTO}"|ip\s${TRANSTO_IP}|${TRANSTO_EIP}))?(\s*mode\s+${MODE})?(\s*${LOG})?(\s*${DISABLE})?(\s*track\s{TRACK})?(\s*description${DESC})? -> Continue.Record
+  ^exit -> Record Start

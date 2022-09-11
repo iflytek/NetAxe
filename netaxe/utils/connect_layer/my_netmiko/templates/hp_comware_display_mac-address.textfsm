@@ -1,0 +1,12 @@
+Value MACADDRESS (^[\d\w-]+)
+Value VLAN ([\d]+)
+Value STATE (\S+)
+Value INTERFACE (\S+)
+Value AGING (\S+)
+
+Start
+  ^MAC\sAddress\s+
+  ^MAC\s+ADDR\s+
+  ^${MACADDRESS}\s+${VLAN}\s+${STATE}\s+${INTERFACE}\s+${AGING} -> Record
+  ^. -> EOF
+

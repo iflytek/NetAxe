@@ -1,0 +1,16 @@
+Value Filldown INTERFACE (\S+)
+Value AGGREGATE (\d+)
+Value SELECTED (\S+)
+Value ATTACHED (\S+)
+Value MODE (\S+)
+Value LACP_ENABLE (\S+)
+
+Start
+  ^\s+${INTERFACE}\s+link\s+aggregation\s+${AGGREGATE}\s+mode:\s+${MODE} -> AGGREPROC
+
+
+AGGREPROC
+  ^\s+selected:\s${SELECTED}
+  ^\s+attached:\s${ATTACHED}
+  ^\s+lacp_enabled:\s${LACP_ENABLE}
+  ^$$ -> Record Start

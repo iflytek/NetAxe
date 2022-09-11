@@ -1,0 +1,36 @@
+Value TRUNK_NUM (\S+)
+Value List PortName (\S+)
+Value List PortStatus (Down|Up|Selected)
+Value List PortWeight (\d+)
+Value LAGID (\d+)
+Value List Local ((X)GigabitEthernet[\s\S]+)
+Value List Partner ((X)GigabitEthernet[\s\S]+)
+
+
+Start
+  ^${TRUNK_NUM}'s state information is:\s*
+  ^Local:\s* -> LOACL
+  ^PortName\s+Status\s+Weight\s* -> PortList
+
+PortList
+  ^${PortName}\s+${PortStatus}\s+${PortWeight}
+  ^\s* -> Record Start
+
+LOACL
+  ^LAG ID:\s*${LAGID}\s+\S+
+  #^Preempt Delay:\s.*
+  #^System Priority:\s.*
+  #^Least Active-linknumber:\s.*
+  #^Operate status:\s.*
+  #^----------\S+\s*
+  #^ActorPortName
+  ^Partner:\s* -> PARTNER
+  ^${Local}\s*
+  ^\S+'s state information is:\s* -> Start
+
+
+PARTNER
+  ^----------\S+\s*
+  ^ActorPortName.*
+  ^${Partner}\s*
+  ^\S+'s state information is:\s* -> Start

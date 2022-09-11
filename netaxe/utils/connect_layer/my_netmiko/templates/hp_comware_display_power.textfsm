@@ -1,0 +1,14 @@
+Value Filldown Slot (\d+)
+Value Required PowerID (\d+)
+Value State (\S+)
+Value Mode (\S+)
+Value Current (\S+)
+Value Voltage (\S+)
+Value Power (\S+)
+
+Start
+  ^\s+Slot\s+${Slot}:
+  ^PowerID -> Next
+  ^\s*${PowerID}\s+${State}\s+${Mode}\s+${Current}\s+${Voltage}\s+${Power}\s* -> Continue.Record
+  ^\s*$$
+

@@ -1,0 +1,8 @@
+Value INTERFACE (\S+)
+Value IPADDR (\d+.\d+.\d+.\d+\/\d{1,2}|unassigned)
+Value PHY (down|\*down|up|up\(s\))
+Value PROTOCOL (down|\*down|up|up\(s\))
+
+Start
+  ^${INTERFACE}\s+${IPADDR}\s+${PHY}\s+${PROTOCOL} -> Record
+

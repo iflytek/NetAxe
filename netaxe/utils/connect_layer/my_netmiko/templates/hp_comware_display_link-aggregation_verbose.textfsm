@@ -1,0 +1,27 @@
+Value Required,Filldown AGGNAME (\S+)
+Value Filldown MODE (\w{5,7})
+Value Required,List MEMBERPORTS (\S+)
+Value List STATUS (S|U)
+
+
+Start
+  ^No\s+link\s+aggregation\s+group\s+exists. -> EOF
+  ^Aggregate\s+Interface:\s+${AGGNAME}
+  ^Aggregation\s+Interface:\s+${AGGNAME}
+  ^Aggregation\s+Mode:\s+${MODE}
+  ^Loadsharing\s+Type\s*:\s+
+  ^Management\s+VLAN\s*:\s+
+  ^\s+Port\s+Status\s+Priority\s+Oper-Key -> MEMBER_A
+  ^\s+Port\s+Status\s+Oper-Key -> MEMBER_B
+  #^\s+Port\s+Status -> MEMBER
+  #^\s+${MEMBER}\s+${STATUS}\s+\d+\s+\d\s+ -> Record
+
+MEMBER_A
+  ^---+
+  ^\s+${MEMBERPORTS}\s+${STATUS}\s+\d+\s+\d+
+  ^$$ -> Record Start
+
+MEMBER_B
+  ^---+
+  ^\s+${MEMBERPORTS}\s+${STATUS}\s+\d+
+  ^$$ -> Record Start

@@ -1,0 +1,26 @@
+Value LOCAL_INTERFACE (\S+)
+Value CHASSIS_ID (\S+)
+Value NEIGHBOR_PORT (\S+)
+Value PortDescription (\S+)
+Value NEIGHBORSYSNAME (\S+)
+Value MANAGEMENT_IP (\S+)
+Value MANAGEMENT_TYPE (\S+)
+
+Start
+  ^${LOCAL_INTERFACE}\s+has\s+\d\s+neighbor
+  ^Neighbor\s+index
+  ^Chassis\s+type
+  ^Chassis\s+ID\s+:\s*${CHASSIS_ID}
+  ^Port\s+ID\s+:\s*${NEIGHBOR_PORT}\s*$$
+  ^Port\s+description\s*:\s*${PortDescription}
+  ^System\s+name\s+:\s*${NEIGHBORSYSNAME}
+  ^System\s+description\s+:
+  ^System\s+capabilities\s+supported
+  ^System\s+capabilities\s+enabled
+  ^Management\s+address\s+type\s*:\s*${MANAGEMENT_TYPE}
+  ^Management\s+address\s*:\s*${MANAGEMENT_IP}
+  ^Management\s+address\s+value\s*:\s*${MANAGEMENT_IP}
+  ^Port\sAvailable\spower\svalue:
+  ^Maximum\s+frame\s+Size -> Record Start
+  ^\S+\s+has\s+\d\s+neighbor -> Record Start
+

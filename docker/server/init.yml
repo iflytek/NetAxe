@@ -1,0 +1,30 @@
+version: "3.2"
+networks:
+    netops-axe:
+        driver: bridge
+        ipam:
+            config:
+                - subnet: 192.168.15.0/24
+services:
+    redis-cache:
+        image: registry.cn-hangzhou.aliyuncs.com/netaxe/redis:latest
+        container_name: redis-cache
+        ports:
+            - "6379:6379"
+        command: "redis-server --requirepass dade0f2a65237a56b79277e6dd27351d2854df033e0ad4b4f90abec229cd64df"
+        networks:
+            - netops-axe
+
+    netaxe-server:
+        image: registry.cn-hangzhou.aliyuncs.com/netaxe/netaxe-backend:1.0.2
+        container_name: netaxe-server
+        ports:
+            - "5555:5555"
+        #command: sh start.sh web
+        command: sleep 999999
+        depends_on:
+            - redis-cache
+        volumes:
+            - ../../netaxe:/home/netaxe
+        networks:
+            - netops-axe

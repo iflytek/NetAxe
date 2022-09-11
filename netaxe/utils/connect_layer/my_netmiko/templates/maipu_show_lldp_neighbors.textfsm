@@ -1,0 +1,9 @@
+Value Required LOCAL_INTERFACE (\S+)
+Value NEIGHBOR_PORT (\S+)
+Value NEIGHBORSYSNAME (\S+)
+
+Start
+  ^\d+\s+${LOCAL_INTERFACE}\s+\d+\s+\S+\s+${NEIGHBOR_PORT}\s+${NEIGHBORSYSNAME} -> Continue.Record
+
+
+

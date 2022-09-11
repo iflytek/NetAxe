@@ -1,0 +1,14 @@
+Value MACADDRESS (\w+-\w+-\w+)
+Value VLAN (\S+)
+Value INTERFACE (\S+)
+Value TYPE (\S+)
+Value AGE (\d+)
+
+Start
+  ^MAC address table
+  ^-----------+ -> MACADDR
+
+MACADDR
+  ^MAC Address -> Next
+  ^----------+
+  ^${MACADDRESS}\s+${VLAN}\s+${AGE}\s+${INTERFACE}\s+${TYPE} -> Continue.Record

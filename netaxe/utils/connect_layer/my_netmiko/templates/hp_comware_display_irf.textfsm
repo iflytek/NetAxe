@@ -1,0 +1,11 @@
+Value ChassisID (\d)
+Value MemberID (\d)
+Value Role (\S+)
+Value Priority (\d+)
+Value Mac (\w+-\w+-\w+)
+
+Start
+  ^MemberID.*
+  ^\s+(\S+)?${MemberID}\s+${Role}\s+${Priority}\s+${Mac} -> Continue.Record
+  ^\s*(\*)?(\+)?${ChassisID}\s+${MemberID}\s+${Role}\s+${Priority}\s+\S+\s+\S+ -> Continue.Record
+

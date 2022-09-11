@@ -1,0 +1,15 @@
+Value Filldown VSI_NAME (\S+)
+Value Required MACADDRESS (\w+-\w+-\w+)
+Value LINK_ID (\S+)
+Value FLAGS (\S+)
+Value NEXTHOP (\S+)
+
+Start
+  ^VSI\s+name\s*:\s*${VSI_NAME} -> VSI
+
+VSI
+  #^VSI name:\s+\d+
+  #^VSI name:\s+${VSI_NAME}
+  ^MAC\s+address\s+Link
+  ^${MACADDRESS}\s+${LINK_ID}\s+${FLAGS}\s+${NEXTHOP} -> Continue.Record
+

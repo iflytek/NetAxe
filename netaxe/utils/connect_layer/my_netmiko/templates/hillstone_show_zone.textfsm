@@ -1,0 +1,12 @@
+Value Name (\S+)
+Value Type (\S+)
+Value Vswitch (\S+)
+Value Ifcount (\d+)
+Value Shared (\S)
+
+
+Start
+  ^Total zone count
+  ^============+
+  ^\s+Name\s+Type
+  ^\s+${Name}\s+${Type}\s+${Vswitch}\s+${Ifcount}\s+${Shared}\s*$$ -> Continue.Record

@@ -1,0 +1,10 @@
+Value AggregatePort (\S+)
+Value MaxPorts (\d+)
+Value SwitchPort (Enabled|Disabled)
+Value Mode (TRUNK|ACCESS)
+Value Loadbalance (src\S+)
+Value Ports (\S+[\s+\S+]+)
+
+Start
+  #^${AggregatePort}\s+${MaxPorts}\s+${SwitchPort}\s+${Loadbalance}\s+${Ports}$$ -> Continue.Record
+  ^${AggregatePort}\s+${MaxPorts}\s+${SwitchPort}\s*(${Mode})?\s*(${Loadbalance})?\s*(${Ports})? -> Continue.Record

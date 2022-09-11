@@ -1,0 +1,11 @@
+Value INTERFACE (\S+(\s\d{1,4})?)
+Value IPADDR (\d+.\d+.\d+.\d+\/\d{1,2}|Unassigned)
+Value Primary ((\S+)?)
+Value ADMINSTATE (\S+)
+Value OPERSTATE (Down|\*down|Up|Up\(s\))
+Value MTU (\d+)
+Value VRF (\S+)
+
+Start
+  ^${INTERFACE}\s+${IPADDR}\s+${Primary}\s+${ADMINSTATE}\s+${OPERSTATE}\s+${MTU}\s+${VRF}\s+  -> Record
+

@@ -1,0 +1,20 @@
+Value Filldown Device (\d+)
+Value Item (\d+)
+Value Name (\S+)
+Value Slot (\S+)
+Value Level (\S+)
+Value Status (\S+)
+Value SerialNum (\S+)
+Value Ver (\S+)
+Value Speed (\S+)
+
+
+Start
+  ^Device-${Device}: -> FanDevice
+  ^Name\s+Slot\s+\S+
+  ^\s+--------+
+  ^\s+${Name}\s+${Slot}\s+${Status}\s+${Level}\s+${Speed}\s+\S+\s+\S+\s+${Ver}\s+${SerialNum}\s+\S+ -> Continue.Record
+
+FanDevice
+  ^Device-${Device}:
+  ^\s+${Item}\s+${Status}\s+${SerialNum}\s+${Ver}\s+${Speed}   -> Continue.Record

@@ -1,0 +1,12 @@
+Value Interface (\S+)
+Value Status (UP|DOWN|ADM)
+Value Speed (\S+)
+Value Duplex (\S+)
+Value Type (\S+)
+Value PVID (\S+)
+Value Description ((\S+)?)
+
+Start
+  ^Link: ADM - administratively down;
+  ^${Interface}\s+${Status}\s+${Speed}\s+${Duplex}\s+${Type}\s+${PVID}\s+${Description} -> Continue.Record
+  ^${Interface}\s+${Status}\s+${Speed}\s+${Duplex}\s+${Type}\s+${PVID}$$ -> Continue.Record

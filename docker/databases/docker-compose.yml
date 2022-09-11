@@ -1,0 +1,68 @@
+version: "3.2"
+networks:
+  netops-databases:
+    driver: bridge
+    ipam:
+      config:
+        - subnet: 192.168.13.0/24
+services:
+  mysql-server:
+    image: registry.cn-hangzhou.aliyuncs.com/netaxe/mysql:5.7
+    restart: always
+    container_name: mysql-server
+    environment:
+      TZ: Asia/Shanghai
+      MYSQL_USER: "netaxe"
+      MYSQL_DATABASE: "netaxe"
+      MYSQL_ROOT_PASSWORD: "root_devnet@2022"
+    volumes:
+      - /etc/localtime:/etc/localtime
+      - ./mysql_data:/var/lib/mysql
+      - ./my.cnf:/etc/mysql/my.cnf
+    command: ['--character-set-server=utf8mb4', '--collation-server=utf8mb4_bin']
+    ports:
+      - "3306:3306"
+    networks:
+      - netops-databases
+
+  mongo-db:
+    image: registry.cn-hangzhou.aliyuncs.com/netaxe/mongo:latest
+    container_name: mongo-db
+    restart: always
+    ports:
+      - "27017:27017"
+    environment:
+      TZ: Asia/Shanghai
+      MONGO_INITDB_DATABASE: netaxe
+      MONGO_INITDB_ROOT_USERNAME: root
+      MONGO_INITDB_ROOT_PASSWORD: 70uUceCVL1gf
+    volumes:
+      - /etc/localtime:/etc/localtime
+      - /data/mongo/db:/data/db
+      - ./mongodb.conf:/data/conf
+      - ./init/:/docker-entrypoint-initdb.d/
+    security_opt:
+      - 'seccomp=unconfined'
+    command: mongod
+    networks:
+      - netops-databases
+
+  mongo-express:
+    image: registry.cn-hangzhou.aliyuncs.com/netaxe/mongo-express:latest
+    container_name: mongo-express
+    restart: always
+    links:
+      - mongo-db:mongodb
+    depends_on:
+      - mongo-db
+    ports:
+      - 27018:8081
+    environment:
+      ME_CONFIG_OPTIONS_EDITORTHEME: 3024-night
+      ME_CONFIG_MONGODB_SERVER: mongodb
+      ME_CONFIG_MONGODB_ADMINUSERNAME: root
+      ME_CONFIG_MONGODB_ADMINPASSWORD: 70uUceCVL1gf
+      ME_CONFIG_BASICAUTH_USERNAME: root
+      ME_CONFIG_BASICAUTH_PASSWORD: 70uUceCVL1gf
+    networks:
+      - netops-databases

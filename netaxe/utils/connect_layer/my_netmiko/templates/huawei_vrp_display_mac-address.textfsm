@@ -1,0 +1,13 @@
+Value MACADDRESS (\w+-\w+-\w+)
+Value VLAN (\S+)
+Value INTERFACE (\S+)
+Value TYPE (\S+)
+
+Start
+  ^------------ -> MACADDR
+
+MACADDR
+  ^MAC Address -> Next
+  ^${MACADDRESS}\s+${VLAN}\/-\s+${INTERFACE}\s+${TYPE}  -> Record
+  ^${MACADDRESS}\s+${VLAN}\s+${INTERFACE}\s+${TYPE}  -> Record
+

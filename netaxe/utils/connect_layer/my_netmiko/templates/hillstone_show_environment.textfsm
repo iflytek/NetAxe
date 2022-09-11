@@ -1,0 +1,29 @@
+Value FAN (\S+)
+Value List Chassis_FAN (Fan(\d)?\s*\S+[\s+\S+]+)
+Value FAN_Slot (\d+)
+Value Slot_Module (\S+)
+Value PWR_id (\d+)
+Value PWR_STATUS (\S+)
+
+Start
+  ^Normal\s+Temperature\s+ -> Chassis
+  ^Both\s+the\s+temperature\s+and\sfan\sare\sin\s+${FAN}\s+state. -> Record
+  ^Fan\sStatus:
+  ^Temperature\s+information(C):
+  ^======*
+  ^Description\s+Temperature\s+Range
+  ^-----*
+  ^Chassis\s+\d+\s+\S+
+  ^CPU\s+\d+\s+\S+
+  ^-----*
+  ^Fans+information:
+  ^============*
+  ^Description\s+Status
+  ^-----*
+  ^Fan\s+${FAN}
+  ^PS${PWR_id}\s+${PWR_STATUS} -> Record
+
+
+Chassis
+  ^\s+${FAN_Slot}\s+${Slot_Module}\s*:\s*${Chassis_FAN} -> Continue.Record
+  ^\s+PS${PWR_id}\s*:\s*${PWR_STATUS} -> Continue.Record

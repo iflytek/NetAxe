@@ -1,0 +1,8 @@
+Value Module (FAN\d+)
+Value Device (\S+)
+Value Fan (\S+)
+Value SpeedRPM (\S+)
+Value Status (\S+)
+
+Start
+  ^${Module}\s+${Device}\s+${Fan}\s+${SpeedRPM}\s+${Status} -> Continue.Record

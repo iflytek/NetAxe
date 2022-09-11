@@ -1,0 +1,26 @@
+Value Required Interface (\S+)
+Value ProtocolStatus (\S+)
+Value Description (\S+(\s+\S+)?)
+Value List IPADDR (\d+.\d+.\d+.\d+\/\d{1,2})
+Value MacAddress (\w{4}.\w{4}.\w{4})
+Value SPEED (\d+\s\S+|\d+\S{1,2})
+Value DUPLEX (\S+)
+Value MTU (\d+)
+
+
+
+Start
+  #^${Interface}\s+current\s+state\s*:\s*${Status} -> INTF
+  ^${Interface}:$$ -> INTF
+
+
+INTF
+  ^\s+line protocol is ${ProtocolStatus}
+  ^\s+Internet address: ${IPADDR}
+  ^\s+Metric:\s\d+, MTU:\s${MTU}
+  ^\s+Description: ${Description}
+  ^\s+Ethernet address is ${MacAddress}
+  ^\s+ACT speed ${SPEED},  ACT duplex ${DUPLEX}
+  ^\s+speed ${SPEED}bit/s, duplex ${DUPLEX},
+  ^$$ -> Record Start
+

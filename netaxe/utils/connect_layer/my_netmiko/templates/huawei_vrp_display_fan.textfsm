@@ -1,0 +1,18 @@
+Value Filldown Chassis (\d+)
+Value Required FanID (\d+)
+Value FanNUM (\S+)
+Value Slot (\d+)
+Value Present (\S+)
+Value Register (\S+)
+Value Speed (\S+)
+Value Mode (\S+)
+
+Start
+  ^Slot\s${Slot}
+  ^\s+Chassis\s+${Chassis}\s+ -> FAN
+
+FAN
+  ^\s+FanId\s+FanNum\s+
+  ^---------+
+  ^\s+FAN${FanID}\s+\[${FanNUM}\]\s+${Present}\s+${Register}\s+${Speed}\s+${Mode} -> Continue.Record
+  ^$$ -> Record Start

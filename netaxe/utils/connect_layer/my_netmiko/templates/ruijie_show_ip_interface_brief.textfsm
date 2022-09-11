@@ -1,0 +1,10 @@
+Value Interface (\S+\s\S+)
+Value PriIPaddr (\d+.\d+.\d+.\d+\/\d{1,2}|no address)
+Value SecIPaddr (\d+.\d+.\d+.\d+\/\d{1,2}|no address)
+Value Status (up|down|\S+)
+Value Protocol (up|down|\S+)
+
+Start
+  ^Interface -> Next
+  ^${Interface}\s+${PriIPaddr}\s+${SecIPaddr}\s+${Status}\s+${Protocol} -> Continue.Record
+

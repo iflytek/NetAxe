@@ -1,0 +1,10 @@
+Value IPADDRESS (\d+.\d+.\d+.\d+)
+Value MACADDRESS (\w+-\w+-\w+|Incomplete)
+Value EXPIRE (\d+)
+Value TYPE (I\s-|D-1|D-0)
+Value INTERFACE (\S+)
+Value VPNINSTANCE (\S+)
+
+Start
+  ^${IPADDRESS}\s+${MACADDRESS}\s+(${EXPIRE}\s+)?${TYPE}\s+${INTERFACE}\s+${VPNINSTANCE}$$ -> Record
+  ^${IPADDRESS}\s+${MACADDRESS}\s+(${EXPIRE}\s+)?${TYPE}\s+${INTERFACE}$$ -> Record

@@ -1,0 +1,15 @@
+Value Slot (\d+)
+Value PowerName (\S+)
+Value Present (\S+)
+Value Mode (\S+)
+Value State (\S+)
+Value Current (\S+)
+Value Voltage (\S+)
+Value ActualPower (\S+)
+Value RatedPower (\S+)
+
+Start
+  ^----+
+  ^Slot\s+PowerNo\s+
+  ^${Slot}\s+${PowerName}\s+${Present}\s+${Mode}\s+${State}
+

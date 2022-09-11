@@ -1,0 +1,9 @@
+Value Interface (\S+)
+Value Status (\S+)
+Value Speed (\S+)
+Value Negotiation (\S+)
+
+Start
+  ^Port\s+\S+ -> Next
+  ^--* -> Next
+  ^${Interface}\s+${Status}\s+${Speed}\s+${Negotiation} -> Continue.Record

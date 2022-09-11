@@ -1,0 +1,8 @@
+Value SLOT (\d)
+Value SUB (\S+)
+Value SERIALNUM (\S+)
+Value MANUDATE (\S+)
+
+
+Start
+  ^${SLOT}\s+${SUB}\s+${SERIALNUM}\s+${MANUDATE} -> Continue.Record

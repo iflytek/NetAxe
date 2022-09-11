@@ -1,0 +1,12 @@
+Value INTF (\S+)
+Value aggregate (\S+)
+Value status (shutdown)
+
+Start
+  ^interface\s*${INTF} -> Interface
+
+Interface
+  ^interface\s*${INTF}
+  ^\s+aggregate\s+${aggregate}
+  ^\s+${status}
+  ^exit -> Record

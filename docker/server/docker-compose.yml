@@ -1,0 +1,77 @@
+version: "3.2"
+networks:
+  netops-axe:
+    driver: bridge
+    ipam:
+      config:
+        - subnet: 192.168.12.0/24
+services:
+  redis-cache:
+    image: registry.cn-hangzhou.aliyuncs.com/netaxe/redis:latest
+    container_name: redis-cache
+    ports:
+      - "6379:6379"
+    command: "redis-server --requirepass dade0f2a65237a56b79277e6dd27351d2854df033e0ad4b4f90abec229cd64df"
+    networks:
+      - netops-axe
+  
+  netaxe-server:
+    image: registry.cn-hangzhou.aliyuncs.com/netaxe/netaxe-backend:1.0.2
+    container_name: netaxe-server
+    ports:
+      - "5555:5555"
+    command: sh start.sh web
+    depends_on:
+      - redis-cache
+    volumes:
+      - ../../netaxe:/home/netaxe
+    networks:
+      - netops-axe
+
+  celery-default:
+    image: registry.cn-hangzhou.aliyuncs.com/netaxe/netaxe-backend:1.0.2
+    container_name: celery-default
+    command: sh start.sh default
+    depends_on:
+      - redis-cache
+      - netaxe-server
+    volumes:
+      - ../../netaxe:/home/netaxe
+    networks:
+      - netops-axe
+
+  celery-config:
+    image: registry.cn-hangzhou.aliyuncs.com/netaxe/netaxe-backend:1.0.2
+    container_name: celery-config
+    command: sh start.sh config
+    depends_on:
+      - redis-cache
+      - netaxe-server
+    volumes:
+      - ../../netaxe:/home/netaxe
+    networks:
+      - netops-axe
+
+  netaxe-nginx:
+    image: registry.cn-hangzhou.aliyuncs.com/netaxe/nginx:1.7.9
+    container_name: netaxe-nginx
+    volumes:
+      - ./nginx.conf:/etc/nginx/conf.d/nginx.conf
+      - ../../netaxe:/home/netaxe
+    ports:
+      - "9999:9999"
+    depends_on:
+      - netaxe-server
+    networks:
+      - netops-axe
+
+  netaxe-web:
+    image: registry.cn-hangzhou.aliyuncs.com/netaxe/netaxe-web:1.0.3
+    container_name: netaxe-web
+    ports:
+      - "8888:80"
+    depends_on:
+      - netaxe-nginx
+      - netaxe-server
+    networks:
+      - netops-axe

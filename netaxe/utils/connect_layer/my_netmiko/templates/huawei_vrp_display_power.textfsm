@@ -1,0 +1,19 @@
+Value Filldown Chassis (\d+)
+Value Slot (\d+)
+Value Required PowerNo (PWR\S+)
+Value Present (\S+)
+Value Mode (\S+)
+Value State (\S+)
+Value Current (\S+)
+Value Voltage (\S+)
+Value RealPwr (\S+)
+
+Start
+  ^\s+Chassis\s+${Chassis}\s+\S+
+  ^\s+SlotID\s+PowerNo\s+\S+
+  ^------+
+  ^\s+PowerNo\s+Present
+  ^\s+${PowerNo}\s+${Present}\s+${Mode}\s+${State}\s+${Current}\s+${Voltage}\s+${RealPwr} -> Continue.Record
+  ^\s+${Slot}\s+${PowerNo}\s+${Present}\s+${Mode}\s+${State}\s+${Current}\s+${Voltage} -> Continue.Record
+  ^$$
+

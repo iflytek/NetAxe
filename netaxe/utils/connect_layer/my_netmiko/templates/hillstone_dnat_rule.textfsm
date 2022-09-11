@@ -1,0 +1,25 @@
+Value Required,Filldown VROUTE (\S+)
+Value Required ID (\d+)
+Value FROM (\S+)
+Value TO (\S+)
+Value FROM_IP (\d+.\d+.\d+.\d+)
+Value TO_IP (\d+.\d+.\d+.\d+)
+Value SERVICE (\S+|\S+udp\s\S+)
+Value TRANSTO (\S+)
+Value TRANSTO_IP (\d+.\d+.\d+.\d+)
+Value PORT ((\d+)?)
+Value POOLNAME (\S+|\S+udp\s\S+)
+Value RULESTATE (disable)
+Value LOADBALANCE (load-balance)
+Value LOG (log)
+Value DESC (\S+(\s\S+)?)
+Value TRACK ((track-ping\s*|track-tcp\s\d+\s*){1,})
+
+Start
+  ^ip vrouter\s"${VROUTE}" -> VRT
+
+VRT
+  ^\s+dnatrule\s+id\s+${ID}\s+from\s+"${FROM}"\s+to\s+"${TO}"(\s*service\s+"${SERVICE}"\s*)?(\s*trans-to\s+"${TRANSTO}"|\s*trans-to\s*slb-server-pool\s+"${POOLNAME}"\s*|\s*port\s*${PORT}\s*|\s*${LOG}\s*|\s*description\s+"${DESC}"\s*|\s*${LOADBALANCE}\s*|\s*${TRACK}\s*|\s*${RULESTATE}\s*)* -> Continue.Record
+  ## 5.5r6
+  ^\s+dnatrule\s+id\s+${ID}\s+from\s+(address-book\s"${FROM}"|ip\s${FROM_IP})\sto\s(address-book\s"${TO}"|ip\s${TO_IP})(\s*service\s+"${SERVICE}")?(\s*trans-to\saddress-book\s"${TRANSTO}"|\s*trans-to\sip\s${TRANSTO_IP}|\s*trans-to\s*slb-server-pool\s+"${POOLNAME}"\s*|\s*port\s*${PORT}\s*|\s*${LOG}\s*|\s*description\s+"${DESC}"\s*|\s*${LOADBALANCE}\s*|\s*${TRACK}\s*|\s*${RULESTATE}\s*)*  -> Continue.Record
+  ^exit -> Record Start

@@ -1,0 +1,7 @@
+Value MEMBER (\d+)
+Value PRIORITY (\d+)
+Value MACADDR (\w+.\w+.\w+)
+Value SOFTVER (\S+[\s\S+]+)
+
+Start
+  ^\s*${MEMBER}\s+${MACADDR}\s+${PRIORITY}\s+\S+[\s\S+]+ -> Continue.Record

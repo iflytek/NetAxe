@@ -1,0 +1,8 @@
+Value Group (\d{1,2})
+Value PortChannel (\S+)
+Value Type (\S+)
+Value MemberPorts ([\S+\s]+)
+
+
+Start
+  ^${Group}\s+${PortChannel}\s+${Type}\s+${MemberPorts} -> Continue.Record

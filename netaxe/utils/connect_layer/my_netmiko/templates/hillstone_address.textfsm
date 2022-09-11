@@ -1,0 +1,24 @@
+Value Filldown address (.*)
+Value Required ip (\d+.\d+.\d+.\d+\/\d{1,2}|(\d+.\d+.\d+.\d+\s*)+|".*")
+Value iptype (ip|range|exclude ip|wildcard|host|country|exclude range)
+Value description (.*)
+
+
+Start
+  ^address\s+"${address}" -> Normal
+  ^address\s+(id\s+\d+\s+)?"${address}" -> Ext
+
+Normal
+  ^address\s+"${address}"
+  ^\s+description\s+"${description}"
+  ^\s+${iptype}\s+${ip} -> Continue.Record
+  ^\s*exit -> Start
+
+Ext
+  ^address\s+(id\s+\d+\s+)?"${address}"
+  ^\s+description\s+"${description}"
+  ^\s+${iptype}\s+${ip} -> Continue.Record
+  ^\s*exit -> Start
+
+
+

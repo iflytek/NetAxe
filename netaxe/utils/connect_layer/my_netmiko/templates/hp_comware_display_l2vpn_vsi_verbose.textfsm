@@ -1,0 +1,62 @@
+Value VSI_NAME (\S+)
+Value VSI_INDEX (\d+)
+Value VSI_DESC (\S+)
+Value VSI_STATE (\S+)
+Value MTU (\S+)
+Value BANDWIDTH (\S+)
+Value BROADCAST_RESTRAIN (\S+)
+Value MULTICAST_RESTRAIN (\S+)
+Value UNKNOWN_UNICAST_RESTRAIN (\S+)
+Value MAC_LEARNING (\S+)
+Value MAC_TABLE_LIMIT (\S+)
+Value MAC_LEARNING_RATE (\S+)
+Value DROP_UNKNOWN (\S+)
+Value FLOODING (\S+)
+Value STATISTICS (\S+)
+Value GATEWAY_INTERFACE (\S+)
+Value VXLAN_ID (\d+)
+Value List TUNNEL_NAME (Tunnel\d+[\s\S]+)
+Value List AC_NAME (BAGG[\s\S]+)
+
+
+Start
+  ^VSI Name -> Continue.Record
+  ^VSI Name\s*:\s*${VSI_NAME}
+  ^\s+VSI Index\s*:\s*${VSI_INDEX}
+  ^\s+VSI Description\s*:\s*${VSI_DESC}
+  ^\s+VSI State\s*:\s*${VSI_STATE}
+  ^\s+MTU\s*:\s*${MTU}
+  ^\s+Bandwidth\s*:\s*${BANDWIDTH}
+  ^\s+Broadcast Restrain\s*:\s*${BROADCAST_RESTRAIN}
+  ^\s+Multicast Restrain\s*:\s*${MULTICAST_RESTRAIN}
+  ^\s+Unknown Unicast Restrain\s*:\s*${UNKNOWN_UNICAST_RESTRAIN}
+  ^\s+MAC Learning\s*:\s*${MAC_LEARNING}
+  ^\s+MAC Table Limit\s*:\s*${MAC_TABLE_LIMIT}
+  ^\s+MAC Learning rate\s*:\s*${MAC_LEARNING_RATE}
+  ^\s+Drop Unknown\s*:\s*${DROP_UNKNOWN}
+  ^\s+Flooding\s*:\s*${FLOODING}
+  ^\s+Statistics\s*:\s*${STATISTICS}
+  ^\s+Gateway Interface\s*:\s*${GATEWAY_INTERFACE}
+  ^\s+VXLAN ID\s*:\s*${VXLAN_ID}
+  ^\s+Tunnels: -> Tunnels_State
+  #^\s*Tunnel\s*Name\s* -> Next
+  #^\s+${TUNNEL_NAME}\s+${TUNNEL_ID}\s+${TUNNEL_STATE}\s+${TUNNEL_TYPE}\s+${TUNNEL_FLOOD_PROXY}
+  #^\s+${AC_NAME}\s+${AC_LINK_ID}\s+${AC_STATE}\s+${AC_TYPE} -> Record
+  #^\s+${AC_NAME}\s+${AC_LINK_ID}\s+${AC_STATE}\s+${AC_TYPE}
+  #^\s+$(AC_NAME)\s+
+  #^\s*ACs\s*:\s+ -> ACS
+  #^\s+\S+\s\S+\s+\d+\s+\w{1,2}+\s+Manual
+  #^\s*ACs\s*: -> Record
+  #^\s+${AC_NAME}\s+${AC_LINK_ID}\s+${AC_STATE}\s+${AC_TYPE} -> Continue
+  # \s+Tunnel\d+\s+0x\S+\s+\S+\s+\S+\s+\S+
+  #\s*\S+\s\S+\s+\d+\s+\S+\s+(Manual)
+  #^\s*VSI\s*Name\s*:  -> Record
+
+Tunnels_State
+  ^\s+${TUNNEL_NAME}
+  ^\s+ACs: -> ACS_S
+  ^$$ ->  Start
+
+ACS_S
+  ^\s+${AC_NAME}
+  ^$$ ->  Start

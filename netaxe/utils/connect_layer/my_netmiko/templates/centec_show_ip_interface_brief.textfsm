@@ -1,0 +1,8 @@
+Value Interface (\S+)
+Value IP (\d+.\d+.\d+.\d+)
+Value Status (\S+)
+Value Protocol (\S+)
+
+
+Start
+  ^${Interface}\s+${IP}\s+${Status}\s+${Protocol} -> Continue.Record

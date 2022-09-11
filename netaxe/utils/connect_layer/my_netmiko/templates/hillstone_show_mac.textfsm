@@ -1,0 +1,9 @@
+Value MACADDRESS (\w+.\w+.\w+)
+Value Switch (\S+)
+Value INTERFACE (\S+)
+Value Type (\S+)
+Value AGE (\d+|-+)
+
+
+Start
+  ^${MACADDRESS}\s+${Switch}\s+${INTERFACE}\s+${Type}\s+${AGE} -> Record

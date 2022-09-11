@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Lightly-HTML-Project</title>
+</head>
+<body>
+<style>
+    .table1 table {
+        width: 100%;
+        margin: 15px 0;
+        border: 0;
+    }
+
+    .table1 th {
+        background-color: #2e8ea9;
+        color: #FFFFFF
+    }
+
+    .table1, .table1 th, .table1 td {
+        font-size: 0.95em;
+        text-align: center;
+        padding: 4px;
+        border-collapse: collapse;
+    }
+
+    .table1 th, .table1 td {
+        border: 1px solid #69bcdc;
+    }
+
+    .table1 tr {
+        border: 1px solid #ffffff;
+    }
+
+    .table1 tr:nth-child(odd) {
+        background-color: #ffffff;
+    }
+
+    .table1 tr:nth-child(even) {
+        background-color: #ffffff;
+    }
+</style>
+{% if changedFiles %}
+    <table class=table1>
+        <tr>
+            <th>新增配置文件</th>
+        </tr>
+        {% for name in changedFiles %}
+            <tr>
+                <td>{{ name }}</td>
+            </tr>
+        {% endfor %}
+    </table>
+{% endif %}
+{% if untracked_files %}
+    <table class=table1>
+        <tr>
+            <th>变更配置文件</th>
+        </tr>
+        {% for name in untracked_files %}
+            <tr>
+                <td>{{ name }}</td>
+            </tr>
+        {% endfor %}
+    </table>
+{% endif %}
+
+</body>
+</html>

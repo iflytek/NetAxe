@@ -1,0 +1,8 @@
+Value Vlan (\d+)
+Value MACADDRESS (\w+.\w+.\w+)
+Value Type (\S+)
+Value Ports ([\S+\s]+)
+
+
+Start
+  ^${Vlan}\s+${MACADDRESS}\s+${Type}\s+${Ports}$$ -> Continue.Record
