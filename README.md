@@ -53,7 +53,7 @@ git clone https://gitee.com/IFLY-DevNet/net-axe.git
 2. 配置一下网络设备配置备份目录的 git 初始化
 
 ```shell
-   mkdir -p netaxe/media/device_config
+   mkdir -p netaxe/media/device_config/current-configuration
    cd netaxe/media/device_config
    git init
    git remote add origin 仓库地址
