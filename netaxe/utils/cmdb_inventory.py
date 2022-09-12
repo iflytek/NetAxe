@@ -116,6 +116,7 @@ class CMDBInventory(InventoryPlugin):
             Mellanox='mellanox',
             Ruijie='ruijie_os',
             centec='cisco_ios',
+            Cisco='cisco_ios',
             inspur='cisco_ios',
             Hillstone='ruijie_os',
             Maipu='ruijie_os'

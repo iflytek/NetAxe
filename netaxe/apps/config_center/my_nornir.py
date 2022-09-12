@@ -25,6 +25,7 @@ def configure_backup(task, path) -> Result:
         'centec': {'cmd': 'show running-config', 'expect_string': None, 'enable': False},
         'Hillstone': {'cmd': 'show configuration running', 'expect_string': None, 'enable': False},
         'inspur': {'cmd': 'show running-config', 'expect_string': None, 'enable': False},
+        'Cisco': {'cmd': 'show running-config', 'expect_string': None, 'enable': False},
         # 'Maipu': {'cmd': 'show running-config', 'expect_string': ']'},  # 迈普的暂不不支持，待后续驱动适配
     }
     if task.host.data['vendor__alias'] in command_map.keys():

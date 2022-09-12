@@ -21,7 +21,7 @@ def get_device_info_v2(**kwargs):
     hosts = []
     _CryptPwd = CryptPwd()  # 密码解码
     support_vendor = [
-        'H3C', 'Huawei', 'Ruijie', 'Maipu', 'Hillstone', 'Mellanox', 'centec'
+        'H3C', 'Huawei', 'Ruijie', 'Maipu', 'Hillstone', 'Mellanox', 'centec', 'Cisco'
     ]
     if kwargs:
         kwargs['status'] = 0
