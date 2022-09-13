@@ -31,6 +31,7 @@ device_type_map = {
     "centec": "cisco_ios",
     "Ruijie": "ruijie_os",
     "Maipu": "ruijie_os",
+    "Cisco": "cisco_ios",
 }
 fsm_flag_map = {
     "H3C": "hp_comware",
@@ -131,6 +132,21 @@ class InterfaceFormat(object):
             return '100G'
         return interface
 
+    @staticmethod  # 按接口名称速率转换
+    def cisco_speed_format(interface):
+        if re.search(r'^(GigabitEthernet)', interface):
+            return '1G'
+        elif re.search(r'^(TenGigabitEthernet)', interface):
+            return '10G'
+        elif re.search(r'^(TFGigabitEthernet)', interface):
+            return '10G'
+        elif re.search(r'^(FortyGigabitEthernet)', interface):
+            return '40G'
+        elif re.search(r'^(HundredGigabitEthernet)', interface):
+            return '100G'
+        return interface
+
+
     @staticmethod
     def mathintspeed(value):
         """接口speed单位换算"""
@@ -215,6 +231,8 @@ class BaseConn:
             self.netconf_flag = 'huawei'
         elif self.vendor_alias == 'H3C':
             self.netconf_flag = 'h3c'
+        elif self.device_type == 'cisco_ios' and self.category__name == '防火墙':
+            self.device_type = 'cisco_asa'
         else:
             self.netconf_flag = ''
         self.plan = {}
