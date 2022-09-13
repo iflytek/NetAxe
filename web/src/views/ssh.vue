@@ -18,11 +18,11 @@
     // import LyXterm from "@/components/terminal/xterm";
     // import { deviceWebSshLogin } from '@/api/url'
     import useGet from '@/hooks/useGet'
-    import { Terminal } from 'xterm'
-    import { FitAddon } from 'xterm-addon-fit'
-    import "xterm/css/xterm.css"
-    import { AttachAddon } from 'xterm-addon-attach'
+    import {Terminal} from 'xterm'
+    import {FitAddon} from 'xterm-addon-fit'
+    import {AttachAddon} from 'xterm-addon-attach'
     import router from '@/router'
+    import "xterm/css/xterm.css"
 
     export default defineComponent({
         name: "ssh",
@@ -36,7 +36,6 @@
 
 
             const get = useGet()
-
 
 
             function initSocket() {
@@ -56,8 +55,8 @@
                 nextTick(() => {
                     terminalSocket.onopen = function () {
                         //console.log('连接成功！')
-                        let init_width = 9;
-                        let init_height = 15;
+                        let init_width = 5;
+                        let init_height = 10;
                         const _width = window.innerWidth
                         const _height = window.innerHeight
                         var cols = Math.floor(_width / init_width)
@@ -78,63 +77,75 @@
                                 cursor: "#00ff00" //设置光标
                             },
                         })
-                        //console.log(terminal_id)
-                        // const attachAddon = new AttachAddon(terminalSocket)
-                        // const attachAddon = new AttachAddon(terminalSocket)
+
                         term.open(document.getElementById(terminal_id))
-                        const fitAddon = new FitAddon() // 全屏插件
-                        // term.loadAddon(attachAddon)
+                        // 全屏插件
+                        const fitAddon = new FitAddon()
                         term.loadAddon(fitAddon)
-                        // term.fitAddon.fit()
-                        term.focus()
-                        // var input = localStorage.getItem('init_cmd')
-                        var input = 'terminal monitor'
-                        // socketOpen = true
-                        if (input.length > 0) {
-                            terminalSocket.send(input)
-                            terminalSocket.send('\r')
-                        }
-                        term.onData((val) => {
-                            terminalSocket.send(val)
-                        })
-                        // term.write('terminal monitor')
-                        terminalSocket.onmessage = function (evt) {
-                            var received_msg = evt.data.toString()
-                            //console.log('接受消息：', received_msg)
-                            // term.onData((received_msg) => {
-                            term.write(received_msg)
-                            // })
+                        fitAddon.fit()
+                        window.addEventListener("resize", resizeScreen)
+
+                        function resizeScreen() {
+                            try { // 窗口大小改变时，触发xterm的resize方法使自适应
+                                fitAddon.fit()
+                            } catch (e) {
+                                console.log("e", e.message)
+                            }
                         }
 
-                        terminalSocket.onclose = function (event) {
-                            //console.log('连接关闭！', event)
-                        }
-                        terminalSocket.onerror = function (event) {
-                            //console.log('连接异常！', event)
-                        }
+                        // _this.term = term
+                        // _this.runFakeTerminal()
+                    // }
+                    // term.focus()
+                    // var input = localStorage.getItem('init_cmd')
+                    var input = 'terminal monitor'
+                    // socketOpen = true
+                    if (input.length > 0) {
+                        terminalSocket.send(input)
+                        terminalSocket.send('\r')
                     }
-                })
-                // })
+                    term.onData((val) => {
+                        terminalSocket.send(val)
+                    })
+                    // term.write('terminal monitor')
+                    terminalSocket.onmessage = function (evt) {
+                        var received_msg = evt.data.toString()
+                        //console.log('接受消息：', received_msg)
+                        // term.onData((received_msg) => {
+                        term.write(received_msg)
+                        // })
+                    }
+
+                    terminalSocket.onclose = function (event) {
+                        //console.log('连接关闭！', event)
+                    }
+                    terminalSocket.onerror = function (event) {
+                        //console.log('连接异常！', event)
+                    }
+                }
             }
 
+        )
+        // })
+    }
 
 
-            onMounted(initSocket)
+    onMounted(initSocket)
 
-            return {
-                device_id,
-                wsurl,
-
-
-                initSocket,
-
-                terminalSocket,
-
-                term,
+    return {
+        device_id,
+        wsurl,
 
 
-            }
-        },
+        initSocket,
+
+        terminalSocket,
+
+        term,
+
+
+    }
+    },
     })
 </script>
 
