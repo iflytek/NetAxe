@@ -20,5 +20,6 @@ netaxe/apps/config_center/migrations/
 Python-3.9.11.tgz
 netaxe/media/device_config/current-configuration
 netaxe/media/device_config
+netaxe/media/automation
 netaxemedia
 netaxe/__pycahe__

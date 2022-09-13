@@ -16,11 +16,9 @@ from utils.wechat_api import send_msg_netops
 from .base_connection import BaseConn, InterfaceFormat
 
 
-def ruijie_interface_format(interface):
-    if re.search(r'^(Ag)', interface):
-        return interface.replace('Ag', 'AggregatePort')
-    elif re.search(r'^(Te)', interface):
-        return interface.replace('Te', 'TenGigabitEthernetn')
+def cisco_interface_format(interface):
+    if re.search(r'^(Gi)', interface):
+        return interface.replace('Gi', 'GigabitEthernet0')
 
     return interface
 
@@ -41,9 +39,9 @@ class CiscoProc(BaseConn):
         arp_datas = []
         for i in res:
             try:
-                macaddress = i['hardware'].replace('.', '-')
+                macaddress = i['mac'].replace('.', '-')
             except Exception as e:
-                macaddress = i.get('hardware', '')
+                macaddress = i.get('mac', '')
                 pass
             tmp = dict(
                 hostip=self.hostip,
@@ -51,9 +49,9 @@ class CiscoProc(BaseConn):
                 idc_name=self.idc_name,
                 ipaddress=i['address'],
                 macaddress=macaddress,
-                aging=i['agemin'],
+                aging=i['age'],
                 type=i['type'],
-                vlan=i.get('vlan'),
+                vlan=i.get('vlan', ''),
                 interface=i['interface'].strip(),
                 vpninstance='',
                 log_time=datetime.now()
@@ -68,9 +66,9 @@ class CiscoProc(BaseConn):
             mac_datas = []
             for i in res:
                 try:
-                    macaddress = i['macaddress'].replace('.', '-')
+                    macaddress = i['destination_address'].replace('.', '-')
                 except Exception as e:
-                    macaddress = i.get('macaddress')
+                    macaddress = i.get('destination_address', '')
                     pass
                 tmp = dict(
                     hostip=self.hostip,
@@ -78,7 +76,7 @@ class CiscoProc(BaseConn):
                     idc_name=self.idc_name,
                     macaddress=macaddress,
                     vlan=i['vlan'],
-                    interface=i['interface'].strip(),
+                    interface=cisco_interface_format(i['destination_port'].strip()),
                     type=i['type'].lower(),
                     log_time=datetime.now()
                 )
@@ -87,47 +85,42 @@ class CiscoProc(BaseConn):
                 MongoNetOps.insert_table(
                     'Automation', self.hostip, mac_datas, 'MACTable')
 
-    def ip_interface_proc(self, res):
+    def interface_proc(self, res):
+        layer2datas = []
         layer3datas = []
         for i in res:
-            if i['priipaddr'] != 'no address':
-                _ip = IPNetwork(i['priipaddr'])
+            if i['ip_address']:
+                _ip = IPNetwork(i['ip_address'])
                 location = [dict(start=_ip.first, end=_ip.last)]
                 data = dict(
                     hostip=self.hostip,
                     interface=i['interface'],
-                    line_status=i['status'],
-                    protocol_status=i['protocol'],
+                    line_status=i['link_status'],
+                    protocol_status=i['protocol_status'],
                     ipaddress=_ip.ip.format(),
                     ipmask=_ip.netmask.format(),
                     ip_type='Primary',
                     location=location,
                     mtu='')
                 layer3datas.append(data)
-            elif i['secipaddr'] != 'no address':
-                _ip = IPNetwork(i['priipaddr'])
-                location = [dict(start=_ip.first, end=_ip.last)]
-                data = dict(
-                    hostip=self.hostip,
-                    interface=i['interface'],
-                    line_status=i['status'],
-                    protocol_status=i['protocol'],
-                    ipaddress=_ip.ip.format(),
-                    ipmask=_ip.netmask.format(),
-                    ip_type='Sub',
-                    location=location,
-                    mtu='')
-                layer3datas.append(data)
             else:
-                data = dict(
-                    hostip=self.hostip,
-                    interface=i['interface'],
-                    line_status=i['status'],
-                    protocol_status=i['protocol'],
-                    ipaddress=i['priipaddr'],
-                    ip_type='', location=[],
-                    mtu='')
-                layer3datas.append(data)
+                if i['interface'].startswith('AggregatePort'):
+                    continue
+                if i['speed'] == 'Unknown' or i['speed'] == 'unknown':
+                    i['speed'] = InterfaceFormat.cisco_speed_format(i['interface'])
+                data = dict(hostip=self.hostip,
+                            interface=i['interface'],
+                            status=i['link_status'],
+                            speed=i['speed'],
+                            duplex=i['duplex'].strip('-duplex'),
+                            description=i.get('description'))
+                layer2datas.append(data)
+        if layer2datas:
+            MongoNetOps.insert_table(
+                db='Automation',
+                hostip=self.hostip,
+                datas=layer2datas,
+                tablename='layer2interface')
         if layer3datas:
             MongoNetOps.insert_table(
                 db='Automation',
@@ -136,134 +129,26 @@ class CiscoProc(BaseConn):
                 tablename='layer3interface')
         return
 
-    def interface_status_proc(self, res):
-        layer2datas = []
-        for i in res:
-            if i['interface'].startswith('AggregatePort'):
-                continue
-            if i['speed'] == 'Unknown' or i['speed'] == 'unknown':
-                i['speed'] = InterfaceFormat.ruijie_speed_format(
-                    i['interface'])
-            data = dict(hostip=self.hostip,
-                        interface=i['interface'],
-                        status=i['status'],
-                        # speed=i['speed'],
-                        speed=InterfaceFormat.mathintspeed(i['speed']),
-                        duplex=i['duplex'],
-                        description=i.get('description'))
-            layer2datas.append(data)
-        if layer2datas:
-            MongoNetOps.insert_table(
-                db='Automation',
-                hostip=self.hostip,
-                datas=layer2datas,
-                tablename='layer2interface')
-        return
-
     def version_proc(self, res):
         if isinstance(res, dict):
             """
             {'member': '1', 'serialnum': 'G1GC10V000176'}
             """
-            model_tmp = re.search(r'(\([^)]*\))', res['description']).group()
-            if model_tmp:
-                model_name = model_tmp[1:-1]
-                model_q = Model.objects.get_or_create(name=model_name,
-                                                           vendor=Vendor.objects.get(alias='Ruijie'))
-                NetworkDevice.objects.filter(
-                    manage_ip=self.hostip).update(model=model_q[0])
+            model_name = res['hardware'][1:-1]
+            model_q = Model.objects.get_or_create(name=model_name,
+                                                  vendor=Vendor.objects.get(alias='Cisco'))
             NetworkDevice.objects.filter(
-                manage_ip=self.hostip).update(serial_num=res['serialnum'],
+                manage_ip=self.hostip).update(model=model_q[0])
+            NetworkDevice.objects.filter(
+                manage_ip=self.hostip).update(serial_num=res['serial'][1:-1],
                                               slot=int(res['member']), soft_version=res['version'])
-        elif isinstance(res, list):
-            """
-            [{'member': '1', 'serialnum': 'G1GC10V000176'}
-            {'member': '2', 'serialnum': 'G1GC10V000134'}]
-            """
-            if len(res) == 1:
-                for i in res:
-                    model_tmp = re.search(r'(\([^)]*\))', i['description']).group()
-                    if model_tmp:
-                        model_name = model_tmp[1:-1]
-                        model_q = Model.objects.get_or_create(name=model_name,
-                                                                   vendor=Vendor.objects.get(alias='Ruijie'))
-                        NetworkDevice.objects.filter(
-                            manage_ip=self.hostip).update(model=model_q[0])
-                    NetworkDevice.objects.filter(
-                        manage_ip=self.hostip).update(serial_num=i['serialnum'],
-                                                      slot=int(i['member']), soft_version=i['version'])
-            else:
-                for i in res:
-                    NetworkDevice.objects.filter(
-                        manage_ip=self.hostip,
-                        serial_num=i['serialnum']).update(
-                        slot=int(i['member']), soft_version=i['version'])
-
-    def switch_virtual_proc(self, res):
-        if isinstance(res, dict):
-            if res['role'] == 'ACTIVE':
-                NetworkDevice.objects.filter(
-                    manage_ip=self.hostip, slot=int(
-                        res['member'])).update(
-                    ha_status=1)
-            elif res['role'] == 'STANDBY':
-                NetworkDevice.objects.filter(
-                    manage_ip=self.hostip, slot=int(
-                        res['member'])).update(
-                    ha_status=2)
-        elif isinstance(res, list):
-            for i in res:
-                if i['role'] == 'ACTIVE':
-                    NetworkDevice.objects.filter(
-                        manage_ip=self.hostip, slot=int(
-                            i['member'])).update(
-                        ha_status=1)
-                elif i['role'] == 'STANDBY':
-                    NetworkDevice.objects.filter(
-                        manage_ip=self.hostip, slot=int(
-                            i['member'])).update(
-                        ha_status=2)
-        return
-
-    def memeber_proc(self, res):
-        if isinstance(res, dict):
-            """
-            {'member': '1', 'priority': '120', 'macaddr': '1414.4b74.d658', 'softver': ''}
-            {'member': '2', 'priority': '100', 'macaddr': '1414.4b74.d658', 'softver': ''}
-            """
-            # if int(res['priority']) > 100:
-            NetworkDevice.objects.filter(
-                manage_ip=self.hostip, slot=int(
-                    res['member'])).update(
-                ha_status=1)
-            # elif int(res['priority']) <= 100:
-            #     NetworkDevice.objects.filter(manage_ip=hostip, slot=int(res['member'])).update(ha_status=2)
-        elif isinstance(res, list):
-            # 172.17.1.2 的堆叠 priority 都是120，会导致判断错误
-            tmp_priority = list(set([int(x['priority']) for x in res]))
-            if len(tmp_priority) == 1:
-                return
-            for i in res:
-                if int(i['priority']) == max(tmp_priority):
-                    NetworkDevice.objects.filter(
-                        manage_ip=self.hostip, slot=int(
-                            i['member'])).update(
-                        ha_status=1)
-                elif int(i['priority']) == min(tmp_priority):
-                    NetworkDevice.objects.filter(
-                        manage_ip=self.hostip, slot=int(
-                            i['member'])).update(
-                        ha_status=2)
 
     def path_map(self, file_name, res: list):
         fsm_map = {
             'show_ip_arp': self.arp_proc,
-            'show_mac': self.mac_proc,
-            'show_ip_interface_brief': self.ip_interface_proc,
-            'show_interfaces_status': self.interface_status_proc,
+            'show_mac-address-table': self.mac_proc,
+            'show_interfaces': self.interface_proc,
             'show_version': self.version_proc,
-            'show_switch_virtual': self.switch_virtual_proc,
-            'show_member': self.memeber_proc,
         }
         if file_name in fsm_map.keys():
             fsm_map[file_name](res)

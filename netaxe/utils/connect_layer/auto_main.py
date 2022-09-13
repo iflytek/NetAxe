@@ -326,6 +326,7 @@ class BatManMain(object):
         result = ins.ParseTextToDicts(_content)
         return result
 
+
 class HillstoneFsm:
     # 解析器映射
     @staticmethod
@@ -1064,3 +1065,10 @@ if __name__ == '__main__':
     logging.basicConfig(level=logging.DEBUG)
     logger = logging.getLogger("netmiko")
     # Logging section ##############
+    # res = BatManMain.info_fsm(path='automation/10.1.1.2/show_mac-address-table.txt', fsm_platform='cisco_ios')
+    res = BatManMain.info_fsm(path='automation/10.1.1.2/show_interfaces.txt', fsm_platform='cisco_ios')
+    if isinstance(res, list):
+        for i in res:
+            print(i)
+    else:
+        print(res)
