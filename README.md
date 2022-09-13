@@ -36,10 +36,6 @@ docker 版本 >= 18.9
 docker-compose 版本 >= 1.18.0  
 配置差异比较依赖 git 配置，请确认有现成的 git 仓库可以用来保存设备配置数据
 
-克隆项目到本地 是项目的正确打开方式哦， 会第一时间享受到功能的更新以及问题优化
-
-git clone https://gitee.com/IFLY-DevNet/net-axe.git
-
 ### 直接运行方式(适用于 amd64 系统，在 centos7 上验证通过)
 
 1. 更新 docker 配置文件
@@ -57,8 +53,12 @@ git clone https://gitee.com/IFLY-DevNet/net-axe.git
 2. 配置一下网络设备配置备份目录的 git 初始化
 
 ```shell
+   克隆项目到本地 是项目的正确打开方式， 会第一时间享受到功能的更新以及问题优化
+   # 这一步是克隆项目到本地
+   git clone https://gitee.com/IFLY-DevNet/net-axe.git
    mkdir -p netaxe/media/device_config/current-configuration
    cd netaxe/media/device_config
+   # 下面是需要单独再建立一个git关联你自己的git仓库，专门用来管理网络设备配置文件的，跟项目git不冲突也没关系
    git init
    git remote add origin 仓库地址
    git fetch
