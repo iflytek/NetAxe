@@ -31,6 +31,7 @@ device_type_map = {
     "centec": "cisco_ios",
     "Ruijie": "ruijie_os",
     "Maipu": "ruijie_os",
+    "Cisco": "cisco_ios",
 }
 fsm_flag_map = {
     "H3C": "hp_comware",
