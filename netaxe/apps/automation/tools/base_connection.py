@@ -177,7 +177,7 @@ class BaseConn:
                 'password': kwargs['telnet']['password'],
                 'timeout': 200,  # float，连接超时时间，默认为100
                 'session_timeout': 100,  # float，每个请求的超时时间，默认为60
-                'conn_timeout': 20,
+                'conn_timeout': 50,
                 'encoding': 'utf-8'
             }
         else:
@@ -189,7 +189,7 @@ class BaseConn:
                 'password': kwargs['ssh']['password'],
                 'timeout': 200,  # float，连接超时时间，默认为100
                 'session_timeout': 100,  # float，每个请求的超时时间，默认为60
-                'conn_timeout': 20,
+                'conn_timeout': 50,
                 'encoding': 'utf-8'
             }
         # print(self.netmiko_params)
