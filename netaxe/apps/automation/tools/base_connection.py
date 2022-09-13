@@ -40,6 +40,7 @@ fsm_flag_map = {
     "centec": "centec",
     "Ruijie": "ruijie",
     "Maipu": "maipu",
+    "Cisco": "cisco_ios",
 }
 netconf_class_map = {
     "huawei_usg": HuaweiUSG,
