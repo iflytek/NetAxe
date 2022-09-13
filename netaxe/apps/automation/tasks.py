@@ -156,6 +156,7 @@ def interface_used(device_ip=None):
         # 所有待分析接口利用率的网络设备
         hosts = list(set([x['hostip'] for x in host_list]))
     for host in hosts:
+        print(host)
         # 获取接口cmdb信息
         host_cmdb = cmdb_mongo.find(query_dict=dict(manage_ip=host, status=0),
                                     fileds={'_id': 0, 'slot': 1, 'chassis': 1})

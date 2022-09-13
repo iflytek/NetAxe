@@ -231,6 +231,8 @@ class BaseConn:
             self.netconf_flag = 'huawei'
         elif self.vendor_alias == 'H3C':
             self.netconf_flag = 'h3c'
+        elif self.device_type == 'cisco_ios' and self.category__name == '防火墙':
+            self.device_type = 'cisco_asa'
         else:
             self.netconf_flag = ''
         self.plan = {}
