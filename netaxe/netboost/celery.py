@@ -51,9 +51,9 @@ class AxeTask(Task):
     def run(self, *args, **kwargs):
         pass
 
-    max_retries = 2
+    max_retries = 1
     autoretry_for = (Exception, KeyError, RuntimeError)
-    retry_kwargs = {'max_retries': 3}
+    retry_kwargs = {'max_retries': 1}
     retry_backoff = True
 
     def on_failure(self, exc, task_id, args, kwargs, einfo):

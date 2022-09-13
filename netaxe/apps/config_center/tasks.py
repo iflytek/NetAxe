@@ -48,7 +48,7 @@ def config_backup(**kwargs):
         html_tmp = loader.render_to_string(
             'config_center/config_backup.html',
             dict(commit=commit, changedFiles=changed_files, untracked_files=untracked_files), None, None)
-        html_res = str(html_tmp, "utf-8")
+        # html_res = str(html_tmp, "utf-8")
         # email_addr = ['*@*.com']
         # email_subject = '配置备份结果_' + datetime.now().strftime("%Y-%m-%d %H:%M")
         # email_text_content = html_res

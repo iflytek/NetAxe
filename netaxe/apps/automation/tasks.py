@@ -32,6 +32,7 @@ from apps.automation.tools.h3c import H3cProc
 from apps.automation.tools.hillstone import HillstoneProc
 from apps.automation.tools.huawei import HuaweiProc
 from apps.automation.tools.maipu import MaipuProc
+from apps.automation.tools.cisco import CiscoProc
 from apps.automation.tools.mellanox import MellanoxProc
 from apps.automation.tools.ruijie import RuijieProc
 from apps.automation.tools.centec import CentecProc
@@ -155,6 +156,7 @@ def interface_used(device_ip=None):
         # 所有待分析接口利用率的网络设备
         hosts = list(set([x['hostip'] for x in host_list]))
     for host in hosts:
+        print(host)
         # 获取接口cmdb信息
         host_cmdb = cmdb_mongo.find(query_dict=dict(manage_ip=host, status=0),
                                     fileds={'_id': 0, 'slot': 1, 'chassis': 1})
@@ -552,6 +554,9 @@ def collect_device(**kwargs):
     elif vendor_alias == 'Maipu':
         _MaipuProc = MaipuProc(**kwargs)
         _MaipuProc.collection_run()
+    elif vendor_alias == 'Cisco':
+        _CiscoProc = CiscoProc(**kwargs)
+        _CiscoProc.collection_run()
     return
 
 
