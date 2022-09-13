@@ -7,7 +7,7 @@ from captcha.models import CaptchaStore
 from captcha.views import captcha_image
 from django.views import View
 from apps.asset.models import NetworkDevice
-from django_celery_beat.models import PeriodicTask, PeriodicTasks
+from django_celery_beat.models import PeriodicTask, PeriodicTasks, CrontabSchedule, IntervalSchedule
 # Create your views here.
 
 # 根据角色的菜单组件
@@ -17,6 +17,13 @@ from .models import NavigationProfile
 from netboost import settings
 from utils.crypt_pwd import CryptPwd
 from utils.sftp import SFTP
+
+from apps.automation.models import CollectionPlan
+
+from utils.connect_layer.NETCONF.h3c_netconf import H3CinfoCollection, H3CSecPath
+from utils.connect_layer.NETCONF.huawei_netconf import HuaweiUSG, HuaweiCollection
+
+from .serializers import CrontabSerializer, IntervalSerializer
 
 
 class MenuListByRoleId(APIView):
@@ -161,3 +168,107 @@ class WebSshView(APIView):
             return JsonResponse({'code': 200, 'msg': '上传成功！文件默认放在{}用户家目录下'.format(server_obj.username)})
         except Exception as e:
             return JsonResponse({'code': 500, 'msg': '上传失败！{}'.format(e)})
+
+
+# 设备采集方案
+class DeviceCollectView(APIView):
+    def get(self, request):
+        get_param = request.GET.dict()
+        if all(k in get_param for k in ("vendor", "netconf_class")):
+            vendor = get_param['vendor']
+            data = {
+                'H3C': ['H3CinfoCollection', 'H3CSecPath'],
+                'Huawei': ['HuaweiUSG', 'HuaweiCollection'],
+            }
+            if vendor in data.keys():
+                return JsonResponse(dict(code=200, data=data[vendor]))
+            else:
+                return JsonResponse(dict(code=400, data=[]))
+
+        if all(k in get_param for k in ("get_method", "netconf_class")):
+            netconf_class = get_param['netconf_class']
+            data = {
+                'H3CinfoCollection': H3CinfoCollection,
+                'H3CSecPath': H3CSecPath,
+                'HuaweiUSG': HuaweiUSG,
+                'HuaweiCollection': HuaweiCollection,
+            }
+            if netconf_class in data.keys():
+                res = data[netconf_class].get_method()
+                return JsonResponse(dict(code=200, data=res))
+            else:
+                return JsonResponse(dict(code=400, data=[]))
+
+
+# 自动化chart
+class AutomationChart(APIView):
+    def get(self, request):
+        get_params = request.GET.dict()
+
+        if "collection_plan" in get_params:
+            collection_plan_list = []
+            collection_plan_queryset = CollectionPlan.objects.values("vendor").annotate(sum_count=Count("vendor"))
+            for i in collection_plan_queryset:
+                collection_plan_list.append(i)
+
+            result = {
+                'code': 200,
+                'data': collection_plan_list
+            }
+            return JsonResponse(result, safe=False)
+
+
+# 调度管理
+class DispatchManageView(View):
+    def post(self, request):
+        post_params = request.POST.dict()
+        if post_params.get("add_crontab_schedule", ''):
+            try:
+                crontab_schedule = request.POST.dict()
+                crontab_schedule_obj = CrontabSchedule.objects.create(
+                    minute=crontab_schedule['minute'],
+                    hour=crontab_schedule['hour'],
+                    day_of_week=crontab_schedule['day_of_week'],
+                    day_of_month=crontab_schedule['day_of_month'],
+                    month_of_year=crontab_schedule['month_of_year'],
+                    timezone=crontab_schedule['timezone'],
+                )
+                # crontab_schedule_obj = CrontabSchedule.objects.create(**crontab_schedule)
+                return JsonResponse({'code': 200, 'msg': '添加crontab_schedule成功', 'data': crontab_schedule_obj.id})
+            except Exception as e:
+                return JsonResponse({'code': 500, 'msg': '添加crontab_schedule失败，{}'.format(e)})
+        if post_params.get('add_interval_schedule', ''):
+            try:
+                interval_schedule = request.POST.dict()
+                interval_schedule_obj = IntervalSchedule.objects.create(
+                    every=int(interval_schedule.get('every')),
+                    period=interval_schedule.get('period')
+                )
+                return JsonResponse({'code': 200, 'msg': '添加interval_schedule成功', 'data': interval_schedule_obj.id})
+            except Exception as e:
+                return JsonResponse({'code': 500, 'msg': '添加interval_schedule失败，{}'.format(e)})
+
+        if post_params.get('delete', ''):
+            schedule_type = request.POST.get('schedule_type', '')
+            pk = request.POST.get('id', '')
+            if schedule_type == 'crontab_schedule':
+                try:
+                    CrontabSchedule.objects.get(id=pk).delete()
+                    return JsonResponse({'code': 200, 'msg': '删除crontab_schedule成功'})
+                except Exception as e:
+                    return JsonResponse({'code': 500, 'msg': '删除crontab_schedule失败，{}'.format(e)})
+            elif schedule_type == 'interval_schedule':
+                try:
+                    IntervalSchedule.objects.get(id=pk).delete()
+                    return JsonResponse({'code': 200, 'msg': '删除interval_schedule成功'})
+                except Exception as e:
+                    return JsonResponse({'code': 500, 'msg': '删除interval_schedule失败，{}'.format(e)})
+
+    def get(self, request):
+        crontab_schedules = CrontabSchedule.objects.all()
+
+        interval_schedules = IntervalSchedule.objects.all()
+
+        return JsonResponse(
+            {'code': 200, 'msg': 'success', 'crontab_data': CrontabSerializer(crontab_schedules, many=True).data,
+             "interval_data": IntervalSerializer(interval_schedules, many=True).data})

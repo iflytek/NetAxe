@@ -30,6 +30,7 @@ router.register(r'attribute', views.AttributelViewSet)
 router.register(r'framework', views.FrameworkViewSet)
 router.register(r'asset_networkdevice', views.NetworkDeviceViewSet)
 router.register(r'interfaceused', views.InterfaceUsedNewViewSet)
+router.register(r'collection_plan', views.CollectionPlanViewSet),
 app_name = 'api'
 
 urlpatterns = [

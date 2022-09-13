@@ -21,11 +21,15 @@ export const deleteUserById = '/deleteUserById'
 export const dashboard_chart = '/net_backend/dashboardChart'
 
 export const networkDeviceUrl = '/net_backend/networkDevice'
+export const deviceCollect = '/net_backend/deviceCollect'
+export const automation_chart = '/net_backend/automationChart'
+// 调度管理
+export const getdispach = '/net_backend/dispatch_page/'
 
 export const device_import_url = '/resources/import_assets/'
 
 export const getNetworkDeviceList = '/api/asset_networkdevice/'
-
+export const getCollection_planList = '/api/collection_plan/'
 export const BackendApi = '/api/'
 
 export const getCmdbIdcList = '/api/cmdb_idc/'

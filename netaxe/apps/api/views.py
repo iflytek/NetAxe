@@ -18,6 +18,9 @@ from rest_framework_extensions.key_constructor.constructors import (
 )
 from datetime import date
 
+from apps.automation.models import CollectionPlan
+from apps.int_utilization.models import InterfaceUsedNew
+
 
 class LimitSet(pagination.LimitOffsetPagination):
     # 每页默认几条
@@ -276,3 +279,19 @@ class InterfaceUsedNewViewSet(CustomViewBase):
         if start and end:
             return self.queryset.filter(log_time__range=(start, end))
         return self.queryset
+
+
+# 自动化设备数据采集方案
+class CollectionPlanViewSet(LoggingMixin, CustomViewBase):
+    """
+    处理  GET POST , 处理 /api/post/<pk>/ GET PUT PATCH DELETE
+    """
+    logging_methods = ['POST', 'PUT', 'PATCH', 'DELETE']
+    queryset = CollectionPlan.objects.all().order_by('-id')
+    queryset = CollectionPlanSerializer.setup_eager_loading(queryset)
+    serializer_class = CollectionPlanSerializer
+    permission_classes = (permissions.IsAuthenticated,)
+    # 配置搜索功能
+    filter_backends = (DjangoFilterBackend, filters.SearchFilter, filters.OrderingFilter)
+    filter_fields = '__all__'
+    pagination_class = LimitSet

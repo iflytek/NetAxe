@@ -18,6 +18,8 @@ from apps.asset.models import (
     Idc, NetZone, Role, IdcModel, Rack, Vendor, Category, Model,
     Attribute, Framework, AssetIpInfo, AssetAccount, NetworkDevice)
 
+from apps.automation.models import CollectionPlan
+
 
 class PeriodicTaskSerializer(serializers.ModelSerializer):
     class Meta:
@@ -211,4 +213,19 @@ class InterfaceUsedNewSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = InterfaceUsedNew
+        fields = '__all__'
+
+
+# 自动化设备数据采集方案清单
+class CollectionPlanSerializer(serializers.ModelSerializer):
+
+    @staticmethod
+    def setup_eager_loading(queryset):
+        """ Perform necessary eager loading of data. """
+        # queryset = queryset.prefetch_related('relate_device')
+
+        return queryset
+
+    class Meta:
+        model = CollectionPlan
         fields = '__all__'
