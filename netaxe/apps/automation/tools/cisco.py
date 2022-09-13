@@ -106,8 +106,7 @@ class CiscoProc(BaseConn):
             else:
                 if i['interface'].startswith('AggregatePort'):
                     continue
-                if i['speed'] == 'Unknown' or i['speed'] == 'unknown':
-                    i['speed'] = InterfaceFormat.cisco_speed_format(i['interface'])
+                i['speed'] = InterfaceFormat.cisco_speed_format(i['interface'])
                 data = dict(hostip=self.hostip,
                             interface=i['interface'],
                             status=i['link_status'],
