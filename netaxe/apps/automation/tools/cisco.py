@@ -104,7 +104,13 @@ class CiscoProc(BaseConn):
                     mtu='')
                 layer3datas.append(data)
             else:
-                if i['interface'].startswith('AggregatePort'):
+                if i['interface'].startswith('Serial'):
+                    continue
+                elif i['interface'].startswith('Embedded'):
+                    continue
+                elif i['interface'].startswith('NVI'):
+                    continue
+                elif i['interface'].startswith('Virtual'):
                     continue
                 i['speed'] = InterfaceFormat.cisco_speed_format(i['interface'])
                 data = dict(hostip=self.hostip,
