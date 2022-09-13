@@ -32,6 +32,7 @@ from apps.automation.tools.h3c import H3cProc
 from apps.automation.tools.hillstone import HillstoneProc
 from apps.automation.tools.huawei import HuaweiProc
 from apps.automation.tools.maipu import MaipuProc
+from apps.automation.tools.cisco import CiscoProc
 from apps.automation.tools.mellanox import MellanoxProc
 from apps.automation.tools.ruijie import RuijieProc
 from apps.automation.tools.centec import CentecProc
@@ -552,6 +553,9 @@ def collect_device(**kwargs):
     elif vendor_alias == 'Maipu':
         _MaipuProc = MaipuProc(**kwargs)
         _MaipuProc.collection_run()
+    elif vendor_alias == 'Cisco':
+        _CiscoProc = CiscoProc(**kwargs)
+        _CiscoProc.collection_run()
     return
 
 

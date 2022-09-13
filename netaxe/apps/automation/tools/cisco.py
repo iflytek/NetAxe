@@ -25,7 +25,7 @@ def ruijie_interface_format(interface):
     return interface
 
 
-class RuijieProc(BaseConn):
+class CiscoProc(BaseConn):
     """
     show ip arp
     show mac
