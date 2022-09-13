@@ -112,12 +112,20 @@ class CiscoProc(BaseConn):
                     continue
                 elif i['interface'].startswith('Virtual'):
                     continue
-                i['speed'] = InterfaceFormat.cisco_speed_format(i['interface'])
+                elif i['interface'].startswith('Vlan'):
+                    continue
+                duplex = 'auto'
+                if 'Auto' in i['duplex']:
+                    duplex = 'auto'
+                elif 'Full' in i['duplex']:
+                    duplex = 'full'
+                elif 'Half' in i['duplex']:
+                    duplex = 'half'
                 data = dict(hostip=self.hostip,
                             interface=i['interface'],
                             status=i['link_status'],
-                            speed=i['speed'],
-                            duplex=i['duplex'].strip('-duplex'),
+                            speed=InterfaceFormat.cisco_speed_format(i['interface']),
+                            duplex=duplex,
                             description=i.get('description'))
                 layer2datas.append(data)
         if layer2datas:
