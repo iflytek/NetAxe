@@ -4,23 +4,23 @@ export const baseAddress = baseURL
 
 export const test = '/test'
 
-export const login = '/vue3/login'
+export const login = '/net_backend/login'
 
-export const captcha = '/vue3/captcha'
+export const captcha = '/net_backend/captcha'
 
 export const updateUserInfo = '/updateUser'
 
 export const addUserInfo = '/addUser'
 
-export const getMenuListByRoleId = '/vue3/getMenusByRoleId'
+export const getMenuListByRoleId = '/net_backend/getMenusByRoleId'
 
 export const getAllMenuByRoleId = '/getAllMenuByRoleId'
 
 export const deleteUserById = '/deleteUserById'
 
-export const dashboard_chart = '/vue3/dashboardChart'
+export const dashboard_chart = '/net_backend/dashboardChart'
 
-export const networkDeviceUrl = '/vue3/networkDevice'
+export const networkDeviceUrl = '/net_backend/networkDevice'
 
 export const device_import_url = '/resources/import_assets/'
 
@@ -54,11 +54,11 @@ export const getcmdb_accountList = '/api/cmdb_account/'
 
 export const get_device_expand = '/network/networklist/'
 
-export const device_import_template = '/vue3/importTemplate'
+export const device_import_template = '/net_backend/importTemplate'
 
-export const deviceWebSshLogin = '/vue3/deviceWebSsh'
+export const deviceWebSshLogin = '/net_backend/deviceWebSsh'
 
-export const deviceInfoChange = '/vue3/deviceInfoChange'
+export const deviceInfoChange = '/net_backend/deviceInfoChange'
 
 export const get_git_config_tree = '/config_center/git_config'
 

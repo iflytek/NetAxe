@@ -20,6 +20,7 @@
     import useGet from '@/hooks/useGet'
     import { Terminal } from 'xterm'
     import { FitAddon } from 'xterm-addon-fit'
+    import "xterm/css/xterm.css"
     import { AttachAddon } from 'xterm-addon-attach'
     import router from '@/router'
 
