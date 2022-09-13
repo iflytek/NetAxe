@@ -41,11 +41,11 @@ export default ({ mode }) => {
           changeOrigin: true, // 虚拟的站点需要更管origin
           rewrite: (path: string) => path.replace(/^\/api/, '/api'),
         },
-        '/vue3': {
+        '/net_backend': {
           target: env.VITE_BASIC_URL,
           ws: true, //代理websockets
           changeOrigin: true, // 虚拟的站点需要更管origin
-          rewrite: (path: string) => path.replace(/^\/vue3/, '/vue3'),
+          rewrite: (path: string) => path.replace(/^\/net_backend/, '/backend'),
         },
         '/topology': {
           target: env.VITE_BASIC_URL,
