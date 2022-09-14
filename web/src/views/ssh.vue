@@ -57,7 +57,7 @@
                     terminalSocket.onopen = function () {
                         //console.log('连接成功！')
                         let init_width = 9;
-                        let init_height = 15;
+                        let init_height = 18;
                         const _width = window.innerWidth
                         const _height = window.innerHeight
                         var cols = Math.floor(_width / init_width)
