@@ -25,9 +25,11 @@ export const deviceCollect = '/net_backend/deviceCollect'
 export const automation_chart = '/net_backend/automationChart'
 // 调度管理
 export const getdispach = '/net_backend/dispatch_page/'
-
+// 任务列表
+export const jobcenterTaskUrl = '/net_backend/jobCenter'
 export const device_import_url = '/resources/import_assets/'
-
+export const getperiodic_taskList = '/api/periodic_task/'
+export const getinterval_schedule = '/api/interval_schedule'
 export const getNetworkDeviceList = '/api/asset_networkdevice/'
 export const getCollection_planList = '/api/collection_plan/'
 export const BackendApi = '/api/'

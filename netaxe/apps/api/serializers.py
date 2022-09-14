@@ -11,7 +11,7 @@
 -------------------------------------------------
 """
 from rest_framework import serializers
-from django_celery_beat.models import PeriodicTask
+from django_celery_beat.models import PeriodicTask, IntervalSchedule
 from django_celery_results.models import TaskResult
 from apps.int_utilization.models import InterfaceUsedNew
 from apps.asset.models import (
@@ -19,6 +19,12 @@ from apps.asset.models import (
     Attribute, Framework, AssetIpInfo, AssetAccount, NetworkDevice)
 
 from apps.automation.models import CollectionPlan
+
+
+class IntervalScheduleSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = IntervalSchedule
+        fields = '__all__'
 
 
 class PeriodicTaskSerializer(serializers.ModelSerializer):
@@ -85,7 +91,7 @@ class AttributeSerializer(serializers.ModelSerializer):
 # 网络架构
 class FrameworkSerializer(serializers.ModelSerializer):
     class Meta:
-        model =Framework
+        model = Framework
         fields = '__all__'
 
 
@@ -98,7 +104,6 @@ class CategorySerializer(serializers.ModelSerializer):
 
 # 网络区域
 class NetZoneSerializer(serializers.ModelSerializer):
-
     class Meta:
         model = NetZone
         fields = '__all__'
@@ -179,7 +184,6 @@ class NetworkDeviceSerializer(serializers.ModelSerializer):
         model = NetworkDevice
         fields = '__all__'
 
-
     @staticmethod
     def setup_eager_loading(queryset):
         """ Perform necessary eager loading of data. """
@@ -197,7 +201,7 @@ class NetworkDeviceSerializer(serializers.ModelSerializer):
         # prefetch_related for "to-many" relationships
         # queryset = queryset.select_related('adpp_device')
         queryset = queryset.prefetch_related(
-           'bind_ip', 'account')
+            'bind_ip', 'account')
         #
         # # Prefetch for subsets of relationships
         # queryset = queryset.prefetch_related(

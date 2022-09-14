@@ -2,13 +2,17 @@ from django.shortcuts import render
 
 # Create your views here.
 import json
+
+from django_celery_beat.models import PeriodicTask, IntervalSchedule
 from django_filters.rest_framework import DjangoFilterBackend
 import django_filters
 from rest_framework import viewsets, permissions, filters, pagination
+
+from .serializers import PeriodicTaskSerializer
 from .tools.custom_viewset_base import CustomViewBase
 # from rest_framework_extensions.cache.mixins import CacheResponseMixin
 from rest_framework_extensions.cache.decorators import cache_response
-from rest_framework_extensions.cache.mixins import BaseCacheResponseMixin
+from rest_framework_extensions.cache.mixins import BaseCacheResponseMixin, CacheResponseMixin
 from rest_framework_tracking.mixins import LoggingMixin
 from .tools.custom_pagination import LargeResultsSetPagination
 from apps.api.serializers import *
@@ -20,6 +24,10 @@ from datetime import date
 
 from apps.automation.models import CollectionPlan
 from apps.int_utilization.models import InterfaceUsedNew
+
+
+class QueryParamsKeyConstructor(DefaultKeyConstructor):
+    all_query_params = bits.QueryParamsKeyBit()
 
 
 class LimitSet(pagination.LimitOffsetPagination):
@@ -295,3 +303,33 @@ class CollectionPlanViewSet(LoggingMixin, CustomViewBase):
     filter_backends = (DjangoFilterBackend, filters.SearchFilter, filters.OrderingFilter)
     filter_fields = '__all__'
     pagination_class = LimitSet
+
+
+# 任务列表
+class PeriodicTaskViewSet(viewsets.ModelViewSet):
+    # queryset = PeriodicTask.objects.all().order_by('id')
+    queryset = PeriodicTask.objects.exclude(task__startswith='celery').order_by('id')
+    serializer_class = PeriodicTaskSerializer
+    permission_classes = (permissions.IsAuthenticated,)
+    # 配置搜索功能
+    filter_backends = (DjangoFilterBackend, filters.SearchFilter, filters.OrderingFilter)
+    # 如果要允许对某些字段进行过滤，可以使用filter_fields属性。
+    filter_fields = '__all__'
+    pagination_class = LimitSet
+    # 设置搜索的关键字
+    search_fields = '__all__'
+    # list_cache_key_func = QueryParamsKeyConstructor()
+
+
+class IntervalScheduleViewSet(CacheResponseMixin, viewsets.ModelViewSet):
+    queryset = IntervalSchedule.objects.all().order_by('id')
+    serializer_class = IntervalScheduleSerializer
+    permission_classes = (permissions.IsAuthenticated,)
+    # 配置搜索功能
+    filter_backends = (DjangoFilterBackend, filters.SearchFilter, filters.OrderingFilter)
+    # 如果要允许对某些字段进行过滤，可以使用filter_fields属性。
+    filter_fields = '__all__'
+    pagination_class = LimitSet
+    # 设置搜索的关键字
+    search_fields = '__all__'
+    list_cache_key_func = QueryParamsKeyConstructor()
