@@ -88,6 +88,7 @@ class CiscoProc(BaseConn):
     def interface_proc(self, res):
         layer2datas = []
         layer3datas = []
+        int_regex = re.compile('^\w+[\d\/]+$')
         for i in res:
             if i['ip_address']:
                 _ip = IPNetwork(i['ip_address'])
@@ -103,17 +104,22 @@ class CiscoProc(BaseConn):
                     location=location,
                     mtu='')
                 layer3datas.append(data)
-            else:
-                if i['interface'].startswith('Serial'):
-                    continue
-                elif i['interface'].startswith('Embedded'):
-                    continue
-                elif i['interface'].startswith('NVI'):
-                    continue
-                elif i['interface'].startswith('Virtual'):
-                    continue
-                elif i['interface'].startswith('Vlan'):
-                    continue
+        for i in res:
+            if i['interface'].startswith('Serial'):
+                continue
+            elif i['interface'].startswith('Embedded'):
+                continue
+            elif i['interface'].startswith('NVI'):
+                continue
+            elif i['interface'].startswith('Virtual'):
+                continue
+            elif i['interface'].startswith('Vlan'):
+                continue
+            elif i['interface'].startswith('Loopback'):
+                continue
+            elif i['interface'].startswith('Tunnel'):
+                continue
+            if int_regex.search(i['interface']):
                 duplex = 'auto'
                 if 'Auto' in i['duplex']:
                     duplex = 'auto'
