@@ -5,7 +5,18 @@ import json
 
 # 设备信息采集方案
 class CollectionPlan(models.Model):
-    vendor = models.CharField(verbose_name='厂商', max_length=50, default='')
+    VENDOR_CHOICES = (
+        ('H3C', 'H3C'),
+        ('Huawei', 'Huawei'),
+        ('Cisco', 'Cisco')
+    )
+    CATEGORY_CHOICES = (
+        ('交换机', '交换机'),
+        ('防火墙', '防火墙'),
+        ('路由器', '路由器')
+    )
+    vendor = models.CharField(verbose_name='厂商', choices=VENDOR_CHOICES, max_length=50, default='H3C')
+    category = models.CharField(verbose_name='类型', choices=CATEGORY_CHOICES, max_length=50, default='交换机')
     name = models.CharField(verbose_name='采集方案', max_length=100, null=True, blank=True)
     commands = models.TextField(
         blank=True, default='[]',

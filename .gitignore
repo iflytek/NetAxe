@@ -13,13 +13,15 @@ venv/
 netaxe/apps/api/__pycache__/
 netaxe/apps/asset/__pycache__/
 netaxe/apps/config_center/__pycache__/
+netaxe/apps/automation/__pycache__/
 netaxe/netboost/__pycache__/
 netaxe/apps/api/migrations/
 netaxe/apps/asset/migrations/
 netaxe/apps/config_center/migrations/
+netaxe/apps/automation/migrations/
+netaxe/apps/system/migrations/
 Python-3.9.11.tgz
 netaxe/media/device_config/current-configuration
-netaxe/media/device_config
 netaxe/media/automation
 netaxemedia
 netaxe/__pycahe__
