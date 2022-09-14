@@ -193,34 +193,34 @@
               title: '1g',
               key: 'int_used_1g_status',
               render(rowData) {
-                return rowData.int_used_1g + '/' + (rowData.int_used_1g + rowData.int_unused_1g)
+                return rowData.int_used_1g?rowData.int_used_1g:0  + '/' + (rowData.int_used_1g + rowData.int_unused_1g)
               },
             },
             {
               title: '10g',
               key: 'int_used_10g_status',
               render(rowData) {
-                return rowData.int_used_10g + '/' + (rowData.int_used_10g + rowData.int_unused_10g)
+                return rowData.int_used_10g ?rowData.int_used_10g:0+ '/' + (rowData.int_used_10g + rowData.int_unused_10g)
               },
             },
             {
               title: '20g',
               key: 'int_used_20g_status',
               render(rowData) {
-                return rowData.int_used_20g + '/' + (rowData.int_used_20g + rowData.int_unused_20g)
+                return rowData.int_used_20g?rowData.int_used_20g:0 + '/' + (rowData.int_used_20g + rowData.int_unused_20g)
               },
             },
             {
               title: '25g',
               key: 'int_used_25g',
               render(rowData) {
-                return rowData.int_used_20g + '/' + (rowData.int_used_20g + rowData.int_unused_20g)
+                return rowData.int_used_25g?rowData.int_used_25g:0 + '/' + (rowData.int_used_25g + rowData.int_unused_25g)
               },
             },
 
             {
               title: '40g',
-              key: 'int_used_40g',
+              key: 'int_used_40g_count',
               render(rowData) {
                 return rowData.int_used_40g + '/' + (rowData.int_used_40g + rowData.int_unused_40g)
               },
@@ -230,7 +230,7 @@
               key: 'int_used_100g',
               render(rowData) {
                 return (
-                  rowData.int_used_100g + '/' + (rowData.int_used_100g + rowData.int_unused_100g)
+                  rowData.int_used_100g?rowData.int_used_100g:0 + '/' + (rowData.int_used_100g + rowData.int_unused_100g)
                 )
               },
             },
@@ -238,7 +238,7 @@
               title: '10M',
               key: 'int_used_10m',
               render(rowData) {
-                return rowData.int_used_10m + '/' + (rowData.int_used_10m + rowData.int_unused_10m)
+                return rowData.int_used_10m?rowData.int_used_10m:0 + '/' + (rowData.int_used_10m + rowData.int_unused_10m)
               },
             },
             {
@@ -246,7 +246,7 @@
               key: 'int_used_100m',
               render(rowData) {
                 return (
-                  rowData.int_used_100m + '/' + (rowData.int_used_100m + rowData.int_unused_100m)
+                  rowData.int_used_100m?rowData.int_used_100m:0 + '/' + (rowData.int_used_100m + rowData.int_unused_100m)
                 )
               },
             },

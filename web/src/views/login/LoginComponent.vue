@@ -84,7 +84,7 @@
     <div v-else class="m-login-container">
       <div class="header">
         <div class="the-p"> P </div>
-        <div class="mt-4 text-lg font-bold text-white"> Iflytek 网络自动化平台 </div>
+        <div class="mt-4 text-lg font-bold text-white"> NetAxe 网络自动化平台 </div>
       </div>
       <div class="content">
         <n-input round placeholder="请输入用户名" size="large" v-model:value="username">
