@@ -8,7 +8,8 @@ networks:
 services:
     netaxe-web:
         # image: registry.cn-hangzhou.aliyuncs.com/netaxe/netaxe-web:1.0.4
-        build: ../../web
+        build:
+            context: ../../web
         container_name: netaxe-web
         volumes:
             - ../../web/nginx.conf:/etc/nginx/conf.d/default.conf
