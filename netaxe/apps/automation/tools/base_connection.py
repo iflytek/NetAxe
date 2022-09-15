@@ -240,6 +240,13 @@ class BaseConn:
         if self.collection_plan:
             self.plan = CollectionPlan.objects.filter(id=self.collection_plan).values().first()
             self.netconf_class = self.plan['netconf_class']
+        else:
+            self.plan = CollectionPlan.objects.filter(
+                vendor=self.vendor_alias, category=self.category__name).values().first()
+            if self.plan:
+                self.netconf_class = self.plan['netconf_class']
+                NetworkDevice.objects.filter(
+                    manage_ip=self.hostip).update(plan=CollectionPlan.objects.get(id=self.plan['id']))
         # 交换机特性
         self.layer3datas = []
 

@@ -1066,7 +1066,9 @@ if __name__ == '__main__':
     logger = logging.getLogger("netmiko")
     # Logging section ##############
     # res = BatManMain.info_fsm(path='automation/10.1.1.2/show_mac-address-table.txt', fsm_platform='cisco_ios')
-    res = BatManMain.info_fsm(path='automation/10.1.1.2/show_interfaces.txt', fsm_platform='cisco_ios')
+    # res = BatManMain.info_fsm(path='automation/10.1.1.2/show_interfaces.txt', fsm_platform='cisco_ios')
+    # res = BatManMain.info_fsm(path='automation/10.1.1.2/show_cdp_neighbors_detail.txt', fsm_platform='cisco_ios')
+    res = BatManMain.info_fsm(path='automation/10.1.1.2/show_lldp_neighbors_detail.txt', fsm_platform='cisco_ios')
     if isinstance(res, list):
         for i in res:
             print(i)

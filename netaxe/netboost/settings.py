@@ -53,8 +53,8 @@ INSTALLED_APPS = [
     'apps.route_backend.apps.RouteBackendConfig',
     'apps.users.apps.UsersConfig',
     'apps.automation.apps.AutomationConfig',
-    'apps.int_utilization.apps.IntUtilizationConfig'
-
+    'apps.int_utilization.apps.IntUtilizationConfig',
+    'apps.system.apps.SystemConfig',
 ]
 
 MIDDLEWARE = [

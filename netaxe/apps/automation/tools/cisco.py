@@ -5,10 +5,11 @@
 # @File    : cisco.py
 # @Software: PyCharm
 import re
+import json
 from datetime import datetime
 
 from netaddr import IPNetwork
-
+from django.core.cache import cache
 from apps.asset.models import NetworkDevice, Model, Vendor
 from utils.connect_layer.auto_main import BatManMain
 from utils.db.mongo_ops import MongoNetOps
@@ -18,24 +19,20 @@ from .base_connection import BaseConn, InterfaceFormat
 
 def cisco_interface_format(interface):
     if re.search(r'^(Gi)', interface):
-        return interface.replace('Gi', 'GigabitEthernet0')
+        return interface.replace('Gi', 'GigabitEthernet')
 
     return interface
 
 
 class CiscoProc(BaseConn):
     """
-    show ip arp
-    show mac
-    show ip interface brief
-    show interfaces status
-    show aggregatePort summary
-    show version
-    show switch virtual
-    show member
     """
 
-    def arp_proc(self, res):
+    def __init__(self, **kwargs):
+        super(CiscoProc, self).__init__(**kwargs)
+        self.lldp_datas = []
+
+    def _arp_proc(self, res):
         arp_datas = []
         for i in res:
             try:
@@ -61,7 +58,7 @@ class CiscoProc(BaseConn):
             MongoNetOps.insert_table(
                 'Automation', self.hostip, arp_datas, 'ARPTable')
 
-    def mac_proc(self, res):
+    def _mac_proc(self, res):
         if isinstance(res, list):
             mac_datas = []
             for i in res:
@@ -85,10 +82,11 @@ class CiscoProc(BaseConn):
                 MongoNetOps.insert_table(
                     'Automation', self.hostip, mac_datas, 'MACTable')
 
-    def interface_proc(self, res):
+    def _interface_proc(self, res):
         layer2datas = []
         layer3datas = []
         int_regex = re.compile('^\w+[\d\/]+$')
+        exclude_regex = re.compile('^((?!(Serial|Embedded|NVI|Virtual|Vlan|Loopback|Tunnel)).)*$')
         for i in res:
             if i['ip_address']:
                 _ip = IPNetwork(i['ip_address'])
@@ -105,21 +103,8 @@ class CiscoProc(BaseConn):
                     mtu='')
                 layer3datas.append(data)
         for i in res:
-            if i['interface'].startswith('Serial'):
-                continue
-            elif i['interface'].startswith('Embedded'):
-                continue
-            elif i['interface'].startswith('NVI'):
-                continue
-            elif i['interface'].startswith('Virtual'):
-                continue
-            elif i['interface'].startswith('Vlan'):
-                continue
-            elif i['interface'].startswith('Loopback'):
-                continue
-            elif i['interface'].startswith('Tunnel'):
-                continue
-            if int_regex.search(i['interface']):
+            # 排除一些接口列表并且接口名称不包含子接口
+            if exclude_regex.search(i['interface']) and int_regex.search(i['interface']):
                 duplex = 'auto'
                 if 'Auto' in i['duplex']:
                     duplex = 'auto'
@@ -148,7 +133,7 @@ class CiscoProc(BaseConn):
                 tablename='layer3interface')
         return
 
-    def version_proc(self, res):
+    def _version_proc(self, res):
         if isinstance(res, dict):
             """
             {'member': '1', 'serialnum': 'G1GC10V000176'}
@@ -162,17 +147,87 @@ class CiscoProc(BaseConn):
                 manage_ip=self.hostip).update(serial_num=res['serial'][1:-1],
                                               slot=int(res['member']), soft_version=res['version'])
 
+    def _lldp_proc(self, res):
+        """
+        {'neighbor': 'ic-ofce-sw', 'local_interface': 'Gi0/0/1', 'capabilities': 'B', 'neighbor_interface': 'GigabitEthernet0/0/24'}
+        """
+        if not res:
+            return
+        if isinstance(res, dict):
+            res = [res]
+        for i in res:
+            neighbor_ip = ''
+            if i['neighbor']:
+                tmp_neighbor_ip = cache.get('cmdb_' + i['neighbor'])
+                if tmp_neighbor_ip:
+                    tmp_neighbor_ip = json.loads(tmp_neighbor_ip)
+                    neighbor_ip = tmp_neighbor_ip[0]['manage_ip']
+                else:
+                    tmp_neighbor_ip = NetworkDevice.objects.filter(
+                        name=i['neighbor']).values('manage_ip')
+                    neighbor_ip = tmp_neighbor_ip[0]['manage_ip'] if tmp_neighbor_ip else ''
+            tmp = dict(
+                hostip=self.hostip,
+                local_interface=cisco_interface_format(i['local_interface']),
+                chassis_id='',
+                neighbor_port=i['neighbor_port_id'],
+                portdescription='',
+                neighborsysname=i['neighbor'],
+                management_ip=i.get('management_ip', ''),
+                management_type='ipv4',
+                neighbor_ip=neighbor_ip
+            )
+            self.lldp_datas.append(tmp)
+
+    def _cdp_proc(self, res):
+        if not res:
+            return
+        if isinstance(res, dict):
+            res = [res]
+        for i in res:
+            neighbor_ip = ''
+            if i['destination_host']:
+                tmp_neighbor_ip = cache.get('cmdb_' + i['destination_host'])
+                if tmp_neighbor_ip:
+                    tmp_neighbor_ip = json.loads(tmp_neighbor_ip)
+                    neighbor_ip = tmp_neighbor_ip[0]['manage_ip']
+                else:
+                    tmp_neighbor_ip = NetworkDevice.objects.filter(
+                        name=i['destination_host']).values('manage_ip')
+                    neighbor_ip = tmp_neighbor_ip[0]['manage_ip'] if tmp_neighbor_ip else ''
+            tmp = dict(
+                hostip=self.hostip,
+                local_interface=i['local_port'],
+                chassis_id='',
+                neighbor_port=i['remote_port'],
+                portdescription='',
+                neighborsysname=i['destination_host'],
+                management_ip=i.get('management_ip'),
+                management_type='CDP',
+                neighbor_ip=neighbor_ip
+            )
+            self.lldp_datas.append(tmp)
+
     def path_map(self, file_name, res: list):
         fsm_map = {
-            'show_ip_arp': self.arp_proc,
-            'show_mac-address-table': self.mac_proc,
-            'show_interfaces': self.interface_proc,
-            'show_version': self.version_proc,
+            'show_ip_arp': self._arp_proc,
+            'show_mac-address-table': self._mac_proc,
+            'show_interfaces': self._interface_proc,
+            'show_version': self._version_proc,
+            'show_lldp_neighbors_detail': self._lldp_proc,
+            'show_cdp_neighbors_detail': self._cdp_proc,
         }
         if file_name in fsm_map.keys():
             fsm_map[file_name](res)
         else:
             send_msg_netops("设备:{}\n命令:{}\n不被解析".format(self.hostip, file_name))
+
+    def collection_run(self):
+        # 先执行父类方法
+        super(CiscoProc, self).collection_run()
+        if self.lldp_datas:
+            MongoNetOps.insert_table(
+                'Automation', self.hostip, self.lldp_datas, 'LLDPTable')
 
     def _collection_analysis(self, paths: list):
         for path in paths:
