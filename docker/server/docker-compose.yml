@@ -56,8 +56,6 @@ services:
     image: registry.cn-hangzhou.aliyuncs.com/netaxe/netaxe-web:1.0.4
     build: 
       context: ../../web
-    extra_hosts:
-      - "netops-nginx:10.254.0.111"
     container_name: netaxe-web
     ports:
       - "8888:80"
