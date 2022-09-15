@@ -1,0 +1,17 @@
+version: "3.2"
+networks:
+  netops-axe:
+    driver: bridge
+    ipam:
+      config:
+        - subnet: 192.168.14.0/24
+services:
+  netaxe-web:
+    # image: registry.cn-hangzhou.aliyuncs.com/netaxe/netaxe-web:1.0.4
+    build: ../../web
+    container_name: netaxe-web
+    ports:
+      - "8888:80"
+    networks:
+      - netops-axe
+      

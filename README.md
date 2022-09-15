@@ -42,12 +42,12 @@ docker-compose 版本 >= 1.18.0
 
 ```shell
    sudo tee /etc/docker/daemon.json <<-'EOF'
-   {
-   "registry-mirrors": ["https://tawedu6l.mirror.aliyuncs.com"]
-   }
-   EOF
-   sudo systemctl daemon-reload
-   sudo systemctl restart docker
+ {
+ "registry-mirrors": ["https://tawedu6l.mirror.aliyuncs.com"]
+ }
+ EOF
+ sudo systemctl daemon-reload
+ sudo systemctl restart docker
 ```
 
 2. 配置一下网络设备配置备份目录的 git 初始化
@@ -120,8 +120,13 @@ docker-compose 版本 >= 1.18.0
 8. 重新启动后端服务(docker/server 路径下)
 
 ```shell
+   docker-compose build
    docker-compose up -d
 ```
+
+9. 登陆启动页面  
+   web 界面端口号 8888  
+   django 后台端口 9999 浏览器访问为 http://服务器 IP:9999/admin
 
 ### 本地构建方式
 
