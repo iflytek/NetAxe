@@ -53,8 +53,8 @@ services:
       - netops-axe
 
   netaxe-web:
-    image: registry.cn-hangzhou.aliyuncs.com/netaxe/netaxe-web:1.0.4
-    # build: ../../web
+    # image: registry.cn-hangzhou.aliyuncs.com/netaxe/netaxe-web:1.0.4
+    build: ../../web
     container_name: netaxe-web
     ports:
       - "8888:80"
