@@ -56,6 +56,11 @@ docker-compose 版本 >= 1.18.0
    克隆项目到本地 是项目的正确打开方式， 会第一时间享受到功能的更新以及问题优化
    # 这一步是克隆项目到本地
    git clone https://gitee.com/IFLY-DevNet/net-axe.git
+   会在你的当前目录下，生成一个名为net-axe的项目文件夹
+   进入项目文件夹
+   cd net-axe
+   生成配置备份专用的工作目录，并对其进行git初始化
+   记住，这个是配置备份的专用目录，git地址也应该是你自己单独建的一个仓库地址，跟本项目的git无关
    mkdir -p netaxe/media/device_config/current-configuration
    cd netaxe/media/device_config
    # 下面是需要单独再建立一个git关联你自己的git仓库，专门用来管理网络设备配置文件的，跟项目git不冲突也没关系
