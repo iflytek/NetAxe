@@ -51,7 +51,17 @@ services:
       - ../../netaxe:/home/netaxe
     networks:
       - netops-axe
-
+  netaxe-web:
+    # image: registry.cn-hangzhou.aliyuncs.com/netaxe/netaxe-web:1.0.3
+    build: ../../web
+    container_name: netaxe-web
+    ports:
+      - "8888:80"
+    depends_on:
+      - netaxe-nginx
+      - netaxe-server
+    networks:
+      - netops-axe
   netaxe-nginx:
     image: registry.cn-hangzhou.aliyuncs.com/netaxe/nginx:1.7.9
     container_name: netaxe-nginx
@@ -61,18 +71,6 @@ services:
     ports:
       - "9999:9999"
     depends_on:
-      - netaxe-server
-    networks:
-      - netops-axe
-
-  netaxe-web:
-    # image: registry.cn-hangzhou.aliyuncs.com/netaxe/netaxe-web:1.0.3
-    build: ../../web
-    container_name: netaxe-web
-    ports:
-      - "8888:80"
-    depends_on:
-      - netaxe-nginx
       - netaxe-server
     networks:
       - netops-axe
