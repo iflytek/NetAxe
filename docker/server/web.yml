@@ -12,8 +12,5 @@ services:
         container_name: netaxe-web
         ports:
             - "8888:80"
-        depends_on:
-            - netaxe-nginx
-            - netaxe-server
         networks:
             - netaxe-web
