@@ -1,6 +1,6 @@
 version: "3.2"
 networks:
-  netops-axe:
+  netops-web:
     driver: bridge
     ipam:
       config:
@@ -13,5 +13,5 @@ services:
     ports:
       - "8888:80"
     networks:
-      - netops-axe
+      - netops-web
       
