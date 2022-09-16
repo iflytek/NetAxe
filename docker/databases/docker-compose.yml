@@ -1,4 +1,10 @@
 version: "3.2"
+networks:
+  netops-databases:
+    driver: bridge
+    ipam:
+      config:
+        - subnet: 192.168.13.0/24
 services:
   mysql-server:
     image: registry.cn-hangzhou.aliyuncs.com/netaxe/mysql:5.7
@@ -16,7 +22,8 @@ services:
     command: ['--character-set-server=utf8mb4', '--collation-server=utf8mb4_bin']
     ports:
       - "3306:3306"
-    network_mode: "host"
+    networks:
+      - netops-databases
 
   mongo-db:
     image: registry.cn-hangzhou.aliyuncs.com/netaxe/mongo:latest
@@ -37,7 +44,8 @@ services:
     security_opt:
       - 'seccomp=unconfined'
     command: mongod
-    network_mode: "host"
+    networks:
+      - netops-databases
 
   mongo-express:
     image: registry.cn-hangzhou.aliyuncs.com/netaxe/mongo-express:latest
@@ -54,4 +62,5 @@ services:
       ME_CONFIG_MONGODB_ADMINPASSWORD: 70uUceCVL1gf
       ME_CONFIG_BASICAUTH_USERNAME: root
       ME_CONFIG_BASICAUTH_PASSWORD: 70uUceCVL1gf
-    network_mode: "host"
+    networks:
+      - netops-databases
