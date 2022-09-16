@@ -12,11 +12,11 @@
     display-directive="show"
   >
     <div :style="{ maxHeight: '60vh', height: contentHeight }">
-      <n-scrollbar class="pl-5 pr-5">
+<!--      <n-scrollbar class="pl-5 pr-5">-->
         <div>
           <slot name="content"></slot>
         </div>
-      </n-scrollbar>
+<!--      </n-scrollbar>-->
     </div>
     <template #footer>
       <div class="flex justify-end">

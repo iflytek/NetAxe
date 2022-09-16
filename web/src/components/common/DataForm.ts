@@ -1,21 +1,22 @@
 import { FormItem } from './../../types/components'
 import { defineComponent, h, PropType, ref, toRef } from 'vue'
 import { FormProps, NForm, NFormItem, NFormItemGridItem, NGrid, useMessage } from 'naive-ui'
+import service from '@/api/axios.config'
 
 function renderItem(formItem: FormItem) {
-  return function () {
+  return function() {
     if (formItem.render) {
       return formItem.required
         ? [
-            formItem.render(formItem),
-            h(
-              'span',
-              {
-                class: 'ml-2 text-red-500 align-top',
-              },
-              '*'
-            ),
-          ]
+          formItem.render(formItem),
+          h(
+            'span',
+            {
+              class: 'ml-2 text-red-800 align-top',
+            },
+            '*',
+          ),
+        ]
         : formItem.render(formItem)
     } else {
       return ''
@@ -28,15 +29,16 @@ export default defineComponent({
   props: {
     formConfig: {
       type: Object as PropType<FormProps>,
-      default: () => {},
+      default: () => {
+      },
     },
     preset: {
       type: String,
       default: 'form-item',
       validator: (value: string) => {
-        if (!['form-item', 'grid-item'].includes(value)) {
+        if (!['form-item', 'grid-item', 'grid-two-item'].includes(value)) {
           console.error(
-            'preset value must be `form-item` or `grid-item`, the default value is `form-item`'
+            'preset value must be `form-item` or `grid-item` or `grid-two-item`, the default value is `form-item`',
           )
           return false
         }
@@ -52,16 +54,18 @@ export default defineComponent({
     const dataForm = ref<typeof NForm | null>(null)
     const options = toRef(props, 'options')
     const message = useMessage()
+
     function reset() {
       if (!options.value) return
       options.value.forEach((it: FormItem) => {
         if (it.reset) {
           it.reset(it)
         } else {
-          it.value.value = null
+          it.value.value = ''
         }
       })
     }
+
     function generatorParams() {
       if (!options.value) return
       return options.value.reduce((pre: any, cur: FormItem) => {
@@ -69,6 +73,7 @@ export default defineComponent({
         return pre
       }, {})
     }
+
     function validator() {
       if (!options.value) return
       return options.value.every((it: FormItem) => {
@@ -85,6 +90,7 @@ export default defineComponent({
         return true
       })
     }
+
     return {
       dataForm,
       reset,
@@ -101,36 +107,62 @@ export default defineComponent({
       {
         ref: 'dataForm',
         labelPlacement: 'left',
-        size: 'medium',
+        size: 'small',
         ...this.formConfig,
+        // style: { height: '600px' },
       },
       {
         default: () => {
           return this.preset === 'grid-item'
-            ? h(
-                NGrid,
-                {
-                  responsive: 'screen',
-                  cols: 'xs:1 s:2 m:3 l:3 xl:4 2xl:4',
-                  xGap: 10,
+            ?
+            h(
+              NGrid,
+              {
+                responsive: 'screen',
+                cols: '4',
+                xGap: 5,
+              },
+              {
+                default: () => {
+                  return this.options?.map((it) => {
+                    return h(
+                      NFormItemGridItem,
+                      {
+                        label: it.label,
+                      },
+                      {
+                        default: renderItem(it),
+                      },
+                    )
+                  })
                 },
-                {
-                  default: () => {
-                    return this.options?.map((it) => {
-                      return h(
-                        NFormItemGridItem,
-                        {
-                          label: it.label,
-                        },
-                        {
-                          default: renderItem(it),
-                        }
-                      )
-                    })
-                  },
-                }
+              },
+            )
+            : (this.preset === 'grid-two-item' ? h(
+              NGrid,
+              {
+                responsive: 'screen',
+                cols: '2',
+                xGap: 5,
+              },
+              {
+                default: () => {
+                  return this.options?.map((it) => {
+                    return h(
+                      NFormItemGridItem,
+                      {
+                        label: it.label,
+                      },
+                      {
+                        default: renderItem(it),
+                      },
+                    )
+                  })
+                },
+              },
               )
-            : this.options?.map((it) => {
+              :
+              this.options?.map((it) => {
                 return h(
                   NFormItem,
                   {
@@ -139,11 +171,11 @@ export default defineComponent({
                   },
                   {
                     default: renderItem(it),
-                  }
+                  },
                 )
-              })
+              }))
         },
-      }
+      },
     )
   },
 })

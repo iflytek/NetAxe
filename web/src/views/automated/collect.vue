@@ -53,7 +53,7 @@
                 ref="modalDialog"
                 title="采集命令修改"
                 @confirm="changeCommandsConfirm"
-                :style="{ height: '600px', width: '500px' }"
+                :style="{ height: '620px', width: '500px' }"
         >
             <template #content>
                 <!-- <DataForm ref="itemDataFormRef"
@@ -63,7 +63,7 @@
                         v-model:value="commands_value"
                         lang="yaml"
                         theme="monokai"
-                        style="height: 620px"
+                        style="height: 500px"
                         :options="ace_option"
                 />
             </template>
@@ -71,7 +71,7 @@
         <ModalDialog
                 ref="edit_modalDialog"
                 title="编辑采集方案"
-                @confirm="changeCommandsConfirm"
+                @confirm="EditConfirm"
                 :style="{ height: '600px', width: '500px' }"
         >
             <template #content>
@@ -179,6 +179,7 @@
     import {renderTag} from '@/hooks/form'
     import useGet from '@/hooks/useGet'
     import usePatch from '@/hooks/usePatch'
+    import usePut from '@/hooks/usePut'
     import {sortColumns} from '@/utils'
     import {Terminal} from 'xterm'
     import CollectionPlanChart from './chart/CollectionPlanChart.vue'
@@ -202,7 +203,7 @@
 
 
     export default defineComponent({
-        name: 'networkdevice',
+        name: 'collect',
         components: {
             CollectionPlanChart,
             VAceEditor,
@@ -242,7 +243,8 @@
                         return h(NSelect, {
                             options: formItem.optionItems as Array<SelectOption>,
                             value: formItem.value.value,
-                            placeholder: '请选择架构',
+                            placeholder: '请选择厂商',
+                            filterable: true,
                             onUpdateValue: (val) => {
                                 formItem.value.value = val
                             },
@@ -287,6 +289,7 @@
                             options: formItem.optionItems as Array<SelectOption>,
                             value: formItem.value.value,
                             required: true,
+                            filterable: true,
                             placeholder: '请选择Netconf连接类',
                             onUpdateValue: (val) => {
                                 formItem.value.value = val
@@ -304,6 +307,8 @@
                         return h(NSelect, {
                             options: formItem.optionItems as Array<SelectOption>,
                             value: formItem.value.value,
+                            filterable: true,
+                            maxTagCount: 3,
                             multiple: true,
                             required: true,
                             placeholder: '请选择netconf_method',
@@ -341,6 +346,7 @@
                         return h(NSelect, {
                             options: formItem.optionItems as Array<SelectOption>,
                             value: formItem.value.value,
+                            filterable: true,
                             placeholder: '请选择供应商',
                             onUpdateValue: (val) => {
                                 formItem.value.value = val
@@ -437,12 +443,7 @@
                                     () => h('span', {}, '修改下发命令'),
                                 )
 
-                                // return useRenderAction([
-                                //   {
-                                //     label: '修改下发命令',
-                                //     onClick: change_commands.bind(null, rowData),
-                                //   },
-                                // ] as TableActionModel[])
+
                             },
                         },
                         {
@@ -454,12 +455,6 @@
                                     {onClick: edit_collect_info.bind(null, rowData), type: 'warning', size: 'tiny'},
                                     () => h('span', {}, '编辑采集方案'),
                                 )
-                                // return useRenderAction([
-                                //   {
-                                //     label: '编辑',
-                                //     onClick: edit_collect_info.bind(null, rowData),
-                                //   },
-                                // ] as TableActionModel[])
                             },
                         },
                     ],
@@ -472,7 +467,14 @@
             const searchDataFormRef = ref<DataFormType | null>(null)
             const modalDialog = ref<ModalDialogType | null>(null)
             const edit_modalDialog = ref<ModalDialogType | null>(null)
-            const current_row = ref({})
+            const current_row = ref({
+                name: ref(''),
+                memo: ref(''),
+                vendor: ref(''),
+                netconf_class: ref(''),
+                netconf_method: ref(null),
+                id: ref(0),
+            })
             const WebsshmodalDialog = ref<ModalDialogType | null>(null)
             const show_password_modalDialog = ref<ModalDialogType | null>(null)
             const account_modalDialog = ref<ModalDialogType | null>(null)
@@ -481,6 +483,7 @@
             const get = useGet()
             const post = usePost()
             const patch = usePatch()
+            const put = usePut()
 
             function onSearch() {
                 //console.log(searchForm.value?.generatorParams())
@@ -521,9 +524,10 @@
 
             function changeCommandsConfirm() {
                 //console.log(current_row.value)
-                //console.log('commands_value', commands_value.value)
+                console.log('commands_value', commands_value.value.replaceAll('\n', ',').split(','))
+                var commands_array = commands_value.value.replaceAll('\n', ',').split(',')
                 var post_data = new FormData()
-                post_data.append('commands', '[' + commands_value.value + ']')
+                post_data.append('commands', JSON.stringify(commands_array))
                 post_data.append('name', current_row.value['name'])
                 patch({
                     url: getCollection_planList + '/' + current_row.value['id'] + '/',
@@ -532,6 +536,33 @@
                     if (res.code === 200) {
                         message.success(res.message)
                         modalDialog.value!.toggle()
+                        doRefresh()
+                    } else {
+                        message.error(res.message)
+                    }
+                })
+            }
+
+            function EditConfirm() {
+                console.log(current_row.value)
+                // console.log('commands_value', commands_value.value.replaceAll('\n', ',').split(','))
+                // var commands_array = commands_value.value.replaceAll('\n', ',').split(',')
+                let edit_form = itemDataFormRef.value.generatorParams()
+                console.log('edit_form', edit_form)
+                var post_data = new FormData()
+                post_data.append('netconf_method', JSON.stringify(edit_form['netconf_method']))
+                post_data.append('name', edit_form['name'])
+                post_data.append('vendor', edit_form['vendor'])
+                post_data.append('memo', edit_form['memo'])
+                post_data.append('netconf_class', edit_form['netconf_class'])
+                put({
+                    url: getCollection_planList + '/' + current_row.value['id'] + '/',
+                    data: post_data,
+                }).then((res) => {
+                    if (res.code === 200) {
+                        message.success(res.message)
+                        edit_modalDialog.value!.toggle()
+                        doRefresh()
                     } else {
                         message.error(res.message)
                     }
@@ -540,16 +571,13 @@
 
             function edit_collect_info(item: any) {
                 //console.log('编辑采集方案', item)
+                console.log("row", item)
+                current_row.value = item
                 edit_modalDialog.value?.toggle()
                 itemFormOptions.forEach((it) => {
                     const key = it.key
-                    //console.log(key)
-                    if (key === 'netconf_method') {
-                        it.value.value = []
-                    } else {
-                        const propName = item[key]
-                        it.value.value = propName
-                    }
+                    const propName = item[key]
+                    it.value.value = propName
 
                 })
                 // 点击编辑获取连接类itemFormOptions[3]
@@ -574,11 +602,34 @@
                         itemFormOptions[3].optionItems.splice(0, 0, {value: '', label: ''})
                     })
                 })
+                // 根据netconf_class 获取方法
+                get({
+                    url: deviceCollect,
+                    data: () => {
+                        return {
+                            netconf_class: item.netconf_class,
+                            get_method: 1,
+                        }
+                    },
+                }).then((res) => {
+                    itemFormOptions[4].optionItems.length = 0
+                    res.data.forEach((ele) => {
+                        var dict = {
+                            value: ele,
+                            label: ele,
+                        }
+                        itemFormOptions[4].optionItems.push(dict)
+                    })
+                    nextTick(() => {
+                        itemFormOptions[4].optionItems.splice(0, 0, {value: '', label: ''})
+                    })
+                })
 
 
             }
 
             function change_commands(item: any) {
+
                 current_row.value = item
                 modalDialog.value?.toggle()
                 //  //console.log('修改当前行命令', item.commands)
@@ -729,6 +780,7 @@
             onMounted(doRefresh)
 
             return {
+                EditConfirm,
                 get_info_by_vendor,
                 new_collect_submit,
                 select_class_get_method_,
