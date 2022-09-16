@@ -41,68 +41,73 @@ docker-compose 版本 >= 1.18.0
 1. 更新 docker 配置文件
 
 ```shell
-   sudo tee /etc/docker/daemon.json <<-'EOF'
-   {
-   "registry-mirrors": ["https://tawedu6l.mirror.aliyuncs.com"]
-   }
-   EOF
-   sudo systemctl daemon-reload
-   sudo systemctl restart docker
+sudo tee /etc/docker/daemon.json <<-'EOF'
+{
+"registry-mirrors": ["https://tawedu6l.mirror.aliyuncs.com"]
+}
+EOF
+sudo systemctl daemon-reload
+sudo systemctl restart docker
 ```
 
 2. 配置一下网络设备配置备份目录的 git 初始化
 
 ```shell
-   克隆项目到本地 是项目的正确打开方式， 会第一时间享受到功能的更新以及问题优化
-   # 这一步是克隆项目到本地
-   git clone https://gitee.com/IFLY-DevNet/net-axe.git
-   mkdir -p netaxe/media/device_config/current-configuration
-   cd netaxe/media/device_config
-   # 下面是需要单独再建立一个git关联你自己的git仓库，专门用来管理网络设备配置文件的，跟项目git不冲突也没关系
-   git init
-   git remote add origin 仓库地址
-   git fetch
-   git checkout master
-   git branch --set-upstream-to=origin/master master
+克隆项目到本地 是项目的正确打开方式， 会第一时间享受到功能的更新以及问题优化
+# 这一步是克隆项目到本地
+git clone https://gitee.com/IFLY-DevNet/net-axe.git
+会在你的当前目录下，生成一个名为net-axe的项目文件夹
+进入项目文件夹
+cd net-axe
+生成配置备份专用的工作目录，并对其进行git初始化
+记住，这个是配置备份的专用目录，git地址也应该是你自己单独建的一个仓库地址，跟本项目的git无关
+mkdir -p netaxe/media/device_config/current-configuration
+cd netaxe/media/device_config
+# 下面是需要单独再建立一个git关联你自己的git仓库，专门用来管理网络设备配置文件的，跟项目git不冲突也没关系
+git init
+git remote add origin 仓库地址
+git fetch
+git checkout master
+git branch --set-upstream-to=origin/master master
 ```
 
 3. 进入到 docker 目录下 先启动数据库
 
 ```shell
-   cd docker/databases
-   docker-compose up -d
+cd docker/databases
+docker-compose up -d
 ```
 
 4. 配置 conf 文件
 
 ```shell
-   cd netaxe/netboost
-   cp conf_bak.py conf.py
-   vi conf.py
-   注意：这里要将服务器的网卡IP填写到mysql和mongo的配置项中，必须配置好IP
+项目目录下执行(例如我这里是/home/net-axe)
+cp netaxe/netboost/conf_bak.py netaxe/netboost/conf.py
+修改项目配置文件，将宿主机的网卡IP配置替换到配置文件中(例如192.168.11.11，根据实际网卡IP配置)
+sed -i "s/{SERVERIP}/192.168.11.11/g" netaxe/netboost/conf.py
 ```
 
 5. 进入到 server 目录下，启动服务
 
 ```shell
-   cd docker/server
-   docker-compose -f init.yml up -d
+cd docker/server
+docker-compose -f init.yml up -d
 ```
 
 6. 数据初始化(docker/server 路径下)
 
 ```shell
-  进入后端服务容器命令行
-  docker exec -it netaxe-server /bin/bash
-   python3 manage.py migrate
-   python3 manage.py makemigrations asset
-   python3 manage.py migrate asset
-   python3 manage.py makemigrations rest_framework_tracking
-   python3 manage.py migrate rest_framework_tracking
-   python3 manage.py init_asset
-   python3 manage.py init_route
-   python3 manage.py createsuperuser # 新建管理员账户，要输入管理员账户和密码
-   exit
+进入后端服务容器命令行
+docker exec -it netaxe-server /bin/bash
+python3 manage.py migrate
+python3 manage.py makemigrations asset
+python3 manage.py migrate asset
+python3 manage.py makemigrations rest_framework_tracking
+python3 manage.py migrate rest_framework_tracking
+python3 manage.py init_asset
+python3 manage.py init_route
+python3 manage.py createsuperuser # 新建管理员账户，要输入管理员账户和密码
+exit
 ```
 
 7. 关闭初始化用的服务(docker/server 路径下)
@@ -115,22 +120,42 @@ docker-compose 版本 >= 1.18.0
 8. 重新启动后端服务(docker/server 路径下)
 
 ```shell
-   docker-compose up -d
+docker-compose build
+docker-compose up -d
 ```
 
-### 本地构建方式
+9. 登陆启动页面  
+   web 界面端口号 8888  
+   django 后台端口 9999 浏览器访问为 http://服务器 IP:9999/admin
 
-1. 克隆项目到本地  
-   git clone https://gitee.com/IFLY-DevNet/net-axe.git
-2. 进入项目目录  
-   cd net-axe
-3. 打包后端镜像  
-   cd netaxe  
-   wget http://npm.taobao.org/mirrors/python/3.9.11/Python-3.9.11.tgz  
-   docker build -t registry.cn-hangzhou.aliyuncs.com/netaxe/netaxe-backend:1.0.2 .
-4. 打包前端镜像  
-   cd web  
-   docker build -t registry.cn-hangzhou.aliyuncs.com/netaxe/netaxe-web:1.0.3 .
+### 本地构建方式(不推荐)
+
+1. 克隆项目到本地
+
+```shell
+git clone https://gitee.com/IFLY-DevNet/net-axe.git
+```
+
+2. 进入项目目录
+
+```shell
+cd net-axe
+```
+
+3. 打包后端镜像
+
+```shell
+cd netaxe
+wget http://npm.taobao.org/mirrors/python/3.9.11/Python-3.9.11.tgz
+docker build -t registry.cn-hangzhou.aliyuncs.com/netaxe/netaxe-backend:1.0.3 .
+```
+
+4. 打包前端镜像
+
+```shell
+cd web
+docker build -t registry.cn-hangzhou.aliyuncs.com/netaxe/netaxe-web:1.0.4 .
+```
 
 ## 软件架构
 

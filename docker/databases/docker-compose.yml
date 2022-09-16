@@ -51,8 +51,6 @@ services:
     image: registry.cn-hangzhou.aliyuncs.com/netaxe/mongo-express:latest
     container_name: mongo-express
     restart: always
-    links:
-      - mongo-db:mongodb
     depends_on:
       - mongo-db
     ports:

@@ -122,8 +122,6 @@ class CaptchaView(View):
     """
     获取图片验证码
     """
-    authentication_classes = []
-
     def get(self, request):
         hashkey = CaptchaStore.generate_key()
         id = CaptchaStore.objects.filter(hashkey=hashkey).first().id
