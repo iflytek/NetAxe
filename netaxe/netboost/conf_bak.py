@@ -16,7 +16,7 @@ DATABASES = {
     'default': {
         'NAME': 'netaxe',
         'ENGINE': 'django.db.backends.mysql',
-        'HOST': '',
+        'HOST': '{SERVERIP}',
         'USER': 'root',
         'PASSWORD': 'root_devnet@2022',
         'PORT': '3306',
@@ -36,14 +36,14 @@ DATABASES = {
 REDIS_URL = "redis://:dade0f2a65237a56b79277e6dd27351d2854df033e0ad4b4f90abec229cd64df@redis-cache:6379/"
 CACHE_PWD = 'dade0f2a65237a56b79277e6dd27351d2854df033e0ad4b4f90abec229cd64df'
 mongo_db_conf = {
-    "host": '',
+    "host": '{SERVERIP}',
     "port": 27017,
     "username": "root",
     "password": "70uUceCVL1gf"
 }
 netops_api = {
-    "token_url": 'http://10.254.0.111:9999/api/token/',
-    "base_url": 'http://10.254.0.111:9999/api/',
+    "token_url": 'http://{SERVERIP}:9999/api/token/',
+    "base_url": 'http://{SERVERIP}:9999/api/',
     'username': 'adminnetaxe',
     'password': 'netaxeadmin',
 }
