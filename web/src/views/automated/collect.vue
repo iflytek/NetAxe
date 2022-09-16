@@ -244,6 +244,7 @@
                             options: formItem.optionItems as Array<SelectOption>,
                             value: formItem.value.value,
                             placeholder: '请选择厂商',
+                            filterable: true,
                             onUpdateValue: (val) => {
                                 formItem.value.value = val
                             },
@@ -288,6 +289,7 @@
                             options: formItem.optionItems as Array<SelectOption>,
                             value: formItem.value.value,
                             required: true,
+                            filterable: true,
                             placeholder: '请选择Netconf连接类',
                             onUpdateValue: (val) => {
                                 formItem.value.value = val
@@ -305,6 +307,7 @@
                         return h(NSelect, {
                             options: formItem.optionItems as Array<SelectOption>,
                             value: formItem.value.value,
+                            filterable: true,
                             maxTagCount: 3,
                             multiple: true,
                             required: true,
@@ -343,6 +346,7 @@
                         return h(NSelect, {
                             options: formItem.optionItems as Array<SelectOption>,
                             value: formItem.value.value,
+                            filterable: true,
                             placeholder: '请选择供应商',
                             onUpdateValue: (val) => {
                                 formItem.value.value = val
@@ -544,8 +548,9 @@
                 // console.log('commands_value', commands_value.value.replaceAll('\n', ',').split(','))
                 // var commands_array = commands_value.value.replaceAll('\n', ',').split(',')
                 let edit_form = itemDataFormRef.value.generatorParams()
+                console.log('edit_form', edit_form)
                 var post_data = new FormData()
-                post_data.append('netconf_method', JSON.stringify(current_row.value['netconf_method']))
+                post_data.append('netconf_method', JSON.stringify(edit_form['netconf_method']))
                 post_data.append('name', edit_form['name'])
                 post_data.append('vendor', edit_form['vendor'])
                 post_data.append('memo', edit_form['memo'])
@@ -571,13 +576,8 @@
                 edit_modalDialog.value?.toggle()
                 itemFormOptions.forEach((it) => {
                     const key = it.key
-                    //console.log(key)
-                    // if (key === 'netconf_method') {
-                    //     it.value.value = []
-                    // } else {
                     const propName = item[key]
                     it.value.value = propName
-                    // }
 
                 })
                 // 点击编辑获取连接类itemFormOptions[3]
@@ -600,6 +600,28 @@
                     })
                     nextTick(() => {
                         itemFormOptions[3].optionItems.splice(0, 0, {value: '', label: ''})
+                    })
+                })
+                // 根据netconf_class 获取方法
+                get({
+                    url: deviceCollect,
+                    data: () => {
+                        return {
+                            netconf_class: item.netconf_class,
+                            get_method: 1,
+                        }
+                    },
+                }).then((res) => {
+                    itemFormOptions[4].optionItems.length = 0
+                    res.data.forEach((ele) => {
+                        var dict = {
+                            value: ele,
+                            label: ele,
+                        }
+                        itemFormOptions[4].optionItems.push(dict)
+                    })
+                    nextTick(() => {
+                        itemFormOptions[4].optionItems.splice(0, 0, {value: '', label: ''})
                     })
                 })
 
