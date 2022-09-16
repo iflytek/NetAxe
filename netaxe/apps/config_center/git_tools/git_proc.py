@@ -103,7 +103,7 @@ def push_file():
         for file in files:
             print(file)
             repo.index.add(os.path.join(repo.working_tree_dir, file))
-        author = Actor("jmli12", "jmli12@iflytek.com")
+        author = Actor("netaxe", "netaxe@example.com")
         committer = Actor(log_time, "netops@example.com")
         commit = repo.index.commit(f"automation commit by {log_time}", author=author, committer=committer)
         print(commit)
