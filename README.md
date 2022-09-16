@@ -41,13 +41,13 @@ docker-compose 版本 >= 1.18.0
 1. 更新 docker 配置文件
 
 ```shell
-   sudo tee /etc/docker/daemon.json <<-'EOF'
- {
- "registry-mirrors": ["https://tawedu6l.mirror.aliyuncs.com"]
- }
- EOF
- sudo systemctl daemon-reload
- sudo systemctl restart docker
+sudo tee /etc/docker/daemon.json <<-'EOF'
+{
+"registry-mirrors": ["https://tawedu6l.mirror.aliyuncs.com"]
+}
+EOF
+sudo systemctl daemon-reload
+sudo systemctl restart docker
 ```
 
 2. 配置一下网络设备配置备份目录的 git 初始化
