@@ -2,139 +2,85 @@
     <div class="main-container">
         <TableBody>
             <template #header>
-                <TableHeader
-                        :show-filter="false"
-                        title="查询条件"
-                        @search="onSearch"
-                        @reset-search="onResetSearch"
-                >
+                <TableHeader :show-filter="false" title="查询条件" @search="onSearch" @reset-search="onResetSearch">
                     <template #search-content>
 
                     </template>
                     <template #table-config>
-                        <TableConfig @update-border="onUpdateBorder" @refresh="doRefresh"/>
-                        <SortableTable class="ml-4" :columns="tableColumns" @update="onUpdateTable"/>
+                        <TableConfig @update-border="onUpdateBorder" @refresh="doRefresh" />
+                        <SortableTable class="ml-4" :columns="tableColumns" @update="onUpdateTable" />
                     </template>
                     <template #top-right>
                         <n-button type="info" size="small" @click="new_collect_show = true">新建采集方案</n-button>
-                        <n-button type="warning" size="small" @click="chart_show = true"
-                        >采集方案运营数据
-                        </n-button
-                        >
+                        <n-button type="warning" size="small" @click="chart_show = true">采集方案运营数据
+                        </n-button>
                     </template>
                 </TableHeader>
             </template>
             <template #default>
-                <DataForm
-                        ref="searchForm"
-                        :form-config="{
+                <DataForm ref="searchForm" :form-config="{
                 labelWidth: 60,
-              }"
-                        :options="conditionItems"
-                        preset="grid-item"
-                />
+              }" :options="conditionItems" preset="grid-item" />
                 <n-space class="control_button">
                     <n-button type="info" size="small">查询</n-button>
                     <n-button type="warning" size="small">重置</n-button>
                 </n-space>
-                <n-data-table
-                        :loading="tableLoading"
-                        :data="dataList"
-                        :columns="tableColumns"
-                        :single-line="!bordered"
-                        :row-key="rowKey"
-                />
+                <n-data-table :loading="tableLoading" :data="dataList" :columns="tableColumns" :single-line="!bordered"
+                    :row-key="rowKey" />
             </template>
             <template #footer>
-                <TableFooter :pagination="pagination"/>
+                <TableFooter :pagination="pagination" />
             </template>
         </TableBody>
-        <ModalDialog
-                ref="modalDialog"
-                title="采集命令修改"
-                @confirm="changeCommandsConfirm"
-                :style="{ height: '620px', width: '500px' }"
-        >
+        <ModalDialog ref="modalDialog" title="采集命令修改" @confirm="changeCommandsConfirm"
+            :style="{ height: '620px', width: '500px' }">
             <template #content>
                 <!-- <DataForm ref="itemDataFormRef"
                           :form-config="{ labelWidth: 60}"
                           preset="form-item" :options="itemFormOptions"/> -->
-                <v-ace-editor
-                        v-model:value="commands_value"
-                        lang="yaml"
-                        theme="monokai"
-                        style="height: 500px"
-                        :options="ace_option"
-                />
+                <v-ace-editor v-model:value="commands_value" lang="yaml" theme="monokai" style="height: 500px"
+                    :options="ace_option" />
             </template>
         </ModalDialog>
-        <ModalDialog
-                ref="edit_modalDialog"
-                title="编辑采集方案"
-                @confirm="EditConfirm"
-                :style="{ height: '600px', width: '500px' }"
-        >
+        <ModalDialog ref="edit_modalDialog" title="编辑采集方案" @confirm="EditConfirm"
+            :style="{ height: '600px', width: '500px' }">
             <template #content>
-                <DataForm
-                        ref="itemDataFormRef"
-                        :form-config="{ labelWidth: 100 }"
-                        preset="form-item"
-                        :options="itemFormOptions"
-                        label-align="left"
-                />
+                <DataForm ref="itemDataFormRef" :form-config="{ labelWidth: 100 }" preset="form-item"
+                    :options="itemFormOptions" label-align="left" />
             </template>
         </ModalDialog>
-        <n-modal
-                v-model:show="chart_show"
-                preset="dialog"
-                header-style="padding: 10px 20px"
-                title="采集方案运营数据"
-                :style="{ height: '380px', width: '1300px' }"
-        >
+        <n-modal v-model:show="chart_show" preset="dialog" header-style="padding: 10px 20px" title="采集方案运营数据"
+            :style="{ height: '380px', width: '1300px' }">
             <n-grid x-gap="12" :cols="1">
                 <n-gi>
-                    <CollectionPlanChart ref="collectionPlanChart"/>
+                    <CollectionPlanChart ref="collectionPlanChart" />
                 </n-gi>
             </n-grid>
         </n-modal>
-        <n-modal
-                v-model:show="new_collect_show"
-                preset="card"
-                header-style="padding: 10px 20px"
-                title="新建采集方案"
-                :style="{ height: '580px', width: '500px' }"
-        >
+        <n-modal v-model:show="new_collect_show" preset="card" header-style="padding: 10px 20px" title="新建采集方案"
+            :style="{ height: '580px', width: '500px' }">
             <n-form label-align="left" label-placement="left" :model="new_collect_form" label-width="120">
                 <n-form-item label="厂商">
-                    <n-select v-model:value="new_collect_form.vendor"
-                              filterable
-                              placeholder="勾选厂商"
-                              @update:value="get_class_by_vendor()"
-                              :options="vendor_options">
+                    <n-select v-model:value="new_collect_form.vendor" filterable placeholder="勾选厂商"
+                        @update:value="get_class_by_vendor()" :options="vendor_options">
 
                     </n-select>
                 </n-form-item>
                 <n-form-item label="方案名称">
-                    <n-input v-model:value="new_collect_form.name" clearable/>
+                    <n-input v-model:value="new_collect_form.name" clearable />
                 </n-form-item>
                 <n-form-item label="备注">
-                    <n-input v-model:value="new_collect_form.memo" clearable/>
+                    <n-input v-model:value="new_collect_form.memo" clearable />
                 </n-form-item>
                 <n-form-item label="Netconf连接类">
-                    <n-select v-model:value="new_collect_form.netconf_class"
-                              filterable
-                              placeholder="勾选Netconf连接类"
-                              @update:value="select_class_get_method_"
-                              :options="class_options">
+                    <n-select v-model:value="new_collect_form.netconf_class" filterable placeholder="勾选Netconf连接类"
+                        @update:value="select_class_get_method_" :options="class_options">
 
                     </n-select>
                 </n-form-item>
                 <n-form-item label="Netconf方法">
-                    <n-select v-model:value="new_collect_form.netconf_method"
-                              filterable
-                              multiple
-                              placeholder="勾选Netconf方法"
-                              :options="method_options">
+                    <n-select v-model:value="new_collect_form.netconf_method" filterable multiple
+                        placeholder="勾选Netconf方法" :options="method_options">
 
                     </n-select>
                 </n-form-item>
@@ -161,7 +107,7 @@
         useTableColumn,
         usePagination,
     } from '@/hooks/table'
-    import {defineComponent, h, nextTick, onMounted, reactive, ref, shallowReactive} from 'vue'
+    import { defineComponent, h, nextTick, onMounted, reactive, ref, shallowReactive } from 'vue'
     import _ from 'lodash'
     import {
         DataTableColumn,
@@ -174,16 +120,16 @@
         NFormItem,
         NButton,
     } from 'naive-ui'
-    import {DataFormType, ModalDialogType, FormItem, TablePropsType} from '@/types/components'
+    import { DataFormType, ModalDialogType, FormItem, TablePropsType } from '@/types/components'
     import usePost from '@/hooks/usePost'
-    import {renderTag} from '@/hooks/form'
+    import { renderTag } from '@/hooks/form'
     import useGet from '@/hooks/useGet'
     import usePatch from '@/hooks/usePatch'
     import usePut from '@/hooks/usePut'
-    import {sortColumns} from '@/utils'
-    import {Terminal} from 'xterm'
+    import { sortColumns } from '@/utils'
+    import { Terminal } from 'xterm'
     import CollectionPlanChart from './chart/CollectionPlanChart.vue'
-    import {VAceEditor} from 'vue3-ace-editor'
+    import { VAceEditor } from 'vue3-ace-editor'
     import 'ace-builds/src-noconflict/mode-yaml'
     import 'ace-builds/src-noconflict/mode-html'
     import 'ace-builds/src-noconflict/theme-chrome'
@@ -209,17 +155,17 @@
             VAceEditor,
         },
         setup() {
-            const ace_option = ref({fontSize: 14})
+            const ace_option = ref({ fontSize: 14 })
             const commands_value = ref('')
             const vendor_options = [
-                {value: '', label: ''},
-                {value: 'H3C', label: '华三'},
-                {value: 'Huawei', label: '华为'},
-                {value: 'Hillstone', label: '山石网科'},
-                {value: 'Maipu', label: '迈普'},
-                {value: 'Ruijie', label: '锐捷'},
-                {value: 'Centec', label: '盛科'},
-                {value: 'Mellanox', label: 'Mellanox'},
+                { value: '', label: '' },
+                { value: 'H3C', label: '华三' },
+                { value: 'Huawei', label: '华为' },
+                { value: 'Hillstone', label: '山石网科' },
+                { value: 'Maipu', label: '迈普' },
+                { value: 'Ruijie', label: '锐捷' },
+                { value: 'Centec', label: '盛科' },
+                { value: 'Mellanox', label: 'Mellanox' },
             ]
             const class_options = shallowReactive([]) as Array<any>
             const method_options = shallowReactive([]) as Array<any>
@@ -230,14 +176,14 @@
                     label: '厂商',
                     value: ref(null),
                     optionItems: [
-                        {value: '', label: ''},
-                        {value: 'H3C', label: '华三'},
-                        {value: 'Huawei', label: '华为'},
-                        {value: 'Hillstone', label: '山石网科'},
-                        {value: 'Maipu', label: '迈普'},
-                        {value: 'Ruijie', label: '锐捷'},
-                        {value: 'Centec', label: '盛科'},
-                        {value: 'Mellanox', label: 'Mellanox'},
+                        { value: '', label: '' },
+                        { value: 'H3C', label: '华三' },
+                        { value: 'Huawei', label: '华为' },
+                        { value: 'Hillstone', label: '山石网科' },
+                        { value: 'Maipu', label: '迈普' },
+                        { value: 'Ruijie', label: '锐捷' },
+                        { value: 'Centec', label: '盛科' },
+                        { value: 'Mellanox', label: 'Mellanox' },
                     ],
                     render: (formItem) => {
                         return h(NSelect, {
@@ -333,14 +279,14 @@
                     label: '供应商',
                     value: ref(null),
                     optionItems: [
-                        {value: '', label: ''},
-                        {value: 'H3C', label: '华三'},
-                        {value: 'Huawei', label: '华为'},
-                        {value: 'Hillstone', label: '山石网科'},
-                        {value: 'Maipu', label: '迈普'},
-                        {value: 'Ruijie', label: '锐捷'},
-                        {value: 'Centec', label: '盛科'},
-                        {value: 'Mellanox', label: 'Mellanox'},
+                        { value: '', label: '' },
+                        { value: 'H3C', label: '华三' },
+                        { value: 'Huawei', label: '华为' },
+                        { value: 'Hillstone', label: '山石网科' },
+                        { value: 'Maipu', label: '迈普' },
+                        { value: 'Ruijie', label: '锐捷' },
+                        { value: 'Centec', label: '盛科' },
+                        { value: 'Mellanox', label: 'Mellanox' },
                     ],
                     render: (formItem) => {
                         return h(NSelect, {
@@ -364,7 +310,7 @@
             pagination.limit = 10
             pagination.start = 0
             const chart_show = ref(false)
-            const searchForm = ref<DataFormType | null>(null)
+            const searchForm = ref < DataFormType | null > (null)
             const message = useMessage()
             const naiveDailog = useDialog()
             const tableColumns = reactive(
@@ -439,7 +385,7 @@
                             render: (rowData) => {
                                 return h(
                                     NButton,
-                                    {onClick: change_commands.bind(null, rowData), type: 'info', size: 'tiny'},
+                                    { onClick: change_commands.bind(null, rowData), type: 'info', size: 'tiny' },
                                     () => h('span', {}, '修改下发命令'),
                                 )
 
@@ -452,7 +398,7 @@
                             render: (rowData) => {
                                 return h(
                                     NButton,
-                                    {onClick: edit_collect_info.bind(null, rowData), type: 'warning', size: 'tiny'},
+                                    { onClick: edit_collect_info.bind(null, rowData), type: 'warning', size: 'tiny' },
                                     () => h('span', {}, '编辑采集方案'),
                                 )
                             },
@@ -463,10 +409,10 @@
                     } as DataTableColumn,
                 ),
             )
-            const itemDataFormRef = ref<DataFormType | null>(null)
-            const searchDataFormRef = ref<DataFormType | null>(null)
-            const modalDialog = ref<ModalDialogType | null>(null)
-            const edit_modalDialog = ref<ModalDialogType | null>(null)
+            const itemDataFormRef = ref < DataFormType | null > (null)
+            const searchDataFormRef = ref < DataFormType | null > (null)
+            const modalDialog = ref < ModalDialogType | null > (null)
+            const edit_modalDialog = ref < ModalDialogType | null > (null)
             const current_row = ref({
                 name: ref(''),
                 memo: ref(''),
@@ -475,10 +421,10 @@
                 netconf_method: ref(null),
                 id: ref(0),
             })
-            const WebsshmodalDialog = ref<ModalDialogType | null>(null)
-            const show_password_modalDialog = ref<ModalDialogType | null>(null)
-            const account_modalDialog = ref<ModalDialogType | null>(null)
-            const rowData = ref<Object | null>(null)
+            const WebsshmodalDialog = ref < ModalDialogType | null > (null)
+            const show_password_modalDialog = ref < ModalDialogType | null > (null)
+            const account_modalDialog = ref < ModalDialogType | null > (null)
+            const rowData = ref < Object | null > (null)
             const second_password = ref('')
             const get = useGet()
             const post = usePost()
@@ -599,7 +545,7 @@
                         itemFormOptions[3].optionItems.push(dict)
                     })
                     nextTick(() => {
-                        itemFormOptions[3].optionItems.splice(0, 0, {value: '', label: ''})
+                        itemFormOptions[3].optionItems.splice(0, 0, { value: '', label: '' })
                     })
                 })
                 // 根据netconf_class 获取方法
@@ -621,14 +567,14 @@
                         itemFormOptions[4].optionItems.push(dict)
                     })
                     nextTick(() => {
-                        itemFormOptions[4].optionItems.splice(0, 0, {value: '', label: ''})
+                        itemFormOptions[4].optionItems.splice(0, 0, { value: '', label: '' })
                     })
                 })
 
 
             }
 
-            function change_commands(item: any) {
+            function change_commands(item) {
 
                 current_row.value = item
                 modalDialog.value?.toggle()
@@ -661,7 +607,7 @@
                 })
             }
 
-            function rowKey(rowData: any) {
+            function rowKey(rowData) {
                 return rowData.id
             }
 
@@ -685,7 +631,7 @@
                         class_options.push(dict)
                     })
                     nextTick(() => {
-                        class_options.splice(0, 0, {value: '', label: '不启用'})
+                        class_options.splice(0, 0, { value: '', label: '不启用' })
                     })
                 })
             }
