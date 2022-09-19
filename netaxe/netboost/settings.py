@@ -89,8 +89,6 @@ REST_FRAMEWORK = {
     ),
 
 }
-# Restful token 有效时间60 * 8分钟
-REST_FRAMEWORK_TOKEN_EXPIRE_MINUTES = 60 * 8
 ROOT_URLCONF = 'netboost.urls'
 
 TEMPLATES = [
@@ -258,7 +256,6 @@ REST_FRAMEWORK = {
 # Restful token 有效时间60分钟
 REST_FRAMEWORK_TOKEN_EXPIRE_MINUTES = 60 * 8
 
-ROOT_URLCONF = 'netboost.urls'
 DATA_UPLOAD_MAX_MEMORY_SIZE = 30485760
 # api 缓存配置
 REST_FRAMEWORK_EXTENSIONS = {

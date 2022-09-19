@@ -151,7 +151,7 @@ class CiscoProc(BaseConn):
         """
         {'neighbor': 'ic-ofce-sw', 'local_interface': 'Gi0/0/1', 'capabilities': 'B', 'neighbor_interface': 'GigabitEthernet0/0/24'}
         """
-        if not res:
+        if not res or isinstance(res, str):
             return
         if isinstance(res, dict):
             res = [res]
@@ -180,7 +180,7 @@ class CiscoProc(BaseConn):
             self.lldp_datas.append(tmp)
 
     def _cdp_proc(self, res):
-        if not res:
+        if not res or isinstance(res, str):
             return
         if isinstance(res, dict):
             res = [res]
