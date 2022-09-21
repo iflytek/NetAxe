@@ -159,3 +159,83 @@ crontab -e
 */5 * * * * /usr/sbin/ntpdate time1.aliyun.com
 systemctl restart crond.service 
 ```
+## 集群的master上执行
+```shell
+下面要填入master物理网卡的ip，表面master将以这个网卡地址启动
+docker swarm init --advertise-addr 1.1.1.1
+
+将会有如下显示
+docker swarm join --token SWMTKN-1-3yccusxwi29oxrpgfszx8b3v5yo3glt5notowwwjb06dzc49rm-6jh46zylg198hqnu3a2muu9 1.1.1.1:2377
+```
+
+## 集群slave 配置  
+```shell
+执行master上的显示内容
+docker swarm join --token SWMTKN-1-3yccusxwi29oxrpgfszx8b3v5yo3glt5notowwwjb06dzc49rm-6jh46zylg198hqnu3a2muu9 1.1.1.1:2377
+```
+
+## 集群master点执行
+```shell
+查看节点数
+docker node ls
+```
+
+## 启动portainer的平台端(可以不装在集群服务器中，比如其它现有服务器中部署)
+```shell
+docker pull portainer/portainer-ce
+新建一个docker-compose.yml  内容如下，目录路径随意
+version: '3'
+services:
+  portainer:
+    image: portainer/portainer-ce:latest
+    container_name: portainer
+    ports:
+      - 9000:9000
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock 
+      - ./portainer_data:/data
+      - /usr/share/zoneinfo/Asia/Shanghai:/etc/localtime
+    networks:
+      - portna
+networks:
+  portna:
+    driver: bridge
+    ipam:
+      config:
+        - subnet: 11.11.11.0/24
+启动服务
+docker-compose up -d
+```
+
+## portainer-agent-stack.yml 配置  
+在Master中 进行本节配置
+用来向管理平台进行agent服务注册
+这里示例以 /home/portainer 作为agent目录
+```shell
+mkdir -p /home/portainer
+cd /home/portainer
+
+portainer-agent-stack.yml 内容如下
+version: '3.2'
+services:
+  agent:
+    image: portainer/agent:latest
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock
+      - /var/lib/docker/volumes:/var/lib/docker/volumes
+    networks:
+      - agent_network
+    ports:
+      - "9001:9001"
+    deploy:
+      mode: global
+      placement:
+        constraints: [node.platform.os == linux]
+networks:
+  agent_network:
+    driver: overlay
+    attachable: true
+
+执行部署
+docker stack deploy --compose-file=portainer-agent-stack.yml portainer
+```
