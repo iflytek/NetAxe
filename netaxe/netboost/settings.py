@@ -51,9 +51,10 @@ INSTALLED_APPS = [
     'apps.api.apps.ApiConfig',
     'apps.config_center.apps.ConfigCenterConfig',
     'apps.route_backend.apps.RouteBackendConfig',
-    'apps.users.apps.UsersConfig',
     'apps.automation.apps.AutomationConfig',
     'apps.int_utilization.apps.IntUtilizationConfig',
+
+    'apps.users.apps.UsersConfig',
     'apps.system.apps.SystemConfig',
 ]
 
@@ -65,6 +66,7 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
+    "utils.custom.middleware.ApiLoggingMiddleware",
 ]
 REST_FRAMEWORK = {
     # # 全局配置异常模块
@@ -209,7 +211,8 @@ MEDIA_URL = '/media/'
 
 STATICFILES_FINDERS = (
     'django.contrib.staticfiles.finders.FileSystemFinder',
-    'django.contrib.staticfiles.finders.AppDirectoriesFinder',  # causes verbose duplicate notifications in django 1.9
+    # causes verbose duplicate notifications in django 1.9
+    'django.contrib.staticfiles.finders.AppDirectoriesFinder',
 )
 # Default primary key field type
 # https://docs.djangoproject.com/en/4.0/ref/settings/#default-auto-field
@@ -224,15 +227,13 @@ SIMPLE_JWT = {
 
 # restful api 配置
 REST_FRAMEWORK = {
-    # # 全局配置异常模块
-    # 'EXCEPTION_HANDLER': 'apps.api.exception.custom_exception_handler',
-    # # 修改默认返回JSON的renderer的类
-    # 'DEFAULT_RENDERER_CLASSES': (
-    #     'apps.api.rendererresponse.customrenderer',
-    # ),
-    # 'DEFAULT_FILTER_BACKENDS': [
-    #     'django_filters.rest_framework.DjangoFilterBackend'
-    # ],
+    "DATETIME_FORMAT": "%Y-%m-%d %H:%M:%S",  # 日期时间格式配置
+    "DATE_FORMAT": "%Y-%m-%d",
+    "DEFAULT_FILTER_BACKENDS": (
+        'django_filters.rest_framework.DjangoFilterBackend',
+        "rest_framework.filters.SearchFilter",
+        "rest_framework.filters.OrderingFilter",
+    ),
     'DEFAULT_PERMISSION_CLASSES': (
         # 'rest_framework.permissions.DjangoModelPermissions',
         'rest_framework.permissions.IsAuthenticated',
@@ -240,22 +241,20 @@ REST_FRAMEWORK = {
     ),
     'DEFAULT_AUTHENTICATION_CLASSES': (
         'rest_framework_simplejwt.authentication.JWTAuthentication',
-        'apps.api.authentication.ExpiringTokenAuthentication',
         'rest_framework.authentication.SessionAuthentication',
         'rest_framework.authentication.BasicAuthentication',
+        'apps.api.authentication.ExpiringTokenAuthentication',
     ),
+    # 'EXCEPTION_HANDLER': 'apps.api.tools.custom_exception.custom_exception_handler',
+    "EXCEPTION_HANDLER": "utils.exception.CustomExceptionHandler",  # 自定义的异常处理
     # 下面控制分页
-    # 'DEFAULT_PAGINATION_CLASS': 'rest_framework.pagination.PageNumberPagination',
     'DEFAULT_PAGINATION_CLASS': 'apps.api.tools.custom_pagination.LargeResultsSetPagination',
     'PAGE_SIZE': 10,
-    'EXCEPTION_HANDLER': 'apps.api.tools.custom_exception.custom_exception_handler',
-    # 'DEFAULT_FILTER_BACKENDS': ('django_filters.rest_framework.DjangoFilterBackend',)
     'DEFAULT_SCHEMA_CLASS': 'rest_framework.schemas.AutoSchema'
-
 }
 # Restful token 有效时间60分钟
 REST_FRAMEWORK_TOKEN_EXPIRE_MINUTES = 60 * 8
-
+# 设置上传请求的最大字节
 DATA_UPLOAD_MAX_MEMORY_SIZE = 30485760
 # api 缓存配置
 REST_FRAMEWORK_EXTENSIONS = {
@@ -283,14 +282,14 @@ CACHES = {
         }
     }
 }
-
+# 认证配置
 AUTHENTICATION_BACKENDS = (
-    "django.contrib.auth.backends.ModelBackend",
+    # "django_auth_ldap.backend.LDAPBackend",
+    "utils.custom.backends.CustomBackend",
     "guardian.backends.ObjectPermissionBackend",  # 这是guardian的
 )
-
 # ================================================= #
-# **************** 验证码配置  ******************* #
+# **************** 验证码配置  ********************* #
 # ================================================= #
 # 验证码配置
 MULTI_CAPTCHA_ADMIN = {
