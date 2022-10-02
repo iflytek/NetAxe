@@ -25,9 +25,9 @@ services:
     networks:
       - netops-databases
 
-  mongo-db:
+  mongodb:
     image: registry.cn-hangzhou.aliyuncs.com/netaxe/mongo:latest
-    container_name: mongo-db
+    container_name: mongodb
     restart: always
     ports:
       - "27017:27017"
@@ -52,7 +52,7 @@ services:
     container_name: mongo-express
     restart: always
     depends_on:
-      - mongo-db
+      - mongodb
     ports:
       - 27018:8081
     environment:
