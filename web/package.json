@@ -1,5 +1,5 @@
 {
-  "name": "admin-work",
+  "name": "netaxe-web",
   "version": "1.0.0",
   "scripts": {
     "dev": "vite",
