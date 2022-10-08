@@ -33,76 +33,6 @@ from .tasks import get_tasks
 from netboost.celery import app
 
 
-class MenuListByRoleId(APIView):
-
-    def get(self, request):
-        """
-
-        :param request:
-        :return:
-        """
-        # get_param = request.GET.dict()
-        return JsonResponse({'code': 200})
-
-    def post(self, request):
-        navigate = []
-        res = NavigationProfile.objects.all().order_by('showOrder')
-        for i in res:
-            tmp = {
-                "menuUrl": i.menuUrl,
-                "menuName": i.menuName,
-                "iconPrefix": i.iconPrefix,
-                "icon": i.icon,
-                "parentPath": "",
-                "children": []
-            }
-            if i.badge:
-                tmp['badge'] = i.badge
-            # 二级菜单
-            sub_q = i.sub_profile.all().order_by('showOrder')
-            if sub_q:
-                for sub in sub_q:
-                    sub_tmp = {
-                        "parentPath": i.menuUrl,
-                        "menuUrl": sub.menuUrl,
-                        "menuName": sub.menuName,
-                    }
-                    if sub.badge:
-                        sub_tmp["badge"] = sub.badge
-                    if sub.cacheable:
-                        sub_tmp["cacheable"] = sub.cacheable
-                    third_q = sub.sub_on.all().order_by('showOrder')
-                    if third_q:
-                        sub_tmp["children"] = []
-                        for third in third_q:
-                            third_tmp = {
-                                "parentPath": sub.menuUrl,
-                                "menuUrl": third.menuUrl,
-                                "menuName": third.menuName,
-                            }
-                            if third.cacheable:
-                                third_tmp["cacheable"] = third.cacheable
-                            fourth_q = third.sub_on.all().order_by('showOrder')
-                            if fourth_q:
-                                third_tmp["children"] = []
-                                for fourth in fourth_q:
-                                    fourth_tmp = {
-                                        "parentPath": third.menuUrl,
-                                        "menuUrl": fourth.menuUrl,
-                                        "menuName": fourth.menuName,
-                                    }
-                                    third_tmp["children"].append(fourth_tmp)
-                            sub_tmp["children"].append(third_tmp)
-                    tmp["children"].append(sub_tmp)
-            navigate.append(tmp)
-        data = {
-            "code": 200,
-            "data": navigate,
-            "msg": "获取菜单列表成功"
-        }
-        return JsonResponse(data)
-
-
 class DashboardChart(APIView):
     def get(self, request):
         get_params = request.GET.dict()
@@ -116,24 +46,6 @@ class DashboardChart(APIView):
                 "data": idc_dimension_data
             }
             return JsonResponse(result, safe=False)
-
-
-class CaptchaView(View):
-    """
-    获取图片验证码
-    """
-    def get(self, request):
-        hashkey = CaptchaStore.generate_key()
-        id = CaptchaStore.objects.filter(hashkey=hashkey).first().id
-        imgage = captcha_image(request, hashkey)
-        # 将图片转换为base64
-        image_base = base64.b64encode(imgage.content)
-        json_data = {"key": id, "image_base": "data:image/png;base64," + image_base.decode('utf-8')}
-        result = {
-            'code': 200,
-            'data': json_data
-        }
-        return JsonResponse(data=result)
 
 
 class WebSshView(APIView):

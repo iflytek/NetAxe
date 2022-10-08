@@ -6,9 +6,9 @@
 @Created on: 2021/6/3 003 0:30
 @Remark: 按钮权限管理
 """
-from system.models import LoginLog
-from utils.serializers import CustomModelSerializer
-from utils.viewset import CustomModelViewSet
+from apps.system.models import LoginLog
+from utils.custom.serializers import CustomModelSerializer
+from utils.custom.viewset import CustomModelViewSet
 
 
 class LoginLogSerializer(CustomModelSerializer):

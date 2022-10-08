@@ -1,4 +1,3 @@
-from rest_framework.decorators import action
 from django.utils.translation import gettext_lazy as _
 from rest_framework import serializers, status
 from rest_framework.views import APIView
@@ -6,11 +5,11 @@ from rest_framework_simplejwt.serializers import TokenObtainPairSerializer
 from rest_framework_simplejwt.views import TokenObtainPairView
 
 
-from system.models import Users
+from apps.users.models import UserProfile
 from utils.crypt_pwd import CryptPwd
-from utils.json_response import DetailResponse, Response, SuccessResponse
-from utils.request_util import save_login_log
-from utils.viewset import CustomModelViewSet
+from utils.custom.json_response import DetailResponse, Response, SuccessResponse
+from utils.custom.request_util import save_login_log
+from utils.custom.viewset import CustomModelViewSet
 
 
 class LoginSerializer(TokenObtainPairSerializer):
@@ -22,7 +21,7 @@ class LoginSerializer(TokenObtainPairSerializer):
     captcha = serializers.CharField(max_length=6, required=False, allow_null=True, allow_blank=True)
 
     class Meta:
-        model = Users
+        model = UserProfile
         fields = "__all__"
         read_only_fields = ["id"]
 
@@ -31,15 +30,12 @@ class LoginSerializer(TokenObtainPairSerializer):
     def validate(self, attrs):
         data = super().validate(attrs)
         refresh = self.get_token(self.user)
-
-        data['token'] = str(refresh.access_token)
         data["username"] = self.user.username
-        data["userId"] = self.user.id
+        data['token'] = str(refresh.access_token)
         data["isSuperuser"] = self.user.is_superuser
-        data["avatar"] = self.user.avatar
+        # 记录登录日志
         request = self.context.get("request")
         request.user = self.user
-        # 记录登录日志
         save_login_log(request=request)
         return {"code": 200, "msg": "请求成功", "data": data}
 
@@ -68,7 +64,7 @@ class LogoutView(APIView):
     def post(self, request):
         return DetailResponse(msg="注销成功")
 
-class LoginViewSet(CustomModelViewSet):
+class LoginViewSet(APIView):
 
-    def login_status(self, request, *args, **kwargs):
+    def get(self, request, *args, **kwargs):
         return SuccessResponse(data="已登录")

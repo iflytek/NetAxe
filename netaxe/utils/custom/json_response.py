@@ -20,11 +20,11 @@ class SuccessResponse(Response):
                  content_type=None,page=1,limit=1,total=1):
         std_data = {
             "code": 200,
-            "data": data,
             "msg": msg,
+            "results": data,
+            "count": total,
             "page": page,
             "limit": limit,
-            "total": total,
         }
         super().__init__(std_data, status, template_name, headers, exception, content_type)
 
@@ -39,8 +39,8 @@ class DetailResponse(Response):
                  content_type=None,):
         std_data = {
             "code": 200,
-            "data": data,
-            "msg": msg
+            "msg": msg,
+            "results": data,
         }
         super().__init__(std_data, status, template_name, headers, exception, content_type)
 
@@ -55,7 +55,7 @@ class ErrorResponse(Response):
                  exception=False, content_type=None):
         std_data = {
             "code": code,
-            "data": data,
-            "msg": msg
+            "msg": msg,
+            "results": data,
         }
         super().__init__(std_data, status, template_name, headers, exception, content_type)

@@ -2,16 +2,14 @@
 Request工具类
 """
 import json
-
 import requests
+from user_agents import parse
 from django.conf import settings
 from django.contrib.auth.models import AbstractBaseUser
 from django.contrib.auth.models import AnonymousUser
 from django.urls.resolvers import ResolverMatch
 from rest_framework_simplejwt.authentication import JWTAuthentication
-from user_agents import parse
-
-from system.models import LoginLog
+from apps.system.models import LoginLog
 
 
 def get_request_user(request):
@@ -41,7 +39,8 @@ def get_request_ip(request):
     if x_forwarded_for:
         ip = x_forwarded_for.split(',')[-1].strip()
         return ip
-    ip = request.META.get('REMOTE_ADDR', '') or getattr(request, 'request_ip', None)
+    ip = request.META.get('REMOTE_ADDR', '') or getattr(
+        request, 'request_ip', None)
     return ip or 'unknown'
 
 
@@ -191,7 +190,8 @@ def get_ip_analysis(ip):
     if ip != 'unknown' and ip:
         if getattr(settings, 'ENABLE_LOGIN_ANALYSIS_LOG', True):
             try:
-                res = requests.get(url='https://ip.django-vue-admin.com/ip/analysis', params={"ip": ip}, timeout=5)
+                res = requests.get(
+                    url='https://ip.django-vue-admin.com/ip/analysis', params={"ip": ip}, timeout=5)
                 if res.status_code == 200:
                     res_data = res.json()
                     if res_data.get('code') == 0:

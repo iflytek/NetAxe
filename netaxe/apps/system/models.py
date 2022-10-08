@@ -1,5 +1,5 @@
 from django.db import models
-from utils.custom.models import CoreModel, table_prefix
+from utils.custom.models import CoreModel
 
 
 STATUS_CHOICES = (
@@ -18,7 +18,7 @@ class Post(CoreModel):
     status = models.IntegerField(choices=STATUS_CHOICES, default=1, verbose_name="岗位状态", help_text="岗位状态")
 
     class Meta:
-        db_table = table_prefix + "system_post"
+        db_table = "system_post"
         verbose_name = "岗位表"
         verbose_name_plural = verbose_name
         ordering = ("sort",)
@@ -44,7 +44,7 @@ class Role(CoreModel):
     permission = models.ManyToManyField(to="MenuButton", verbose_name="关联菜单的接口按钮", db_constraint=False, help_text="关联菜单的接口按钮")
 
     class Meta:
-        db_table = table_prefix + "system_role"
+        db_table = "system_role"
         verbose_name = "角色表"
         verbose_name_plural = verbose_name
         ordering = ("sort",)
@@ -70,7 +70,7 @@ class Dept(CoreModel):
     )
 
     class Meta:
-        db_table = table_prefix + "system_dept"
+        db_table = "system_dept"
         verbose_name = "部门表"
         verbose_name_plural = verbose_name
         ordering = ("sort",)
@@ -104,7 +104,7 @@ class Menu(CoreModel):
     visible = models.BooleanField(default=True, blank=True, verbose_name="侧边栏中是否显示", help_text="侧边栏中是否显示")
 
     class Meta:
-        db_table = table_prefix + "system_menu"
+        db_table = "system_menu"
         verbose_name = "菜单表"
         verbose_name_plural = verbose_name
         ordering = ("sort",)
@@ -131,7 +131,7 @@ class MenuButton(CoreModel):
     method = models.IntegerField(default=0, verbose_name="接口请求方法", null=True, blank=True, help_text="接口请求方法")
 
     class Meta:
-        db_table = table_prefix + "system_menu_button"
+        db_table = "system_menu_button"
         verbose_name = "菜单权限表"
         verbose_name_plural = verbose_name
         ordering = ("-name",)
@@ -151,7 +151,7 @@ class OperationLog(CoreModel):
     status = models.BooleanField(default=False, verbose_name="响应状态", help_text="响应状态")
 
     class Meta:
-        db_table = table_prefix + "system_operation_log"
+        db_table = "system_operation_log"
         verbose_name = "操作日志"
         verbose_name_plural = verbose_name
         ordering = ("-create_datetime",)
@@ -176,7 +176,7 @@ class Area(CoreModel):
     )
 
     class Meta:
-        db_table = table_prefix + "system_area"
+        db_table = "system_area"
         verbose_name = "地区表"
         verbose_name_plural = verbose_name
         ordering = ("code",)
@@ -197,7 +197,7 @@ class ApiWhiteList(CoreModel):
     enable_datasource = models.BooleanField(default=True, verbose_name="激活数据权限", help_text="激活数据权限", blank=True)
 
     class Meta:
-        db_table = table_prefix + "api_white_list"
+        db_table = "api_white_list"
         verbose_name = "接口白名单"
         verbose_name_plural = verbose_name
         ordering = ("-create_datetime",)
@@ -224,7 +224,7 @@ class LoginLog(CoreModel):
     login_type = models.IntegerField(default=1, choices=LOGIN_TYPE_CHOICES, verbose_name="登录类型", help_text="登录类型")
 
     class Meta:
-        db_table = table_prefix + "system_login_log"
+        db_table = "system_login_log"
         verbose_name = "登录日志"
         verbose_name_plural = verbose_name
         ordering = ("-create_datetime",)

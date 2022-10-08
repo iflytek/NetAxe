@@ -34,6 +34,7 @@ export default ({ mode }) => {
     server: {
       open: true,
       port: 5005,
+      host:"0.0.0.0",
       proxy: {
         '/api': {
           target: env.VITE_BASIC_URL,

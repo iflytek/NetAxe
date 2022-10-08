@@ -5,18 +5,17 @@
 2. 修改此文件中对应json名
 3. 右击执行此py文件进行初始化
 """
-import json
 import os
-
+import json
 import django
 import pypinyin
+from apps.system.models import Area
+from netboost.settings import BASE_DIR
 from django.core.management import BaseCommand
 
 
-os.environ.setdefault('DJANGO_SETTINGS_MODULE', 'application.settings')
+os.environ.setdefault('DJANGO_SETTINGS_MODULE', 'netboost.settings')
 django.setup()
-from application.settings import BASE_DIR
-from system.models import Area
 
 area_code_list = []
 
@@ -29,7 +28,8 @@ def area_list(code_list, pcode=None, depth=1):
         code = code_dict.get('code', None)
         name = code_dict.get('name', None)
         children = code_dict.get('children', None)
-        pinyin = ''.join([''.join(i) for i in pypinyin.pinyin(name, style=pypinyin.NORMAL)])
+        pinyin = ''.join([''.join(i)
+                         for i in pypinyin.pinyin(name, style=pypinyin.NORMAL)])
         area_code_list.append(
             {
                 "name": name,
@@ -45,7 +45,7 @@ def area_list(code_list, pcode=None, depth=1):
 
 
 def main():
-    with open(os.path.join(BASE_DIR, 'system', 'management', 'commands', 'pca-code.json'), 'r', encoding="utf-8") as load_f:
+    with open(os.path.join(BASE_DIR, 'apps','system', 'management', 'commands', 'pca-code.json'), 'r', encoding="utf-8") as load_f:
         code_list = json.load(load_f)
     area_list(code_list)
     if Area.objects.count() == 0:
@@ -58,7 +58,7 @@ def main():
 
 class Command(BaseCommand):
     """
-    项目初始化命令: python manage.py init
+    项目初始化命令: python manage.py init_area
     """
 
     def add_arguments(self, parser):

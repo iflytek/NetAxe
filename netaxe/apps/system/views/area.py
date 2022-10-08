@@ -1,9 +1,9 @@
 # -*- coding: utf-8 -*-
 from rest_framework import serializers
 
-from system.models import Area
-from utils.serializers import CustomModelSerializer
-from utils.viewset import CustomModelViewSet
+from apps.system.models import Area
+from utils.custom.serializers import CustomModelSerializer
+from utils.custom.viewset import CustomModelViewSet
 
 
 class AreaSerializer(CustomModelSerializer):

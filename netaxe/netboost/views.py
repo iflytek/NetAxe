@@ -10,24 +10,8 @@
                     2022/7/29 14:49
 -------------------------------------------------
 """
-import base64
-import datetime
-
-from captcha.helpers import captcha_image_url
-# from io import BytesIO
-from captcha.models import CaptchaStore
 from django.conf import settings
 from django.contrib import admin
-from django.contrib import auth
-from django.contrib.auth.models import Group
-from django.http import HttpResponseRedirect, HttpResponse, JsonResponse
-from django.shortcuts import redirect, render
-from django.views.decorators.csrf import csrf_exempt
-from ratelimit.decorators import ratelimit
-from rest_framework import status
-from rest_framework.authtoken.models import Token
-# from rest_framework.authtoken.views import ObtainAuthToken
-from rest_framework.response import Response
 
 
 EXPIRE_MINUTES = getattr(settings, 'REST_FRAMEWORK_TOKEN_EXPIRE_MINUTES', 1)

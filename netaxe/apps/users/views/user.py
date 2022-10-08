@@ -4,12 +4,12 @@ from rest_framework import serializers
 from rest_framework.decorators import action
 from rest_framework.permissions import IsAuthenticated
 
-from users.models import Users
-from system.views.role import RoleSerializer
-from utils.json_response import ErrorResponse, DetailResponse
-from utils.serializers import CustomModelSerializer
-from utils.validator import CustomUniqueValidator
-from utils.viewset import CustomModelViewSet
+from apps.users.models import UserProfile
+from apps.system.views.role import RoleSerializer
+from utils.custom.json_response import ErrorResponse, DetailResponse
+from utils.custom.serializers import CustomModelSerializer
+from utils.custom.validator import CustomUniqueValidator
+from utils.custom.viewset import CustomModelViewSet
 
 
 class UserSerializer(CustomModelSerializer):
@@ -18,13 +18,9 @@ class UserSerializer(CustomModelSerializer):
     """
     dept_name = serializers.CharField(source='dept.name', read_only=True)
     role_info = DynamicSerializerMethodField()
-    nick_name = serializers.SerializerMethodField()
-
-    def get_nick_name(self, instance):
-        return instance.last_name+instance.first_name
 
     class Meta:
-        model = Users
+        model = UserProfile
         read_only_fields = ["id"]
         exclude = ["password"]
         extra_kwargs = {
@@ -52,7 +48,7 @@ class UserCreateSerializer(CustomModelSerializer):
         max_length=50,
         validators=[
             CustomUniqueValidator(
-                queryset=Users.objects.all(), message="账号必须唯一")
+                queryset=UserProfile.objects.all(), message="账号必须唯一")
         ],
     )
     password = serializers.CharField(
@@ -76,7 +72,7 @@ class UserCreateSerializer(CustomModelSerializer):
         return data
 
     class Meta:
-        model = Users
+        model = UserProfile
         fields = "__all__"
         read_only_fields = ["id"]
         extra_kwargs = {
@@ -93,7 +89,7 @@ class UserUpdateSerializer(CustomModelSerializer):
         max_length=50,
         validators=[
             CustomUniqueValidator(
-                queryset=Users.objects.all(), message="账号必须唯一")
+                queryset=UserProfile.objects.all(), message="账号必须唯一")
         ],
     )
     # password = serializers.CharField(required=False, allow_blank=True)
@@ -101,7 +97,7 @@ class UserUpdateSerializer(CustomModelSerializer):
         max_length=50,
         validators=[
             CustomUniqueValidator(
-                queryset=Users.objects.all(), message="手机号必须唯一")
+                queryset=UserProfile.objects.all(), message="手机号必须唯一")
         ],
         allow_blank=True
     )
@@ -115,7 +111,7 @@ class UserUpdateSerializer(CustomModelSerializer):
         return data
 
     class Meta:
-        model = Users
+        model = UserProfile
         read_only_fields = ["id", "password"]
         fields = "__all__"
         extra_kwargs = {
@@ -133,30 +129,30 @@ class UserViewSet(CustomModelViewSet):
     destroy:删除
     """
 
-    queryset = Users.objects.exclude(is_superuser=1).all()
+    queryset = UserProfile.objects.exclude(is_superuser=1).all()
     serializer_class = UserSerializer
     create_serializer_class = UserCreateSerializer
     update_serializer_class = UserUpdateSerializer
-    filter_fields = {
-        "name": ["icontains"],
+    filterset_fields = {
         "username": ["exact"],
+        "nick_name": ["icontains"],
         "gender": ["icontains"],
         "is_active": ["icontains"],
         "dept": ["exact"],
         "user_type": ["exact"],
     }
-    search_fields = ["username", "name", "gender", "dept__name", "role__name"]
+    search_fields = ["username", "nick_name", "gender", "dept__name", "role__name"]
 
     @action(methods=["GET"], detail=False, permission_classes=[IsAuthenticated])
     def user_info(self, request):
         """获取当前用户信息"""
         user = request.user
         result = {
-            "name": user.name,
+            "nick_name": user.nick_name,
             "mobile": user.mobile,
             "gender": user.gender,
             "email": user.email,
-            "avatar": user.avatar,
+            "image": user.image,
         }
         return DetailResponse(data=result, msg="获取成功")
 
@@ -164,13 +160,13 @@ class UserViewSet(CustomModelViewSet):
     def update_user_info(self, request):
         """修改当前用户信息"""
         user = request.user
-        Users.objects.filter(id=user.id).update(**request.data)
+        UserProfile.objects.filter(id=user.id).update(**request.data)
         return DetailResponse(data=None, msg="修改成功")
 
     @action(methods=["PUT"], detail=True, permission_classes=[IsAuthenticated])
     def change_password(self, request, *args, **kwargs):
         """密码修改"""
-        instance = Users.objects.filter(id=kwargs.get("pk")).first()
+        instance = UserProfile.objects.filter(id=kwargs.get("pk")).first()
         data = request.data
         old_pwd = data.get("oldPassword")
         new_pwd = data.get("newPassword")
@@ -190,7 +186,7 @@ class UserViewSet(CustomModelViewSet):
     @action(methods=["PUT"], detail=True, permission_classes=[IsAuthenticated])
     def reset_to_default_password(self, request, *args, **kwargs):
         """恢复默认密码"""
-        instance = Users.objects.filter(id=kwargs.get("pk")).first()
+        instance = UserProfile.objects.filter(id=kwargs.get("pk")).first()
         if instance:
             instance.set_password("123456")
             instance.save()
@@ -203,7 +199,7 @@ class UserViewSet(CustomModelViewSet):
         """
         密码重置
         """
-        instance = Users.objects.filter(id=pk).first()
+        instance = UserProfile.objects.filter(id=pk).first()
         data = request.data
         new_pwd = data.get("newPassword")
         new_pwd2 = data.get("newPassword2")

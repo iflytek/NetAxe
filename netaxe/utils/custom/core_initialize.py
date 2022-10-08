@@ -5,8 +5,8 @@ import os
 from django.apps import apps
 from rest_framework import request
 
-from application import settings
-from system.models import Users
+from netboost import settings
+from apps.users.models import UserProfile
 
 
 class CoreInitialize:
@@ -26,7 +26,7 @@ class CoreInitialize:
         self.reset = reset or self.reset
         self.creator_id = creator_id or self.creator_id
         self.app = app or ''
-        self.request.user = Users.objects.order_by('create_datetime').first()
+        self.request.user = UserProfile.objects.first()
 
     def init_base(self, Serializer, unique_fields=None):
         model = Serializer.Meta.model

@@ -9,19 +9,19 @@
 from rest_framework import serializers
 from rest_framework.decorators import action
 
-from system.models import Menu
-from utils.json_response import SuccessResponse
-from utils.serializers import CustomModelSerializer
-from utils.viewset import CustomModelViewSet
+from apps.system.models import Menu
+from utils.custom.json_response import SuccessResponse
+from utils.custom.serializers import CustomModelSerializer
+from utils.custom.viewset import CustomModelViewSet
 
 class MenuSerializer(CustomModelSerializer):
     """
     菜单表的简单序列化器
     """
-    menuPermission = serializers.SerializerMethodField(read_only=True)
-    iconPrefix = serializers.SerializerMethodField()
     children = serializers.SerializerMethodField()
     parentPath = serializers.SerializerMethodField()
+    iconPrefix = serializers.SerializerMethodField()
+    menuPermission = serializers.SerializerMethodField(read_only=True)
 
     def get_children(self, data):
         queryset = Menu.objects.filter(parent_id=data.id).all()
@@ -37,15 +37,16 @@ class MenuSerializer(CustomModelSerializer):
         else:
             return ""
 
+    
+    def get_iconPrefix(self, instance):
+        return "iconfont"
+
     def get_menuPermission(self, instance):
         queryset = instance.menuPermission.order_by('-name').values_list('name', flat=True)
         if queryset:
             return queryset
         else:
             return None
-
-    def get_iconPrefix(self, instance):
-        return "iconfont"
 
     class Meta:
         model = Menu
@@ -114,7 +115,7 @@ class MenuViewSet(CustomModelViewSet):
     create_serializer_class = MenuCreateSerializer
     update_serializer_class = MenuCreateSerializer
     search_fields = ['name', 'status']
-    filter_fields = {
+    filterset_fields = {
         "parent": ["isnull"],
         "name": ["icontains"],
     }

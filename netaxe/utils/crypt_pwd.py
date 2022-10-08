@@ -4,16 +4,15 @@
    File Name：      crypt_pwd
    Description:
    Author:          lijiamin
-   date：           2022/5/24
+   date：           2019/5/24
 -------------------------------------------------
    Change Activity:
-                    2022/7/24:
+                    2019/5/24:
 -------------------------------------------------
 """
-import base64
-import re
-from Crypto.Cipher import AES, PKCS1_v1_5
+import base64, re
 from Crypto.PublicKey import RSA
+from Crypto.Cipher import AES, PKCS1_v1_5
 
 
 class CryptPwd:
@@ -22,7 +21,7 @@ class CryptPwd:
     """
 
     def __init__(self):
-        self.key = "1daff23r32sfaasdfa#$%"
+        self.key = "1daff23r32sfa#$%"
         self.mode = AES.MODE_ECB
 
     @staticmethod
@@ -72,21 +71,35 @@ class CryptPwd:
         :return:
         """
 
-        key = """-----BEGIN RSA PRIVATE KEY-----
-MIICWwIBAAKBgGhvDNv1H/3EGeNcS+ju3Ytx7QlWtvUi3KqV5U73md9G4Gyw+izQ
-uvYYnZ/rDZrHocLB2fVcSZKKj8vNxkkpNqv00OJCGbwzGcOtXOpsRpiY2qhd0kvR
-wglnN84h9kWq8C6oMe/eWwZkpsCQJMmtiHeHdzSUxHkf4mpwxUfVDqF5AgMBAAEC
-gYBKjjUs9qN/JDejJCohQh4xxgSGLTzyZpAIzHhnVsaoKs5faj1AL0e6Fzq4hzMw
-M6LdCk2TJ+5ySq97vQz5AA5B5nf0y4zokCwYn5vdFVVtZeyiVeY0LYSpEvBS0xHY
-G3SJWLjMEtql2k1xJ8/1jvFkMx5SJKzruFFTvkRKn4bRAQJBANAuL2HZDjgcqgeF
-M7pQOKR+MxJzkN0hWBap1yJ5HQnUPqsEyBD3/BIcffCk2rQkfxnMT7gbnbiWVUd7
-/Ioh+FkCQQCAbClrx7wQW26JMjRqSBVyHWm1RoYDi0/USs7B9mct2KNGkPVr8dAB
-nm/glt5Rs9ay2QHbI103TjSPP938xs4hAkB6oup4utQcjA5B1d8uH3nutQVDFl89
-VRo+Z5j7jttjYev09SEileOhi7VJIORRgLp7KRfBPkuAZNciAFE50l8pAkBYE9bE
-yRQ+07aX+grg6ddrkKizX08Cl0WFAFmVxf02AGLbPwhTpGFY+uUYT+DigEk8GIGh
-XjvMdqKtrMv/VgqBAkEAjqQqCyiK1R9INladDpt8PjAJZecr1PLVdulyzlHvMm2l
-CHd72qhDwZUKVQck56xLGpPVPBGyyMl+cjRhZ+mnIQ==
------END RSA PRIVATE KEY-----"""
+        key = """-----BEGIN PRIVATE KEY-----
+MIIEvAIBADANBgkqhkiG9w0BAQEFAASCBKYwggSiAgEAAoIBAQCpWjOC7g8/3U2X
+4qAbs/TRkfAYO+R+PHiG0xNUHAziyjPqgL5TFE48hjuwiAQL1Y7qeO7q8sl0d6nC
+bqkFYx8z7DUIWN83o7Kmo0PgvilN1NZ2WGTAwwEvZraAPFx6vILU+OzAKOKpa7Wy
+pe5g6QMOgeCiuT1BmQe1UvSke+6lhDRUXKelAV05zyCev+E9RRWTVyn1ZJ5EVAZe
+Gp8j/EFppnnIEws0roQBl6n7VeyPa7/c0ja2XCWOVlkAB6oS7aE57IYoFoHlJr12
+68xNHzeUT6SiDNlt2L89d4YCm46iwhNedl4u8UqukiItvOr5POEsAcLs5ut7ZPOa
+V2KcFCdBAgMBAAECggEAU6AxE5ROf3DeYgQMn+FrIRl5f94DZLqjoaAVSVFYo5zJ
+qiDM2uWKBKUcUH250cYw/mOdRvOAuzxj3ZkbaYea3t7jCS4pe6YgD91LJW2Bo+dX
+x7S6e91PdoK31/b2i70Ote/9qJ4H3zVK0d7SKZSmZ8GGlZP3Ra81eTpvh9GS9LPX
+23lLRG7ozY6e94yFR8hCRYyUES6l/hPjhb22bOcQEd51tCUskXlCcpzNCV31nLOD
+eE8VnzLq1Yn9/2tUkE18yBdHU9VGNBA9grK0L1lzflMtfP1HQ4O1vnRHWoKGA0ql
+zeJ7VlNNexmT/kNRpaDs2a+8yW07qxNfcF4N8mSlKQKBgQDbxidhjh9NG5EmmMJs
+Lqms2olkPmEUh7fDrSQs9b/Dn0ZgdNXDyvKFFYFvTcXju9Ol1gI25Tg0Y0eA9922
+Jz31ZoOj6jSHafxO5+R6y1Q7wZmvzCfOSOgcp1Rd4tTrdjIh2FHFjG37C5pjoZSn
+4GYp8p4V/2yROzYDqSqQjrJXxwKBgQDFRGTXfJxgnJ//5EOBlbzy/8k4Ch2yXAIW
+eXPnygu5KNKdaPyAhZSqVAVl/p8m0WblnOsBnkmQb1G1Clo9HJKhi6Uig4Wpl+zD
+z4+T8GaLjxIRYBXVZN1zN48e9R+YSmlMwndcttZ/4zVj5O86X0T3+Yv/4kbIfTp7
+iHWwjj1YtwKBgQCN+JO4EXdm+EfsBwKRoBM79nCKsUFFYeb0IQUdhiM628k6xj7R
+HGlOT3Yt0K/lTZCLsJP9olWMghXO2k//O5pqzK59VO5aC71Ru7t9F5xyfb4qMlgE
+ilRnLjDx9XZWJSR9eKBaXT0uz3AMrHS7fdqBfplg3H/l0boy4zT77TKIQQKBgQC0
+Kg3rnLx5pDKhFAnvfSGP0bsl+l86+btSaWRJSwe/+R+6chtDCj1H/urbR1x1qIRQ
+qysbVESdrH20Whsme0UUU6TjS7m0tbOg9p2MIOCXD3kR826dcbyrMQ/+1yMfBL79
+QxKe08I+FPY7IOi4qDAmRnztm+zHyU+zaWMLeC1hKwJ/dwc6UxKKTQwKbClduZTZ
+bpEsyS7xvAWuaQjTfD4r0dcudE90h/gx+s1coAVxeguaIEIsGFCRsF1Y2q/Uvyrm
+ndpQtGa+vWEiqQh9DgQ260LPvVjVRpGf8fp54q06wUf9i5cpK6SK/mUOno674cXE
+ufzZkfqqEAEdPkvaN3k3gg==
+-----END PRIVATE KEY-----
+"""
         rsakey = RSA.importKey(key)  # 导入私钥
         cipher = PKCS1_v1_5.new(rsakey)  # 生成对象
         missing_padding = len(en_pwd) % 4
@@ -95,7 +108,6 @@ CHd72qhDwZUKVQck56xLGpPVPBGyyMl+cjRhZ+mnIQ==
         text = cipher.decrypt(base64.b64decode(en_pwd.encode('utf-8')), "ERROR")  # 将密文解密成明文，返回的是一个bytes类型数据，需要自己转换成str
 
         return text.decode('utf-8')
-
 
 def checkio(passwd):
     """ 密码必须同时包含大写字母、小写字母、数字并且长度大于10位"""

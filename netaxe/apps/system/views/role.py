@@ -9,14 +9,14 @@
 from rest_framework import serializers
 from rest_framework.decorators import action
 
-from system.models import Role, Menu
-from system.views.dept import DeptSerializer
-from system.views.menu import MenuSerializer
-from system.views.menu_button import MenuButtonSerializer
-from utils.json_response import SuccessResponse
-from utils.serializers import CustomModelSerializer
-from utils.validator import CustomUniqueValidator
-from utils.viewset import CustomModelViewSet
+from apps.system.models import Role, Menu
+from apps.system.views.dept import DeptSerializer
+from apps.system.views.menu import MenuSerializer
+from apps.system.views.menu_button import MenuButtonSerializer
+from utils.custom.json_response import SuccessResponse
+from utils.custom.serializers import CustomModelSerializer
+from utils.custom.validator import CustomUniqueValidator
+from utils.custom.viewset import CustomModelViewSet
 
 
 class RoleSerializer(CustomModelSerializer):

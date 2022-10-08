@@ -1,29 +1,22 @@
-from django.shortcuts import render
-
 # Create your views here.
 import json
-
-from django_celery_beat.models import PeriodicTask, IntervalSchedule
-from django_filters.rest_framework import DjangoFilterBackend
 import django_filters
-from rest_framework import viewsets, permissions, filters, pagination
-
-from .serializers import PeriodicTaskSerializer
-from .tools.custom_viewset_base import CustomViewBase
-# from rest_framework_extensions.cache.mixins import CacheResponseMixin
-from rest_framework_extensions.cache.decorators import cache_response
-from rest_framework_extensions.cache.mixins import BaseCacheResponseMixin, CacheResponseMixin
+from datetime import date
+from django_filters.rest_framework import DjangoFilterBackend
+from django_celery_beat.models import PeriodicTask, IntervalSchedule
 from rest_framework_tracking.mixins import LoggingMixin
-from .tools.custom_pagination import LargeResultsSetPagination
-from apps.api.serializers import *
 from rest_framework_extensions.key_constructor import bits
+from rest_framework import viewsets, permissions, filters, pagination
+from rest_framework_extensions.cache.mixins import BaseCacheResponseMixin, CacheResponseMixin
 from rest_framework_extensions.key_constructor.constructors import (
     DefaultKeyConstructor
 )
-from datetime import date
 
+from apps.api.serializers import *
 from apps.automation.models import CollectionPlan
 from apps.int_utilization.models import InterfaceUsedNew
+from .tools.custom_viewset_base import CustomViewBase
+from .tools.custom_pagination import LargeResultsSetPagination
 
 
 class QueryParamsKeyConstructor(DefaultKeyConstructor):
@@ -112,7 +105,7 @@ class AssetRoleViewSet(viewsets.ModelViewSet):
     处理  GET POST , 处理 /api/post/<pk>/ GET PUT PATCH DELETE
     """
     queryset = Role.objects.all().order_by('id')
-    serializer_class = RoleSerializer
+    serializer_class = AssetRoleSerializer
     permission_classes = (permissions.IsAuthenticated,)
     # 配置搜索功能
     filter_backends = (DjangoFilterBackend, filters.SearchFilter, filters.OrderingFilter)

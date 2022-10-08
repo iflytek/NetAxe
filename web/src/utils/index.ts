@@ -1,7 +1,7 @@
 import { RouteRecordRaw } from 'vue-router'
 import path from 'path-browserify'
 import { SplitTab, RouteRecordRawWithHidden } from '../types/store'
-import { DataTableColumn, MenuOption, NIcon, TreeSelectOption } from 'naive-ui'
+import { DataTableColumn, MenuOption, NIcon, TreeSelectOption, SelectOption } from 'naive-ui'
 import { h, ref } from 'vue'
 import SvgIcon from '../components/svg-icon/index.vue'
 import { TablePropsType } from '@/types/components'
@@ -199,6 +199,25 @@ export function transformTreeSelect(
     } as TreeSelectOption
     if (it.children) {
       selection.children = transformTreeSelect(it.children, labelName, keyName)
+    }
+    tempSelections.push(selection)
+  })
+  return tempSelections
+}
+
+export function transformSelect(
+  origin: any[],
+  labelName: string,
+  valueName: string
+): SelectOption[] {
+  const tempSelections: SelectOption[] = []
+  origin.forEach((it) => {
+    const selection = {
+      label: it[labelName],
+      value: it[valueName],
+    } as SelectOption
+    if (it.children) {
+      selection.children = transformSelect(it.children, labelName, valueName)
     }
     tempSelections.push(selection)
   })

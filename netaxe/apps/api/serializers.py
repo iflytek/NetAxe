@@ -110,7 +110,7 @@ class NetZoneSerializer(serializers.ModelSerializer):
 
 
 # 设备角色
-class RoleSerializer(serializers.ModelSerializer):
+class AssetRoleSerializer(serializers.ModelSerializer):
     class Meta:
         model = Role
         fields = '__all__'

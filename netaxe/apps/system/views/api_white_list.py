@@ -6,9 +6,9 @@
 @Created on: 2022/1/1 001 9:34
 @Remark:
 """
-from system.models import ApiWhiteList
-from utils.serializers import CustomModelSerializer
-from utils.viewset import CustomModelViewSet
+from apps.system.models import ApiWhiteList
+from utils.custom.serializers import CustomModelSerializer
+from utils.custom.viewset import CustomModelViewSet
 
 
 class ApiWhiteListSerializer(CustomModelSerializer):

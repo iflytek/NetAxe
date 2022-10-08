@@ -6,21 +6,11 @@
 @Created on: 2021/6/6 006 12:39
 @Remark: 自定义过滤器
 """
-import operator
 import re
-from collections import OrderedDict
-from functools import reduce
-
-import six
-from django.db.models import Q, F
-from django.db.models.constants import LOOKUP_SEP
-from django_filters import utils
-from django_filters.filters import CharFilter
-from django_filters.rest_framework import DjangoFilterBackend
-from django_filters.utils import get_model_field
+from django.db.models import F
 from rest_framework.filters import BaseFilterBackend
 
-from system.models import Dept, ApiWhiteList
+from apps.system.models import Dept, ApiWhiteList
 
 
 def get_dept(dept_id: int, dept_all_list=None, dept_list=None):

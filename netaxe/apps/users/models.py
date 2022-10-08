@@ -37,11 +37,11 @@ class UserProfile(AbstractUser):
         choices=USER_TYPE, default=0, verbose_name="用户类型", null=True, blank=True, help_text="用户类型"
     )
     post = models.ManyToManyField(
-        to="Post", blank=True, verbose_name="关联岗位", db_constraint=False, help_text="关联岗位")
+        to="system.Post", blank=True, verbose_name="关联岗位", db_constraint=False, help_text="关联岗位")
     role = models.ManyToManyField(
-        to="Role", blank=True, verbose_name="关联角色", db_constraint=False, help_text="关联角色")
+        to="system.Role", blank=True, verbose_name="关联角色", db_constraint=False, help_text="关联角色")
     dept = models.ForeignKey(
-        to="Dept",
+        to="system.Dept",
         verbose_name="所属部门",
         on_delete=models.PROTECT,
         db_constraint=False,
@@ -60,7 +60,6 @@ class UserProfile(AbstractUser):
         db_table = 'ops_user'
         verbose_name = '用户表'
         verbose_name_plural = '用户表'
-        ordering = ("-create_datetime",)
 
 
 class BgBu(models.Model):
@@ -72,7 +71,7 @@ class BgBu(models.Model):
         return self.name
 
     class Meta:
+        db_table = 'bgbu'  # 通过db_table自定义数据表名
         verbose_name = '业务表'
         verbose_name_plural = '业务表'
-        db_table = 'bgbu'  # 通过db_table自定义数据表名
         indexes = [models.Index(fields=['name', ]), ]

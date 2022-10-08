@@ -11,11 +11,12 @@ from drf_yasg import openapi
 from drf_yasg.utils import swagger_auto_schema
 from rest_framework.decorators import action
 from rest_framework.viewsets import ModelViewSet
-
-from utils.filters import DataLevelPermissionsFilter
-from utils.json_response import SuccessResponse, ErrorResponse, DetailResponse
-from utils.permission import CustomPermission
 from django_restql.mixins import QueryArgumentsMixin
+
+from utils.custom.filters import DataLevelPermissionsFilter
+from utils.custom.json_response import SuccessResponse, ErrorResponse, DetailResponse
+from utils.custom.permission import CustomPermission
+
 
 class CustomModelViewSet(ModelViewSet,QueryArgumentsMixin):
     """
@@ -23,16 +24,16 @@ class CustomModelViewSet(ModelViewSet,QueryArgumentsMixin):
     统一标准的返回格式;新增,查询,修改可使用不同序列化器
     (1)ORM性能优化, 尽可能使用values_queryset形式
     (2)xxx_serializer_class 某个方法下使用的序列化器(xxx=create|update|list|retrieve|destroy)
-    (3)filter_fields = '__all__' 默认支持全部model中的字段查询(除json字段外)
+    (3)filterset_fields = '__all__' 默认支持全部model中的字段查询(除json字段外)
     (4)import_field_dict={} 导入时的字段字典 {model值: model的label}
     (5)export_field_label = [] 导出时的字段
     """
     values_queryset = None
     create_serializer_class = None
     update_serializer_class = None
-    filter_fields = '__all__'
     search_fields = ()
     ordering_fields = '__all__'
+    filterset_fields = '__all__'
     extra_filter_backends = [DataLevelPermissionsFilter]
     permission_classes = [CustomPermission]
     import_field_dict = {}

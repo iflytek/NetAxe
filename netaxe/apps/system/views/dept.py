@@ -6,20 +6,20 @@
 @Remark: 部门管理
 """
 from rest_framework import serializers
+from django_filters.rest_framework import DjangoFilterBackend
 
-from system.models import Dept
-from utils.json_response import DetailResponse, SuccessResponse
-from utils.serializers import CustomModelSerializer
-from utils.viewset import CustomModelViewSet
+from apps.system.models import Dept
+from utils.custom.json_response import DetailResponse, SuccessResponse
+from utils.custom.serializers import CustomModelSerializer
+from utils.custom.viewset import CustomModelViewSet
 
 
 class DeptSerializer(CustomModelSerializer):
     """
     部门-序列化器
     """
-    # parent_name = serializers.CharField(read_only=True, source='parent.name')
-    status_label = serializers.SerializerMethodField()
     children = serializers.SerializerMethodField()
+    status_label = serializers.SerializerMethodField()
 
     def get_children(self, data):
         queryset = Dept.objects.filter(parent_id=data.id).all()
@@ -71,7 +71,7 @@ class DeptViewSet(CustomModelViewSet):
     create_serializer_class = DeptCreateUpdateSerializer
     update_serializer_class = DeptCreateUpdateSerializer
     search_fields = []
-    filter_fields = {
+    filterset_fields = {
         "parent": ["isnull"],
         "name": ["icontains"],
     }

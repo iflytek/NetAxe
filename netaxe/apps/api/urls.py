@@ -11,14 +11,13 @@
 -------------------------------------------------
 """
 from django.urls import path, include
-from apps.api import views
 from rest_framework_extensions.routers import (
     ExtendedDefaultRouter as DefaultRouter
 )
-from rest_framework_simplejwt.views import (
-    TokenObtainPairView,
-    TokenRefreshView, TokenVerifyView
-)
+
+from apps.api import views
+
+
 router = DefaultRouter()
 router.register(r'cmdb_idc', views.IdcViewSet)
 router.register(r'cmdb_account', views.AccountList)
@@ -37,8 +36,5 @@ app_name = 'api'
 
 urlpatterns = [
     # 主机列表
-    path(r'', include(router.urls)),
-    path('token/', TokenObtainPairView.as_view(), name='get_jwt_token'),
-    path('refresh/', TokenRefreshView.as_view(), name='refresh_jwt_token'),
-    path('verify/', TokenVerifyView.as_view(), name='token_jwt_verify'),
+    path(r'', include(router.urls))
 ]

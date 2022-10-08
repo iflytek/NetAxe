@@ -7,12 +7,11 @@
 @Remark: 自定义权限
 """
 import re
-
-from django.contrib.auth.models import AnonymousUser
 from django.db.models import F
+from django.contrib.auth.models import AnonymousUser
 from rest_framework.permissions import BasePermission
 
-from system.models import ApiWhiteList
+from apps.system.models import ApiWhiteList
 
 
 def ValidationApi(reqApi, validApi):

@@ -7,9 +7,9 @@
 @Remark: 操作日志管理
 """
 
-from system.models import OperationLog
-from utils.serializers import CustomModelSerializer
-from utils.viewset import CustomModelViewSet
+from apps.system.models import OperationLog
+from utils.custom.serializers import CustomModelSerializer
+from utils.custom.viewset import CustomModelViewSet
 
 
 class OperationLogSerializer(CustomModelSerializer):

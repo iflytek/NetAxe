@@ -22,13 +22,13 @@ class CustomPagination(PageNumberPagination):
     def get_paginated_response(self, data):
         res = {
             "code": 200,
-            "page": int(self.get_page_number(self.request, paginator)) or 1,
-            "total": self.page.paginator.count,
-            "limit": int(self.get_page_size(self.request)) or 10,
-            "data": data,
             'msg': '获取成功',
+            "results": data,
+            "count": self.page.paginator.count,
+            "limit": int(self.get_page_size(self.request)) or 10,
+            "page": int(self.get_page_number(self.request, paginator)) or 1,
         }
         if not data:
             res['msg'] = "暂无数据"
-            res['data'] = []
+            res['results'] = []
         return Response(res)

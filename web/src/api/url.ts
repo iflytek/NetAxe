@@ -1,10 +1,19 @@
 import { baseURL } from './axios.config'
 
 export const baseAddress = baseURL
+// 登录
+export const login = '/api/login/'
 
+// 系统配置URL
+export const getTableList = '/api/users/user/'
+export const getRoleList = '/api/system/role/'
+export const getMenuList = '/api/system/menu/'
+export const getDepartmentList = '/api/system/dept/'
+export const getMenuListByRole = '/api/system/menu/web_router/'
+
+
+// export const login = '/net_backend/login'
 export const test = '/test'
-
-export const login = '/net_backend/login'
 
 export const captcha = '/net_backend/captcha'
 

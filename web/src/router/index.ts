@@ -1,33 +1,19 @@
 import {mapTwoLevelRouter} from '@/utils'
-import {createRouter, createWebHashHistory, createWebHistory} from 'vue-router'
+import {createRouter, createWebHistory} from 'vue-router'
 
 const Layout = () => import('@/components/Layout.vue')
 
 export const constantRoutes = [
-    {
-        path: '/login',
-        name: 'Login',
-        hidden: true,
-        component: () => import('@/views/login/index.vue'),
-    },
     {
         path: '/',
         redirect: '/index/work-place',
         hidden: true,
     },
     {
-        path: '/redirect',
-        component: Layout,
+        path: '/login',
+        name: 'Login',
         hidden: true,
-        meta: {
-            noShowTabbar: true,
-        },
-        children: [
-            {
-                path: '/redirect/:path(.*)*',
-                component: (): any => import('@/views/redirect/index.vue'),
-            },
-        ],
+        component: () => import('@/views/login/index.vue'),
     },
     {
         path: '/personal',
@@ -67,6 +53,20 @@ export const constantRoutes = [
                     iconPrefix: 'iconfont',
                     icon: 'menu',
                 },
+            },
+        ],
+    },
+    {
+        path: '/redirect',
+        component: Layout,
+        hidden: true,
+        meta: {
+            noShowTabbar: true,
+        },
+        children: [
+            {
+                path: '/redirect/:path(.*)*',
+                component: (): any => import('@/views/redirect/index.vue'),
             },
         ],
     },

@@ -8,12 +8,11 @@
 """
 import logging
 import traceback
-
 from django.db.models import ProtectedError
 from rest_framework.exceptions import APIException as DRFAPIException, AuthenticationFailed
 from rest_framework.views import set_rollback
 
-from utils.json_response import ErrorResponse
+from utils.custom.json_response import ErrorResponse
 
 logger = logging.getLogger(__name__)
 
