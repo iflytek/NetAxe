@@ -27,26 +27,26 @@ export const automation_chart = '/net_backend/automationChart'
 export const getdispach = '/net_backend/dispatch_page/'
 // 任务列表
 export const jobcenterTaskUrl = '/net_backend/jobCenter'
-export const device_import_url = '/resources/import_assets/'
+export const device_import_url = '/resources_manage/excel/'
 export const getperiodic_taskList = '/api/periodic_task/'
 export const getinterval_schedule = '/api/interval_schedule'
-export const getNetworkDeviceList = '/api/asset_networkdevice/'
+export const getNetworkDeviceList = '/resources_manage/api/asset_networkdevice/'
 export const getCollection_planList = '/automation/api/collection_plan/'
 export const BackendApi = '/api/'
 
-export const getCmdbIdcList = '/api/cmdb_idc/'
+export const getCmdbIdcList = '/resources_manage/api/cmdb_idc/'
 
-export const getCmdbRoleList = '/api/cmdb_role/'
+export const getCmdbRoleList = '/resources_manage/api/cmdb_role/'
 
-export const getVendorList = '/api/cmdb_vendor/'
+export const getVendorList = '/resources_manage/api/cmdb_vendor/'
 
-export const getCmdbModelList = '/api/cmdb_model/'
+export const getCmdbModelList = '/resources_manage/api/cmdb_model/'
 
 export const get_cmdb_rack = '/api/cmdb_rack/'
 
 export const get_cmdb_idc_model = '/api/cmdb_idc_model'
 
-export const getCategoryList = '/api/cmdb_category/'
+export const getCategoryList = '/resources_manage/api/cmdb_category/'
 
 export const get_api_request_log = '/api/api_request_log'
 
@@ -56,11 +56,11 @@ export const getCmdbIdcModelList = '/api/cmdb_idc_model/'
 
 export const getCmdbRackList = '/api/cmdb_rack'
 
-export const getcmdb_accountList = '/api/cmdb_account/'
+export const getcmdb_accountList = '/resources_manage/api/cmdb_account/'
 
 export const get_device_expand = '/network/networklist/'
 
-export const device_import_template = '/net_backend/importTemplate'
+export const device_import_template = '/resources_manage/excel/'
 
 export const deviceWebSshLogin = '/net_backend/deviceWebSsh'
 

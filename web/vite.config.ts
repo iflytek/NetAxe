@@ -59,6 +59,12 @@ export default ({ mode }) => {
           changeOrigin: true, // 虚拟的站点需要更管origin
           rewrite: (path: string) => path.replace(/^\/automation/, '/automation'),
         },
+        '/resources_manage': {
+          target: env.VITE_BASIC_URL,
+          ws: true, //代理websockets
+          changeOrigin: true, // 虚拟的站点需要更管origin
+          rewrite: (path: string) => path.replace(/^\/resources_manage/, '/resources_manage'),
+        },
         '/topology': {
           target: env.VITE_BASIC_URL,
           ws: true, //代理websockets

@@ -24,6 +24,7 @@ urlpatterns = [
     path(r'backend/', include('apps.route_backend.urls')),
     path(r'int_utilization/', include('apps.int_utilization.urls')),
     path(r'automation/', include('apps.automation.urls')),
+    path(r'resources_manage/', include('apps.asset.urls')),
     re_path('^api/', include('apps.api.urls', namespace='api')),
     re_path('^api-auth/', include('rest_framework.urls', namespace='rest_framework')),
     path('admin/login/', views.extend_admin_login),
