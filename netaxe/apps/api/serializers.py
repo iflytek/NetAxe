@@ -211,25 +211,6 @@ class NetworkDeviceSerializer(serializers.ModelSerializer):
         return queryset
 
 
-class InterfaceUsedNewSerializer(serializers.ModelSerializer):
-    """接口利用率表"""
-    log_time = serializers.DateTimeField(format='%Y-%m-%d %H:%M:%S', read_only=True)
-
-    class Meta:
-        model = InterfaceUsedNew
-        fields = '__all__'
 
 
-# 自动化设备数据采集方案清单
-class CollectionPlanSerializer(serializers.ModelSerializer):
 
-    @staticmethod
-    def setup_eager_loading(queryset):
-        """ Perform necessary eager loading of data. """
-        # queryset = queryset.prefetch_related('relate_device')
-
-        return queryset
-
-    class Meta:
-        model = CollectionPlan
-        fields = '__all__'

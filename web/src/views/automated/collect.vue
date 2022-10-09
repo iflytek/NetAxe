@@ -22,7 +22,7 @@
                 labelWidth: 60,
               }" :options="conditionItems" preset="grid-item"/>
                 <n-space class="control_button">
-                    <n-button type="info" size="small">查询</n-button>
+                    <n-button type="info" size="small" @click="doRefresh()">查询</n-button>
                     <n-button type="warning" size="small">重置</n-button>
                 </n-space>
                 <n-data-table :loading="tableLoading" :data="dataList" :columns="tableColumns" :single-line="!bordered"
@@ -307,7 +307,7 @@
             const table = useTable()
             const pagination = usePagination(doRefresh)
             pagination.pageSize = 10
-            pagination.page = 10
+            pagination.page = 1
             // pagination.limit = 10
             // pagination.start = 0
             const chart_show = ref(false)
@@ -455,9 +455,7 @@
                     data: () => {
                         return {
                             start: (pagination.page - 1) * pagination.pageSize,
-                            // pageSize: pagination.pageSize,
                             limit: pagination.pageSize,
-                            status: 0,
                             _: Date.now(),
                         }
                     },

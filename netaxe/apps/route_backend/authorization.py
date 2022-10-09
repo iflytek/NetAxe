@@ -11,8 +11,6 @@ from rest_framework_simplejwt.views import (
 )
 from scripts.crypt_pwd import CryptPwd
 
-from apps.users.models import UserProfile
-
 
 class FormulaTokenObtainPairSerializer(TokenObtainPairSerializer):
     def create(self, validated_data):
@@ -69,15 +67,12 @@ class FormulaTokenObtainPairView(TokenObtainPairView):
         print(request_data)
         crypt = CryptPwd()
         de_password = crypt.de_js_encrypt(request_data['password'])
-        # 更新用户登录状态
-        # UserProfile.objects.filter(username=request_data['username']).update(login_status=0)
+        # 做用户鉴权用作webssh记录命令信息
+        # user = auth.authenticate(username=request_data['username'], password=de_password)
+        # auth.login(request, user)
+        request.session['username'] = request_data['username']
+        request.session['password'] = crypt.encrypt_pwd(pwd=de_password)
         serializer = self.get_serializer(data=request_data)
-        if serializer:
-            # 做用户鉴权用作webssh记录命令信息
-            user = auth.authenticate(username=request_data['username'], password=de_password)
-            auth.login(request, user)
-            request.session['username'] = request_data['username']
-            request.session['password'] = crypt.encrypt_pwd(pwd=de_password)
         response_data = serializer.validate(request_data)
         response_data['data']['csrf_token'] = csrf_token
         return HttpResponse(JsonResponse(response_data, safe=False), content_type="application/json")

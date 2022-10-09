@@ -16,6 +16,8 @@ from pathlib import Path
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 # BASE_DIR = Path(__file__).resolve().parent.parent
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+# 自建APP
+sys.path.insert(0, os.path.join(BASE_DIR, 'apps'))
 # 初始化plugins插件路径到环境变量中
 # PLUGINS_PATH = os.path.join(BASE_DIR, "apps")
 # sys.path.insert(0, os.path.join(PLUGINS_PATH))
@@ -66,29 +68,29 @@ MIDDLEWARE = [
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
 ]
-REST_FRAMEWORK = {
-    # # 全局配置异常模块
-    # 'EXCEPTION_HANDLER': 'apps.api.exception.custom_exception_handler',
-    # # 修改默认返回JSON的renderer的类
-    # 'DEFAULT_RENDERER_CLASSES': (
-    #     'apps.api.rendererresponse.customrenderer',
-    # ),
-    'DEFAULT_FILTER_BACKENDS': [
-        'django_filters.rest_framework.DjangoFilterBackend'
-    ],
-    'DEFAULT_PERMISSION_CLASSES': (
-        # 'rest_framework.permissions.DjangoModelPermissions',
-        'rest_framework.permissions.IsAuthenticated',
-        # 'rest_framework.permissions.DjangoModelPermissionsOrAnonReadOnly'
-    ),
-    'DEFAULT_AUTHENTICATION_CLASSES': (
-        'rest_framework_simplejwt.authentication.JWTAuthentication',
-        # 'apps.api.authentication.ExpiringTokenAuthentication',
-        'rest_framework.authentication.SessionAuthentication',
-        'rest_framework.authentication.BasicAuthentication',
-    ),
-
-}
+# REST_FRAMEWORK = {
+#     # # 全局配置异常模块
+#     # 'EXCEPTION_HANDLER': 'apps.api.exception.custom_exception_handler',
+#     # # 修改默认返回JSON的renderer的类
+#     # 'DEFAULT_RENDERER_CLASSES': (
+#     #     'apps.api.rendererresponse.customrenderer',
+#     # ),
+#     'DEFAULT_FILTER_BACKENDS': [
+#         'django_filters.rest_framework.DjangoFilterBackend'
+#     ],
+#     'DEFAULT_PERMISSION_CLASSES': (
+#         # 'rest_framework.permissions.DjangoModelPermissions',
+#         'rest_framework.permissions.IsAuthenticated',
+#         # 'rest_framework.permissions.DjangoModelPermissionsOrAnonReadOnly'
+#     ),
+#     'DEFAULT_AUTHENTICATION_CLASSES': (
+#         'rest_framework_simplejwt.authentication.JWTAuthentication',
+#         # 'apps.api.authentication.ExpiringTokenAuthentication',
+#         'rest_framework.authentication.SessionAuthentication',
+#         'rest_framework.authentication.BasicAuthentication',
+#     ),
+#
+# }
 ROOT_URLCONF = 'netboost.urls'
 
 TEMPLATES = [

@@ -255,56 +255,6 @@ class NetworkDeviceViewSet(LoggingMixin, viewsets.ModelViewSet):
         # Do some stuff after saving.
 
 
-class InterfaceUsedFilter(django_filters.FilterSet):
-    log_time = django_filters.CharFilter(lookup_expr='icontains')
-    host = django_filters.CharFilter(lookup_expr='icontains')
-    host_ip = django_filters.CharFilter(lookup_expr='icontains')
-
-    class Meta:
-        model = InterfaceUsedNew
-        fields = '__all__'
-
-
-class InterfaceUsedNewViewSet(CustomViewBase):
-    """
-    接口利用率--处理  GET POST , 处理 /api/post/<pk>/ GET PUT PATCH DELETE
-    """
-    queryset = InterfaceUsedNew.objects.all().order_by('-log_time')
-    # queryset = InterfaceUsedNewSerializer.setup_eager_loading(queryset)
-    serializer_class = InterfaceUsedNewSerializer
-    permission_classes = (permissions.IsAuthenticated,)
-    pagination_class = LargeResultsSetPagination
-    # 配置搜索功能
-    filter_backends = (DjangoFilterBackend, filters.SearchFilter, filters.OrderingFilter)
-    # 如果要允许对某些字段进行过滤，可以使用filter_fields属性。
-    filterset_class = InterfaceUsedFilter
-    search_fields = ('host_ip', 'host')
-    ordering_fields = ('log_time', 'id')
-
-    def get_queryset(self):
-        start = self.request.query_params.get('start_time', None)
-        end = self.request.query_params.get('end_time', None)
-        if start and end:
-            return self.queryset.filter(log_time__range=(start, end))
-        return self.queryset
-
-
-# 自动化设备数据采集方案
-class CollectionPlanViewSet(LoggingMixin, CustomViewBase):
-    """
-    处理  GET POST , 处理 /api/post/<pk>/ GET PUT PATCH DELETE
-    """
-    logging_methods = ['POST', 'PUT', 'PATCH', 'DELETE']
-    queryset = CollectionPlan.objects.all().order_by('-id')
-    queryset = CollectionPlanSerializer.setup_eager_loading(queryset)
-    serializer_class = CollectionPlanSerializer
-    permission_classes = (permissions.IsAuthenticated,)
-    # 配置搜索功能
-    filter_backends = (DjangoFilterBackend, filters.SearchFilter, filters.OrderingFilter)
-    filter_fields = '__all__'
-    pagination_class = LimitSet
-
-
 # 任务列表
 class PeriodicTaskViewSet(viewsets.ModelViewSet):
     # queryset = PeriodicTask.objects.all().order_by('id')

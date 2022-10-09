@@ -29,8 +29,6 @@ router.register(r'cmdb_model', views.ModelViewSet)
 router.register(r'attribute', views.AttributelViewSet)
 router.register(r'framework', views.FrameworkViewSet)
 router.register(r'asset_networkdevice', views.NetworkDeviceViewSet)
-router.register(r'interfaceused', views.InterfaceUsedNewViewSet)
-router.register(r'collection_plan', views.CollectionPlanViewSet),
 router.register(r'periodic_task', views.PeriodicTaskViewSet)
 router.register(r'interval_schedule', views.IntervalScheduleViewSet)
 app_name = 'api'

@@ -31,7 +31,7 @@ export const device_import_url = '/resources/import_assets/'
 export const getperiodic_taskList = '/api/periodic_task/'
 export const getinterval_schedule = '/api/interval_schedule'
 export const getNetworkDeviceList = '/api/asset_networkdevice/'
-export const getCollection_planList = '/api/collection_plan/'
+export const getCollection_planList = '/automation/api/collection_plan/'
 export const BackendApi = '/api/'
 
 export const getCmdbIdcList = '/api/cmdb_idc/'
@@ -68,7 +68,7 @@ export const deviceInfoChange = '/net_backend/deviceInfoChange'
 
 export const get_git_config_tree = '/config_center/git_config'
 
-export const getInterfaceUsedList = '/api/interfaceused'
+export const getInterfaceUsedList = '/int_utilization/api/interfaceused/'
 
 declare module '@vue/runtime-core' {
   interface ComponentCustomProperties {

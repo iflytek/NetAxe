@@ -47,6 +47,18 @@ export default ({ mode }) => {
           changeOrigin: true, // 虚拟的站点需要更管origin
           rewrite: (path: string) => path.replace(/^\/net_backend/, '/backend'),
         },
+        '/int_utilization': {
+          target: env.VITE_BASIC_URL,
+          ws: true, //代理websockets
+          changeOrigin: true, // 虚拟的站点需要更管origin
+          rewrite: (path: string) => path.replace(/^\/int_utilization/, '/int_utilization'),
+        },
+        '/automation': {
+          target: env.VITE_BASIC_URL,
+          ws: true, //代理websockets
+          changeOrigin: true, // 虚拟的站点需要更管origin
+          rewrite: (path: string) => path.replace(/^\/automation/, '/automation'),
+        },
         '/topology': {
           target: env.VITE_BASIC_URL,
           ws: true, //代理websockets
