@@ -31,6 +31,7 @@
           block-line
           cascade
           checkable
+          check-strategy="child"
           default-expand-all
           :data="menuData"
           :checked-keys="checkedKeys"
@@ -312,6 +313,7 @@
       
       // 更新菜单权限数据
       function updateCheckedKeys(v: string[]) {
+        console.log(v)
         checkedKeys.length = 0
         checkedKeys.push(...v)
       }

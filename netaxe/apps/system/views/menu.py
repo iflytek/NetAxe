@@ -37,7 +37,6 @@ class MenuSerializer(CustomModelSerializer):
         else:
             return ""
 
-    
     def get_iconPrefix(self, instance):
         return "iconfont"
 
@@ -73,6 +72,17 @@ class WebRouterSerializer(CustomModelSerializer):
     children = serializers.SerializerMethodField()
     menuPermission = serializers.SerializerMethodField(read_only=True)
 
+    def get_children(self, data):
+        queryset = Menu.objects.filter(parent_id=data.id, status=1).all()
+        if not self.request.user.is_superuser:
+            menuIds = self.request.user.role.values_list('menu__id', flat=True)
+            queryset = Menu.objects.filter(id__in=menuIds, status=1, parent_id=data.id).all()
+        children = WebRouterSerializer(queryset, many=True, request=self.request).data
+        if children:
+            return children
+        else:
+            return None
+
     def get_menuPermission(self, instance):
         # 判断是否是超级管理员
         if self.request.user.is_superuser:
@@ -85,14 +95,6 @@ class WebRouterSerializer(CustomModelSerializer):
                 return queryset
             else:
                 return None
-
-    def get_children(self, data):
-        queryset = Menu.objects.filter(parent_id=data.id).all()
-        children = MenuSerializer(queryset, many=True).data
-        if children:
-            return children
-        else:
-            return None
 
     class Meta:
         model = Menu
@@ -123,11 +125,11 @@ class MenuViewSet(CustomModelViewSet):
     @action(methods=['GET'], detail=False, permission_classes=[])
     def web_router(self, request):
         """用于前端获取当前角色的路由"""
-        user = request.user
         queryset = self.queryset.filter(status=1, parent__isnull=True)
-        if not user.is_superuser:
-            menuIds = user.role.values_list('menu__id', flat=True)
-            queryset = Menu.objects.filter(id__in=menuIds, status=1, parent__isnull=True)
+        if not self.request.user.is_superuser:
+            menuIds = self.request.user.role.values_list('menu__id', flat=True)
+            parentMenuIds = list(set(Menu.objects.filter(id__in=menuIds, status=1).values_list('parent_id', flat=True)))
+            queryset = self.queryset.filter(status=1, id__in=parentMenuIds)
         serializer = WebRouterSerializer(queryset, many=True, request=request)
         data = serializer.data
         return SuccessResponse(data=data, total=len(data), msg="获取成功")
