@@ -35,6 +35,7 @@ export const getCollection_planList = '/automation/api/collection_plan/'
 export const BackendApi = '/api/'
 
 export const getCmdbIdcList = '/resources_manage/api/cmdb_idc/'
+export const getFrameworkList = '/resources_manage/api/framework/'
 
 export const getCmdbRoleList = '/resources_manage/api/cmdb_role/'
 

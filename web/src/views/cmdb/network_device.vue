@@ -8,16 +8,6 @@
           @search="onSearch"
           @reset-search="onResetSearch"
         >
-          <template #search-content>
-            <DataForm
-              ref="searchForm"
-              :form-config="{
-                labelWidth: 60,
-              }"
-              :options="conditionItems"
-              preset="grid-item"
-            />
-          </template>
           <template #table-config>
             <TableConfig @update-border="onUpdateBorder" @refresh="doRefresh" />
             <SortableTable class="ml-4" :columns="tableColumns" @update="onUpdateTable" />
@@ -29,18 +19,16 @@
             <n-button type="warning" size="small" @click="btnClick"> 数据导入</n-button>
             <n-button type="primary" size="small" @click="export_excel"> 数据导出</n-button>
             <n-button type="primary" size="small" @click="connect_collect"> 关联采集</n-button>
-            <n-button type="warning" size="small" @click="device_data_show = true">
+            <!-- <n-button type="warning" size="small" @click="device_data_show = true">
               运营展示
-            </n-button>
+            </n-button> -->
           </template>
         </TableHeader>
       </template>
       <template #default>
         <DataForm
           ref="searchForm"
-          :form-config="{
-            labelWidth: 60,
-          }"
+          :form-config="{ labelWidth: 60 }"
           :options="conditionItems"
           preset="grid-item"
         />
@@ -111,11 +99,7 @@
         />
       </template>
     </ModalDialog>
-    <ModalDialog ref="WebsshmodalDialog" title="Webssh">
-      <template>
-        <div id="terms"></div>
-      </template>
-    </ModalDialog>
+  
     <ModalDialog
       ref="ChangeLogmodalDialog"
       title="变更轨迹"
@@ -225,10 +209,57 @@
     </ModalDialog>
 
     <n-modal
+      v-model:show="collect_modalDialog"
+      class="modal-dialog-wrapper"
+      header-style="padding: 10px 20px"
+      :mask-closable="false"
+      :style="bodyStyle"
+    >
+      <n-card
+        style="width: 600px"
+        title="关联采集方案"
+        :bordered="false"
+        size="huge"
+        role="dialog"
+        aria-modal="true"
+      >
+      
+        <n-form
+          ref="formRef"
+          :model="formRef"
+          label-placement="left"
+          label-align="left"
+          :label-width="160"
+          :style="{
+            maxWidth: '640px',
+          }"
+        >
+          <n-form-item label="当前选中设备条目:">{{ checkedRowKeysRef.length }}</n-form-item>
+
+          <n-form-item label="采集方案">
+            <n-select
+              v-model:value="selectCollectValues"
+              filterable
+              placeholder="勾选采集方案"
+              :options="collection_options"
+            />
+          </n-form-item>
+        </n-form>
+        <template #footer>
+          <div class="flex justify-end">
+            <n-button type="default" size="small" @click="onCancelCollect">取消</n-button>
+            <n-button type="info" size="small" @click="NewConnectCollect">确认</n-button>
+            <!--            <n-button type="primary" size="small" @click="AddConnect">追加关联</n-button>-->
+          </div>
+        </template>
+      </n-card>
+    </n-modal>
+
+    <n-modal
       v-model:show="import_show"
       preset="dialog"
       header-style="padding: 10px 20px"
-      title="设备批量导入"
+      title="设备批量表格导入"
       :style="{ height: '230px', width: '600px' }"
       :mask-closable="false"
     >
@@ -271,6 +302,7 @@ import {
   device_import_template,
   deviceWebSshLogin,
   deviceInfoChange,
+  getCollection_planList,
 } from '@/api/url'
 import { useTable, usePagination, useTableColumn } from '@/hooks/table'
 import {
@@ -305,18 +337,15 @@ import useGet from '@/hooks/useGet'
 import usePut from '@/hooks/usePut'
 import usePatch from '@/hooks/usePatch'
 import { sortColumns } from '@/utils'
-import { Terminal } from 'xterm'
-import { FitAddon } from 'xterm-addon-fit'
 import { useLayoutStore } from '@/components'
 import Cookies from 'js-cookie'
 import router from '@/router'
 
-const terminal = ref(null)
-const fitAddon = new FitAddon()
 export default defineComponent({
   name: 'networkdevice',
   components: {},
   setup() {
+    const  formRef = ref({})
     const term = ref(null)
     const socket = ref(null)
     const layoutStore = useLayoutStore()
@@ -2167,14 +2196,14 @@ export default defineComponent({
         collect_data.append('plan', selectCollectValues.value)
         collect_data.append('serial_num', dev_detail_info['serial_num'])
         patch({
-          url: getNetworkDeviceList + '/' + devid + '/',
+          url: getNetworkDeviceList +  devid + '/',
           data: collect_data,
         }).then((res) => {
-          if (res.code === 200) {
+        
             message.success('新关联方案成功')
             doRefresh()
             checkedRowKeysRef.value.length = 0
-          }
+          
         })
       })
     }
@@ -3205,12 +3234,45 @@ export default defineComponent({
         }
       })
     }
+
+    function doCollection() {
+      get({
+        url: getCollection_planList,
+        data: () => {
+          return {
+            limit: 1000,
+          }
+        },
+      }).then((res) => {
+       
+        const collection_list = res.results
+        for (var i = 0; i < collection_list.length; i++) {
+          const dict = {
+            label: collection_list[i]['name'],
+            value: collection_list[i]['id'],
+          }
+          collection_options.push(dict)
+          if (conditionItems[15].optionItems != undefined) {
+            conditionItems[15].optionItems.push(dict)
+           
+          }
+          if (EditFormOptions[15].optionItems != undefined) {
+            EditFormOptions[15].optionItems.push(dict)
+          }
+        }
+        nextTick(() => {
+          conditionItems[15].optionItems.splice(0, 0, { label: '', value: '' })
+          
+        })
+      })
+    }
     onMounted(get_cmdb_account)
     onMounted(doRefresh)
     onMounted(doIdc)
     onMounted(doVendor)
     onMounted(doRole)
     onMounted(doCagetory)
+    onMounted(doCollection)
 
     return {
       // doReport,
@@ -3306,6 +3368,7 @@ export default defineComponent({
       device_data_show,
       import_show,
       device_import_template_url,
+      formRef,
     }
   },
 })

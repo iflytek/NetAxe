@@ -1,5 +1,6 @@
 import json
 import os
+from datetime import date
 
 import django_filters
 from django.http import JsonResponse, FileResponse, Http404
@@ -239,7 +240,7 @@ class NetworkDeviceFilter(django_filters.FilterSet):
         fields = '__all__'
 
 
-class NetworkDeviceViewSet(LoggingMixin, viewsets.ModelViewSet):
+class NetworkDeviceViewSet(viewsets.ModelViewSet):
     """
     处理  GET POST , 处理 /api/post/<pk>/ GET PUT PATCH DELETE
     """
@@ -285,6 +286,7 @@ class NetworkDeviceViewSet(LoggingMixin, viewsets.ModelViewSet):
 
     # 重新update方法主要用来捕获更改前的字段值并赋值给self.log
     def update(self, request, *args, **kwargs):
+        print('更新', super().update(request, *args, **kwargs))
         return super().update(request, *args, **kwargs)
 
     # 拼接log记录中data字段前后变化
@@ -307,13 +309,10 @@ class NetworkDeviceViewSet(LoggingMixin, viewsets.ModelViewSet):
                     if 'id' in tmp['data'].keys():
                         self.log['path'] += str(tmp['data']['id']) + '/'
         elif self.request.data.get('serial_num'):
-            # print('PATCH记录写入')
+            print('PATCH记录写入')
             for key in self.request.data.keys():
                 if key == 'serial_num':
                     continue
                 self.log['data'][key] += " => " + str(self.request.data[key])
             self.log['data'].pop('serial_num')
-        # print(self.log)
         super(NetworkDeviceViewSet, self).handle_log()
-        # print('after', self.log['data'])
-        # Do some stuff after saving.
