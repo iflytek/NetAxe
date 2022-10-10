@@ -14,6 +14,8 @@ from datetime import timedelta
 # Build paths inside the project like this: BASE_DIR / "subdir".
 # BASE_DIR = Path(__file__).resolve().parent.parent
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+# 自建APP
+sys.path.insert(0, os.path.join(BASE_DIR, 'apps'))
 # 初始化plugins插件路径到环境变量中
 # PLUGINS_PATH = os.path.join(BASE_DIR, "apps")
 # sys.path.insert(0, os.path.join(PLUGINS_PATH))
@@ -59,8 +61,9 @@ INSTALLED_APPS = [
     "apps.users.apps.UsersConfig",
     "apps.system.apps.SystemConfig",
     
-    "apps.asset.apps.AssetConfig",
     "apps.api.apps.ApiConfig",
+    "apps.asset.apps.AssetConfig",
+    'apps.system.apps.SystemConfig',
     "apps.config_center.apps.ConfigCenterConfig",
     "apps.route_backend.apps.RouteBackendConfig",
     "apps.automation.apps.AutomationConfig",

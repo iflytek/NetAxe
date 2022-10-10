@@ -65,7 +65,13 @@ def config_backup_nornir(devices: List[dict]) -> InitNornir:
             # core={"raise_on_error": True}
     ) as nr:
 
-        support_platform = ['huawei', 'hp_comware', 'ruijie_os', 'cisco_ios', 'mellanox', 'ruijie_os_telnet']
+        support_platform = [
+            'huawei', 'huawei_telnet',
+            'hp_comware', 'hp_comware_telnet',
+            'ruijie_os', 'ruijie_os_telnet',
+            'cisco_ios',
+            'mellanox',
+            ]
         device = nr.filter(filter_func=lambda host: host.platform in support_platform)
         backup_res = device.run(task=configure_backup, name='配置备份', path=BACKUP_PATH)
         print_result(backup_res)

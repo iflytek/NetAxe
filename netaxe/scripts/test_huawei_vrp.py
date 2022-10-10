@@ -1,6 +1,6 @@
 from napalm import get_network_driver
 driver = get_network_driver('huawei_vrp')
-device = driver(hostname='10.254.6.249', username='admin', password='+A-#-]DEVbSd')
+device = driver(hostname='10.254.6.249', username='admin', password='aaaaaaaaaaa')
 device.open()
 
 # get_facts = device.get_facts()

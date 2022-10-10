@@ -26,6 +26,7 @@ class netOpsApi():
     def __init__(self):
         self.token_url = USER_CONF.get('token_url') or None
         self.base_url = USER_CONF.get('base_url') or None
+        self.resource_manage_base_url = USER_CONF.get('base_url') or None
         self.data = {
             'username': USER_CONF.get('username') or 'adminnetaxe',
             'password': USER_CONF.get('password') or 'netaxeadmin'
@@ -97,7 +98,7 @@ class netOpsApi():
         # 获取所有网络设备信息
 
     def get_all_device(self, limit):
-        networkdevice_url = self.base_url + 'asset_networkdevice/'
+        networkdevice_url = self.resource_manage_base_url + 'asset_networkdevice/'
         params = {
             'limit': limit,
         }

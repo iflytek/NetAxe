@@ -114,3 +114,4 @@ KcangNacos==1.7
 django-restql==0.15.2
 user-agents==2.2.0
 drf-yasg==1.21.4
+xlrd==2.0.1

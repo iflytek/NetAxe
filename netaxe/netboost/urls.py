@@ -41,8 +41,8 @@ schema_view = get_schema_view(
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-    re_path('^api-auth/', include('rest_framework.urls', namespace='rest_framework')),
     path("",schema_view.with_ui("swagger", cache_timeout=0), name="schema-swagger-ui",),
+    re_path('^api-auth/', include('rest_framework.urls', namespace='rest_framework')),
     # 登录
     # re_path(r'^captcha/', include('captcha.urls')),
     path("api/login/", LoginView.as_view(), name="login"),
@@ -55,6 +55,9 @@ urlpatterns = [
 
     # path('admin/login/', views.extend_admin_login),
     path(r'backend/', include('apps.route_backend.urls')),
+    path(r'automation/', include('apps.automation.urls')),
+    path(r'resources_manage/', include('apps.asset.urls')),
     path(r'config_center/', include('apps.config_center.urls')),
-    re_path('^api/', include('apps.api.urls', namespace='api'))
+    path(r'int_utilization/', include('apps.int_utilization.urls')),
+    re_path('^api/', include('apps.api.urls', namespace='api')),
 ]

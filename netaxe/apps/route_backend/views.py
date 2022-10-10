@@ -200,7 +200,6 @@ class JobCenterView(APIView):
         get_queues = request.GET.get('get_queues')
         celery_app = current_app
         if get_current_tasks:
-            # celery_tasks = [task for task in celery_app.tasks if not task.startswith('celery.')]
             res = get_tasks.apply_async()
             while True:
                 if res.ready():
@@ -209,7 +208,6 @@ class JobCenterView(APIView):
             return JsonResponse(
                 {'code': 200, 'data': json.loads(result)['result'], 'count': len(json.loads(result)['result'])})
         if get_crontab_schedules:
-            # crontab_schedules = CrontabSchedule.objects.all()
             crontab_schedules = serializers.serialize("json", CrontabSchedule.objects.all())
             return JsonResponse(
                 {'code': 200, 'data': json.loads(crontab_schedules), 'count': len(json.loads(crontab_schedules))})

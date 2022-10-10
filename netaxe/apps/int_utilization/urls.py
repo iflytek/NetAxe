@@ -3,12 +3,13 @@ from rest_framework_extensions.routers import (
     ExtendedDefaultRouter as DefaultRouter
 )
 
-from .views import CollectionPlanViewSet
+# from apps.int_utilization import views
+from .views import InterfaceUsedNewViewSet
 
 
 router = DefaultRouter()
 
-router.register(r'collection_plan', CollectionPlanViewSet)
+router.register(r'interfaceused', InterfaceUsedNewViewSet)
 
 urlpatterns = [
     path(r'api/', include(router.urls)),
