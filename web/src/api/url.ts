@@ -4,7 +4,7 @@ export const baseAddress = baseURL
 // 登录
 export const login = '/api/login/'
 
-// 系统配置URL
+// 认证和权限URL
 export const getTableList = '/api/users/user/'
 export const getRoleList = '/api/system/role/'
 export const getMenuList = '/api/system/menu/'

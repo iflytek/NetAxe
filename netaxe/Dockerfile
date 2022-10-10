@@ -21,7 +21,7 @@ RUN set -ex \
     &&/usr/local/python3/bin/pip3 install -r requirements.txt -i https://mirrors.aliyun.com/pypi/simple/ \
     && rm -rf /home/netaxe/* \
     && rm -rf /var/cache/yum/*
-EXPOSE 8000
+# EXPOSE 5555
+# EXPOSE 8000
 EXPOSE 8001
-EXPOSE 5555
 CMD ["sh", "start.sh"]

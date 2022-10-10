@@ -5,26 +5,48 @@ networks:
     ipam:
       config:
         - subnet: 192.168.12.0/24
+volumes:
+  etcd_data:
+    driver: local
+
 services:
-  redis-cache:
-    image: registry.cn-hangzhou.aliyuncs.com/netaxe/redis:latest
-    container_name: redis-cache
-    ports:
-      - "6379:6379"
-    command: "redis-server --requirepass dade0f2a65237a56b79277e6dd27351d2854df033e0ad4b4f90abec229cd64df"
-    networks:
-      - netops-axe
-  
   netaxe-server:
     image: registry.cn-hangzhou.aliyuncs.com/netaxe/netaxe-backend:1.0.3
     container_name: netaxe-server
     ports:
-      - "5555:5555"
+      - "8001:8001"
+    # command: sleep 999999
     command: sh start.sh web
     depends_on:
       - redis-cache
     volumes:
       - ../../netaxe:/home/netaxe
+    networks:
+      - netops-axe
+
+  netaxe-nginx:
+    image: registry.cn-hangzhou.aliyuncs.com/netaxe/nginx:1.7.9
+    container_name: netaxe-nginx
+    volumes:
+      - ./nginx.conf:/etc/nginx/conf.d/nginx.conf
+      - ../../netaxe:/home/netaxe
+    ports:
+      - "9999:9999"
+    depends_on:
+      - netaxe-server
+    networks:
+      - netops-axe
+      
+  netaxe-web:
+    image: registry.cn-hangzhou.aliyuncs.com/netaxe/netaxe-web:1.0.4
+    build: 
+      context: ../../web
+    container_name: netaxe-web
+    ports:
+      - "8888:80"
+    depends_on:
+      - netaxe-nginx
+      - netaxe-server
     networks:
       - netops-axe
 
@@ -51,29 +73,88 @@ services:
       - ../../netaxe:/home/netaxe
     networks:
       - netops-axe
-      
-  netaxe-web:
-    image: registry.cn-hangzhou.aliyuncs.com/netaxe/netaxe-web:1.0.4
-    build: 
-      context: ../../web
-    container_name: netaxe-web
+
+  redis-cache:
+    image: registry.cn-hangzhou.aliyuncs.com/netaxe/redis:latest
+    container_name: redis-cache
     ports:
-      - "8888:80"
-    depends_on:
-      - netaxe-nginx
-      - netaxe-server
+      - "6379:6379"
+    command: "redis-server --requirepass dade0f2a65237a56b79277e6dd27351d2854df033e0ad4b4f90abec229cd64df"
     networks:
       - netops-axe
-      
-  netaxe-nginx:
-    image: registry.cn-hangzhou.aliyuncs.com/netaxe/nginx:1.7.9
-    container_name: netaxe-nginx
-    volumes:
-      - ./nginx.conf:/etc/nginx/conf.d/nginx.conf
-      - ../../netaxe:/home/netaxe
+
+  # 新增nacos
+  nacos:
+    image: nacos/nacos-server:2.0.3
+    container_name: nacos
+    environment:
+      - PREFER_HOST_MODE=hostname
+      #模式为单体模式
+      - MODE=standalone
     ports:
-      - "9999:9999"
+      - "8848:8848"
+    networks:
+      - netops-axe
+
+  apisix-dashboard:
+    image: apache/apisix-dashboard:2.13-alpine
+    restart: always
+    volumes:
+      - ./conf/dashboard_conf/conf.yaml:/usr/local/apisix-dashboard/conf/conf.yaml
+    ports:
+      - "9000:9000"
+    networks:
+      - netops-axe
+
+  apisix:
+    image: apache/apisix:2.15.0-alpine
+    restart: always
+    volumes:
+      - ./conf/apisix_log:/usr/local/apisix/logs
+      - ./conf/apisix_conf/config.yaml:/usr/local/apisix/conf/config.yaml:ro
     depends_on:
-      - netaxe-server
+      - etcd
+    ports:
+      - "9080:9080/tcp"
+      - "9091:9091/tcp"
+      - "9443:9443/tcp"
+      - "9092:9092/tcp"
+    networks:
+      - netops-axe
+
+  etcd:
+    image: bitnami/etcd:3.4.15
+    restart: always
+    volumes:
+      - etcd_data:/bitnami/etcd
+    environment:
+      ETCD_ENABLE_V2: "true"
+      ALLOW_NONE_AUTHENTICATION: "yes"
+      ETCD_ADVERTISE_CLIENT_URLS: "http://0.0.0.0:2379"
+      ETCD_LISTEN_CLIENT_URLS: "http://0.0.0.0:2379"
+    ports:
+      - "2379:2379/tcp"
+    networks:
+      - netops-axe
+
+  prometheus:
+    image: prom/prometheus:v2.25.0
+    restart: always
+    volumes:
+      - ./conf/prometheus_conf/prometheus.yml:/etc/prometheus/prometheus.yml
+    ports:
+      - "9090:9090"
+    networks:
+      - netops-axe
+
+  grafana:
+    image: grafana/grafana:7.3.7
+    restart: always
+    ports:
+      - "3000:3000"
+    volumes:
+      - "./conf/grafana_conf/provisioning:/etc/grafana/provisioning"
+      - "./conf/grafana_conf/dashboards:/var/lib/grafana/dashboards"
+      - "./conf/grafana_conf/config/grafana.ini:/etc/grafana/grafana.ini"
     networks:
       - netops-axe

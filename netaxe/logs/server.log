@@ -1,0 +1,517 @@
+[2022-10-10 15:11:54,162][daphne.cli.run():287] [INFO] Starting server at tcp:port=8001:interface=0.0.0.0
+[2022-10-10 15:11:54,163][daphne.server.run():110] [INFO] HTTP/2 support not enabled (install the http2 and tls Twisted extras)
+[2022-10-10 15:11:54,163][daphne.server.run():119] [INFO] Configuring endpoint tcp:port=8001:interface=0.0.0.0
+[2022-10-10 15:11:54,165][daphne.server.listen_success():150] [INFO] Listening on TCP address 0.0.0.0:8001
+[2022-10-10 15:11:55,340][flower.command.print_banner():162] [INFO] Visit me at http://localhost:5555
+[2022-10-10 15:11:55,347][flower.command.print_banner():170] [INFO] Broker: redis://:**@redis-cache:6379/8
+[2022-10-10 15:11:55,353][flower.command.print_banner():171] [INFO] Registered tasks: 
+['apps.asset.tasks.admin_file',
+ 'apps.automation.tasks.collect_device',
+ 'apps.automation.tasks.collect_device_main',
+ 'apps.automation.tasks.interface_used',
+ 'apps.config_center.tasks.config_backup',
+ 'apps.route_backend.tasks.get_tasks',
+ 'celery.accumulate',
+ 'celery.backend_cleanup',
+ 'celery.chain',
+ 'celery.chord',
+ 'celery.chord_unlock',
+ 'celery.chunks',
+ 'celery.group',
+ 'celery.map',
+ 'celery.starmap']
+[2022-10-10 15:11:55,362][kombu.mixins.Consumer():225] [INFO] Connected to redis://:**@redis-cache:6379/8
+[2022-10-10 15:11:56,412][flower.inspector._inspect():42] [WARNING] Inspect method scheduled failed
+[2022-10-10 15:11:56,418][flower.inspector._inspect():42] [WARNING] Inspect method revoked failed
+[2022-10-10 15:11:56,419][flower.inspector._inspect():42] [WARNING] Inspect method registered failed
+[2022-10-10 15:11:56,421][flower.inspector._inspect():42] [WARNING] Inspect method active_queues failed
+[2022-10-10 15:11:56,426][flower.inspector._inspect():42] [WARNING] Inspect method stats failed
+[2022-10-10 15:11:56,428][flower.inspector._inspect():42] [WARNING] Inspect method active failed
+[2022-10-10 15:11:56,429][flower.inspector._inspect():42] [WARNING] Inspect method reserved failed
+[2022-10-10 15:11:56,429][flower.inspector._inspect():42] [WARNING] Inspect method conf failed
+[2022-10-10 15:27:55,714][django.request.log_response():224] [WARNING] Not Found: /api/login/
+[2022-10-10 15:39:07,059][django.request.log_response():224] [WARNING] Not Found: /api/login/
+[2022-10-10 15:40:34,982][utils.custom.backends.authenticate():19] [INFO] admin 正在使用本地登录...
+[2022-10-10 15:42:10,988][utils.custom.backends.authenticate():19] [INFO] admin 正在使用本地登录...
+[2022-10-10 15:55:34,477][django.request.log_response():224] [WARNING] Not Found: /api/login/
+[2022-10-10 15:55:39,648][django.request.log_response():224] [WARNING] Not Found: /api/login/
+[2022-10-10 15:55:40,686][django.request.log_response():224] [WARNING] Not Found: /api/login/
+[2022-10-10 15:55:50,154][django.request.log_response():224] [WARNING] Not Found: /api/login/
+[2022-10-10 15:55:51,028][django.request.log_response():224] [WARNING] Not Found: /api/login/
+[2022-10-10 15:56:32,929][flower.events.run():199] [ERROR] Failed to capture events: 'Connection closed by server.', trying again in 1 seconds.
+[2022-10-10 15:56:34,939][kombu.mixins.Consumer():225] [INFO] Connected to redis://:**@redis-cache:6379/8
+[2022-10-10 15:56:37,792][root.__registerBeatThreadRun():162] [ERROR] 服务心跳维持失败！
+Traceback (most recent call last):
+  File "/usr/local/python3/lib/python3.9/site-packages/urllib3/connectionpool.py", line 699, in urlopen
+    httplib_response = self._make_request(
+  File "/usr/local/python3/lib/python3.9/site-packages/urllib3/connectionpool.py", line 445, in _make_request
+    six.raise_from(e, None)
+  File "<string>", line 3, in raise_from
+  File "/usr/local/python3/lib/python3.9/site-packages/urllib3/connectionpool.py", line 440, in _make_request
+    httplib_response = conn.getresponse()
+  File "/usr/local/python3/lib/python3.9/http/client.py", line 1377, in getresponse
+    response.begin()
+  File "/usr/local/python3/lib/python3.9/http/client.py", line 320, in begin
+    version, status, reason = self._read_status()
+  File "/usr/local/python3/lib/python3.9/http/client.py", line 281, in _read_status
+    line = str(self.fp.readline(_MAXLINE + 1), "iso-8859-1")
+  File "/usr/local/python3/lib/python3.9/socket.py", line 704, in readinto
+    return self._sock.recv_into(b)
+ConnectionResetError: [Errno 104] Connection reset by peer
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/usr/local/python3/lib/python3.9/site-packages/requests/adapters.py", line 489, in send
+    resp = conn.urlopen(
+  File "/usr/local/python3/lib/python3.9/site-packages/urllib3/connectionpool.py", line 755, in urlopen
+    retries = retries.increment(
+  File "/usr/local/python3/lib/python3.9/site-packages/urllib3/util/retry.py", line 532, in increment
+    raise six.reraise(type(error), error, _stacktrace)
+  File "/usr/local/python3/lib/python3.9/site-packages/urllib3/packages/six.py", line 769, in reraise
+    raise value.with_traceback(tb)
+  File "/usr/local/python3/lib/python3.9/site-packages/urllib3/connectionpool.py", line 699, in urlopen
+    httplib_response = self._make_request(
+  File "/usr/local/python3/lib/python3.9/site-packages/urllib3/connectionpool.py", line 445, in _make_request
+    six.raise_from(e, None)
+  File "<string>", line 3, in raise_from
+  File "/usr/local/python3/lib/python3.9/site-packages/urllib3/connectionpool.py", line 440, in _make_request
+    httplib_response = conn.getresponse()
+  File "/usr/local/python3/lib/python3.9/http/client.py", line 1377, in getresponse
+    response.begin()
+  File "/usr/local/python3/lib/python3.9/http/client.py", line 320, in begin
+    version, status, reason = self._read_status()
+  File "/usr/local/python3/lib/python3.9/http/client.py", line 281, in _read_status
+    line = str(self.fp.readline(_MAXLINE + 1), "iso-8859-1")
+  File "/usr/local/python3/lib/python3.9/socket.py", line 704, in readinto
+    return self._sock.recv_into(b)
+urllib3.exceptions.ProtocolError: ('Connection aborted.', ConnectionResetError(104, 'Connection reset by peer'))
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/usr/local/python3/lib/python3.9/site-packages/KcangNacos/nacos.py", line 153, in __registerBeatThreadRun
+    re = requests.put(beatUrl[:-1])
+  File "/usr/local/python3/lib/python3.9/site-packages/requests/api.py", line 130, in put
+    return request("put", url, data=data, **kwargs)
+  File "/usr/local/python3/lib/python3.9/site-packages/requests/api.py", line 59, in request
+    return session.request(method=method, url=url, **kwargs)
+  File "/usr/local/python3/lib/python3.9/site-packages/requests/sessions.py", line 587, in request
+    resp = self.send(prep, **send_kwargs)
+  File "/usr/local/python3/lib/python3.9/site-packages/requests/sessions.py", line 701, in send
+    r = adapter.send(request, **kwargs)
+  File "/usr/local/python3/lib/python3.9/site-packages/requests/adapters.py", line 547, in send
+    raise ConnectionError(err, request=request)
+requests.exceptions.ConnectionError: ('Connection aborted.', ConnectionResetError(104, 'Connection reset by peer'))
+[2022-10-10 15:56:37,795][root.__registerBeatThreadRun():162] [ERROR] 服务心跳维持失败！
+Traceback (most recent call last):
+  File "/usr/local/python3/lib/python3.9/site-packages/urllib3/connectionpool.py", line 699, in urlopen
+    httplib_response = self._make_request(
+  File "/usr/local/python3/lib/python3.9/site-packages/urllib3/connectionpool.py", line 445, in _make_request
+    six.raise_from(e, None)
+  File "<string>", line 3, in raise_from
+  File "/usr/local/python3/lib/python3.9/site-packages/urllib3/connectionpool.py", line 440, in _make_request
+    httplib_response = conn.getresponse()
+  File "/usr/local/python3/lib/python3.9/http/client.py", line 1377, in getresponse
+    response.begin()
+  File "/usr/local/python3/lib/python3.9/http/client.py", line 320, in begin
+    version, status, reason = self._read_status()
+  File "/usr/local/python3/lib/python3.9/http/client.py", line 289, in _read_status
+    raise RemoteDisconnected("Remote end closed connection without"
+http.client.RemoteDisconnected: Remote end closed connection without response
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/usr/local/python3/lib/python3.9/site-packages/requests/adapters.py", line 489, in send
+    resp = conn.urlopen(
+  File "/usr/local/python3/lib/python3.9/site-packages/urllib3/connectionpool.py", line 755, in urlopen
+    retries = retries.increment(
+  File "/usr/local/python3/lib/python3.9/site-packages/urllib3/util/retry.py", line 532, in increment
+    raise six.reraise(type(error), error, _stacktrace)
+  File "/usr/local/python3/lib/python3.9/site-packages/urllib3/packages/six.py", line 769, in reraise
+    raise value.with_traceback(tb)
+  File "/usr/local/python3/lib/python3.9/site-packages/urllib3/connectionpool.py", line 699, in urlopen
+    httplib_response = self._make_request(
+  File "/usr/local/python3/lib/python3.9/site-packages/urllib3/connectionpool.py", line 445, in _make_request
+    six.raise_from(e, None)
+  File "<string>", line 3, in raise_from
+  File "/usr/local/python3/lib/python3.9/site-packages/urllib3/connectionpool.py", line 440, in _make_request
+    httplib_response = conn.getresponse()
+  File "/usr/local/python3/lib/python3.9/http/client.py", line 1377, in getresponse
+    response.begin()
+  File "/usr/local/python3/lib/python3.9/http/client.py", line 320, in begin
+    version, status, reason = self._read_status()
+  File "/usr/local/python3/lib/python3.9/http/client.py", line 289, in _read_status
+    raise RemoteDisconnected("Remote end closed connection without"
+urllib3.exceptions.ProtocolError: ('Connection aborted.', RemoteDisconnected('Remote end closed connection without response'))
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/usr/local/python3/lib/python3.9/site-packages/KcangNacos/nacos.py", line 153, in __registerBeatThreadRun
+    re = requests.put(beatUrl[:-1])
+  File "/usr/local/python3/lib/python3.9/site-packages/requests/api.py", line 130, in put
+    return request("put", url, data=data, **kwargs)
+  File "/usr/local/python3/lib/python3.9/site-packages/requests/api.py", line 59, in request
+    return session.request(method=method, url=url, **kwargs)
+  File "/usr/local/python3/lib/python3.9/site-packages/requests/sessions.py", line 587, in request
+    resp = self.send(prep, **send_kwargs)
+  File "/usr/local/python3/lib/python3.9/site-packages/requests/sessions.py", line 701, in send
+    r = adapter.send(request, **kwargs)
+  File "/usr/local/python3/lib/python3.9/site-packages/requests/adapters.py", line 547, in send
+    raise ConnectionError(err, request=request)
+requests.exceptions.ConnectionError: ('Connection aborted.', RemoteDisconnected('Remote end closed connection without response'))
+[2022-10-10 15:56:52,642][daphne.cli.run():287] [INFO] Starting server at tcp:port=8001:interface=0.0.0.0
+[2022-10-10 15:56:52,643][daphne.server.run():110] [INFO] HTTP/2 support not enabled (install the http2 and tls Twisted extras)
+[2022-10-10 15:56:52,644][daphne.server.run():119] [INFO] Configuring endpoint tcp:port=8001:interface=0.0.0.0
+[2022-10-10 15:56:52,645][daphne.server.listen_success():150] [INFO] Listening on TCP address 0.0.0.0:8001
+[2022-10-10 15:56:53,847][flower.command.print_banner():162] [INFO] Visit me at http://localhost:5555
+[2022-10-10 15:56:53,855][flower.command.print_banner():170] [INFO] Broker: redis://:**@redis-cache:6379/8
+[2022-10-10 15:56:53,861][flower.command.print_banner():171] [INFO] Registered tasks: 
+['apps.asset.tasks.admin_file',
+ 'apps.automation.tasks.collect_device',
+ 'apps.automation.tasks.collect_device_main',
+ 'apps.automation.tasks.interface_used',
+ 'apps.config_center.tasks.config_backup',
+ 'apps.route_backend.tasks.get_tasks',
+ 'celery.accumulate',
+ 'celery.backend_cleanup',
+ 'celery.chain',
+ 'celery.chord',
+ 'celery.chord_unlock',
+ 'celery.chunks',
+ 'celery.group',
+ 'celery.map',
+ 'celery.starmap']
+[2022-10-10 15:56:53,875][kombu.mixins.Consumer():225] [INFO] Connected to redis://:**@redis-cache:6379/8
+[2022-10-10 15:56:54,923][flower.inspector._inspect():42] [WARNING] Inspect method active failed
+[2022-10-10 15:56:54,929][flower.inspector._inspect():42] [WARNING] Inspect method reserved failed
+[2022-10-10 15:56:54,931][flower.inspector._inspect():42] [WARNING] Inspect method scheduled failed
+[2022-10-10 15:56:54,932][flower.inspector._inspect():42] [WARNING] Inspect method registered failed
+[2022-10-10 15:56:54,935][flower.inspector._inspect():42] [WARNING] Inspect method revoked failed
+[2022-10-10 15:56:54,936][flower.inspector._inspect():42] [WARNING] Inspect method conf failed
+[2022-10-10 15:56:54,936][flower.inspector._inspect():42] [WARNING] Inspect method active_queues failed
+[2022-10-10 15:56:54,937][flower.inspector._inspect():42] [WARNING] Inspect method stats failed
+[2022-10-10 15:57:04,561][utils.custom.backends.authenticate():19] [INFO] admin 正在使用本地登录...
+[2022-10-10 15:58:28,507][utils.custom.backends.authenticate():19] [INFO] admin 正在使用本地登录...
+[2022-10-10 15:59:51,401][flower.events.run():199] [ERROR] Failed to capture events: 'Connection closed by server.', trying again in 1 seconds.
+[2022-10-10 15:59:52,097][root.__registerBeatThreadRun():162] [ERROR] 服务心跳维持失败！
+Traceback (most recent call last):
+  File "/usr/local/python3/lib/python3.9/site-packages/urllib3/connectionpool.py", line 699, in urlopen
+    httplib_response = self._make_request(
+  File "/usr/local/python3/lib/python3.9/site-packages/urllib3/connectionpool.py", line 445, in _make_request
+    six.raise_from(e, None)
+  File "<string>", line 3, in raise_from
+  File "/usr/local/python3/lib/python3.9/site-packages/urllib3/connectionpool.py", line 440, in _make_request
+    httplib_response = conn.getresponse()
+  File "/usr/local/python3/lib/python3.9/http/client.py", line 1377, in getresponse
+    response.begin()
+  File "/usr/local/python3/lib/python3.9/http/client.py", line 320, in begin
+    version, status, reason = self._read_status()
+  File "/usr/local/python3/lib/python3.9/http/client.py", line 281, in _read_status
+    line = str(self.fp.readline(_MAXLINE + 1), "iso-8859-1")
+  File "/usr/local/python3/lib/python3.9/socket.py", line 704, in readinto
+    return self._sock.recv_into(b)
+ConnectionResetError: [Errno 104] Connection reset by peer
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/usr/local/python3/lib/python3.9/site-packages/requests/adapters.py", line 489, in send
+    resp = conn.urlopen(
+  File "/usr/local/python3/lib/python3.9/site-packages/urllib3/connectionpool.py", line 755, in urlopen
+    retries = retries.increment(
+  File "/usr/local/python3/lib/python3.9/site-packages/urllib3/util/retry.py", line 532, in increment
+    raise six.reraise(type(error), error, _stacktrace)
+  File "/usr/local/python3/lib/python3.9/site-packages/urllib3/packages/six.py", line 769, in reraise
+    raise value.with_traceback(tb)
+  File "/usr/local/python3/lib/python3.9/site-packages/urllib3/connectionpool.py", line 699, in urlopen
+    httplib_response = self._make_request(
+  File "/usr/local/python3/lib/python3.9/site-packages/urllib3/connectionpool.py", line 445, in _make_request
+    six.raise_from(e, None)
+  File "<string>", line 3, in raise_from
+  File "/usr/local/python3/lib/python3.9/site-packages/urllib3/connectionpool.py", line 440, in _make_request
+    httplib_response = conn.getresponse()
+  File "/usr/local/python3/lib/python3.9/http/client.py", line 1377, in getresponse
+    response.begin()
+  File "/usr/local/python3/lib/python3.9/http/client.py", line 320, in begin
+    version, status, reason = self._read_status()
+  File "/usr/local/python3/lib/python3.9/http/client.py", line 281, in _read_status
+    line = str(self.fp.readline(_MAXLINE + 1), "iso-8859-1")
+  File "/usr/local/python3/lib/python3.9/socket.py", line 704, in readinto
+    return self._sock.recv_into(b)
+urllib3.exceptions.ProtocolError: ('Connection aborted.', ConnectionResetError(104, 'Connection reset by peer'))
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/usr/local/python3/lib/python3.9/site-packages/KcangNacos/nacos.py", line 153, in __registerBeatThreadRun
+    re = requests.put(beatUrl[:-1])
+  File "/usr/local/python3/lib/python3.9/site-packages/requests/api.py", line 130, in put
+    return request("put", url, data=data, **kwargs)
+  File "/usr/local/python3/lib/python3.9/site-packages/requests/api.py", line 59, in request
+    return session.request(method=method, url=url, **kwargs)
+  File "/usr/local/python3/lib/python3.9/site-packages/requests/sessions.py", line 587, in request
+    resp = self.send(prep, **send_kwargs)
+  File "/usr/local/python3/lib/python3.9/site-packages/requests/sessions.py", line 701, in send
+    r = adapter.send(request, **kwargs)
+  File "/usr/local/python3/lib/python3.9/site-packages/requests/adapters.py", line 547, in send
+    raise ConnectionError(err, request=request)
+requests.exceptions.ConnectionError: ('Connection aborted.', ConnectionResetError(104, 'Connection reset by peer'))
+[2022-10-10 15:59:52,100][root.__registerBeatThreadRun():162] [ERROR] 服务心跳维持失败！
+Traceback (most recent call last):
+  File "/usr/local/python3/lib/python3.9/site-packages/urllib3/connectionpool.py", line 699, in urlopen
+    httplib_response = self._make_request(
+  File "/usr/local/python3/lib/python3.9/site-packages/urllib3/connectionpool.py", line 445, in _make_request
+    six.raise_from(e, None)
+  File "<string>", line 3, in raise_from
+  File "/usr/local/python3/lib/python3.9/site-packages/urllib3/connectionpool.py", line 440, in _make_request
+    httplib_response = conn.getresponse()
+  File "/usr/local/python3/lib/python3.9/http/client.py", line 1377, in getresponse
+    response.begin()
+  File "/usr/local/python3/lib/python3.9/http/client.py", line 320, in begin
+    version, status, reason = self._read_status()
+  File "/usr/local/python3/lib/python3.9/http/client.py", line 281, in _read_status
+    line = str(self.fp.readline(_MAXLINE + 1), "iso-8859-1")
+  File "/usr/local/python3/lib/python3.9/socket.py", line 704, in readinto
+    return self._sock.recv_into(b)
+ConnectionResetError: [Errno 104] Connection reset by peer
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/usr/local/python3/lib/python3.9/site-packages/requests/adapters.py", line 489, in send
+    resp = conn.urlopen(
+  File "/usr/local/python3/lib/python3.9/site-packages/urllib3/connectionpool.py", line 755, in urlopen
+    retries = retries.increment(
+  File "/usr/local/python3/lib/python3.9/site-packages/urllib3/util/retry.py", line 532, in increment
+    raise six.reraise(type(error), error, _stacktrace)
+  File "/usr/local/python3/lib/python3.9/site-packages/urllib3/packages/six.py", line 769, in reraise
+    raise value.with_traceback(tb)
+  File "/usr/local/python3/lib/python3.9/site-packages/urllib3/connectionpool.py", line 699, in urlopen
+    httplib_response = self._make_request(
+  File "/usr/local/python3/lib/python3.9/site-packages/urllib3/connectionpool.py", line 445, in _make_request
+    six.raise_from(e, None)
+  File "<string>", line 3, in raise_from
+  File "/usr/local/python3/lib/python3.9/site-packages/urllib3/connectionpool.py", line 440, in _make_request
+    httplib_response = conn.getresponse()
+  File "/usr/local/python3/lib/python3.9/http/client.py", line 1377, in getresponse
+    response.begin()
+  File "/usr/local/python3/lib/python3.9/http/client.py", line 320, in begin
+    version, status, reason = self._read_status()
+  File "/usr/local/python3/lib/python3.9/http/client.py", line 281, in _read_status
+    line = str(self.fp.readline(_MAXLINE + 1), "iso-8859-1")
+  File "/usr/local/python3/lib/python3.9/socket.py", line 704, in readinto
+    return self._sock.recv_into(b)
+urllib3.exceptions.ProtocolError: ('Connection aborted.', ConnectionResetError(104, 'Connection reset by peer'))
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/usr/local/python3/lib/python3.9/site-packages/KcangNacos/nacos.py", line 153, in __registerBeatThreadRun
+    re = requests.put(beatUrl[:-1])
+  File "/usr/local/python3/lib/python3.9/site-packages/requests/api.py", line 130, in put
+    return request("put", url, data=data, **kwargs)
+  File "/usr/local/python3/lib/python3.9/site-packages/requests/api.py", line 59, in request
+    return session.request(method=method, url=url, **kwargs)
+  File "/usr/local/python3/lib/python3.9/site-packages/requests/sessions.py", line 587, in request
+    resp = self.send(prep, **send_kwargs)
+  File "/usr/local/python3/lib/python3.9/site-packages/requests/sessions.py", line 701, in send
+    r = adapter.send(request, **kwargs)
+  File "/usr/local/python3/lib/python3.9/site-packages/requests/adapters.py", line 547, in send
+    raise ConnectionError(err, request=request)
+requests.exceptions.ConnectionError: ('Connection aborted.', ConnectionResetError(104, 'Connection reset by peer'))
+[2022-10-10 15:59:54,411][kombu.mixins.Consumer():225] [INFO] Connected to redis://:**@redis-cache:6379/8
+[2022-10-10 16:00:11,282][daphne.cli.run():287] [INFO] Starting server at tcp:port=8001:interface=0.0.0.0
+[2022-10-10 16:00:11,283][daphne.server.run():110] [INFO] HTTP/2 support not enabled (install the http2 and tls Twisted extras)
+[2022-10-10 16:00:11,284][daphne.server.run():119] [INFO] Configuring endpoint tcp:port=8001:interface=0.0.0.0
+[2022-10-10 16:00:11,285][daphne.server.listen_success():150] [INFO] Listening on TCP address 0.0.0.0:8001
+[2022-10-10 16:00:12,489][flower.command.print_banner():162] [INFO] Visit me at http://localhost:5555
+[2022-10-10 16:00:12,497][flower.command.print_banner():170] [INFO] Broker: redis://:**@redis-cache:6379/8
+[2022-10-10 16:00:12,503][flower.command.print_banner():171] [INFO] Registered tasks: 
+['apps.asset.tasks.admin_file',
+ 'apps.automation.tasks.collect_device',
+ 'apps.automation.tasks.collect_device_main',
+ 'apps.automation.tasks.interface_used',
+ 'apps.config_center.tasks.config_backup',
+ 'apps.route_backend.tasks.get_tasks',
+ 'celery.accumulate',
+ 'celery.backend_cleanup',
+ 'celery.chain',
+ 'celery.chord',
+ 'celery.chord_unlock',
+ 'celery.chunks',
+ 'celery.group',
+ 'celery.map',
+ 'celery.starmap']
+[2022-10-10 16:00:12,512][kombu.mixins.Consumer():225] [INFO] Connected to redis://:**@redis-cache:6379/8
+[2022-10-10 16:00:13,566][flower.inspector._inspect():42] [WARNING] Inspect method reserved failed
+[2022-10-10 16:00:13,566][flower.inspector._inspect():42] [WARNING] Inspect method stats failed
+[2022-10-10 16:00:13,570][flower.inspector._inspect():42] [WARNING] Inspect method scheduled failed
+[2022-10-10 16:00:13,572][flower.inspector._inspect():42] [WARNING] Inspect method registered failed
+[2022-10-10 16:00:13,572][flower.inspector._inspect():42] [WARNING] Inspect method active_queues failed
+[2022-10-10 16:00:13,574][flower.inspector._inspect():42] [WARNING] Inspect method active failed
+[2022-10-10 16:00:13,576][flower.inspector._inspect():42] [WARNING] Inspect method conf failed
+[2022-10-10 16:00:13,577][flower.inspector._inspect():42] [WARNING] Inspect method revoked failed
+[2022-10-10 16:03:48,114][flower.events.run():199] [ERROR] Failed to capture events: 'Connection closed by server.', trying again in 1 seconds.
+[2022-10-10 16:03:50,123][kombu.mixins.Consumer():225] [INFO] Connected to redis://:**@redis-cache:6379/8
+[2022-10-10 16:03:51,837][root.__registerBeatThreadRun():162] [ERROR] 服务心跳维持失败！
+Traceback (most recent call last):
+  File "/usr/local/python3/lib/python3.9/site-packages/urllib3/connectionpool.py", line 699, in urlopen
+    httplib_response = self._make_request(
+  File "/usr/local/python3/lib/python3.9/site-packages/urllib3/connectionpool.py", line 445, in _make_request
+    six.raise_from(e, None)
+  File "<string>", line 3, in raise_from
+  File "/usr/local/python3/lib/python3.9/site-packages/urllib3/connectionpool.py", line 440, in _make_request
+    httplib_response = conn.getresponse()
+  File "/usr/local/python3/lib/python3.9/http/client.py", line 1377, in getresponse
+    response.begin()
+  File "/usr/local/python3/lib/python3.9/http/client.py", line 320, in begin
+    version, status, reason = self._read_status()
+  File "/usr/local/python3/lib/python3.9/http/client.py", line 281, in _read_status
+    line = str(self.fp.readline(_MAXLINE + 1), "iso-8859-1")
+  File "/usr/local/python3/lib/python3.9/socket.py", line 704, in readinto
+    return self._sock.recv_into(b)
+ConnectionResetError: [Errno 104] Connection reset by peer
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/usr/local/python3/lib/python3.9/site-packages/requests/adapters.py", line 489, in send
+    resp = conn.urlopen(
+  File "/usr/local/python3/lib/python3.9/site-packages/urllib3/connectionpool.py", line 755, in urlopen
+    retries = retries.increment(
+  File "/usr/local/python3/lib/python3.9/site-packages/urllib3/util/retry.py", line 532, in increment
+    raise six.reraise(type(error), error, _stacktrace)
+  File "/usr/local/python3/lib/python3.9/site-packages/urllib3/packages/six.py", line 769, in reraise
+    raise value.with_traceback(tb)
+  File "/usr/local/python3/lib/python3.9/site-packages/urllib3/connectionpool.py", line 699, in urlopen
+    httplib_response = self._make_request(
+  File "/usr/local/python3/lib/python3.9/site-packages/urllib3/connectionpool.py", line 445, in _make_request
+    six.raise_from(e, None)
+  File "<string>", line 3, in raise_from
+  File "/usr/local/python3/lib/python3.9/site-packages/urllib3/connectionpool.py", line 440, in _make_request
+    httplib_response = conn.getresponse()
+  File "/usr/local/python3/lib/python3.9/http/client.py", line 1377, in getresponse
+    response.begin()
+  File "/usr/local/python3/lib/python3.9/http/client.py", line 320, in begin
+    version, status, reason = self._read_status()
+  File "/usr/local/python3/lib/python3.9/http/client.py", line 281, in _read_status
+    line = str(self.fp.readline(_MAXLINE + 1), "iso-8859-1")
+  File "/usr/local/python3/lib/python3.9/socket.py", line 704, in readinto
+    return self._sock.recv_into(b)
+urllib3.exceptions.ProtocolError: ('Connection aborted.', ConnectionResetError(104, 'Connection reset by peer'))
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/usr/local/python3/lib/python3.9/site-packages/KcangNacos/nacos.py", line 153, in __registerBeatThreadRun
+    re = requests.put(beatUrl[:-1])
+  File "/usr/local/python3/lib/python3.9/site-packages/requests/api.py", line 130, in put
+    return request("put", url, data=data, **kwargs)
+  File "/usr/local/python3/lib/python3.9/site-packages/requests/api.py", line 59, in request
+    return session.request(method=method, url=url, **kwargs)
+  File "/usr/local/python3/lib/python3.9/site-packages/requests/sessions.py", line 587, in request
+    resp = self.send(prep, **send_kwargs)
+  File "/usr/local/python3/lib/python3.9/site-packages/requests/sessions.py", line 701, in send
+    r = adapter.send(request, **kwargs)
+  File "/usr/local/python3/lib/python3.9/site-packages/requests/adapters.py", line 547, in send
+    raise ConnectionError(err, request=request)
+requests.exceptions.ConnectionError: ('Connection aborted.', ConnectionResetError(104, 'Connection reset by peer'))
+[2022-10-10 16:03:51,845][root.__registerBeatThreadRun():162] [ERROR] 服务心跳维持失败！
+Traceback (most recent call last):
+  File "/usr/local/python3/lib/python3.9/site-packages/urllib3/connectionpool.py", line 699, in urlopen
+    httplib_response = self._make_request(
+  File "/usr/local/python3/lib/python3.9/site-packages/urllib3/connectionpool.py", line 445, in _make_request
+    six.raise_from(e, None)
+  File "<string>", line 3, in raise_from
+  File "/usr/local/python3/lib/python3.9/site-packages/urllib3/connectionpool.py", line 440, in _make_request
+    httplib_response = conn.getresponse()
+  File "/usr/local/python3/lib/python3.9/http/client.py", line 1377, in getresponse
+    response.begin()
+  File "/usr/local/python3/lib/python3.9/http/client.py", line 320, in begin
+    version, status, reason = self._read_status()
+  File "/usr/local/python3/lib/python3.9/http/client.py", line 281, in _read_status
+    line = str(self.fp.readline(_MAXLINE + 1), "iso-8859-1")
+  File "/usr/local/python3/lib/python3.9/socket.py", line 704, in readinto
+    return self._sock.recv_into(b)
+ConnectionResetError: [Errno 104] Connection reset by peer
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/usr/local/python3/lib/python3.9/site-packages/requests/adapters.py", line 489, in send
+    resp = conn.urlopen(
+  File "/usr/local/python3/lib/python3.9/site-packages/urllib3/connectionpool.py", line 755, in urlopen
+    retries = retries.increment(
+  File "/usr/local/python3/lib/python3.9/site-packages/urllib3/util/retry.py", line 532, in increment
+    raise six.reraise(type(error), error, _stacktrace)
+  File "/usr/local/python3/lib/python3.9/site-packages/urllib3/packages/six.py", line 769, in reraise
+    raise value.with_traceback(tb)
+  File "/usr/local/python3/lib/python3.9/site-packages/urllib3/connectionpool.py", line 699, in urlopen
+    httplib_response = self._make_request(
+  File "/usr/local/python3/lib/python3.9/site-packages/urllib3/connectionpool.py", line 445, in _make_request
+    six.raise_from(e, None)
+  File "<string>", line 3, in raise_from
+  File "/usr/local/python3/lib/python3.9/site-packages/urllib3/connectionpool.py", line 440, in _make_request
+    httplib_response = conn.getresponse()
+  File "/usr/local/python3/lib/python3.9/http/client.py", line 1377, in getresponse
+    response.begin()
+  File "/usr/local/python3/lib/python3.9/http/client.py", line 320, in begin
+    version, status, reason = self._read_status()
+  File "/usr/local/python3/lib/python3.9/http/client.py", line 281, in _read_status
+    line = str(self.fp.readline(_MAXLINE + 1), "iso-8859-1")
+  File "/usr/local/python3/lib/python3.9/socket.py", line 704, in readinto
+    return self._sock.recv_into(b)
+urllib3.exceptions.ProtocolError: ('Connection aborted.', ConnectionResetError(104, 'Connection reset by peer'))
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/usr/local/python3/lib/python3.9/site-packages/KcangNacos/nacos.py", line 153, in __registerBeatThreadRun
+    re = requests.put(beatUrl[:-1])
+  File "/usr/local/python3/lib/python3.9/site-packages/requests/api.py", line 130, in put
+    return request("put", url, data=data, **kwargs)
+  File "/usr/local/python3/lib/python3.9/site-packages/requests/api.py", line 59, in request
+    return session.request(method=method, url=url, **kwargs)
+  File "/usr/local/python3/lib/python3.9/site-packages/requests/sessions.py", line 587, in request
+    resp = self.send(prep, **send_kwargs)
+  File "/usr/local/python3/lib/python3.9/site-packages/requests/sessions.py", line 701, in send
+    r = adapter.send(request, **kwargs)
+  File "/usr/local/python3/lib/python3.9/site-packages/requests/adapters.py", line 547, in send
+    raise ConnectionError(err, request=request)
+requests.exceptions.ConnectionError: ('Connection aborted.', ConnectionResetError(104, 'Connection reset by peer'))
+[2022-10-10 16:04:07,929][daphne.cli.run():287] [INFO] Starting server at tcp:port=8001:interface=0.0.0.0
+[2022-10-10 16:04:07,929][daphne.server.run():110] [INFO] HTTP/2 support not enabled (install the http2 and tls Twisted extras)
+[2022-10-10 16:04:07,930][daphne.server.run():119] [INFO] Configuring endpoint tcp:port=8001:interface=0.0.0.0
+[2022-10-10 16:04:07,931][daphne.server.listen_success():150] [INFO] Listening on TCP address 0.0.0.0:8001
+[2022-10-10 16:04:09,113][flower.command.print_banner():162] [INFO] Visit me at http://localhost:5555
+[2022-10-10 16:04:09,120][flower.command.print_banner():170] [INFO] Broker: redis://:**@redis-cache:6379/8
+[2022-10-10 16:04:09,127][flower.command.print_banner():171] [INFO] Registered tasks: 
+['apps.asset.tasks.admin_file',
+ 'apps.automation.tasks.collect_device',
+ 'apps.automation.tasks.collect_device_main',
+ 'apps.automation.tasks.interface_used',
+ 'apps.config_center.tasks.config_backup',
+ 'apps.route_backend.tasks.get_tasks',
+ 'celery.accumulate',
+ 'celery.backend_cleanup',
+ 'celery.chain',
+ 'celery.chord',
+ 'celery.chord_unlock',
+ 'celery.chunks',
+ 'celery.group',
+ 'celery.map',
+ 'celery.starmap']
+[2022-10-10 16:04:09,142][kombu.mixins.Consumer():225] [INFO] Connected to redis://:**@redis-cache:6379/8
+[2022-10-10 16:04:10,189][flower.inspector._inspect():42] [WARNING] Inspect method stats failed
+[2022-10-10 16:04:10,192][flower.inspector._inspect():42] [WARNING] Inspect method reserved failed
+[2022-10-10 16:04:10,194][flower.inspector._inspect():42] [WARNING] Inspect method registered failed
+[2022-10-10 16:04:10,196][flower.inspector._inspect():42] [WARNING] Inspect method active failed
+[2022-10-10 16:04:10,201][flower.inspector._inspect():42] [WARNING] Inspect method scheduled failed
+[2022-10-10 16:04:10,201][flower.inspector._inspect():42] [WARNING] Inspect method active_queues failed
+[2022-10-10 16:04:10,203][flower.inspector._inspect():42] [WARNING] Inspect method revoked failed
+[2022-10-10 16:04:10,204][flower.inspector._inspect():42] [WARNING] Inspect method conf failed
+[2022-10-10 16:05:00,513][utils.custom.backends.authenticate():19] [INFO] admin 正在使用本地登录...
+[2022-10-10 16:05:13,288][utils.custom.backends.authenticate():19] [INFO] admin 正在使用本地登录...

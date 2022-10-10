@@ -48,7 +48,7 @@ urlpatterns = [
     path("api/login/", LoginView.as_view(), name="login"),
     path("api/logout/", LogoutView.as_view(), name="logout"),
     path("api/status/", LoginViewSet.as_view(), name="status"),
-    path("token/refresh/", TokenRefreshView.as_view(), name="token_refresh"),
+    path("api/refresh/", TokenRefreshView.as_view(), name="token_refresh"),
     # 自定义权限
     path("api/users/", include("apps.users.urls")),
     path("api/system/", include("apps.system.urls")),

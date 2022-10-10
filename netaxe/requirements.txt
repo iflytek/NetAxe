@@ -98,8 +98,6 @@ chardet==4.0.0
 coreschema==0.0.4
 django-comment-migrate==0.1.5
 django-cors-headers==3.10.1
-django-restql==0.15.1
-drf-yasg==1.20.0
 inflection==0.5.1
 itypes==1.2.0
 MarkupSafe==2.0.1
@@ -110,7 +108,9 @@ tzlocal==2.1
 ua-parser==0.10.0
 uritemplate==3.0.1
 urllib3==1.26.6
-user-agents==2.2.0
 whitenoise==5.3.0
 openpyxl==3.0.9
 KcangNacos==1.7
+django-restql==0.15.2
+user-agents==2.2.0
+drf-yasg==1.21.4

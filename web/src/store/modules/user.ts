@@ -30,7 +30,7 @@ const useUserStore = defineStore('user', {
         this.nickName = userInfo.nickName
         this.image = userInfo.image || defaultAvatar
         Cookies.set(NETOPS_TOKEN, 'Bearer ' + userInfo.token)
-        // Cookies.set('csrftoken', userInfo["csrf_token"])
+        // Cookies.set('csrftoken', userInfo['csrf_token'])
         localStorage.setItem('is_superuser', userInfo.isSuperuser + '')
         res()
       })
