@@ -15,10 +15,10 @@ from rest_framework_tracking.mixins import LoggingMixin
 from apps.api.tools.custom_pagination import LargeResultsSetPagination
 from apps.api.views import LimitSet
 from apps.asset.models import Idc, AssetAccount, Vendor, Role, Category, Model, Attribute, Framework, NetworkDevice, \
-    IdcModel, NetZone
+    IdcModel, NetZone, Rack
 from apps.asset.serializers import IdcSerializer, AssetAccountSerializer, AssetVendorSerializer, RoleSerializer, \
     CategorySerializer, ModelSerializer, AttributeSerializer, FrameworkSerializer, NetworkDeviceSerializer, \
-    IdcModelSerializer
+    IdcModelSerializer, NetZoneSerializer, CmdbRackSerializer
 from netboost.settings import MEDIA_ROOT
 from utils.excel2list import excel2list
 
@@ -133,6 +133,52 @@ class NetZoneFilter(django_filters.FilterSet):
     class Meta:
         model = NetZone
         fields = '__all__'
+
+
+class CmdbNetzoneModelViewSet(viewsets.ModelViewSet):
+    """
+    处理  GET POST , 处理 /api/post/<pk>/ GET PUT PATCH DELETE
+    """
+    queryset = NetZone.objects.all().order_by('id')
+    # queryset = NetZoneSerializer.setup_eager_loading(queryset)
+    serializer_class = NetZoneSerializer
+    # permission_classes = (permissions.IsAuthenticated,)
+    permission_classes = (permissions.IsAuthenticated,)
+    pagination_class = LargeResultsSetPagination
+    # 配置搜索功能
+    filter_backends = (DjangoFilterBackend, filters.SearchFilter, filters.OrderingFilter)
+    filterset_class = NetZoneFilter
+    # filter_fields = '__all__'
+    # list_cache_key_func = QueryParamsKeyConstructor()
+
+
+class RackFilter(django_filters.FilterSet):
+    """模糊字段过滤"""
+
+    # vendor = django_filters.CharFilter(lookup_expr='icontains')
+    # memo = django_filters.CharFilter(lookup_expr='icontains')
+    # name = django_filters.CharFilter(lookup_expr='icontains')
+
+    class Meta:
+        model = Rack
+        fields = '__all__'
+
+
+class CmdbRackModelViewSet(viewsets.ModelViewSet):
+    """
+    处理  GET POST , 处理 /api/post/<pk>/ GET PUT PATCH DELETE
+    """
+    queryset = Rack.objects.all().order_by('id')
+    # queryset = NetZoneSerializer.setup_eager_loading(queryset)
+    serializer_class = CmdbRackSerializer
+    # permission_classes = (permissions.IsAuthenticated,)
+    permission_classes = (permissions.IsAuthenticated,)
+    pagination_class = LargeResultsSetPagination
+    # 配置搜索功能
+    filter_backends = (DjangoFilterBackend, filters.SearchFilter, filters.OrderingFilter)
+    filterset_class = RackFilter
+    # filter_fields = '__all__'
+    # list_cache_key_func = QueryParamsKeyConstructor()
 
 
 class IdcModelFilter(django_filters.FilterSet):

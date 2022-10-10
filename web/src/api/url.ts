@@ -43,7 +43,7 @@ export const getVendorList = '/resources_manage/api/cmdb_vendor/'
 
 export const getCmdbModelList = '/resources_manage/api/cmdb_model/'
 
-export const get_cmdb_rack = '/api/cmdb_rack/'
+export const get_cmdb_rack = '/resources_manage/api/cmdb_rack/'
 
 export const get_cmdb_idc_model = '/resources_manage/api/cmdb_idc_model'
 
@@ -51,11 +51,11 @@ export const getCategoryList = '/resources_manage/api/cmdb_category/'
 
 export const get_api_request_log = '/api/api_request_log'
 
-export const getCmdbNetzoneList = '/api/cmdb_netzone/'
+export const getCmdbNetzoneList = '/resources_manage/api/cmdb_netzone'
 
 export const getCmdbIdcModelList = '/resources_manage/api/cmdb_idc_model/'
 
-export const getCmdbRackList = '/api/cmdb_rack'
+export const getCmdbRackList = '/resources_manage/api/cmdb_rack'
 
 export const getcmdb_accountList = '/resources_manage/api/cmdb_account/'
 

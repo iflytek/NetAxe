@@ -99,7 +99,7 @@
         />
       </template>
     </ModalDialog>
-  
+
     <ModalDialog
       ref="ChangeLogmodalDialog"
       title="变更轨迹"
@@ -175,7 +175,7 @@
     <ModalDialog
       ref="connect_account_modalDialog"
       title="关联设备管理账户"
-      :style="{ height: '600px', width: '500px' }"
+      :style="{ height: '300px', width: '500px' }"
       @confirm="ConnectAccountConfirm"
     >
       <template #content>
@@ -223,7 +223,6 @@
         role="dialog"
         aria-modal="true"
       >
-      
         <n-form
           ref="formRef"
           :model="formRef"
@@ -298,7 +297,7 @@ import {
   getCmdbIdcModelList,
   getCmdbRackList,
   getcmdb_accountList,
-  get_device_expand,
+  getInterfaceUsedList,
   device_import_template,
   deviceWebSshLogin,
   deviceInfoChange,
@@ -345,7 +344,7 @@ export default defineComponent({
   name: 'networkdevice',
   components: {},
   setup() {
-    const  formRef = ref({})
+    const formRef = ref({})
     const term = ref(null)
     const socket = ref(null)
     const layoutStore = useLayoutStore()
@@ -382,8 +381,8 @@ export default defineComponent({
         optionItems: [
           { value: 0, label: '' },
           { value: 2, label: '二层' },
-          { value: 4, label: '三层' },
-          { value: 6, label: '大二层' },
+          { value: 1, label: '三层' },
+          { value: 3, label: '大二层' },
         ],
         render: (formItem) => {
           return h(NSelect, {
@@ -679,6 +678,7 @@ export default defineComponent({
           return h(NSelect, {
             options: formItem.optionItems as Array<SelectOption>,
             value: formItem.value.value,
+            multiple:true,
             placeholder: '请选择协议端口',
             onUpdateValue: (val) => {
               formItem.value.value = val
@@ -687,22 +687,22 @@ export default defineComponent({
           })
         },
       },
-      {
-        key: 'protocol_port',
-        label: '协议端口',
-        value: ref(''),
-        optionItems: [],
-        render: (formItem: any) => {
-          return h(NSelect, {
-            options: formItem.optionItems as Array<SelectOption>,
-            value: formItem.value.value,
-            placeholder: '请选择协议端口',
-            onUpdateValue: (val) => {
-              formItem.value.value = val
-            },
-          })
-        },
-      },
+      // {
+      //   key: 'protocol_port',
+      //   label: '协议端口',
+      //   value: ref(''),
+      //   optionItems: [],
+      //   render: (formItem: any) => {
+      //     return h(NSelect, {
+      //       options: formItem.optionItems as Array<SelectOption>,
+      //       value: formItem.value.value,
+      //       placeholder: '请选择协议端口',
+      //       onUpdateValue: (val) => {
+      //         formItem.value.value = val
+      //       },
+      //     })
+      //   },
+      // },
     ]
     const device_import_template_url = ref('')
     const importFormOptions = [
@@ -2196,14 +2196,12 @@ export default defineComponent({
         collect_data.append('plan', selectCollectValues.value)
         collect_data.append('serial_num', dev_detail_info['serial_num'])
         patch({
-          url: getNetworkDeviceList +  devid + '/',
+          url: getNetworkDeviceList + devid + '/',
           data: collect_data,
         }).then((res) => {
-        
-            message.success('新关联方案成功')
-            doRefresh()
-            checkedRowKeysRef.value.length = 0
-          
+          message.success('新关联方案成功')
+          doRefresh()
+          checkedRowKeysRef.value.length = 0
         })
       })
     }
@@ -2566,44 +2564,41 @@ export default defineComponent({
           url: getNetworkDeviceList,
           data: import_formdata,
         }).then((res) => {
-          if (res.code === 201) {
-            var monitor_data = new FormData()
-            monitor_data.append('serial_num', import_form['serial_num'])
-            // 添加监控
-            post({
-              url: networkDeviceUrl,
-              data: monitor_data,
-            }).then((res) => {
-              if (res.data === 200) {
-                message.success(res.result)
-              } else {
-              }
-            })
-            get({
-              url: networkDeviceUrl,
-              data: () => {
-                return {
-                  bgbu: JSON.stringify(['16', '80']),
-                  id: res.data['id'],
-                }
-              },
-            }).then((res) => {
-              if (res.code === 200) {
-                message.success(res.data['msg'])
-              }
-            })
-            nextTick(() => {
-              // device_import_dialog.success({
-              //   title: '提示',
-              //   positiveText: '确定',
-              //   content:
-              //       '设备录入成功,SN号:' +
-              //       JSON.stringify(import_form.serial_num),
-              // })
-              message.success('设备录入成功,SN号:' + JSON.stringify(import_form.serial_num))
-              doRefresh()
-            })
+          console.log('res',res)
+          if (res.code === 400) {
+            message.error(res.message)
           }
+          // if (res.code === 201) {
+          var monitor_data = new FormData()
+          monitor_data.append('serial_num', import_form['serial_num'])
+          // 添加监控
+          post({
+            url: networkDeviceUrl,
+            data: monitor_data,
+          }).then((res) => {
+            if (res.data === 200) {
+              message.success(res.result)
+            } else {
+            }
+          })
+          get({
+            url: networkDeviceUrl,
+            data: () => {
+              return {
+                bgbu: JSON.stringify(['16', '80']),
+                id: res.data['id'],
+              }
+            },
+          }).then((res) => {
+            if (res.code === 200) {
+              message.success(res.data['msg'])
+            }
+          })
+          nextTick(() => {
+            message.success('设备录入成功,SN号:' + JSON.stringify(import_form.serial_num))
+            doRefresh()
+          })
+          // }
         })
 
         // importDataFormRef.value?.reset()
@@ -2636,12 +2631,12 @@ export default defineComponent({
         url: getNetworkDeviceList + '/' + device_info.id + '/',
         data: edit_formdata,
       }).then((res) => {
-        if (res.code === 200) {
+        // if (res.code === 200) {
           message.success('编辑设备成功')
           doRefresh()
-        } else {
-          message.error(res.message)
-        }
+        // } else {
+          // message.error(res.message)
+        // }
       })
     }
 
@@ -2704,12 +2699,11 @@ export default defineComponent({
         // 根据机房查询网络区域
         get({
           url: getCmdbNetzoneList,
-          data: () => {
-            return {
-              idc: item.idc,
-              limit: 1000,
-            }
-          },
+          // data: () => {
+          //   return {
+          //     limit: 1000,
+          //   }
+          // },
         }).then((res) => {
           //console.log('编辑--根据机房获取网络区域', res)
           //console.log(conditionItems)
@@ -2802,12 +2796,11 @@ export default defineComponent({
       //console.log('当前选中机房', item)
       get({
         url: getCmdbNetzoneList,
-        data: () => {
-          return {
-            idc: item,
-            limit: 1000,
-          }
-        },
+        // data: () => {
+        //   return {
+        //     limit: 1000,
+        //   }
+        // },
       }).then((res) => {
         //console.log('选中机房获取网络区域', res)
         //console.log(conditionItems)
@@ -2955,28 +2948,28 @@ export default defineComponent({
       //console.log('设备关联账号')
       // getasset_account_protocolList
       device_info.value = item.id
-      get({
-        url: getasset_account_protocolList,
-        data: () => {
-          return {
-            asset: item.id,
-          }
-        },
-      }).then((res) => {
+      // get({
+      //   url: getasset_account_protocolList,
+      //   data: () => {
+      //     return {
+      //       asset: item.id,
+      //     }
+      //   },
+      // }).then((res) => {
         //console.log('当前设备账户信息', res)
-        connect_account_FormOptions.forEach((it) => {
-          const key = it.key
-          const propName = item[key]
-          if (key === 'account') {
-            it.value.value = res.results[0]['account']
-          }
-          if (key === 'protocol_port') {
-            it.value.value = res.results[0]['protocol_port']
-          }
-        })
+        // connect_account_FormOptions.forEach((it) => {
+        //   const key = it.key
+        //   const propName = item[key]
+        //   if (key === 'account') {
+        //     it.value.value = res.results[0]['account']
+        //   }
+        //   if (key === 'protocol_port') {
+        //     it.value.value = res.results[0]['protocol_port']
+        //   }
+        // })
 
         //console.log(connect_account_FormOptions)
-      })
+      // })
     }
 
     function BindIP_handleClick(item) {
@@ -2992,9 +2985,9 @@ export default defineComponent({
       if (second_password.value === 'ccr_network') {
         show_password_modalDialog.value!.toggle()
         let csrf_token = Cookies.get('csrftoken')
-        // 打开真实密码account_list/get_device_expand
+        // 打开真实密码account_list/getInterfaceUsedList
         get({
-          url: get_device_expand,
+          url: getInterfaceUsedList,
           data: () => {
             return {
               password: second_password.value,
@@ -3047,7 +3040,7 @@ export default defineComponent({
       if (current_row_data.value) {
         nextTick(() => {
           get({
-            url: get_device_expand,
+            url: getInterfaceUsedList,
             data: () => {
               return {
                 host_id: current_row_data.value.id,
@@ -3072,29 +3065,29 @@ export default defineComponent({
         //   console
         // })
 
-        nextTick(() => {
-          get({
-            url: get_device_expand,
-            data: () => {
-              return {
-                stauts_check: current_row_data.value.manage_ip,
-              }
-            },
-          }).then((res) => {
-            //console.log('获取展开行设备监控状态', res)
-            if (res.code === 200) {
-              const status_check_res = res.result[0]
-              // status_check.value = status_check
-              if (status_check_res['snmp_available'] == '1') {
-                status_check.value = '正常'
-              } else {
-                status_check.value = '异常'
-              }
-            } else {
-              status_check.value = '异常'
-            }
-          })
-        })
+        // nextTick(() => {
+        //   get({
+        //     url: getInterfaceUsedList,
+        //     data: () => {
+        //       return {
+        //         stauts_check: current_row_data.value.manage_ip,
+        //       }
+        //     },
+        //   }).then((res) => {
+        //     //console.log('获取展开行设备监控状态', res)
+        //     if (res.code === 200) {
+        //       const status_check_res = res.result[0]
+        //       // status_check.value = status_check
+        //       if (status_check_res['snmp_available'] == '1') {
+        //         status_check.value = '正常'
+        //       } else {
+        //         status_check.value = '异常'
+        //       }
+        //     } else {
+        //       status_check.value = '异常'
+        //     }
+        //   })
+        // })
       }
     }
 
@@ -3216,16 +3209,14 @@ export default defineComponent({
 
     function ConnectAccountConfirm() {
       console.log(connect_account_DataFormRef.value?.generatorParams())
+      console.log('device_info.value',device_info.value)
       var connect_account_info = connect_account_DataFormRef.value?.generatorParams()
-      get({
-        url: deviceInfoChange,
-        data: () => {
-          return {
-            asset: device_info.value,
-            account: connect_account_info['account'],
-            protocol_port: connect_account_info['protocol_port'],
-          }
-        },
+      var account_data = new FormData()
+      account_data.append('asset',device_info.value)
+      account_data.append('account',connect_account_info['account'])
+      patch({
+        url: getNetworkDeviceList +'/' +device_info.value+'/',
+        data: account_data
       }).then((res) => {
         if (res.code === 200) {
           message.success('修改设备信息成功')
@@ -3244,7 +3235,6 @@ export default defineComponent({
           }
         },
       }).then((res) => {
-       
         const collection_list = res.results
         for (var i = 0; i < collection_list.length; i++) {
           const dict = {
@@ -3254,7 +3244,6 @@ export default defineComponent({
           collection_options.push(dict)
           if (conditionItems[15].optionItems != undefined) {
             conditionItems[15].optionItems.push(dict)
-           
           }
           if (EditFormOptions[15].optionItems != undefined) {
             EditFormOptions[15].optionItems.push(dict)
@@ -3262,7 +3251,6 @@ export default defineComponent({
         }
         nextTick(() => {
           conditionItems[15].optionItems.splice(0, 0, { label: '', value: '' })
-          
         })
       })
     }
