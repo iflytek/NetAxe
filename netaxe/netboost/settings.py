@@ -13,6 +13,7 @@ import os
 import sys
 from datetime import timedelta
 from pathlib import Path
+
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 # BASE_DIR = Path(__file__).resolve().parent.parent
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
@@ -37,6 +38,7 @@ INSTALLED_APPS = [
     'channels',
     'guardian',
     'captcha',
+    'django_filters',
     'multi_captcha_admin',
     'django_celery_results.apps.CeleryResultConfig',
     'rest_framework.apps.RestFrameworkConfig',
@@ -49,7 +51,7 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'django_celery_beat',
-    'django_filters',
+
     'apps.asset.apps.AssetConfig',
     'apps.api.apps.ApiConfig',
     'apps.config_center.apps.ConfigCenterConfig',
@@ -109,7 +111,6 @@ TEMPLATES = [
         },
     },
 ]
-
 
 # Channels settings
 ASGI_APPLICATION = "netboost.routing.application"

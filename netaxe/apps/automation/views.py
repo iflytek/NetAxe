@@ -1,6 +1,7 @@
 from django.shortcuts import render
 
 # Create your views here.
+import django_filters
 from django_filters.rest_framework import DjangoFilterBackend
 from rest_framework import viewsets, permissions, filters, pagination
 from rest_framework_tracking.mixins import LoggingMixin
@@ -9,6 +10,18 @@ from apps.api.tools.custom_viewset_base import CustomViewBase
 from apps.api.views import LimitSet
 from apps.automation.models import CollectionPlan
 from apps.automation.serializers import CollectionPlanSerializer
+
+
+class CollectionPlanFilter(django_filters.FilterSet):
+    """模糊字段过滤"""
+
+    # vendor = django_filters.CharFilter(lookup_expr='icontains')
+    memo = django_filters.CharFilter(lookup_expr='icontains')
+    name = django_filters.CharFilter(lookup_expr='icontains')
+
+    class Meta:
+        model = CollectionPlan
+        fields = '__all__'
 
 
 class CollectionPlanViewSet(LoggingMixin, CustomViewBase):
@@ -21,6 +34,8 @@ class CollectionPlanViewSet(LoggingMixin, CustomViewBase):
     serializer_class = CollectionPlanSerializer
     permission_classes = (permissions.IsAuthenticated,)
     # 配置搜索功能
-    filter_backends = (DjangoFilterBackend, filters.SearchFilter, filters.OrderingFilter)
-    filter_fields = '__all__'
+    filter_backends = (DjangoFilterBackend, filters.SearchFilter, filters.OrderingFilter,)
+    # filter_fields = ('vendor', 'name',)
+    filterset_class = CollectionPlanFilter
+    search_fields = ('vendor', 'name',)
     pagination_class = LimitSet

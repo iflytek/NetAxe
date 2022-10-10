@@ -14,9 +14,11 @@ from rest_framework_tracking.mixins import LoggingMixin
 
 from apps.api.tools.custom_pagination import LargeResultsSetPagination
 from apps.api.views import LimitSet
-from apps.asset.models import Idc, AssetAccount, Vendor, Role, Category, Model, Attribute, Framework, NetworkDevice
+from apps.asset.models import Idc, AssetAccount, Vendor, Role, Category, Model, Attribute, Framework, NetworkDevice, \
+    IdcModel, NetZone
 from apps.asset.serializers import IdcSerializer, AssetAccountSerializer, AssetVendorSerializer, RoleSerializer, \
-    CategorySerializer, ModelSerializer, AttributeSerializer, FrameworkSerializer, NetworkDeviceSerializer
+    CategorySerializer, ModelSerializer, AttributeSerializer, FrameworkSerializer, NetworkDeviceSerializer, \
+    IdcModelSerializer
 from netboost.settings import MEDIA_ROOT
 from utils.excel2list import excel2list
 
@@ -119,6 +121,47 @@ class IdcViewSet(viewsets.ModelViewSet):
     filter_fields = '__all__'
     # 设置搜索的关键字
     search_fields = '__all__'
+
+
+class NetZoneFilter(django_filters.FilterSet):
+    """模糊字段过滤"""
+
+    # vendor = django_filters.CharFilter(lookup_expr='icontains')
+    # memo = django_filters.CharFilter(lookup_expr='icontains')
+    # name = django_filters.CharFilter(lookup_expr='icontains')
+
+    class Meta:
+        model = NetZone
+        fields = '__all__'
+
+
+class IdcModelFilter(django_filters.FilterSet):
+    """模糊字段过滤"""
+
+    # vendor = django_filters.CharFilter(lookup_expr='icontains')
+    # memo = django_filters.CharFilter(lookup_expr='icontains')
+    # name = django_filters.CharFilter(lookup_expr='icontains')
+
+    class Meta:
+        model = IdcModel
+        fields = '__all__'
+
+
+class CmdbIdcModelViewSet(viewsets.ModelViewSet):
+    """
+    处理  GET POST , 处理 /api/post/<pk>/ GET PUT PATCH DELETE
+    """
+    queryset = IdcModel.objects.all().order_by('id')
+    queryset = IdcModelSerializer.setup_eager_loading(queryset)
+    serializer_class = IdcModelSerializer
+    # permission_classes = (permissions.IsAuthenticated,)
+    permission_classes = (permissions.IsAuthenticated,)
+    pagination_class = LargeResultsSetPagination
+    # 配置搜索功能
+    filter_backends = (DjangoFilterBackend, filters.SearchFilter, filters.OrderingFilter)
+    filterset_class = IdcModelFilter
+    # filter_fields = '__all__'
+    # list_cache_key_func = QueryParamsKeyConstructor()
 
 
 # asset account

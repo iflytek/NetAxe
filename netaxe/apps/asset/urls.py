@@ -19,6 +19,7 @@ app_name = 'resources_manage'
 router = DefaultRouter()
 
 router.register(r'cmdb_idc', IdcViewSet)
+router.register(r'cmdb_idc_model', CmdbIdcModelViewSet)
 router.register(r'cmdb_account', AccountList)
 router.register(r'cmdb_vendor', VendorViewSet)
 router.register(r'cmdb_role', AssetRoleViewSet)
