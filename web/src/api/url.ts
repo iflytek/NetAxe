@@ -62,6 +62,7 @@ export const getcmdb_accountList = '/resources_manage/api/cmdb_account/'
 export const get_device_expand = '/network/networklist/'
 
 export const device_import_template = '/resources_manage/excel/'
+export const device_account_url = '/resources_manage/device_account/'
 
 export const deviceWebSshLogin = '/net_backend/deviceWebSsh'
 

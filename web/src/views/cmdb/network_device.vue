@@ -302,6 +302,7 @@ import {
   deviceWebSshLogin,
   deviceInfoChange,
   getCollection_planList,
+  device_account_url,
 } from '@/api/url'
 import { useTable, usePagination, useTableColumn } from '@/hooks/table'
 import {
@@ -2624,18 +2625,23 @@ export default defineComponent({
       edit_formdata.append('attribute', device_info['attribute'])
       edit_formdata.append('status', device_info['status'])
       edit_formdata.append('auto_enable', device_info['auto_enable'])
-      edit_formdata.append('netzone', device_info['netzone'])
+      edit_formdata.append('zone', device_info['netzone'])
       edit_formdata.append('serial_num', device_info['serial_num'])
       edit_formdata.append('auto_enable', device_info['auto_enable'])
       patch({
         url: getNetworkDeviceList + '/' + device_info.id + '/',
         data: edit_formdata,
       }).then((res) => {
-        // if (res.code === 200) {
+        if(res.code===400){
+          message.error(res.message)
+        }else{
           message.success('编辑设备成功')
           doRefresh()
+        }
+        // if (res.code === 200) {
+          
         // } else {
-          // message.error(res.message)
+          // 
         // }
       })
     }
@@ -2699,15 +2705,9 @@ export default defineComponent({
         // 根据机房查询网络区域
         get({
           url: getCmdbNetzoneList,
-          // data: () => {
-          //   return {
-          //     limit: 1000,
-          //   }
-          // },
+          
         }).then((res) => {
-          //console.log('编辑--根据机房获取网络区域', res)
-          //console.log(conditionItems)
-          // let filter_list = []
+        
           if (EditFormOptions[10].optionItems !== undefined) {
             EditFormOptions[10].optionItems.length = 0
             let netzone_list = []
@@ -3212,10 +3212,10 @@ export default defineComponent({
       console.log('device_info.value',device_info.value)
       var connect_account_info = connect_account_DataFormRef.value?.generatorParams()
       var account_data = new FormData()
-      account_data.append('asset',device_info.value)
-      account_data.append('account',connect_account_info['account'])
-      patch({
-        url: getNetworkDeviceList +'/' +device_info.value+'/',
+      account_data.append('asset_id',device_info.value)
+      account_data.append('account', "["+connect_account_info['account'] +"]")
+      post({
+        url: device_account_url,
         data: account_data
       }).then((res) => {
         if (res.code === 200) {

@@ -10,6 +10,7 @@ from django.shortcuts import render
 from django.views import View
 from django_filters.rest_framework import DjangoFilterBackend
 from rest_framework import viewsets, permissions, filters
+from rest_framework.views import APIView
 from rest_framework_tracking.mixins import LoggingMixin
 
 from apps.api.tools.custom_pagination import LargeResultsSetPagination
@@ -104,6 +105,16 @@ class ResourceManageExcelView(View):
             return response
         except Exception:
             raise Http404
+
+
+class DeviceAccountView(APIView):
+    def post(self, request):
+        post_params = request.POST.dict()
+        device = NetworkDevice.objects.get(id=post_params['asset_id'])
+        account_list = json.loads(post_params['account'])
+
+        device.account.set(account_list)
+        return JsonResponse({'code': 200, 'message': '关联管理账户成功'})
 
 
 # asset IDC

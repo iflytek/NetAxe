@@ -34,4 +34,5 @@ router.register(r'asset_networkdevice', NetworkDeviceViewSet)
 urlpatterns = [
     path(r'api/', include(router.urls)),
     path('excel/', ResourceManageExcelView.as_view(), name='excel'),
+    path('device_account/', DeviceAccountView.as_view(), name='device_account'),
 ]
