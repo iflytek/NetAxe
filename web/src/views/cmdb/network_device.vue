@@ -191,7 +191,7 @@
     <ModalDialog
       ref="account_modalDialog"
       title="账户信息"
-      :style="{ height: '500px', width: '500px' }"
+      :style="{ height: '300px', width: '800px' }"
     >
       <template #content>
         <n-data-table
@@ -1561,10 +1561,10 @@ export default defineComponent({
                     h(
                       NFormItem,
                       {
-                        label: '管理账户\n:',
+                        label: '备注\n:',
                         style: { width: '32%' },
                       },
-                      () => h('span', {}, ' ' + rowData.adpp_device)
+                      () => h('span', {}, ' ' + rowData.memo)
                     ),
 
                     h(NFormItem, { label: '监控状态\n:', style: { width: '32%' } }, () =>
@@ -1954,19 +1954,23 @@ export default defineComponent({
         [
           {
             title: '账户',
-            key: 'account__username',
+            key: 'name',
+          },
+          {
+            title: '用户名',
+            key: 'username',
           },
           {
             title: '密码',
-            key: 'account__password',
+            key: 'password',
           },
           {
             title: '协议',
-            key: 'protocol_port__protocol',
+            key: 'protocol',
           },
           {
             title: '端口',
-            key: 'protocol_port__port',
+            key: 'port',
             width: 100,
           },
         ],
@@ -2987,7 +2991,7 @@ export default defineComponent({
         let csrf_token = Cookies.get('csrftoken')
         // 打开真实密码account_list/getInterfaceUsedList
         get({
-          url: getInterfaceUsedList,
+          url: device_account_url,
           data: () => {
             return {
               password: second_password.value,
