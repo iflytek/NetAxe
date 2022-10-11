@@ -11,9 +11,10 @@ volumes:
 
 services:
   netaxe-server:
-    image: registry.cn-hangzhou.aliyuncs.com/netaxe/netaxe-backend:1.0.5
+    image: registry.cn-hangzhou.aliyuncs.com/netaxe/netaxe-backend:1.0.3
     container_name: netaxe-server
     ports:
+      - "5555:5555"
       - "8001:8001"
     # command: sleep 999999
     command: sh start.sh web
@@ -21,6 +22,8 @@ services:
       - redis-cache
     volumes:
       - ../../netaxe:/home/netaxe
+      - ./logs/netaxe_log:/home/netaxe/logs
+      - ./logs/daphne_log/websocket.log:/tmp/websocket.log
     networks:
       - netops-axe
 
@@ -51,7 +54,7 @@ services:
       - netops-axe
 
   celery-default:
-    image: registry.cn-hangzhou.aliyuncs.com/netaxe/netaxe-backend:1.0.5
+    image: registry.cn-hangzhou.aliyuncs.com/netaxe/netaxe-backend:1.0.3
     container_name: celery-default
     command: sh start.sh default
     depends_on:
@@ -63,7 +66,7 @@ services:
       - netops-axe
 
   celery-config:
-    image: registry.cn-hangzhou.aliyuncs.com/netaxe/netaxe-backend:1.0.5
+    image: registry.cn-hangzhou.aliyuncs.com/netaxe/netaxe-backend:1.0.3
     container_name: celery-config
     command: sh start.sh config
     depends_on:
@@ -110,7 +113,7 @@ services:
     image: apache/apisix:2.15.0-alpine
     restart: always
     volumes:
-      - ./conf/apisix_log:/usr/local/apisix/logs
+      - ./logs/apisix_log:/usr/local/apisix/logs
       - ./conf/apisix_conf/config.yaml:/usr/local/apisix/conf/config.yaml:ro
     depends_on:
       - etcd

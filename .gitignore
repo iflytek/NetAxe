@@ -11,8 +11,10 @@ web/*.local
 web/.idea/
 web/.vscode/
 web/node_modules
-netaxe/__pycahe__
 Python-3.9.11.tgz
+docker/server/logs/*
+netaxe/logs/*
+netaxe/__pycahe__
 netaxe/netboost/conf.py
 netaxe/netboost/__pycache__/
 netaxe/apps/system/migrations/
