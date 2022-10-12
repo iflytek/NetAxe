@@ -175,7 +175,7 @@
     <ModalDialog
       ref="connect_account_modalDialog"
       title="关联设备管理账户"
-      :style="{ height: '300px', width: '500px' }"
+      :style="{ height: '500px', width: '500px' }"
       @confirm="ConnectAccountConfirm"
     >
       <template #content>
