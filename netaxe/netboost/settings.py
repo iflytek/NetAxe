@@ -194,17 +194,17 @@ LOGGING = {
     },
     "loggers": {
         # default日志
-        "": {
-            "handlers": ["console", "error", "file"],
+        "server": {
+            "handlers": ["error", "file"],
             "level": "INFO",
         },
         "django": {
-            "handlers": ["console", "error", "file"],
+            "handlers": ["error", "file"],
             "level": "INFO",
             "propagate": False,
         },
         "scripts": {
-            "handlers": ["console", "error", "file"],
+            "handlers": ["error", "file"],
             "level": "INFO",
             "propagate": False,
         },

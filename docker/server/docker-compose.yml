@@ -14,7 +14,6 @@ services:
     image: registry.cn-hangzhou.aliyuncs.com/netaxe/netaxe-backend:1.0.3
     container_name: netaxe-server
     ports:
-      - "5555:5555"
       - "8001:8001"
     # command: sleep 999999
     command: sh start.sh web
@@ -82,6 +81,7 @@ services:
     container_name: redis-cache
     ports:
       - "6379:6379"
+    # command: sleep 999999 
     command: "redis-server --requirepass dade0f2a65237a56b79277e6dd27351d2854df033e0ad4b4f90abec229cd64df"
     networks:
       - netops-axe

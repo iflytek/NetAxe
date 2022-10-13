@@ -110,7 +110,6 @@ uritemplate==3.0.1
 urllib3==1.26.6
 whitenoise==5.3.0
 openpyxl==3.0.9
-KcangNacos==1.7
 django-restql==0.15.2
 user-agents==2.2.0
 drf-yasg==1.21.4
