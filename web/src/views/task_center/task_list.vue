@@ -873,7 +873,7 @@ export default defineComponent({
       // console.log(window.location.host)
       var monitor_url = window.location.host.split(':')[0]+':5555'
       // console.log(monitor_url)
-      window.open(monitor_url)
+      window.open("http://"+monitor_url)
     }
 
     function run_task(item) {
