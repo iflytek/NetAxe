@@ -36,6 +36,7 @@ export const BackendApi = '/api/'
 
 export const getCmdbIdcList = '/resources_manage/api/cmdb_idc/'
 export const getFrameworkList = '/resources_manage/api/framework/'
+export const getAttributeList = '/resources_manage/api/attribute/'
 
 export const getCmdbRoleList = '/resources_manage/api/cmdb_role/'
 

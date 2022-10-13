@@ -47,7 +47,7 @@
       </n-grid-item>
     </n-grid>
 
-    <n-grid
+    <!-- <n-grid
       class="mt-4 mb-4"
       :y-gap="15"
       :x-gap="15"
@@ -78,7 +78,7 @@
           <TodoItem v-for="(item, index) of waitingItmes" :key="index" :item="item" />
         </n-card>
       </n-grid-item>
-    </n-grid>
+    </n-grid> -->
   </div>
 </template>
 
