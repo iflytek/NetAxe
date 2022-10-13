@@ -87,7 +87,7 @@
       ref="device_import_modalDialog"
       title="资产数据录入"
       @confirm="importDataFormConfirm"
-      :style="{ height: '500px', }"
+      :style="{ height: '500px' }"
     >
       <template #content>
         <DataForm
@@ -129,7 +129,7 @@
         </div>
       </template>
     </ModalDialog>
-    
+
     <ModalDialog
       ref="show_password_modalDialog"
       title="查看管理账户信息?"
@@ -148,7 +148,6 @@
           ></n-input>
         </n-space>
       </template>
-     
     </ModalDialog>
     <ModalDialog
       ref="bind_ip_modalDialog"
@@ -2107,14 +2106,15 @@ export default defineComponent({
         //console.log(res)
         if (res.code === 200) {
           message.success(res.msg)
+          nextTick(() => {
+            import_show.value = false
+            doRefresh()
+          })
         } else {
           message.error('导入失败:' + res.msg)
         }
       })
-      nextTick(() => {
-        import_show.value = false
-        doRefresh()
-      })
+
       // //这里已经拿到了excel的file文件，若是项目需求，可直接$emit丢出文件
       // // that.$emit('getMyExcelData',f);
       // // 用FileReader来读取

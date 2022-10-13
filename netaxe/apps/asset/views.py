@@ -91,16 +91,16 @@ class ResourceManageExcelView(View):
                     'category': cmdb_category_id,  # 设备类型字段
                 }
 
-                print(networkdevices)
+                # print(networkdevices)
                 device_obj = NetworkDevice.objects.filter(serial_num=data[0].strip())
-                print('查询结果', device_obj)
+                # print('查询结果', device_obj)
                 if device_obj:
                     pass
                 else:
                     netops_api = netOpsApi()
-                    print('请求新增数据')
+                    # print('请求新增数据')
                     res = netops_api.post_cmdb_something(url="asset_networkdevice/", data=networkdevices)
-                    print('新增设备结果', res.json())
+                    # print('新增设备结果', res.json())
                     if res.json().get('code', ''):
                         if res.json()['code'] == 400:
                             return JsonResponse({'code': 500, 'msg': '导入失败！{}'.format(res.json()['message'])})

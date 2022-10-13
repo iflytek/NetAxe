@@ -109,7 +109,7 @@ class netOpsApi():
         新建条目通用方法
         """
         url = self.resources_manage_base_url + url
-        print("新建CMDB条目", data)
+        # print("新建CMDB条目", data)
         res = requests.post(url, data=json.dumps(data), headers=self.headers)
-        print('cmdb_res', res)
+        # print('cmdb_res', res)
         return res
