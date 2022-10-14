@@ -12,5 +12,5 @@ router = DefaultRouter()
 router.register(r'interfaceused', InterfaceUsedNewViewSet)
 
 urlpatterns = [
-    path(r'api/', include(router.urls)),
+    path(r'', include(router.urls)),
 ]

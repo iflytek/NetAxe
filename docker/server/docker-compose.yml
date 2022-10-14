@@ -15,6 +15,7 @@ services:
     container_name: netaxe-server
     ports:
       - "8001:8001"
+      - "5555:5555"
     # command: sleep 999999
     command: sh start.sh web
     depends_on:
@@ -22,7 +23,6 @@ services:
     volumes:
       - ../../netaxe:/home/netaxe
       - ./logs/netaxe_log:/home/netaxe/logs
-      - ./logs/daphne_log/websocket.log:/tmp/websocket.log
     networks:
       - netops-axe
 

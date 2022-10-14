@@ -299,7 +299,7 @@ import {
   getCmdbRackList,
   getcmdb_accountList,
   get_device_expand,
-  device_import_template,
+  device_import_url,
   deviceWebSshLogin,
   deviceInfoChange,
   getCollection_planList,
@@ -2091,12 +2091,12 @@ export default defineComponent({
     }
 
     function download_template() {
-      // window.open(device_import_template)
+      // window.open(device_import_url)
       // let postdata = 'areaName='+obj.areaName+'&areaCode='+obj.areaCode+'&schoolName='+obj.schoolName+'&studentName='+obj.studentName+'&studentExamNumber='+obj.studentExamNumber+'&state='+obj.state+'&subjectName='+obj.subjectName+'&readTeacher='+obj.readTeacher;
       let xhr = new XMLHttpRequest()
       // xhr.setRequestHeader('Authorization', Cookies.get('netops-token'))
       xhr.responseType = 'arraybuffer'
-      xhr.open('get', device_import_template, true)
+      xhr.open('get', device_import_url, true)
       // xhr.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded; charset=UTF-8')
       xhr.onreadystatechange = function () {
         if (this.readyState == 4 && this.status == 200) {
@@ -2318,7 +2318,7 @@ export default defineComponent({
     }
 
     function doRefresh() {
-      // device_import_template_url.value = device_import_template
+      // device_import_template_url.value = device_import_url
       //console.log(searchDataFormRef.value)
       let request_url = ''
       let search_form = searchDataFormRef.value

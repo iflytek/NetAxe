@@ -26,6 +26,7 @@ from apps.system.views.login import (
 )
 from rest_framework_simplejwt.views import (
     TokenRefreshView,
+    TokenObtainPairView
 )
 
 
@@ -41,23 +42,23 @@ schema_view = get_schema_view(
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path("",schema_view.with_ui("swagger", cache_timeout=0), name="schema-swagger-ui",),
+    path('admin/login/', views.extend_admin_login),
+    re_path(r'^captcha/', include('captcha.urls')),
+    path("swagger/",schema_view.with_ui("swagger", cache_timeout=0), name="schema-swagger-ui",),
     re_path('^api-auth/', include('rest_framework.urls', namespace='rest_framework')),
     # 登录
-    # re_path(r'^captcha/', include('captcha.urls')),
     path("api/login/", LoginView.as_view(), name="login"),
     path("api/logout/", LogoutView.as_view(), name="logout"),
     path("api/status/", LoginViewSet.as_view(), name="status"),
+    path('api/token/', TokenObtainPairView.as_view(), name='get_jwt_token'),
     path("api/refresh/", TokenRefreshView.as_view(), name="token_refresh"),
     # 自定义权限
     path("api/users/", include("apps.users.urls")),
     path("api/system/", include("apps.system.urls")),
 
-    # path('admin/login/', views.extend_admin_login),
-    path(r'backend/', include('apps.route_backend.urls')),
-    path(r'automation/', include('apps.automation.urls')),
-    path(r'resources_manage/', include('apps.asset.urls')),
-    path(r'config_center/', include('apps.config_center.urls')),
-    path(r'int_utilization/', include('apps.int_utilization.urls')),
-    re_path('^api/', include('apps.api.urls', namespace='api')),
+    path(r'api/asset/', include('apps.asset.urls')),
+    path(r'api/backend/', include('apps.route_backend.urls')),
+    path(r'api/automation/', include('apps.automation.urls')),
+    path(r'api/config_center/', include('apps.config_center.urls')),
+    path(r'api/int_utilization/', include('apps.int_utilization.urls')),
 ]

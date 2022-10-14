@@ -2552,3 +2552,5 @@ Traceback (most recent call last):
     raise ConnectionError(e, request=request)
 requests.exceptions.ConnectionError: HTTPConnectionPool(host='10.254.2.188', port=8848): Max retries exceeded with url: /nacos/v1/ns/instance/beat?serviceName=auth&groupName=default&namespaceId=public&beat=%7B%22ip%22%3A%20%2210.254.2.188%22%2C%20%22port%22%3A%20%228001%22%2C%20%22serviceName%22%3A%20%22auth%22%2C%20%22metadata%22%3A%20%7B%7D%2C%20%22weight%22%3A%201%7D (Caused by NewConnectionError('<urllib3.connection.HTTPConnection object at 0x7f136b405670>: Failed to establish a new connection: [Errno 111] Connection refused'))
 [2022-10-11 17:30:13,030][django.utils.autoreload.trigger_reload():251] [INFO] /data/net-axe/netaxe/netboost/__init__.py changed, reloading.
+[2022-10-13 16:37:21,340][django.utils.autoreload.run_with_reloader():637] [INFO] Watching for file changes with StatReloader
+[2022-10-13 16:40:51,189][django.utils.autoreload.run_with_reloader():637] [INFO] Watching for file changes with StatReloader

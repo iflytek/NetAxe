@@ -1,13 +1,12 @@
 import django_filters
-from django.shortcuts import render
-
-# Create your views here.
-from rest_framework import viewsets, permissions, filters, pagination
-from apps.api.tools.custom_viewset_base import CustomViewBase
-from apps.api.tools.custom_pagination import LargeResultsSetPagination
 from django_filters.rest_framework import DjangoFilterBackend
+
+from rest_framework import viewsets, permissions, filters, pagination
+
 from .models import InterfaceUsedNew
 from .serializers import InterfaceUsedNewSerializer
+from utils.tools.custom_viewset_base import CustomViewBase
+from utils.tools.custom_pagination import LargeResultsSetPagination
 
 
 class InterfaceUsedFilter(django_filters.FilterSet):

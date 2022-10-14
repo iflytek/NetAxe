@@ -58,8 +58,7 @@ INSTALLED_APPS = [
 
     "apps.users.apps.UsersConfig",
     "apps.system.apps.SystemConfig",
-    
-    "apps.api.apps.ApiConfig",
+
     "apps.asset.apps.AssetConfig",
     "apps.automation.apps.AutomationConfig",
     "apps.config_center.apps.ConfigCenterConfig",
@@ -140,15 +139,12 @@ USE_TZ = False
 
 # log 配置部分BEGIN #
 SERVER_LOGS_FILE = os.path.join(BASE_DIR, "logs", "server.log")
-ERROR_LOGS_FILE = os.path.join(BASE_DIR, "logs", "error.log")
+CELERY_LOGS_FILE = os.path.join(BASE_DIR, "logs", "celery.log")
 if not os.path.exists(os.path.join(BASE_DIR, "logs")):
     os.makedirs(os.path.join(BASE_DIR, "logs"))
 
 # 格式:[2020-04-22 23:33:01][micoservice.apps.ready():16] [INFO] 这是一条日志:
 # 格式:[日期][模块.函数名称():行号] [级别] 信息
-STANDARD_LOG_FORMAT = (
-    "[%(asctime)s][%(name)s.%(funcName)s():%(lineno)d] [%(levelname)s] %(message)s"
-)
 CONSOLE_LOG_FORMAT = (
     "[%(asctime)s][%(name)s.%(funcName)s():%(lineno)d] [%(levelname)s] %(message)s"
 )
@@ -157,12 +153,11 @@ LOGGING = {
     "version": 1,
     "disable_existing_loggers": False,
     "formatters": {
-        "standard": {"format": STANDARD_LOG_FORMAT},
-        "console": {
+        "file": {
             "format": CONSOLE_LOG_FORMAT,
             "datefmt": "%Y-%m-%d %H:%M:%S",
         },
-        "file": {
+        "console": {
             "format": CONSOLE_LOG_FORMAT,
             "datefmt": "%Y-%m-%d %H:%M:%S",
         },
@@ -174,16 +169,16 @@ LOGGING = {
             "filename": SERVER_LOGS_FILE,
             "maxBytes": 1024 * 1024 * 100,  # 100 MB
             "backupCount": 5,  # 最多备份5个
-            "formatter": "standard",
+            "formatter": "file",
             "encoding": "utf-8",
         },
-        "error": {
-            "level": "ERROR",
+        "celery": {
+            "level": "INFO",
             "class": "logging.handlers.RotatingFileHandler",
-            "filename": ERROR_LOGS_FILE,
+            "filename": CELERY_LOGS_FILE,
             "maxBytes": 1024 * 1024 * 100,  # 100 MB
             "backupCount": 3,  # 最多备份3个
-            "formatter": "standard",
+            "formatter": "file",
             "encoding": "utf-8",
         },
         "console": {
@@ -195,18 +190,16 @@ LOGGING = {
     "loggers": {
         # default日志
         "server": {
-            "handlers": ["error", "file"],
+            "handlers": ["file"],
             "level": "INFO",
         },
         "django": {
-            "handlers": ["error", "file"],
+            "handlers": ["file"],
             "level": "INFO",
-            "propagate": False,
         },
-        "scripts": {
-            "handlers": ["error", "file"],
+        "celery": {
+            "handlers": ["celery"],
             "level": "INFO",
-            "propagate": False,
         },
         # 数据库相关日志
         "django.db.backends": {

@@ -3,97 +3,24 @@ import os
 from datetime import date
 
 import django_filters
-from django.http import JsonResponse, FileResponse, Http404
-from django.shortcuts import render
-
-# Create your views here.
 from django.views import View
+from django.http import JsonResponse, FileResponse, Http404
 from django_filters.rest_framework import DjangoFilterBackend
-from rest_framework import viewsets, permissions, filters
-from rest_framework_tracking.mixins import LoggingMixin
 
-from apps.api.tools.custom_pagination import LargeResultsSetPagination
-from apps.api.views import LimitSet
+from rest_framework import viewsets, permissions, filters
+
+from netboost.settings import MEDIA_ROOT
+from apps.route_backend.views import LimitSet
+from utils.tools.custom_pagination import LargeResultsSetPagination
 from apps.asset.models import Idc, AssetAccount, Vendor, Role, Category, Model, Attribute, Framework, NetworkDevice, \
     IdcModel, NetZone
 from apps.asset.serializers import IdcSerializer, AssetAccountSerializer, AssetVendorSerializer, RoleSerializer, \
     CategorySerializer, ModelSerializer, AttributeSerializer, FrameworkSerializer, NetworkDeviceSerializer, \
     IdcModelSerializer
-from netboost.settings import MEDIA_ROOT
-from utils.excel2list import excel2list
 
 
 # asset  import export excel
 class ResourceManageExcelView(View):
-    # def post(self, request):
-    #     file = request.FILES.get('file')
-    #     filename = os.path.join(MEDIA_ROOT, 'upload', file.name)
-    #     if not os.path.exists(os.path.dirname(filename)):
-    #         os.makedirs(os.path.dirname(filename))
-    #     with open(filename, 'wb') as f:
-    #         for chunk in file.chunks():
-    #             f.write(chunk)
-    #     try:
-    #         data_list = excel2list(filename)
-    #         print(data_list)
-    #
-    #         for data in data_list:
-    #             # 判断厂商是否存在，如 F5 Mellanox  华三  华为  山石网科  思科  成都数维  深信服  盛科  科来 锐捷
-    #             cmdb_vendor_id = search_cmdb_vendor_id(data[2].strip())
-    #             # 判断所属机房是否存在，如上海嘉定、北京鲁谷、北京大族、北京酒仙桥、广州新华园、合肥B3
-    #             cmdb_idc_id = search_cmdb_idc_id(data[4].strip())
-    #             # 判断网络区域是否存在，如生产公共区域、业务互联区域、IaaS网络区域、IPMI管理区域、公网区域、网络管理区域、
-    #             cmdb_netzone_id = search_cmdb_netzone_id(data[5].strip(), cmdb_idc_id)
-    #             # 判断设备角色是否存在，如网络汇聚、业务互联、千兆电器接入、出口防火墙、Spine、Leaf、服务器
-    #             cmdb_role_id = search_cmdb_role_id(data[8].strip())
-    #
-    #             # 根据机房模块编号、机房ID进行检索，若机房模块不存在，则创建并返回机房模块ID
-    #             cmdb_idc_model_id = search_cmdb_idc_model_id(data[9].strip(), cmdb_idc_id)
-    #
-    #             # 根据机柜编号、机房ID进行检索，若机柜不存在，则创建并返回创建后机柜ID
-    #             cmdb_cabinet_id = search_cmdb_cabinet_id(data[10].strip(), cmdb_idc_model_id)
-    #             # 根据设备类型字段获取设备类型ID
-    #             cmdb_category_id = search_cmdb_category_id(data[3].strip())
-    #             cmdb_attribute_id = search_cmdb_attribute_id(data[6].strip())
-    #             cmdb_framework_id = search_cmdb_framework_id(data[7].strip())
-    #             from apps.asset.models import AssetAccount
-    #             # account = AssetAccount.objects.get(name='网管账户_带域名')
-    #             print('data[15]', data[15])
-    #             networkdevices = {
-    #                 "attribute": cmdb_attribute_id,
-    #                 "framework": cmdb_framework_id,
-    #                 'serial_num': data[0].strip(),
-    #                 'manage_ip': data[1].strip(),
-    #                 'vendor': cmdb_vendor_id,
-    #                 'idc': cmdb_idc_id,
-    #                 'netzone': cmdb_netzone_id,
-    #                 'role': cmdb_role_id,
-    #                 'rack': cmdb_cabinet_id,
-    #                 'idc_model': cmdb_idc_model_id,
-    #                 'u_location_start': data[11].strip(),  # U位
-    #                 'u_location_end': data[11].strip(),  # U位
-    #                 # 'uptime': '2022-7-11',  # 上线时间必须要，默认当前日期
-    #                 'uptime': str(returndate(data[15].strip())),  # 上线时间必须要，默认当前日期
-    #                 'expire': '2099-01-01',  # 维保时间必须有，默认3年
-    #                 'status': csv_device_staus(data[13].strip()),
-    #                 'memo': data[12].strip(),  # memo为备注信息
-    #                 'name': data[1].strip(),  # 系统名称必须有。用管理IP代替
-    #                 'auto_enable': 'true',
-    #                 'bgbu': [],
-    #                 'category': cmdb_category_id,  # 设备类型字段
-    #             }
-    #
-    #             print(networkdevices)
-    #             device_obj = NetworkDevice.objects.filter(serial_num=data[0].strip())
-    #             if device_obj:
-    #                 pass
-    #             else:
-    #                 netops_api = netOpsApi()
-    #                 res = netops_api.post_something(url="asset_networkdevice/", data=networkdevices)
-    #
-    #         return JsonResponse({'code': 200, 'msg': '导入成功！'})
-    #     except Exception as e:
-    #         return JsonResponse({'code': 500, 'msg': '导入失败！{}'.format(e)})
 
     def get(self, request):
         try:

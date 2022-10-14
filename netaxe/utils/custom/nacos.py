@@ -19,21 +19,20 @@ class nacos:
         while True:
             #检查registerThread
             try:
-                x = int(time.time()) - self.__registerDict["healthy"]
-                if (x > 5):
-                    serviceIp = self.__registerDict["serviceIp"]
-                    servicePort = self.__registerDict["servicePort"]
-                    serviceName = self.__registerDict["serviceName"]
-                    namespaceId = self.__registerDict["namespaceId"]
-                    groupName = self.__registerDict["groupName"]
-                    clusterName = self.__registerDict["clusterName"]
-                    ephemeral = self.__registerDict["ephemeral"]
-                    metadata = self.__registerDict["metadata"]
-                    weight = self.__registerDict["weight"]
-                    enabled = self.__registerDict["enabled"]
-                    self.registerService(serviceIp,servicePort,serviceName,
-                                         namespaceId,groupName,clusterName,
-                                         ephemeral,metadata,weight,enabled)
+                time.sleep(5)
+                serviceIp = self.__registerDict["serviceIp"]
+                servicePort = self.__registerDict["servicePort"]
+                serviceName = self.__registerDict["serviceName"]
+                namespaceId = self.__registerDict["namespaceId"]
+                groupName = self.__registerDict["groupName"]
+                clusterName = self.__registerDict["clusterName"]
+                ephemeral = self.__registerDict["ephemeral"]
+                metadata = self.__registerDict["metadata"]
+                weight = self.__registerDict["weight"]
+                enabled = self.__registerDict["enabled"]
+                self.registerService(serviceIp,servicePort,serviceName,
+                                        namespaceId,groupName,clusterName,
+                                        ephemeral,metadata,weight,enabled)
             except:
                 logging.exception("服务注册心跳进程健康检查失败",exc_info=True)
 
@@ -41,41 +40,6 @@ class nacos:
         t = threading.Thread(target=self.__healthyCheckThreadRun)
         t.start()
         logging.info("健康检查线程已启动")
-
-    def __registerBeatThreadRun(self):
-
-        beatUrl = "http://" + self.ip + ":" + str(self.port) + "/nacos/v1/ns/instance/beat?"
-        beatJson = {
-            "ip": self.__registerDict["serviceIp"],
-            "port": self.__registerDict["servicePort"],
-            "serviceName": self.__registerDict["serviceName"],
-            "metadata": self.__registerDict["metadata"],
-            "weight": self.__registerDict["weight"]
-        }
-        params_beat = {
-            "serviceName": self.__registerDict["serviceName"],
-            "groupName": self.__registerDict["groupName"],
-            "namespaceId": self.__registerDict["namespaceId"],
-            "beat": urllib.request.quote(json.dumps(beatJson))
-        }
-        for item in params_beat:
-            beatUrl = beatUrl + item + "=" + params_beat[item] + "&"
-        while True:
-            time.sleep(3)
-            self.__registerDict["healthy"] = int(time.time())
-            try:
-                re = requests.put(beatUrl[:-1])
-                if(re.json()['code'] != 10200):
-                    self.__registerDict["healthy"] = int(time.time())-10
-                    logging.info(re.text)
-                    break
-                logging.info("发送服务心跳成功")
-            except json.JSONDecodeError:
-                self.__registerDict["healthy"] = int(time.time()) - 10
-                break
-            except :
-                logging.exception("服务心跳维持失败！",exc_info=True)
-                break
 
     def registerService(self,serviceIp,servicePort,serviceName,namespaceId="public",
                         groupName="DEFAULT_GROUP",clusterName="DEFAULT",
@@ -110,8 +74,6 @@ class nacos:
             re = requests.post(registerUrl, params=params)
             if (re.text == "ok"):
                 logging.info("服务注册成功。")
-                beatThread = threading.Thread(target=self.__registerBeatThreadRun)
-                beatThread.start()
             else:
                 logging.error("服务注册失败 "+re.text)
         except:

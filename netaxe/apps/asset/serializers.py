@@ -11,14 +11,10 @@
 -------------------------------------------------
 """
 from rest_framework import serializers
-from django_celery_beat.models import PeriodicTask, IntervalSchedule
-from django_celery_results.models import TaskResult
-from apps.int_utilization.models import InterfaceUsedNew
+
 from apps.asset.models import (
     Idc, NetZone, Role, IdcModel, Rack, Vendor, Category, Model,
     Attribute, Framework, AssetIpInfo, AssetAccount, NetworkDevice)
-
-from apps.automation.models import CollectionPlan
 
 
 # 机房

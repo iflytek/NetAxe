@@ -7,9 +7,8 @@ from .views import CollectionPlanViewSet
 
 
 router = DefaultRouter()
-
 router.register(r'collection_plan', CollectionPlanViewSet)
 
 urlpatterns = [
-    path(r'api/', include(router.urls)),
+    path(r'', include(router.urls)),
 ]

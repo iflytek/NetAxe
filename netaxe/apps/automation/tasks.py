@@ -41,7 +41,7 @@ from utils.netops_api import netOpsApi
 from utils.db.mongo_ops import MongoOps, MongoNetOps
 
 
-logger = logging.getLogger('automation')
+logger = logging.getLogger('celery')
 
 
 class JsonEncoder(json.JSONEncoder):
@@ -563,6 +563,7 @@ def collect_device(**kwargs):
 # 通用信息采集主调度任务
 @shared_task(base=AxeTask, once={'graceful': True})
 def collect_device_main(**kwargs):
+    logger.info('开始执行信息采集主调度任务')
     MainIn.cmdb_to_mongo()
     if kwargs:
         hosts = get_device_info_v2(**kwargs)

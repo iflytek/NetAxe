@@ -11,74 +11,48 @@ export const getMenuList = '/api/system/menu/'
 export const getDepartmentList = '/api/system/dept/'
 export const getMenuListByRole = '/api/system/menu/web_router/'
 
-
-// export const login = '/net_backend/login'
-export const test = '/test'
-
-export const captcha = '/net_backend/captcha'
-
-export const updateUserInfo = '/updateUser'
-
-export const addUserInfo = '/addUser'
-
-export const getMenuListByRoleId = '/net_backend/getMenusByRoleId'
-
-export const getAllMenuByRoleId = '/getAllMenuByRoleId'
-
-export const deleteUserById = '/deleteUserById'
-
-export const dashboard_chart = '/net_backend/dashboardChart'
-
-export const networkDeviceUrl = '/net_backend/networkDevice'
-export const deviceCollect = '/net_backend/deviceCollect'
-export const automation_chart = '/net_backend/automationChart'
+// export const test = '/test'
+// export const captcha = '/net_backend/captcha'
+// export const device_import_template = '/api/asset/excel/'
 // 调度管理
-export const getdispach = '/net_backend/dispatch_page/'
+export const getdispach = '/api/backend/dispatch_page/'
 // 任务列表
-export const jobcenterTaskUrl = '/net_backend/jobCenter'
-export const device_import_url = '/resources_manage/excel/'
-export const getperiodic_taskList = '/api/periodic_task/'
-export const getinterval_schedule = '/api/interval_schedule'
-export const getNetworkDeviceList = '/resources_manage/api/asset_networkdevice/'
-export const getCollection_planList = '/automation/api/collection_plan/'
-export const BackendApi = '/api/'
+export const jobcenterTaskUrl = '/api/backend/jobCenter/'
+// 未知
+export const get_device_expand = '/api/backend/networklist/'
+export const deviceCollect = '/api/backend/deviceCollect/'
+// 未知
+export const networkDeviceUrl = '/api/backend/networkDevice/'
+export const deviceWebSshLogin = '/api/backend/deviceWebSsh/'
+export const automation_chart = '/api/backend/automationChart/'
+// 未知
+export const deviceInfoChange = '/api/backend/deviceInfoChange/'
+// 未知
+export const getCmdbRackList = '/api/backend/cmdb_rack/'
+// 未知
+export const getCmdbNetzoneList = '/api/backend/cmdb_netzone/'
+export const getperiodic_taskList = '/api/backend/periodic_task/'
+// 未知
+export const get_api_request_log = '/api/backend/api_request_log/'
+export const getinterval_schedule = '/api/backend/interval_schedule/'
 
-export const getCmdbIdcList = '/resources_manage/api/cmdb_idc/'
-export const getFrameworkList = '/resources_manage/api/framework/'
+export const device_import_url = '/api/asset/excel/'
+export const getCmdbIdcList = '/api/asset/cmdb_idc/'
+export const getCmdbRoleList = '/api/asset/cmdb_role/'
+export const getVendorList = '/api/asset/cmdb_vendor/'
+export const getFrameworkList = '/api/asset/framework/'
+export const getCmdbModelList = '/api/asset/cmdb_model/'
+export const getCategoryList = '/api/asset/cmdb_category/'
+export const getcmdb_accountList = '/api/asset/cmdb_account/'
+export const get_cmdb_idc_model = '/api/asset/cmdb_idc_model'
+export const getCmdbIdcModelList = '/api/asset/cmdb_idc_model/'
+export const getNetworkDeviceList = '/api/asset/asset_networkdevice/'
 
-export const getCmdbRoleList = '/resources_manage/api/cmdb_role/'
+export const get_git_config_tree = '/api/config_center/git_config'
 
-export const getVendorList = '/resources_manage/api/cmdb_vendor/'
+export const getCollection_planList = '/api/automation/collection_plan/'
 
-export const getCmdbModelList = '/resources_manage/api/cmdb_model/'
-
-export const get_cmdb_rack = '/api/cmdb_rack/'
-
-export const get_cmdb_idc_model = '/resources_manage/api/cmdb_idc_model'
-
-export const getCategoryList = '/resources_manage/api/cmdb_category/'
-
-export const get_api_request_log = '/api/api_request_log'
-
-export const getCmdbNetzoneList = '/api/cmdb_netzone/'
-
-export const getCmdbIdcModelList = '/resources_manage/api/cmdb_idc_model/'
-
-export const getCmdbRackList = '/api/cmdb_rack'
-
-export const getcmdb_accountList = '/resources_manage/api/cmdb_account/'
-
-export const get_device_expand = '/network/networklist/'
-
-export const device_import_template = '/resources_manage/excel/'
-
-export const deviceWebSshLogin = '/net_backend/deviceWebSsh'
-
-export const deviceInfoChange = '/net_backend/deviceInfoChange'
-
-export const get_git_config_tree = '/config_center/git_config'
-
-export const getInterfaceUsedList = '/int_utilization/api/interfaceused/'
+export const getInterfaceUsedList = '/api/int_utilization/interfaceused/'
 
 declare module '@vue/runtime-core' {
   interface ComponentCustomProperties {
