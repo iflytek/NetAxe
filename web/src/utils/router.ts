@@ -121,7 +121,7 @@ router.beforeEach(async (to) => {
               meta: {
                 title: '系统配置',
                 iconPrefix: 'iconfont',
-                icon: 'dashboard',
+                icon: 'setting',
               },
               children: [
                 {
@@ -131,7 +131,7 @@ router.beforeEach(async (to) => {
                   meta: {
                     title: '用户配置',
                     iconPrefix: 'iconfont',
-                    icon: 'dashboard',
+                    icon: 'user',
                   },
                 },
                 {
@@ -141,7 +141,7 @@ router.beforeEach(async (to) => {
                   meta: {
                     title: '部门配置',
                     iconPrefix: 'iconfont',
-                    icon: 'dashboard',
+                    icon: 'apartment',
                   },
                 },
                 {
@@ -151,7 +151,7 @@ router.beforeEach(async (to) => {
                   meta: {
                     title: '角色配置',
                     iconPrefix: 'iconfont',
-                    icon: 'dashboard',
+                    icon: 'control',
                   },
                 },
                 {
@@ -161,7 +161,7 @@ router.beforeEach(async (to) => {
                   meta: {
                     title: '菜单配置',
                     iconPrefix: 'iconfont',
-                    icon: 'dashboard',
+                    icon: 'menu',
                   },
                 },
               ],

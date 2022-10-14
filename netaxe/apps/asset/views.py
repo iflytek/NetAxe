@@ -30,7 +30,7 @@ from utils.cmdb_import import search_cmdb_vendor_id, search_cmdb_idc_id, search_
 
 
 class ResourceManageExcelView(View):
-    
+
     def post(self, request):
         file = request.FILES.get('file')
         filename = os.path.join(MEDIA_ROOT, 'upload', file.name)
@@ -97,7 +97,7 @@ class ResourceManageExcelView(View):
                 else:
                     netops_api = netOpsApi()
                     # print('请求新增数据')
-                    res = netops_api.post_cmdb_something(url="asset_networkdevice/", data=networkdevices)
+                    res = netops_api.post_something(url="asset/asset_networkdevice/", data=networkdevices)
                     # print('新增设备结果', res.json())
                     if res.json().get('code', ''):
                         if res.json()['code'] == 400:

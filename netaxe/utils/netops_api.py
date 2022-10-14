@@ -106,13 +106,3 @@ class netOpsApi():
         }
         res = requests.get(networkdevice_url, params=params, headers=self.headers)
         return res.json()['results']
-
-    def post_cmdb_something(self, url, data):
-        """
-        新建条目通用方法
-        """
-        url = self.resources_manage_base_url + url
-        # print("新建CMDB条目", data)
-        res = requests.post(url, data=json.dumps(data), headers=self.headers)
-        # print('cmdb_res', res)
-        return res

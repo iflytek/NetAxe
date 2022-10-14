@@ -51,7 +51,7 @@ export const constantRoutes = [
                     title: '工作台',
                     affix: true,
                     iconPrefix: 'iconfont',
-                    icon: 'menu',
+                    icon: 'infomation',
                 },
             },
         ],
