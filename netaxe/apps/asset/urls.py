@@ -20,6 +20,8 @@ router = DefaultRouter()
 
 router.register(r'cmdb_idc', IdcViewSet)
 router.register(r'cmdb_idc_model', CmdbIdcModelViewSet)
+router.register(r'cmdb_netzone', CmdbNetzoneModelViewSet)
+router.register(r'cmdb_rack', CmdbRackModelViewSet)
 router.register(r'cmdb_account', AccountList)
 router.register(r'cmdb_vendor', VendorViewSet)
 router.register(r'cmdb_role', AssetRoleViewSet)
@@ -32,4 +34,5 @@ router.register(r'asset_networkdevice', NetworkDeviceViewSet)
 urlpatterns = [
     path(r'api/', include(router.urls)),
     path('excel/', ResourceManageExcelView.as_view(), name='excel'),
+    path('device_account/', DeviceAccountView.as_view(), name='device_account'),
 ]

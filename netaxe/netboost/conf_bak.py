@@ -44,6 +44,7 @@ mongo_db_conf = {
 netops_api = {
     "token_url": 'http://{SERVERIP}:9999/api/token/',
     "base_url": 'http://{SERVERIP}:9999/api/',
+    "resources_manage_base_url": 'http://{SERVERIP}:9999/resources_manage/api/',
     'username': 'adminnetaxe',
     'password': 'netaxeadmin',
 }
