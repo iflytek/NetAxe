@@ -870,7 +870,10 @@ export default defineComponent({
     }
 
     function task_monitor() {
-      window.open('http://10.254.12.169:30055/')
+      // console.log(window.location.host)
+      var monitor_url = window.location.host.split(':')[0]+':5555'
+      // console.log(monitor_url)
+      window.open("http://"+monitor_url)
     }
 
     function run_task(item) {

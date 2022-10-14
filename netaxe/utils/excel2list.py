@@ -18,6 +18,7 @@ mongo_1 = MongoOps(db='tmp', coll='01table')
 
 
 def excel2list(file):
+    print('filepath',file)
     # 将读取的excel从第二行转换为list[list]的格式，不同数据类型都转换为str
     # 0:空，1:str,2:float,3:日期，4：bool，5：error
     # 读取excel表的数据
@@ -61,4 +62,4 @@ def excel2list(file):
 
 if __name__ == '__main__':
 
-    read_01()
+    excel2list()
