@@ -18,5 +18,5 @@ app_name = 'config_center'
 
 urlpatterns = [
     # 配置文件目录树
-    path('', views.GitConfig.as_view(), name='git_config'),
+    path('git_config/', views.GitConfig.as_view(), name='git_config'),
 ]

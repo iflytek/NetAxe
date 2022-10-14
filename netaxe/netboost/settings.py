@@ -74,7 +74,7 @@ MIDDLEWARE = [
     "django.contrib.auth.middleware.AuthenticationMiddleware",
     "django.contrib.messages.middleware.MessageMiddleware",
     "django.middleware.clickjacking.XFrameOptionsMiddleware",
-    "utils.custom.middleware.ApiLoggingMiddleware",
+    # "utils.custom.middleware.ApiLoggingMiddleware",
 ]
 
 ROOT_URLCONF = "netboost.urls"
@@ -390,3 +390,10 @@ SWAGGER_SETTINGS = {
     "AUTO_SCHEMA_TYPE": 2,  # 分组根据url层级分，0、1 或 2 层
     "DEFAULT_AUTO_SCHEMA_CLASS": "utils.custom.swagger.CustomSwaggerAutoSchema",
 }
+
+# ================================================= #
+# ******************** 其他配置 ******************** #
+# ================================================= #
+API_LOG_ENABLE = True
+API_LOG_METHODS = 'ALL'
+# API_LOG_METHODS = ["POST", "UPDATE", "DELETE", "PUT"]
