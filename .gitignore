@@ -13,6 +13,7 @@ web/.vscode/
 web/node_modules
 netaxe/__pycahe__
 Python-3.9.11.tgz
+netaxe/logs
 netaxe/netboost/conf.py
 netaxe/netboost/__pycache__/
 netaxe/apps/system/migrations/
@@ -27,5 +28,6 @@ netaxe/apps/config_center/__pycache__/
 netaxemedia
 netaxe/media/automation
 netaxe/media/device_config/current-configuration
+docker/server/logs/
 docker/databases/init/
 docker/databases/mysql_data/
