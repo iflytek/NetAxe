@@ -38,6 +38,11 @@ class InterfaceUsedNewViewSet(CustomViewBase):
     def get_queryset(self):
         start = self.request.query_params.get('start_time', None)
         end = self.request.query_params.get('end_time', None)
+        host_id = self.request.query_params.get('host_id', None)
+        interface_used = self.request.query_params.get('interface_used', None)
         if start and end:
             return self.queryset.filter(log_time__range=(start, end))
+
+        if host_id and interface_used:
+            return self.queryset.filter(host_id=host_id)
         return self.queryset

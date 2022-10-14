@@ -30,14 +30,14 @@
       const userStore = useUserStore()
       const layoutStore = useLayoutStore()
       const options = [
-        {
-          label: '个人中心',
-          key: 'personal-center',
-          icon: () =>
-            h(NIcon, null, {
-              default: () => h(Menu),
-            }),
-        },
+        // {
+        //   label: '个人中心',
+        //   key: 'personal-center',
+        //   icon: () =>
+        //     h(NIcon, null, {
+        //       default: () => h(Menu),
+        //     }),
+        // },
         {
           label: '退出登录',
           key: 'logout',

@@ -5,7 +5,7 @@ from django.db import models
 
 class InterfaceUsedNew(models.Model):
     """接口使用率新"""
-    host = models.CharField(verbose_name='主机名', max_length=50, null=True, blank=True)
+    host = models.CharField(verbose_name='主机名', max_length=200, null=True, blank=True)
     host_id = models.CharField(verbose_name='硬件ID', max_length=50, null=True, blank=True)
     host_ip = models.GenericIPAddressField(verbose_name='管理IP', null=True, blank=True)
     int_total = models.IntegerField(verbose_name='总接口数', null=True, blank=True)

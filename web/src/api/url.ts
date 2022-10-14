@@ -12,6 +12,7 @@ export const getDepartmentList = '/api/system/dept/'
 export const getMenuListByRole = '/api/system/menu/web_router/'
 
 // export const test = '/test'
+// export const BackendApi = '/api/'
 // export const captcha = '/net_backend/captcha'
 // export const device_import_template = '/api/asset/excel/'
 // 调度管理
@@ -36,15 +37,19 @@ export const getperiodic_taskList = '/api/backend/periodic_task/'
 export const get_api_request_log = '/api/backend/api_request_log/'
 export const getinterval_schedule = '/api/backend/interval_schedule/'
 
+export const get_cmdb_rack = '/api/asset/cmdb_rack/'
 export const device_import_url = '/api/asset/excel/'
 export const getCmdbIdcList = '/api/asset/cmdb_idc/'
 export const getCmdbRoleList = '/api/asset/cmdb_role/'
 export const getVendorList = '/api/asset/cmdb_vendor/'
 export const getFrameworkList = '/api/asset/framework/'
+export const getAttributeList = '/api/asset/attribute/'
 export const getCmdbModelList = '/api/asset/cmdb_model/'
+export const device_import_template = '/api/asset/excel/'
 export const getCategoryList = '/api/asset/cmdb_category/'
 export const getcmdb_accountList = '/api/asset/cmdb_account/'
 export const get_cmdb_idc_model = '/api/asset/cmdb_idc_model'
+export const device_account_url = '/api/asset/device_account/'
 export const getCmdbIdcModelList = '/api/asset/cmdb_idc_model/'
 export const getNetworkDeviceList = '/api/asset/asset_networkdevice/'
 
@@ -53,6 +58,17 @@ export const get_git_config_tree = '/api/config_center/git_config'
 export const getCollection_planList = '/api/automation/collection_plan/'
 
 export const getInterfaceUsedList = '/api/int_utilization/interfaceused/'
+
+
+
+
+
+
+
+
+
+
+
 
 declare module '@vue/runtime-core' {
   interface ComponentCustomProperties {

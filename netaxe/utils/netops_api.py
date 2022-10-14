@@ -21,6 +21,7 @@ logger = logging.getLogger("celery")
 USER_CONF = {}
 if os.path.exists("{}/{}/{}".format(BASE_DIR, "netboost", "conf.py")):
     from netboost.conf import netops_api
+
     USER_CONF = netops_api
 
 
@@ -29,6 +30,7 @@ class netOpsApi():
     def __init__(self):
         self.token_url = USER_CONF.get('token_url') or None
         self.base_url = USER_CONF.get('base_url') or None
+        self.resources_manage_base_url = USER_CONF.get('resources_manage_base_url') or None
         self.data = {
             'username': USER_CONF.get('username') or 'adminnetaxe',
             'password': USER_CONF.get('password') or 'netaxeadmin'
@@ -65,7 +67,7 @@ class netOpsApi():
         """
         url = self.base_url + get_url
 
-        res = requests.get(url,  params=params, headers=self.headers)
+        res = requests.get(url, params=params, headers=self.headers)
         # tmpres = res.json()['results']
         # for i in tmpres:
         #     print(i)
@@ -79,7 +81,7 @@ class netOpsApi():
         res = requests.post(url, data=json.dumps(data), headers=self.headers)
         return res
 
-    def patch_something(self, tmp_url,  pk, data):
+    def patch_something(self, tmp_url, pk, data):
         """
         更新条目通用方法   url example: 'nvwa_relation/'
         """
@@ -103,6 +105,14 @@ class netOpsApi():
             'limit': limit,
         }
         res = requests.get(networkdevice_url, params=params, headers=self.headers)
-        logging.info(1111111111111111111111111111111111111111111)
-        logging.info(res)
         return res.json()['results']
+
+    def post_cmdb_something(self, url, data):
+        """
+        新建条目通用方法
+        """
+        url = self.resources_manage_base_url + url
+        # print("新建CMDB条目", data)
+        res = requests.post(url, data=json.dumps(data), headers=self.headers)
+        # print('cmdb_res', res)
+        return res

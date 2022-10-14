@@ -24,6 +24,7 @@ class AdminNetworkDevice(admin.ModelAdmin):
 
 
 admin.site.register(Idc)
+admin.site.register(Role)
 admin.site.register(Rack)
 admin.site.register(Model)
 admin.site.register(Vendor)
