@@ -13,6 +13,7 @@
 # Database
 # https://docs.djangoproject.com/en/4.0/ref/settings/#databases
 SERVERIP = "10.254.2.188"
+SERVERPORT = "8001"
 DATABASES = {
     'default': {
         'NAME': 'netaxe',
@@ -44,8 +45,8 @@ mongo_db_conf = {
     "password": "70uUceCVL1gf"
 }
 netops_api = {
-    "token_url": 'http://{}:8001/api/token/'.format(SERVERIP),
-    "base_url": 'http://{}:8001/api/'.format(SERVERIP),
+    "token_url": 'http://{}:{}/api/token/'.format(SERVERIP, SERVERPORT),
+    "base_url": 'http://{}:{}}/api/'.format(SERVERIP, SERVERPORT),
     'username': 'adminnetaxe',
     'password': 'netaxeadmin',
 }
