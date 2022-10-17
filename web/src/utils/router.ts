@@ -1,7 +1,7 @@
 import router, { constantRoutes } from '../router'
 import Cookies from 'js-cookie'
-import { post } from '@/api/http'
-import { baseAddress, getMenuListByRoleId } from '@/api/url'
+import { get } from '@/api/http'
+import { baseAddress, getMenuListByRole } from '@/api/url'
 import { RouteRecordRaw } from 'vue-router'
 import { isExternal, mapTwoLevelRouter, toHump } from '.'
 import { Layout } from '@/components'
@@ -10,8 +10,10 @@ import { defineAsyncComponent } from 'vue'
 import LoadingComponent from '../components/loading/index.vue'
 
 interface OriginRoute {
-  menuUrl: string
-  menuName?: string
+  // menuUrl: string
+  // menuName?: string
+  name: string
+  web_path: string
   hidden?: boolean
   outLink?: string
   affix?: boolean
@@ -29,25 +31,20 @@ function loadComponents() {
 }
 
 const asynComponents = loadComponents()
-
+// 获取路由
 function getRoutes() {
-  return post({
-    url: baseAddress + getMenuListByRoleId,
-    method: 'POST',
-    data: {
-      // 在实际的开发中，这个地方可以换成 token，让后端解析用户信息获取 userId 和 roleId，前端可以不用传 userId 和 roleId。
-      // 这样可以增加安全性
-      userId: localStorage.getItem('userId'),
-      roleId: localStorage.getItem('roleId'),
-    },
-  }).then((res: any) => {
-    return generatorRoutes(res.data)
-  })
+  return get({
+      url: baseAddress + getMenuListByRole,
+      method: 'GET',
+      data: {parent__isnull:true}
+    }).then((res: any) => {
+      return generatorRoutes(res.results)
+    })
 }
 
 function getComponent(it: OriginRoute) {
   return defineAsyncComponent({
-    loader: asynComponents['../views' + it.menuUrl + '.vue'],
+    loader: asynComponents['../views' + it.web_path + '.vue'],
     loadingComponent: LoadingComponent,
   })
 }
@@ -63,8 +60,8 @@ function isMenu(path: string) {
   return getCharCount(path, '/') === 1
 }
 
-function getNameByUrl(menuUrl: string) {
-  const temp = menuUrl.split('/')
+function getNameByUrl(web_path: string) {
+  const temp = web_path.split('/')
   return toHump(temp[temp.length - 1])
 }
 
@@ -72,12 +69,12 @@ function generatorRoutes(res: Array<OriginRoute>) {
   const tempRoutes: Array<RouteRecordRawWithHidden> = []
   res.forEach((it) => {
     const route: RouteRecordRawWithHidden = {
-      path: it.outLink && isExternal(it.outLink) ? it.outLink : it.menuUrl,
-      name: getNameByUrl(it.menuUrl),
+      path: it.outLink && isExternal(it.outLink) ? it.outLink : it.web_path,
+      name: getNameByUrl(it.web_path),
       hidden: !!it.hidden,
-      component: isMenu(it.menuUrl) ? Layout : getComponent(it),
+      component: isMenu(it.web_path) ? Layout : getComponent(it),
       meta: {
-        title: it.menuName,
+        title: it.name,
         affix: !!it.affix,
         cacheable: !!it.cacheable,
         icon: it.icon || 'menu',
@@ -115,6 +112,62 @@ router.beforeEach(async (to) => {
         const accessRoutes: Array<RouteRecordRaw> = []
         const tempRoutes = await getRoutes()
         accessRoutes.push(...tempRoutes)
+
+        if (localStorage.getItem('is_superuser') === 'true'){
+          const system_data = {
+              path: '/system',
+              name: 'System',
+              component: Layout,
+              meta: {
+                title: '系统配置',
+                iconPrefix: 'iconfont',
+                icon: 'setting',
+              },
+              children: [
+                {
+                  path: 'user',
+                  name: 'User',
+                  component: () => import('@/views/system/user.vue'),
+                  meta: {
+                    title: '用户配置',
+                    iconPrefix: 'iconfont',
+                    icon: 'user',
+                  },
+                },
+                {
+                  path: 'department',
+                  name: 'Department',
+                  component: () => import('@/views/system/department.vue'),
+                  meta: {
+                    title: '部门配置',
+                    iconPrefix: 'iconfont',
+                    icon: 'apartment',
+                  },
+                },
+                {
+                  path: 'role',
+                  name: 'Role',
+                  component: () => import('@/views/system/role.vue'),
+                  meta: {
+                    title: '角色配置',
+                    iconPrefix: 'iconfont',
+                    icon: 'control',
+                  },
+                },
+                {
+                  path: 'menu',
+                  name: 'Menu',
+                  component: () => import('@/views/system/menu.vue'),
+                  meta: {
+                    title: '菜单配置',
+                    iconPrefix: 'iconfont',
+                    icon: 'menu',
+                  },
+                },
+              ],
+            }
+            accessRoutes.push(system_data)}
+
         const mapRoutes = mapTwoLevelRouter(accessRoutes)
         mapRoutes.forEach((it: any) => {
           router.addRoute(it)

@@ -1,6 +1,5 @@
 from django.contrib import admin
 from .models import *
-# Register your models here.
 
 
 class AdminIdcModel(admin.ModelAdmin):
@@ -24,16 +23,15 @@ class AdminNetworkDevice(admin.ModelAdmin):
                      'u_location', 'uptime', 'expire', 'memo', 'status', 'ha_status']
 
 
-admin.site.register(NetworkDevice, AdminNetworkDevice)
-
-admin.site.register(IdcModel, AdminIdcModel)
-admin.site.register(AssetAccount, AdminAssetAccount)
-admin.site.register(Category)
-admin.site.register(Vendor)
-admin.site.register(Model)
 admin.site.register(Idc)
 admin.site.register(Role)
 admin.site.register(Rack)
+admin.site.register(Model)
+admin.site.register(Vendor)
+admin.site.register(NetZone)
+admin.site.register(Category)
 admin.site.register(Attribute)
 admin.site.register(Framework)
-admin.site.register(NetZone)
+admin.site.register(IdcModel, AdminIdcModel)
+admin.site.register(AssetAccount, AdminAssetAccount)
+admin.site.register(NetworkDevice, AdminNetworkDevice)

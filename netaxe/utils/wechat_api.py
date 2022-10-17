@@ -3,7 +3,7 @@
 -------------------------------------------------
    File Name：      wechat_api
    Description:
-   Author:          Lijiamin
+   Author:          Lijiaminn
    date：           2022/9/1 16:19
 -------------------------------------------------
    Change Activity:

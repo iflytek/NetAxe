@@ -15,7 +15,6 @@ from rest_framework.routers import DefaultRouter
 from .views import *
 
 app_name = 'resources_manage'
-
 router = DefaultRouter()
 
 router.register(r'cmdb_idc', IdcViewSet)
@@ -32,7 +31,7 @@ router.register(r'framework', FrameworkViewSet)
 router.register(r'asset_networkdevice', NetworkDeviceViewSet)
 
 urlpatterns = [
-    path(r'api/', include(router.urls)),
+    path(r'', include(router.urls)),
     path('excel/', ResourceManageExcelView.as_view(), name='excel'),
     path('device_account/', DeviceAccountView.as_view(), name='device_account'),
 ]

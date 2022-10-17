@@ -15,9 +15,12 @@ class CollectionPlan(models.Model):
         ('防火墙', '防火墙'),
         ('路由器', '路由器')
     )
-    vendor = models.CharField(verbose_name='厂商', choices=VENDOR_CHOICES, max_length=50, default='H3C')
-    category = models.CharField(verbose_name='类型', choices=CATEGORY_CHOICES, max_length=50, default='交换机')
-    name = models.CharField(verbose_name='采集方案', max_length=100, null=True, blank=True)
+    vendor = models.CharField(
+        verbose_name='厂商', choices=VENDOR_CHOICES, max_length=50, default='H3C')
+    category = models.CharField(
+        verbose_name='类型', choices=CATEGORY_CHOICES, max_length=50, default='交换机')
+    name = models.CharField(verbose_name='采集方案',
+                            max_length=100, null=True, blank=True)
     commands = models.TextField(
         blank=True, default='[]',
         verbose_name='下发命令',
@@ -27,7 +30,8 @@ class CollectionPlan(models.Model):
         verbose_name='方法列表',
     )
     memo = models.TextField(verbose_name='备注', null=True, blank=True)
-    netconf_class = models.CharField(verbose_name="Netconf连接类", null=True, blank=True, max_length=100)
+    netconf_class = models.CharField(
+        verbose_name="Netconf连接类", null=True, blank=True, max_length=100)
 
     def get_commands(self):
         return '\n'.join(json.loads(self.commands))

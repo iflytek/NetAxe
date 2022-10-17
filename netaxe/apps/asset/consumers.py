@@ -10,15 +10,16 @@
                     2022/9/8 17:46
 -------------------------------------------------
 """
-import logging
+
 import os
-import threading
 import time
-from socket import timeout
+import logging
 import paramiko
-from channels.generic.websocket import WebsocketConsumer
+import threading
 from django import db
+from socket import timeout
 from django.conf import settings
+from channels.generic.websocket import WebsocketConsumer
 from apps.asset.models import NetworkDevice, AssetIpInfo, AdminRecord, AssetAccount
 from apps.asset.tasks import admin_file
 # 以上为了解决 Lost connection to MySQL server during query

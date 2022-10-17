@@ -12,12 +12,15 @@
 """
 # Database
 # https://docs.djangoproject.com/en/4.0/ref/settings/#databases
+SERVERIP = "10.254.2.188"
+SERVERPORT = "8001"
 DATABASES = {
     'default': {
         'NAME': 'netaxe',
         'ENGINE': 'django.db.backends.mysql',
-        'HOST': '{SERVERIP}',
+        'HOST': '{}'.format(SERVERIP),
         'USER': 'root',
+        # 'PASSWORD': 'root',
         'PASSWORD': 'root_devnet@2022',
         'PORT': '3306',
         'CONN_MAX_AGE': 21600,
@@ -36,15 +39,14 @@ DATABASES = {
 REDIS_URL = "redis://:dade0f2a65237a56b79277e6dd27351d2854df033e0ad4b4f90abec229cd64df@redis-cache:6379/"
 CACHE_PWD = 'dade0f2a65237a56b79277e6dd27351d2854df033e0ad4b4f90abec229cd64df'
 mongo_db_conf = {
-    "host": '{SERVERIP}',
+    "host": '{}'.format(SERVERIP),
     "port": 27017,
     "username": "root",
     "password": "70uUceCVL1gf"
 }
 netops_api = {
-    "token_url": 'http://{SERVERIP}:9999/api/token/',
-    "base_url": 'http://{SERVERIP}:9999/api/',
-    "resources_manage_base_url": 'http://{SERVERIP}:9999/resources_manage/api/',
+    "token_url": 'http://{}:{}/api/token/'.format(SERVERIP, SERVERPORT),
+    "base_url": 'http://{}:{}/api/'.format(SERVERIP, SERVERPORT),
     'username': 'adminnetaxe',
     'password': 'netaxeadmin',
 }

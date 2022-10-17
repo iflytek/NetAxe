@@ -1,15 +1,14 @@
-from django.shortcuts import render
-
-# Create your views here.
 import django_filters
 from django_filters.rest_framework import DjangoFilterBackend
-from rest_framework import viewsets, permissions, filters, pagination
-from rest_framework_tracking.mixins import LoggingMixin
 
-from apps.api.tools.custom_viewset_base import CustomViewBase
-from apps.api.views import LimitSet
+from rest_framework_tracking.mixins import LoggingMixin
+from rest_framework import viewsets, permissions, filters, pagination
+
+from apps.route_backend.views import LimitSet
 from apps.automation.models import CollectionPlan
 from apps.automation.serializers import CollectionPlanSerializer
+
+from utils.tools.custom_viewset_base import CustomViewBase
 
 
 class CollectionPlanFilter(django_filters.FilterSet):

@@ -1,0 +1,71 @@
+# 城市联动
+"""
+到乡级 使用方法
+1. https://www.npmjs.com/package/china-division 下载数据，把对应的json放入对应目录
+2. 修改此文件中对应json名
+3. 右击执行此py文件进行初始化
+"""
+import os
+import json
+import django
+import pypinyin
+from apps.system.models import Area
+from netboost.settings import BASE_DIR
+from django.core.management import BaseCommand
+
+
+os.environ.setdefault('DJANGO_SETTINGS_MODULE', 'netboost.settings')
+django.setup()
+
+area_code_list = []
+
+
+def area_list(code_list, pcode=None, depth=1):
+    """
+    递归获取所有列表
+    """
+    for code_dict in code_list:
+        code = code_dict.get('code', None)
+        name = code_dict.get('name', None)
+        children = code_dict.get('children', None)
+        pinyin = ''.join([''.join(i)
+                         for i in pypinyin.pinyin(name, style=pypinyin.NORMAL)])
+        area_code_list.append(
+            {
+                "name": name,
+                "code": code,
+                "level": depth,
+                "pinyin": pinyin,
+                "initials": pinyin[0].upper() if pinyin else "#",
+                "pcode_id": pcode,
+            }
+        )
+        if children:
+            area_list(code_list=children, pcode=code, depth=depth + 1)
+
+
+def main():
+    with open(os.path.join(BASE_DIR, 'apps','system', 'management', 'commands', 'pca-code.json'), 'r', encoding="utf-8") as load_f:
+        code_list = json.load(load_f)
+    area_list(code_list)
+    if Area.objects.count() == 0:
+        Area.objects.bulk_create([Area(**ele) for ele in area_code_list])
+    else:
+        for ele in area_code_list:
+            code = ele.pop("code")
+            Area.objects.update_or_create(code=code, defaults=ele)
+
+
+class Command(BaseCommand):
+    """
+    项目初始化命令: python manage.py init_area
+    """
+
+    def add_arguments(self, parser):
+        pass
+
+    def handle(self, *args, **options):
+
+        print(f"正在准备初始化省份数据...")
+        main()
+        print("省份数据初始化数据完成！")

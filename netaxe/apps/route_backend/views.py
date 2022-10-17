@@ -1,107 +1,49 @@
-import base64
-import json
 import os
+import json
 
-from celery import current_app
-from django.core import serializers
-from django.http import JsonResponse
-from django.db.models import Count
-from captcha.models import CaptchaStore
-from captcha.views import captcha_image
 from django.views import View
-from apps.asset.models import NetworkDevice
+from django.db.models import Count
+from django.http import JsonResponse
+from django_filters.rest_framework import DjangoFilterBackend
+from rest_framework_extensions.cache.mixins import BaseCacheResponseMixin, CacheResponseMixin
 from django_celery_beat.models import PeriodicTask, PeriodicTasks, CrontabSchedule, IntervalSchedule
-# Create your views here.
 
 # 根据角色的菜单组件
+from celery import current_app
 from kombu.utils.json import loads
 from rest_framework.views import APIView
+from rest_framework_extensions.key_constructor import bits
+from rest_framework import viewsets, permissions, filters, pagination
+from rest_framework_extensions.key_constructor.constructors import DefaultKeyConstructor
 
-from .models import NavigationProfile
-from netboost import settings
-from utils.crypt_pwd import CryptPwd
-from utils.sftp import SFTP
-
+from apps.route_backend.serializers import *
+from apps.asset.models import NetworkDevice
 from apps.automation.models import CollectionPlan
 
+from .tasks import get_tasks
+from netboost import settings
+from netboost.celery import app
+from utils.sftp import SFTP
+from utils.crypt_pwd import CryptPwd
 from utils.connect_layer.NETCONF.h3c_netconf import H3CinfoCollection, H3CSecPath
 from utils.connect_layer.NETCONF.huawei_netconf import HuaweiUSG, HuaweiCollection
-
 from .serializers import CrontabSerializer, IntervalSerializer
 
-from .tasks import get_tasks
-from netboost.celery import app
 
+class QueryParamsKeyConstructor(DefaultKeyConstructor):
+    all_query_params = bits.QueryParamsKeyBit()
 
-class MenuListByRoleId(APIView):
-
-    def get(self, request):
-        """
-
-        :param request:
-        :return:
-        """
-        # get_param = request.GET.dict()
-        return JsonResponse({'code': 200})
-
-    def post(self, request):
-        navigate = []
-        res = NavigationProfile.objects.all().order_by('showOrder')
-        for i in res:
-            tmp = {
-                "menuUrl": i.menuUrl,
-                "menuName": i.menuName,
-                "iconPrefix": i.iconPrefix,
-                "icon": i.icon,
-                "parentPath": "",
-                "children": []
-            }
-            if i.badge:
-                tmp['badge'] = i.badge
-            # 二级菜单
-            sub_q = i.sub_profile.all().order_by('showOrder')
-            if sub_q:
-                for sub in sub_q:
-                    sub_tmp = {
-                        "parentPath": i.menuUrl,
-                        "menuUrl": sub.menuUrl,
-                        "menuName": sub.menuName,
-                    }
-                    if sub.badge:
-                        sub_tmp["badge"] = sub.badge
-                    if sub.cacheable:
-                        sub_tmp["cacheable"] = sub.cacheable
-                    third_q = sub.sub_on.all().order_by('showOrder')
-                    if third_q:
-                        sub_tmp["children"] = []
-                        for third in third_q:
-                            third_tmp = {
-                                "parentPath": sub.menuUrl,
-                                "menuUrl": third.menuUrl,
-                                "menuName": third.menuName,
-                            }
-                            if third.cacheable:
-                                third_tmp["cacheable"] = third.cacheable
-                            fourth_q = third.sub_on.all().order_by('showOrder')
-                            if fourth_q:
-                                third_tmp["children"] = []
-                                for fourth in fourth_q:
-                                    fourth_tmp = {
-                                        "parentPath": third.menuUrl,
-                                        "menuUrl": fourth.menuUrl,
-                                        "menuName": fourth.menuName,
-                                    }
-                                    third_tmp["children"].append(fourth_tmp)
-                            sub_tmp["children"].append(third_tmp)
-                    tmp["children"].append(sub_tmp)
-            navigate.append(tmp)
-        data = {
-            "code": 200,
-            "data": navigate,
-            "msg": "获取菜单列表成功"
-        }
-        return JsonResponse(data)
-
+class LimitSet(pagination.LimitOffsetPagination):
+    # 每页默认几条
+    default_limit = 10
+    # 设置传入页码数参数名
+    page_query_param = "page"
+    # 设置传入条数参数名
+    limit_query_param = 'limit'
+    # 设置传入位置参数名
+    offset_query_param = 'start'
+    # 最大每页显示条数
+    max_limit = None
 
 class DashboardChart(APIView):
     def get(self, request):
@@ -116,24 +58,6 @@ class DashboardChart(APIView):
                 "data": idc_dimension_data
             }
             return JsonResponse(result, safe=False)
-
-
-class CaptchaView(View):
-    """
-    获取图片验证码
-    """
-    def get(self, request):
-        hashkey = CaptchaStore.generate_key()
-        id = CaptchaStore.objects.filter(hashkey=hashkey).first().id
-        imgage = captcha_image(request, hashkey)
-        # 将图片转换为base64
-        image_base = base64.b64encode(imgage.content)
-        json_data = {"key": id, "image_base": "data:image/png;base64," + image_base.decode('utf-8')}
-        result = {
-            'code': 200,
-            'data': json_data
-        }
-        return JsonResponse(data=result)
 
 
 class WebSshView(APIView):
@@ -296,6 +220,7 @@ class JobCenterView(APIView):
             return JsonResponse(
                 {'code': 200, 'data': json.loads(result)['result'], 'count': len(json.loads(result)['result'])})
         if get_crontab_schedules:
+            from django.core import serializers
             crontab_schedules = serializers.serialize("json", CrontabSchedule.objects.all())
             return JsonResponse(
                 {'code': 200, 'data': json.loads(crontab_schedules), 'count': len(json.loads(crontab_schedules))})
@@ -331,3 +256,32 @@ class JobCenterView(APIView):
         #  list:<class 'celery.result.AsyncResult'>
         # print(task_ids[0],str(task_ids[0]))
         return JsonResponse({'code': 200, 'data': str(task_ids[0])}, safe=False)
+
+# 任务列表
+class PeriodicTaskViewSet(viewsets.ModelViewSet):
+    # queryset = PeriodicTask.objects.all().order_by('id')
+    queryset = PeriodicTask.objects.exclude(task__startswith='celery').order_by('id')
+    serializer_class = PeriodicTaskSerializer
+    permission_classes = (permissions.IsAuthenticated,)
+    # 配置搜索功能
+    filter_backends = (DjangoFilterBackend, filters.SearchFilter, filters.OrderingFilter)
+    # 如果要允许对某些字段进行过滤，可以使用filter_fields属性。
+    filter_fields = '__all__'
+    pagination_class = LimitSet
+    # 设置搜索的关键字
+    search_fields = '__all__'
+    # list_cache_key_func = QueryParamsKeyConstructor()
+
+
+class IntervalScheduleViewSet(CacheResponseMixin, viewsets.ModelViewSet):
+    queryset = IntervalSchedule.objects.all().order_by('id')
+    serializer_class = IntervalScheduleSerializer
+    permission_classes = (permissions.IsAuthenticated,)
+    # 配置搜索功能
+    filter_backends = (DjangoFilterBackend, filters.SearchFilter, filters.OrderingFilter)
+    # 如果要允许对某些字段进行过滤，可以使用filter_fields属性。
+    filter_fields = '__all__'
+    pagination_class = LimitSet
+    # 设置搜索的关键字
+    search_fields = '__all__'
+    list_cache_key_func = QueryParamsKeyConstructor()

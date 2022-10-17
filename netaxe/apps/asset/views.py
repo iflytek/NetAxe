@@ -3,33 +3,29 @@ import os
 from datetime import date
 
 import django_filters
-from django.http import JsonResponse, FileResponse, Http404
-from django.shortcuts import render
-
-# Create your views here.
 from django.views import View
+from django.http import JsonResponse, FileResponse, Http404
 from django_filters.rest_framework import DjangoFilterBackend
-from rest_framework import viewsets, permissions, filters
 from rest_framework.views import APIView
 from rest_framework_tracking.mixins import LoggingMixin
+from rest_framework import viewsets, permissions, filters
 
-from apps.api.tools.custom_pagination import LargeResultsSetPagination
-from apps.api.views import LimitSet
+from netboost.settings import MEDIA_ROOT
+from apps.route_backend.views import LimitSet
+from utils.crypt_pwd import CryptPwd
+# from scripts.crypt_pwd import CryptPwd
+from utils.excel2list import excel2list
+# asset  import export excel
+from utils.netops_api import netOpsApi
+from utils.tools.custom_pagination import LargeResultsSetPagination
 from apps.asset.models import Idc, AssetAccount, Vendor, Role, Category, Model, Attribute, Framework, NetworkDevice, \
     IdcModel, NetZone, Rack
 from apps.asset.serializers import IdcSerializer, AssetAccountSerializer, AssetVendorSerializer, RoleSerializer, \
     CategorySerializer, ModelSerializer, AttributeSerializer, FrameworkSerializer, NetworkDeviceSerializer, \
     IdcModelSerializer, NetZoneSerializer, CmdbRackSerializer
-from netboost.settings import MEDIA_ROOT
 from utils.cmdb_import import search_cmdb_vendor_id, search_cmdb_idc_id, search_cmdb_netzone_id, search_cmdb_role_id, \
     search_cmdb_idc_model_id, search_cmdb_cabinet_id, search_cmdb_category_id, search_cmdb_attribute_id, \
     search_cmdb_framework_id, returndate, csv_device_staus
-from utils.crypt_pwd import CryptPwd
-# from scripts.crypt_pwd import CryptPwd
-from utils.excel2list import excel2list
-
-# asset  import export excel
-from utils.netops_api import netOpsApi
 
 
 class ResourceManageExcelView(View):
@@ -99,7 +95,7 @@ class ResourceManageExcelView(View):
                 else:
                     netops_api = netOpsApi()
                     # print('请求新增数据')
-                    res = netops_api.post_cmdb_something(url="asset_networkdevice/", data=networkdevices)
+                    res = netops_api.post_something(url="asset/asset_networkdevice/", data=networkdevices)
                     # print('新增设备结果', res.json())
                     if res.json().get('code', ''):
                         if res.json()['code'] == 400:

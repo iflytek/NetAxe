@@ -1,11 +1,12 @@
 import os
 from typing import List
 from nornir import InitNornir
-from nornir.core.plugins.inventory import InventoryPluginRegister
 from nornir.core.task import Result
 from nornir_netmiko import netmiko_send_command
 from nornir_utils.plugins.functions import print_result
 from nornir_utils.plugins.tasks.files import write_file
+from nornir.core.plugins.inventory import InventoryPluginRegister
+
 from netboost.settings import BASE_DIR
 from utils.cmdb_inventory import CMDBInventory
 

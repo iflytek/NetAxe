@@ -11,9 +11,12 @@
 -------------------------------------------------
 """
 import os
-import requests
 import json
+import logging
+import requests
 from netboost.settings import BASE_DIR
+
+logger = logging.getLogger("celery")
 
 USER_CONF = {}
 if os.path.exists("{}/{}/{}".format(BASE_DIR, "netboost", "conf.py")):
@@ -51,7 +54,7 @@ class netOpsApi():
                 r = requests.post(self.token_url, data=json.dumps(self.data), headers=headers)
                 return r.json().get('access')
             except Exception as e:
-                raise Exception("Can't get netops_api token {}".format(str(e)))
+                raise Exception("Can't get netops_api token {},{},{}".format(str(e), self.token_url, self.data))
 
     def do_something(self, get_url, params):
         """
@@ -91,25 +94,15 @@ class netOpsApi():
         """
         查询账户和设备关联
         """
-        url = self.base_url + 'cmdb_account/'
-        # url = 'http://127.0.0.1:8000/api/cmdb_model/'
+        url = self.base_url + 'asset/cmdb_account/'
         res = requests.get(url, params=params, headers=self.headers)
-        # print(res)
         return res.json()['results']
         # 获取所有网络设备信息
 
     def get_all_device(self, limit):
-        networkdevice_url = self.resources_manage_base_url + 'asset_networkdevice/'
-        params = {'limit': limit, }
+        networkdevice_url = self.base_url + 'asset/asset_networkdevice/'
+        params = {
+            'limit': limit,
+        }
         res = requests.get(networkdevice_url, params=params, headers=self.headers)
         return res.json()['results']
-
-    def post_cmdb_something(self, url, data):
-        """
-        新建条目通用方法
-        """
-        url = self.resources_manage_base_url + url
-        # print("新建CMDB条目", data)
-        res = requests.post(url, data=json.dumps(data), headers=self.headers)
-        # print('cmdb_res', res)
-        return res
