@@ -44,7 +44,7 @@ NetAxe 是一个让NetDevOps更简单、更快速、更高效的快速集成前�
 
 
 ## 交流
-![NetAxe开源社区](https://www.hualigs.cn/image/634630d82a1c2.jpg)
+![NetAxe开源社区](https://s1.ax1x.com/2022/10/18/xr7kNV.jpg)
 群名称:NetAxe开源社区
 
 ## 特别感谢
