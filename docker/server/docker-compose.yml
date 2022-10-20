@@ -105,7 +105,7 @@ services:
     volumes:
       - ./conf/dashboard_conf/conf.yaml:/usr/local/apisix-dashboard/conf/conf.yaml
     ports:
-      - "9000:9000"
+      - "9948:9000"
     networks:
       - netops-axe
 
