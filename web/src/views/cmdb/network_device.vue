@@ -288,6 +288,8 @@
 <script lang="ts">
 import {
   networkDeviceUrl,
+  device_account_url,
+  deviceWebSshLogin,
   device_import_url,
   getNetworkDeviceList,
   getCmdbIdcList,
