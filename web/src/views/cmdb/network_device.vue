@@ -290,6 +290,7 @@ import {
   networkDeviceUrl,
   device_account_url,
   deviceWebSshLogin,
+  getInterfaceUsedList,
   device_import_url,
   getNetworkDeviceList,
   getCmdbIdcList,
