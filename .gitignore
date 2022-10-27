@@ -34,3 +34,4 @@ netaxe/media/device_config/current-configuration
 docker/server/logs/
 docker/databases/init/
 docker/databases/mysql_data/
+docker/server/conf/apisix_log/
