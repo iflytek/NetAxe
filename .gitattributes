@@ -1,2 +1,0 @@
-docker/server/conf/apisix_log/access.log filter=lfs diff=lfs merge=lfs -text
-docker/server/conf/apisix_log/error.log filter=lfs diff=lfs merge=lfs -text
