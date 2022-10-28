@@ -1,11 +1,11 @@
 from django.db import models
 from utils.custom.models import CoreModel
 
-
 STATUS_CHOICES = (
     (0, "禁用"),
     (1, "启用"),
 )
+
 
 class Post(CoreModel):
     name = models.CharField(null=False, max_length=64, verbose_name="岗位名称", help_text="岗位名称")
@@ -41,7 +41,8 @@ class Role(CoreModel):
     remark = models.TextField(verbose_name="备注", help_text="备注", null=True, blank=True)
     dept = models.ManyToManyField(to="Dept", verbose_name="数据权限-关联部门", db_constraint=False, help_text="数据权限-关联部门")
     menu = models.ManyToManyField(to="Menu", verbose_name="关联菜单", db_constraint=False, help_text="关联菜单")
-    permission = models.ManyToManyField(to="MenuButton", verbose_name="关联菜单的接口按钮", db_constraint=False, help_text="关联菜单的接口按钮")
+    permission = models.ManyToManyField(to="MenuButton", verbose_name="关联菜单的接口按钮", db_constraint=False,
+                                        help_text="关联菜单的接口按钮")
 
     class Meta:
         db_table = "system_role"
@@ -102,6 +103,9 @@ class Menu(CoreModel):
     status = models.BooleanField(default=True, blank=True, verbose_name="菜单状态", help_text="菜单状态")
     cache = models.BooleanField(default=False, blank=True, verbose_name="是否页面缓存", help_text="是否页面缓存")
     visible = models.BooleanField(default=True, blank=True, verbose_name="侧边栏中是否显示", help_text="侧边栏中是否显示")
+
+    def __str__(self):
+        return '%s-%s' % (self.name, self.web_path)
 
     class Meta:
         db_table = "system_menu"

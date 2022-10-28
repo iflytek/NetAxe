@@ -10,7 +10,7 @@
                     <div class="title">Net-Axe</div>
                     <div class="sub-title">Vue3 + Vite2 + Typescript + Naive UI</div>
                     <div class="flex-1 flex justify-center items-center ttppii"> 生活，应该还有诗和远方</div>
-                    <div class="bottom-wrapper">Net-Axe {{ version }} · Made by qingqingxuan</div>
+                    <div class="bottom-wrapper">Net-Axe {{ version }} </div>
                 </div>
             </div>
             <div class="right">
@@ -19,7 +19,7 @@
                     <div class="item-wrapper">
                         <n-input
                                 v-model:value="username"
-                                placeholder="请输入用户名/手机号"
+                                placeholder="请输入用户名"
                                 prefix-icon="el-icon-user"
                                 clearable
                         />
@@ -45,20 +45,20 @@
                         </div>
                     </div>
                 </div>
-                <div class="third-login">
-                    <n-divider dashed>第三方登录</n-divider>
-                    <n-space justify="center">
-                        <n-icon color="var(--primary-color)" size="20">
-                            <LogoAlipay/>
-                        </n-icon>
-                        <n-icon color="var(--primary-color)" size="20">
-                            <LogoGithub/>
-                        </n-icon>
-                        <n-icon color="var(--primary-color)" size="20">
-                            <LogoWechat/>
-                        </n-icon>
-                    </n-space>
-                </div>
+<!--                <div class="third-login">-->
+<!--                    <n-divider dashed>第三方登录</n-divider>-->
+<!--                    <n-space justify="center">-->
+<!--                        <n-icon color="var(&#45;&#45;primary-color)" size="20">-->
+<!--                            <LogoAlipay/>-->
+<!--                        </n-icon>-->
+<!--                        <n-icon color="var(&#45;&#45;primary-color)" size="20">-->
+<!--                            <LogoGithub/>-->
+<!--                        </n-icon>-->
+<!--                        <n-icon color="var(&#45;&#45;primary-color)" size="20">-->
+<!--                            <LogoWechat/>-->
+<!--                        </n-icon>-->
+<!--                    </n-space>-->
+<!--                </div>-->
             </div>
         </div>
         <div v-else class="m-login-container">
@@ -98,20 +98,20 @@
                     <a class="text-white" type="primary">忘记密码？</a>
                 </div>
             </div>
-            <div class="footer">
-                <n-divider>第三方登录</n-divider>
-                <div class="flex justify-evenly">
-                    <n-icon color="#c3c3c3" size="30">
-                        <LogoAlipay/>
-                    </n-icon>
-                    <n-icon color="#c3c3c3" size="30">
-                        <LogoGithub/>
-                    </n-icon>
-                    <n-icon color="#c3c3c3" size="30">
-                        <LogoWechat/>
-                    </n-icon>
-                </div>
-            </div>
+<!--            <div class="footer">-->
+<!--                <n-divider>第三方登录</n-divider>-->
+<!--                <div class="flex justify-evenly">-->
+<!--                    <n-icon color="#c3c3c3" size="30">-->
+<!--                        <LogoAlipay/>-->
+<!--                    </n-icon>-->
+<!--                    <n-icon color="#c3c3c3" size="30">-->
+<!--                        <LogoGithub/>-->
+<!--                    </n-icon>-->
+<!--                    <n-icon color="#c3c3c3" size="30">-->
+<!--                        <LogoWechat/>-->
+<!--                    </n-icon>-->
+<!--                </div>-->
+<!--            </div>-->
         </div>
     </n-el>
 </template>
@@ -143,8 +143,8 @@
         components: {PhoneIcon, PasswordIcon, LogoGithub, LogoAlipay, LogoWechat},
         setup() {
             const {version} = useAppInfo()
-            const username = ref('admin')
-            const password = ref('123456')
+            const username = ref('')
+            const password = ref('')
             const autoLogin = ref(true)
             const loading = ref(false)
             const router = useRouter()

@@ -1,0 +1,88 @@
+{
+  "Menu": [
+    {
+      "name": "作业中心",
+      "status": "True",
+      "parent_id": null,
+      "visible": "True",
+      "web_path": "/task_center",
+      "sort": 4,
+      "id": 100
+    },
+    {
+      "name": "配置中心",
+      "status": "True",
+      "parent_id": null,
+      "visible": "True",
+      "web_path": "/config_manage",
+      "sort": 3,
+       "id": 101
+    },
+    {
+      "name": "自动化",
+      "status": "True",
+      "parent_id": null,
+      "visible": "True",
+      "web_path": "/automated",
+      "sort": 2,
+       "id": 102
+    },
+    {
+      "name": "资源管理",
+      "status": "True",
+      "parent_id": null,
+      "visible": "True",
+      "web_path": "/cmdb",
+      "sort": 1,
+       "id": 103
+    },
+    {
+      "name": "网络设备",
+      "status": "True",
+      "parent_id": 103,
+      "visible": "True",
+      "web_path": "/cmdb/network_device",
+      "sort": 1
+    },
+    {
+      "name": "接口清单",
+      "status": "True",
+      "parent_id": 103,
+      "visible": "True",
+      "web_path": "/cmdb/interfaceused",
+      "sort": 2
+    },
+    {
+      "name": "调度管理",
+      "status": "True",
+      "parent_id": 100,
+      "visible": "True",
+      "web_path": "/task_center/dispatch_manage",
+      "sort": 1
+    },
+    {
+      "name": "任务列表",
+      "status": "True",
+      "parent_id": 100,
+      "visible": "True",
+      "web_path": "/task_center/task_list",
+      "sort": 2
+    },
+    {
+      "name": "配置差异",
+      "status": "True",
+      "parent_id": 101,
+      "visible": "True",
+      "web_path": "/config_manage/gitdiff",
+      "sort": 1
+    },
+    {
+      "name": "采集方案",
+      "status": "True",
+      "parent_id": 102,
+      "visible": "True",
+      "web_path": "/automated/collect",
+      "sort": 1
+    }
+  ]
+}
