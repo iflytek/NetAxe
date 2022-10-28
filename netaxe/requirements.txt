@@ -18,7 +18,7 @@ constantly==15.1.0
 cryptography==37.0.4
 daphne==2.5.0
 Deprecated==1.2.13
-Django==3.2.15
+Django==3.2.16
 django-annoying==0.10.6
 django-celery-beat==2.3.0
 django-celery-results==2.4.0
