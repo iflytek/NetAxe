@@ -238,6 +238,11 @@ class AssetAccount(models.Model):
     """
     设备管理账户表
     """
+    protocol_choices = (
+        ('ssh', 'ssh'),
+        ('telnet', 'telnet'),
+        ('netconf', 'netconf'),
+    )
     name = models.CharField(
         verbose_name='管理账户',
         max_length=50,
@@ -257,7 +262,7 @@ class AssetAccount(models.Model):
         blank=True)
     protocol = models.CharField(
         verbose_name='协议名',
-        max_length=20,
+        max_length=20, choices=protocol_choices,
         null=False, default='ssh')
     port = models.IntegerField(verbose_name='端口号', default=22)
     role = models.CharField(verbose_name='用户角色', max_length=20, choices=(
