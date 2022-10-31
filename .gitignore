@@ -36,3 +36,9 @@ docker/server/logs/
 docker/databases/init/
 docker/databases/mysql_data/
 docker/server/conf/apisix_conf/config.yaml
+docker/server/conf/apisix_log/
+docker/server/conf/apisix_log/error.log
+docker/server/conf/apisix_log/access.log
+netaxe/media/upload/
+netaxe/media/admin_ssh_records/
+netaxe/apps/users/migrations/
