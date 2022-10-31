@@ -88,7 +88,7 @@ services:
 
   # 新增nacos
   nacos:
-    image: nacos/nacos-server:2.0.3
+    image: registry.cn-hangzhou.aliyuncs.com/netaxe/nacos-server:2.0.3
     container_name: nacos
     environment:
       - PREFER_HOST_MODE=hostname
@@ -100,7 +100,7 @@ services:
       - netops-axe
 
   apisix-dashboard:
-    image: apache/apisix-dashboard:2.13-alpine
+    image: registry.cn-hangzhou.aliyuncs.com/netaxe/apisix-dashboard:2.13-alpine
     restart: always
     volumes:
       - ./conf/dashboard_conf/conf.yaml:/usr/local/apisix-dashboard/conf/conf.yaml
@@ -110,7 +110,7 @@ services:
       - netops-axe
 
   apisix:
-    image: apache/apisix:2.15.0-alpine
+    image: registry.cn-hangzhou.aliyuncs.com/netaxe/apisix:2.15.0-alpine
     restart: always
     volumes:
       - ./logs/apisix_log:/usr/local/apisix/logs
@@ -126,7 +126,7 @@ services:
       - netops-axe
 
   etcd:
-    image: bitnami/etcd:3.4.15
+    image: registry.cn-hangzhou.aliyuncs.com/netaxe/etcd:3.4.15
     restart: always
     volumes:
       - etcd_data:/bitnami/etcd
