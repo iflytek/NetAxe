@@ -27,6 +27,7 @@ netaxe/apps/automation/__pycache__/
 netaxe/apps/config_center/migrations/00*.py
 netaxe/apps/config_center/__pycache__/
 netaxe/apps/route_backend/migrations/00*.py
+netaxe/apps/int_utilization/migrations/00*.py
 netaxe/apps/route_backend/__pycache__/
 netaxemedia
 netaxe/media/automation
@@ -34,6 +35,7 @@ netaxe/media/device_config/current-configuration
 docker/server/logs/
 docker/databases/init/
 docker/databases/mysql_data/
+docker/server/conf/apisix_conf/config.yaml
 docker/server/conf/apisix_log/
 docker/server/conf/apisix_log/error.log
 docker/server/conf/apisix_log/access.log
