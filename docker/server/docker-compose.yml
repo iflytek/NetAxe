@@ -112,8 +112,6 @@ services:
     volumes:
       - ./logs/apisix_log:/usr/local/apisix/logs
       - ./conf/apisix_conf/config.yaml:/usr/local/apisix/conf/config.yaml:ro
-    depends_on:
-      - etcd
     ports:
       - "9080:9080/tcp"
       - "9091:9091/tcp"
