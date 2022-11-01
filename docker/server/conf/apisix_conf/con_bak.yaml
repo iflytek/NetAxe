@@ -39,7 +39,7 @@ apisix:
 
 etcd:
   host: # it's possible to define multiple etcd hosts addresses of the same etcd cluster.
-    - "http://HOSTIP:2379" # multiple etcd address
+    - "http://10.254.2.189:2379" # multiple etcd address
   prefix: "/apisix" # apisix configurations prefix
   timeout: 30 # 30 seconds
 
@@ -52,7 +52,7 @@ plugin_attr:
 discovery:
   nacos:
     host:
-      - "http://nacos:nacos@HOSTIP:8848"
+      - "http://nacos:nacos@10.254.2.188:8848"
     prefix: "/nacos/v1/"
     fetch_interval: 30 # default 30 sec
     weight: 100 # default 100
