@@ -63,3 +63,4 @@ netaxe/apps/system/migrations/
 netaxe/apps/users/migrations/
 docker/server/conf/apisix_log/access.log
 docker/server/conf/apisix_log/error.log
+docker/server/conf/apisix_conf/config.yaml 
