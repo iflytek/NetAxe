@@ -67,6 +67,7 @@ services:
 
   etcd:
     image: registry.cn-hangzhou.aliyuncs.com/netaxe/etcd:3.4.15
+    container_name: etcd
     restart: always
     volumes:
       - ./etcd_data:/bitnami/etcd
