@@ -5,9 +5,6 @@ networks:
     ipam:
       config:
         - subnet: 192.168.12.0/24
-volumes:
-  etcd_data:
-    driver: local
 
 services:
   netaxe-server:
