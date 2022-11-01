@@ -25,9 +25,7 @@ apisix:
   admin_key:
     - name: "admin"
       key: edd1c9f034335f136f87ad84b625c8f1
-      role:
-        admin # admin: manage all configuration data
-        # viewer: only can view configuration data
+      role: admin
     - name: "viewer"
       key: 4054f7cf07e344346cd3f287985e76a2
       role: viewer
@@ -39,7 +37,7 @@ apisix:
 
 etcd:
   host: # it's possible to define multiple etcd hosts addresses of the same etcd cluster.
-    - "http://10.254.2.189:2379" # multiple etcd address
+    - "http://HOSTIP:2379" # multiple etcd address
   prefix: "/apisix" # apisix configurations prefix
   timeout: 30 # 30 seconds
 
@@ -52,7 +50,7 @@ plugin_attr:
 discovery:
   nacos:
     host:
-      - "http://nacos:nacos@10.254.2.188:8848"
+      - "http://nacos:nacos@HOSTIP:8848"
     prefix: "/nacos/v1/"
     fetch_interval: 30 # default 30 sec
     weight: 100 # default 100
