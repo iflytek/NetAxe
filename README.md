@@ -25,7 +25,7 @@ NetAxe 是一个让NetDevOps更简单、更快速、更高效的快速集成前�
 ![配置差异比较](https://cdn.staticaly.com/gh/xuehaoweng/netaxe-image@master/netaxe-git-diff.60gnker70dk0.webp)
 
 ##  4.Webssh
-![Webssh](https://www.hualigs.cn/image/63326a5be2bf5.jpghttps://cdn.staticaly.com/gh/xuehaoweng/netaxe-image@master/netaxe-webssh.3rs5vtioxe80.webp)
+![Webssh](https://cdn.staticaly.com/gh/xuehaoweng/netaxe-image@master/netaxe-webssh.3rs5vtioxe80.webp)
 
 ##  5.接口清单
 
