@@ -64,3 +64,18 @@ services:
       ME_CONFIG_BASICAUTH_PASSWORD: 70uUceCVL1gf
     networks:
       - netops-databases
+
+  etcd:
+    image: registry.cn-hangzhou.aliyuncs.com/netaxe/etcd:3.4.15
+    restart: always
+    volumes:
+      - ./etcd_data:/bitnami/etcd
+    environment:
+      ETCD_ENABLE_V2: "true"
+      ALLOW_NONE_AUTHENTICATION: "yes"
+      ETCD_ADVERTISE_CLIENT_URLS: "http://0.0.0.0:2379"
+      ETCD_LISTEN_CLIENT_URLS: "http://0.0.0.0:2379"
+    ports:
+      - "2379:2379/tcp"
+    networks:
+      - netops-databases
