@@ -12,7 +12,7 @@
 """
 # Database
 # https://docs.djangoproject.com/en/4.0/ref/settings/#databases
-SERVERIP = "10.254.2.188"
+SERVERIP = "HOSTIP"
 SERVERPORT = "8001"
 DATABASES = {
     'default': {

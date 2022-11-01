@@ -5,9 +5,6 @@ networks:
     ipam:
       config:
         - subnet: 192.168.12.0/24
-volumes:
-  etcd_data:
-    driver: local
 
 services:
   netaxe-server:
@@ -88,7 +85,7 @@ services:
 
   # 新增nacos
   nacos:
-    image: nacos/nacos-server:2.0.3
+    image: registry.cn-hangzhou.aliyuncs.com/netaxe/nacos-server:2.0.3
     container_name: nacos
     environment:
       - PREFER_HOST_MODE=hostname
@@ -100,7 +97,8 @@ services:
       - netops-axe
 
   apisix-dashboard:
-    image: apache/apisix-dashboard:2.13-alpine
+    image: registry.cn-hangzhou.aliyuncs.com/netaxe/apisix-dashboard:2.13-alpine
+    container_name: apisix-dashboard
     restart: always
     volumes:
       - ./conf/dashboard_conf/conf.yaml:/usr/local/apisix-dashboard/conf/conf.yaml
@@ -110,13 +108,12 @@ services:
       - netops-axe
 
   apisix:
-    image: apache/apisix:2.15.0-alpine
+    image: registry.cn-hangzhou.aliyuncs.com/netaxe/apisix:2.15.0-alpine
+    container_name: apisix
     restart: always
     volumes:
       - ./logs/apisix_log:/usr/local/apisix/logs
       - ./conf/apisix_conf/config.yaml:/usr/local/apisix/conf/config.yaml:ro
-    depends_on:
-      - etcd
     ports:
       - "9080:9080/tcp"
       - "9091:9091/tcp"
@@ -125,23 +122,9 @@ services:
     networks:
       - netops-axe
 
-  etcd:
-    image: bitnami/etcd:3.4.15
-    restart: always
-    volumes:
-      - etcd_data:/bitnami/etcd
-    environment:
-      ETCD_ENABLE_V2: "true"
-      ALLOW_NONE_AUTHENTICATION: "yes"
-      ETCD_ADVERTISE_CLIENT_URLS: "http://0.0.0.0:2379"
-      ETCD_LISTEN_CLIENT_URLS: "http://0.0.0.0:2379"
-    ports:
-      - "2379:2379/tcp"
-    networks:
-      - netops-axe
-
   prometheus:
     image: prom/prometheus:v2.25.0
+    container_name: prometheus
     restart: always
     volumes:
       - ./conf/prometheus_conf/prometheus.yml:/etc/prometheus/prometheus.yml
@@ -152,6 +135,7 @@ services:
 
   grafana:
     image: grafana/grafana:7.3.7
+    container_name: grafana
     restart: always
     ports:
       - "3000:3000"
