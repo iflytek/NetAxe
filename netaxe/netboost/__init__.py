@@ -2,7 +2,7 @@ from __future__ import absolute_import, unicode_literals
 import logging
 import pymysql
 from .celery import app as celery_app
-from netboost.conf import NACOS_INFO
+from netboost.conf import SERVERIP,SERVERPORT
 from utils.custom.nacos import nacos
 logger = logging.getLogger('server')
 
@@ -12,10 +12,10 @@ pymysql.version_info = (1, 4, 2, "final", 0)
 pymysql.install_as_MySQLdb()
 
 # 注册服务
-nacosServer = nacos(ip=NACOS_INFO['SERVERIP'], port=8848)
+nacosServer = nacos(ip=SERVERIP, port=8848)
 nacosServer.registerService(
-    serviceIp=NACOS_INFO['SERVERIP'],
-    servicePort=NACOS_INFO['SERVERPORT'],
+    serviceIp=SERVERIP,
+    servicePort=SERVERPORT,
     serviceName="auth",
     groupName="default")
 nacosServer.healthyCheck()
