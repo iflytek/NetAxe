@@ -155,7 +155,7 @@ class WebSshConsumer(WebsocketConsumer):
                              int(port),
                              str(username).strip(),
                              str(password).strip(),
-                             timeout=10,
+                             timeout=20,
                              allow_agent=False,
                              look_for_keys=False)
             self.send("当前使用网管账号登陆设备,用户:{}".format(username))
