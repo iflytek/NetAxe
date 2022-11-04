@@ -8,7 +8,7 @@
       "commands": "['display ip interface','display arp','display mac-address','display link-aggregation verbose','display interface brief','display lldp neighbor-information verbose']",
       "netconf_method": "[]",
       "memo": "仅命令采集",
-      "netconf_class": "None"
+      "netconf_class": null
     },
     {
       "id": 33,
@@ -18,7 +18,7 @@
       "commands": "[]",
       "netconf_method": "[\"colleciton_arp_list\",\"colleciton_interface_list\",\"colleciton_lagg_list\",\"collection_device_PhysicalEntities\",\"collection_ipv4address_list\",\"collection_ipv6address_list\",\"collection_irf_info\",\"collection_lldp_info\",\"collection_mac_unicasttable\",\"patch_version\"]",
       "memo": "仅NETCONF采集",
-      "netconf_class": "None"
+      "netconf_class": null
     },
     {
       "id": 31,
@@ -28,7 +28,7 @@
       "commands": "[\"display ip interface\",\"display arp\",\"display mac-address\",\"display link-aggregation verbose\",\"display interface brief\",\"display lldp neighbor-information\",\"display device manuinfo\",\"display version\",\"display irf\"]",
       "netconf_method": "[]",
       "memo": "仅命令采集",
-      "netconf_class": "None"
+      "netconf_class": null
     },
     {
       "id": 29,
@@ -38,7 +38,7 @@
       "commands": "[\"show ip interface brief\",\"show ip arp\",\"show mac-address-table\",\"show interface port-channel summary\",\"show interfaces\"]",
       "netconf_method": "[]",
       "memo": "Mellanox标准采集",
-      "netconf_class": "None"
+      "netconf_class": null
     },
     {
       "id": 27,
@@ -48,7 +48,7 @@
       "commands": "[\"show ip interface brief\",\"show interface status\",\"show ip arp\",\"show mac address-table\",\"show channel-group summary\"]",
       "netconf_method": "[]",
       "memo": "盛科标准采集",
-      "netconf_class": "None"
+      "netconf_class": null
     },
     {
       "id": 25,
@@ -58,7 +58,7 @@
       "commands": "[\"show ip interface brief\",\"show interfaces status\",\"show ip arp\",\"show mac\",\"show aggregatePort summary\",\"show version\",\"show switch virtual\",\"show member\"]",
       "netconf_method": "[]",
       "memo": "锐捷标准采集",
-      "netconf_class": "None"
+      "netconf_class": null
     },
     {
       "id": 9,
@@ -68,7 +68,7 @@
       "commands": "[\"display interface\",\"display arp\",\"display mac-address\",\"display lldp neighbor\",\"display device manufacture-info\",\"display stack\"]",
       "netconf_method": "[]",
       "memo": "仅命令采集",
-      "netconf_class": "None"
+      "netconf_class": null
     },
     {
       "id": 13,
