@@ -73,7 +73,7 @@ six==1.16.0
 smmap==5.0.0
 sqlparse==0.4.2
 ttp==0.6.0
-Twisted==22.4.0
+Twisted==22.10.0
 txaio==22.2.1
 types-pytz==2022.1.2
 tzdata==2022.1
