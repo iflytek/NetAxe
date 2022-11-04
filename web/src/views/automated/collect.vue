@@ -547,7 +547,9 @@
         post_data.append('name', edit_form['name'])
         post_data.append('vendor', edit_form['vendor'])
         post_data.append('memo', edit_form['memo'])
-        post_data.append('netconf_class', edit_form['netconf_class'])
+        if (edit_form['netconf_class'] != null) {
+          post_data.append('netconf_class', edit_form['netconf_class'])
+        }
         put({
           url: getCollection_planList + '/' + current_row.value['id'] + '/',
           data: post_data,
@@ -711,7 +713,9 @@
         new_data.append('name', new_collect_form.value.name)
         new_data.append('memo', new_collect_form.value.memo)
         new_data.append('vendor', new_collect_form.value.vendor)
-        new_data.append('netconf_class', new_collect_form.value.netconf_class)
+        if (new_collect_form.value.netconf_class != null) {
+          new_data.append('netconf_class', new_collect_form.value.netconf_class)
+        }
         new_data.append('netconf_method', JSON.stringify(new_collect_form.value.netconf_method))
         if (new_collect_form.value.netconf_class) {
           post({
