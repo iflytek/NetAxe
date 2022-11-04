@@ -217,6 +217,7 @@
         { value: 'Ruijie', label: '锐捷' },
         { value: 'Centec', label: '盛科' },
         { value: 'Mellanox', label: 'Mellanox' },
+        { value: 'Cisco', label: '思科' },
       ]
       const class_options = shallowReactive([]) as Array<any>
       const method_options = shallowReactive([]) as Array<any>
@@ -235,6 +236,7 @@
             { value: 'Ruijie', label: '锐捷' },
             { value: 'Centec', label: '盛科' },
             { value: 'Mellanox', label: 'Mellanox' },
+            { value: 'Cisco', label: '思科' },
           ],
           render: (formItem) => {
             return h(NSelect, {

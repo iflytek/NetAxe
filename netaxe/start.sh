@@ -15,9 +15,11 @@ web(){
     supervisord -n -c /home/netaxe/supervisord_prd.conf
 }
 default(){
+    sleep 10
     celery -A netboost worker -Q default -c 10  -l info -n default
 }
 config(){
+    sleep 10
     celery -A netboost worker -Q config -c 10 -l info -n config
 }
 case "$1" in
