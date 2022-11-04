@@ -10,6 +10,11 @@
                     2022/7/28 14:59
 -------------------------------------------------
 """
+# nacos
+NACOS_INFO = {
+    'SERVERIP': 'HOSTIP',
+    'SERVERPORT': 9999,
+}
 # Database
 # https://docs.djangoproject.com/en/4.0/ref/settings/#databases
 SERVERIP = "HOSTIP"
