@@ -3,7 +3,7 @@
 # 进入容器：docker exec -it netops-private /bin/bash
 ##############################################
 
-FROM registry.cn-hangzhou.aliyuncs.com/netaxe/netaxe-backend:1.0.3
+FROM registry.cn-hangzhou.aliyuncs.com/netaxe/netaxe-backend:1.0.5
 
 # 更新pip版本
 RUN pip3 install -i https://pypi.doubanio.com/simple/ uwsgi --upgrade pip
