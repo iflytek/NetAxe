@@ -1,5 +1,28 @@
 <template>
   <div class="main-container">
+    <n-modal v-model:show="add_fsm_modal_show" preset="dialog" title="新建文件">
+      <n-form
+        ref="formRef"
+        :model="add_fsm_model"
+        label-placement="left"
+        label-width="auto"
+        require-mark-placement="right-hanging"
+        size="small"
+        :style="{
+          maxWidth: '640px',
+        }"
+      >
+        <n-form-item label="文件名" path="inputConfigPartName">
+          <n-input v-model:value="add_fsm_model.name" placeholder="Input" />
+        </n-form-item>
+      </n-form>
+
+      <template #action>
+        <div style="display: flex; justify-content: flex-end">
+          <n-button round type="primary" @click="add_fsm_template_modal_btn"> 确认 </n-button>
+        </div>
+      </template>
+    </n-modal>
     <n-card>
       <n-tabs
         class="card-tabs"
@@ -22,10 +45,14 @@
           >
             <n-space vertical :size="12">
               <n-input v-model:value="pattern" placeholder="搜索" />
-              <n-switch v-model:value="showIrrelevantNodes">
-                <template #checked> 展示搜索无关的节点 </template>
-                <template #unchecked> 隐藏搜索无关的节点 </template>
-              </n-switch>
+              <n-space :size="12">
+                <n-switch v-model:value="showIrrelevantNodes">
+                  <template #checked> 展示搜索无关的节点 </template>
+                  <template #unchecked> 隐藏搜索无关的节点 </template>
+                </n-switch>
+
+                <n-button round type="primary" size="tiny" @click="add_fsm_file"> 新建 </n-button>
+              </n-space>
               <n-tree
                 :show-irrelevant-nodes="showIrrelevantNodes"
                 :pattern="pattern"
@@ -101,37 +128,6 @@
         </n-tab-pane>
       </n-tabs>
     </n-card>
-    <n-modal v-model:show="fsm_parse_modal_show" preset="dialog" title="解析">
-      <n-form
-        ref="formRef"
-        :model="fsm_model"
-        label-placement="left"
-        label-width="auto"
-        require-mark-placement="right-hanging"
-        size="small"
-        :style="{
-          maxWidth: '640px',
-        }"
-      >
-        <n-form-item label="命令" path="inputConfigPartName">
-          <n-input v-model:value="fsm_model.cmd" placeholder="Input" />
-        </n-form-item>
-        <n-form-item label="厂商" path="inputConfigVendor">
-          <n-select
-            v-model:value="fsm_model.fsm_platform"
-            filterable
-            placeholder="厂商"
-            :options="vendor_options"
-          />
-        </n-form-item>
-      </n-form>
-
-      <template #action>
-        <div style="display: flex; justify-content: flex-end">
-          <n-button round type="primary" @click="fsm_template_modal_btn"> 确认 </n-button>
-        </div>
-      </template>
-    </n-modal>
   </div>
 </template>
 
@@ -164,9 +160,8 @@
       VAceEditor,
     },
     setup() {
-      const fsm_model = ref({
-        cmd: '',
-        fsm_platform: 'hp_comware',
+      const add_fsm_model = ref({
+        name: '',
       })
       const vendor_options = ref([
         {
@@ -180,6 +175,7 @@
       ])
       const current_filename = ref('')
       const fsm_parse_modal_show = ref(false)
+      const add_fsm_modal_show = ref(false)
       const device_test_content = ref('')
       const device_config_render_res = ref('')
       const formRef = ref<FormInst | null>(null)
@@ -189,7 +185,6 @@
       const ace_editor_show = ref(true)
       const change_file = ref(null)
       const change_file_option = ref([])
-      const select_config_file = ref(null)
       const tree_data = ref([])
       const detail_show = ref(false)
       const content = ref('')
@@ -199,7 +194,6 @@
       const showCommitRadio = ref(false)
       const message = useMessage()
       const ace_option = ref({ fontSize: 14 })
-      // tree_data.value.push()
       // 获取配置文件树
       function get_config_tree() {
         get({
@@ -212,6 +206,7 @@
         }).then((res) => {
           res.data.forEach((item) => {
             //console.log(item)
+            tree_data.value = []
             nextTick(() => {
               tree_data.value.push(item)
             })
@@ -231,7 +226,6 @@
               detail_show.value = false
               return
             } else {
-              select_config_file.value = option.key
               // message.info('当前选中最后一层元素做查询' + option.label)
               get({
                 url: fsm_parse,
@@ -290,7 +284,7 @@
           url: fsm_parse,
           data: {
             test_content: device_test_content.value,
-            fsm_platform: select_config_file.value,
+            fsm_platform: current_filename.value,
           },
         }).then((res) => {
           console.log(res)
@@ -303,25 +297,29 @@
           }
         })
       }
-      // 解析模态框解析按钮
-      function fsm_template_modal_btn() {
+      // 新增文件
+      function add_fsm_template_modal_btn() {
         post({
           url: fsm_parse,
           data: {
-            test_content: device_test_content.value,
-            cmd: fsm_model.value.cmd,
-            fsm_platform: fsm_model.value.fsm_platform,
+            add_fsm_platform: add_fsm_model.value.name,
           },
         }).then((res) => {
           console.log(res)
           if (res.code == 200) {
             message.success(res.msg)
-            device_config_render_res.value = res.data
-            fsm_parse_modal_show.value = false
+            add_fsm_modal_show.value = false
+            nextTick(() => {
+              get_config_tree()
+            })
           } else {
             message.error(res.msg)
           }
         })
+      }
+      // 新建模板
+      function add_fsm_file() {
+        add_fsm_modal_show.value = true
       }
       onMounted(get_config_tree)
       // onBeforeMount(() => {
@@ -354,10 +352,12 @@
         device_test_content,
         device_config_render_res,
         fsm_parse_modal_show,
-        fsm_model,
         vendor_options,
-        fsm_template_modal_btn,
+        add_fsm_template_modal_btn,
         current_filename,
+        add_fsm_model,
+        add_fsm_modal_show,
+        add_fsm_file,
       }
     },
   })
