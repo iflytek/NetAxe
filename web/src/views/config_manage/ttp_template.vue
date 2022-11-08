@@ -103,6 +103,7 @@
             lang="json"
             theme="monokai"
             style="height: 820px"
+            :wrap="true"
             :options="ace_option"
           />
         </n-card>
