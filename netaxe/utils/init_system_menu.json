@@ -83,6 +83,38 @@
       "visible": "True",
       "web_path": "/automated/collect",
       "sort": 1
+    },
+    {
+      "name": "配置合规",
+      "status": "True",
+      "parent_id": 101,
+      "visible": "True",
+      "web_path": "/config_manage/compliance",
+      "sort": 1
+    },
+    {
+      "name": "配置模板",
+      "status": "True",
+      "parent_id": 101,
+      "visible": "True",
+      "web_path": "/config_manage/config_jinja2_template",
+      "sort": 1
+    },
+    {
+      "name": "TTP模板",
+      "status": "True",
+      "parent_id": 101,
+      "visible": "True",
+      "web_path": "/config_manage/ttp_template",
+      "sort": 1
+    },
+    {
+      "name": "FSM模板",
+      "status": "True",
+      "parent_id": 101,
+      "visible": "True",
+      "web_path": "/config_manage/fsm_template",
+      "sort": 1
     }
   ]
 }

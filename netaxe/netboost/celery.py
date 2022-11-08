@@ -42,6 +42,7 @@ app.conf.task_queues = (
 
 app.autodiscover_tasks(lambda: [n.name for n in apps.get_app_configs()])
 
+
 class AxeTask(Task):
 
     def run(self, *args, **kwargs):
@@ -50,7 +51,7 @@ class AxeTask(Task):
     max_retries = 1
     autoretry_for = (Exception, KeyError, RuntimeError)
     retry_kwargs = {'max_retries': 1}
-    retry_backoff = True
+    retry_backoff = False
 
     def on_failure(self, exc, task_id, args, kwargs, einfo):
         print(str(einfo))

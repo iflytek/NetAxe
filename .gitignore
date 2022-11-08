@@ -40,6 +40,7 @@ docker/databases/mysql_data/
 docker/databases/etcd_data/
 docker/databases/data/
 docker/server/conf/apisix_conf/config.yaml
+docker/server/conf/dashboard_conf/conf.yaml
 docker/server/conf/apisix_log/
 docker/server/conf/apisix_log/error.log
 docker/server/conf/apisix_log/access.log

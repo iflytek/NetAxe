@@ -326,6 +326,15 @@ class BatManMain(object):
         result = ins.ParseTextToDicts(_content)
         return result
 
+    @staticmethod
+    def test_fsm(content, template):
+        # 将打开的解析模板文件对象传参给TextFSM模块
+        base_template = os.environ["NTC_TEMPLATES_DIR"] + '/'
+        ins = TextFSM(open(base_template + template, "r", encoding='utf8'))
+        # 将文本简析成字典
+        result = ins.ParseTextToDicts(content)
+        return result
+
 
 class HillstoneFsm:
     # 解析器映射
@@ -1067,7 +1076,8 @@ if __name__ == '__main__':
     # Logging section ##############
     # res = BatManMain.info_fsm(path='automation/10.1.1.2/show_mac-address-table.txt', fsm_platform='cisco_ios')
     # res = BatManMain.info_fsm(path='automation/10.1.1.2/show_interfaces.txt', fsm_platform='cisco_ios')
-    res = BatManMain.info_fsm(path='automation/192.168.10.1/show_cdp_neighbors_detail.txt', fsm_platform='cisco_ios')
+    # res = BatManMain.info_fsm(path='automation/192.168.10.1/show_cdp_neighbors_detail.txt', fsm_platform='cisco_ios')
+    res = BatManMain.info_fsm(path='automation/172.17.1.1/show_interfaces.txt', fsm_platform='cisco_ios')
     # res = BatManMain.info_fsm(path='automation/10.1.1.2/show_lldp_neighbors_detail.txt', fsm_platform='cisco_ios')
     if isinstance(res, list):
         for i in res:
