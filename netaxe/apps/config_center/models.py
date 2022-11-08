@@ -5,7 +5,7 @@ class SupportVendor:
     CHOICES = (
         ('H3C', 'H3C'),
         ('HUAWEI', 'HUAWEI'),
-        ('CISCO', 'CISCO'),
+        ('Cisco_ios', 'Cisco_ios'),
         ('Ruijie', 'Ruijie'),
         ('Hillstone', 'Hillstone'),
     )

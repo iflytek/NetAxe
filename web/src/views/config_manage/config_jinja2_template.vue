@@ -342,13 +342,13 @@
         },
       }).then((res) => {
         if (res.code == 200) {
-          message.success(res.message)
+          message.success(res.msg)
           nextTick(() => {
             select_config_set()
             add_config_part_modal_show.value = false
           })
         } else {
-          message.error(res.message)
+          message.error(res.msg)
         }
       })
     } else {
@@ -361,13 +361,13 @@
       }).then((res) => {
         console.log(res)
         if (res.code == 201) {
-          message.success(res.message)
+          message.success(res.msg)
           nextTick(() => {
             select_config_set()
             add_config_part_modal_show.value = false
           })
         } else {
-          message.error(res.message)
+          message.error(res.msg)
         }
       })
     }
