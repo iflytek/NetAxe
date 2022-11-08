@@ -183,6 +183,10 @@
       label: 'HUAWEI',
       value: 'HUAWEI',
     },
+    {
+      label: 'CISCO',
+      value: 'CISCO',
+    },
   ])
   const ace_option = ref({ fontSize: 14 })
   const vendorOption = ref([
@@ -378,7 +382,7 @@
   // jinja2模板渲染事件
   function jinja2render() {
     post({
-      url: jinja2_parse + '/cluster_manage/',
+      url: jinja2_parse,
       data: {
         yaml_content: device_config_yaml_content.value,
         jinja2_content: device_config_jinja2_content.value,

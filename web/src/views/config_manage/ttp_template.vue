@@ -202,6 +202,18 @@
       label: 'HUAWEI',
       value: 'HUAWEI',
     },
+    {
+      label: 'Hillstone',
+      value: 'Hillstone',
+    },
+    {
+      label: 'Ruijie',
+      value: 'Ruijie',
+    },
+    {
+      label: 'Cisco_ios',
+      value: 'Cisco_ios',
+    },
   ])
   const message = useMessage()
   const dialog = useDialog()
