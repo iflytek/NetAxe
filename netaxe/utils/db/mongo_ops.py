@@ -267,7 +267,17 @@ class MongoOps:
         return ret
 
 
+xunmi_mongo = MongoOps(db='netops', coll='XunMi')
+lagg_mongo = MongoOps(db='Automation', coll='AggreTable')
+compliance_mongo = MongoOps(db='Automation', coll='ConfigCompliance')
+
+
 class MongoNetOps(object):
+    @staticmethod
+    def compliance_result(**kwargs):
+        res = compliance_mongo.find(query_dict=kwargs, fileds={'_id': 0})
+        return res
+
     @staticmethod
     def post_cmdb(data):
         cmdb_mongo = MongoOps(db='Automation', coll='networkdevice')
@@ -275,6 +285,31 @@ class MongoNetOps(object):
             cmdb_mongo.delete()
             cmdb_mongo.insert_many(data)
             cmdb_mongo.rebuild_index()
+        return
+
+    @staticmethod
+    def compliance_ops(**kwargs):
+        log_time = kwargs['log_time']
+        kwargs.pop('log_time')
+        query_tmp = compliance_mongo.find(query_dict=kwargs)
+        if query_tmp:
+            if query_tmp[0]['log_time'] != log_time:
+                compliance_mongo.update(filter=kwargs, update={"$set": {'log_time': log_time}})
+                return 'update'
+            else:
+                return 'equal no ops', None  # return ('equal no ops', None) 相同无需操作
+        else:
+            kwargs['log_time'] = log_time
+            compliance_mongo.insert(kwargs)
+            return 'insert'
+
+    @staticmethod
+    def compliance_reindex():
+        my_mongo = MongoOps(db='Automation', coll='ConfigCompliance')
+        my_mongo.drop_indexes()
+        my_mongo.create_index([('log_time', pymongo.DESCENDING)])
+        my_mongo.create_index("hostip")
+        my_mongo.create_index("vendor")
         return
 
     @staticmethod

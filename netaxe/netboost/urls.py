@@ -44,7 +44,7 @@ urlpatterns = [
     path('admin/', admin.site.urls),
     path('admin/login/', views.extend_admin_login),
     re_path(r'^captcha/', include('captcha.urls')),
-    path("swagger/",schema_view.with_ui("swagger", cache_timeout=0), name="schema-swagger-ui",),
+    # path("swagger/",schema_view.with_ui("swagger", cache_timeout=0), name="schema-swagger-ui",),
     re_path('^api-auth/', include('rest_framework.urls', namespace='rest_framework')),
     # 登录
     path("api/login/", LoginView.as_view(), name="login"),

@@ -8,6 +8,7 @@ from django.template import loader
 from netboost.celery import AxeTask
 from netboost.settings import DEBUG
 from apps.asset.model_api import get_device_info_v2
+from apps.config_center.compliance import config_file_verify
 from apps.config_center.config_parse.config_parse import config_file_parse
 from apps.config_center.git_tools.git_proc import push_file
 from apps.config_center.my_nornir import config_backup_nornir
@@ -66,5 +67,7 @@ def config_backup(**kwargs):
         # }
         # config_mongo.insert(mongo_data)
     # send_msg_netops(f"配置备份推送完成\n变更配置文件数:{len(changed_files)}\n新增配置文件数:{len(untracked_files)}\ncommit:{commit}")
+    # 合规性检查
+    loop.run_until_complete(config_file_verify())
     return
 

@@ -1,9 +1,13 @@
 # -*- coding: utf-8 -*-
 import json
+
 import yaml
 from ttp import ttp
+
 from netboost.settings import BASE_DIR
+
 CONFIG_PATH = BASE_DIR + '/media/device_config/current-configuration/'
+
 ttp_template = """
 <macro>
 def check(data):
@@ -93,7 +97,7 @@ interface {{ interface | re(".*") | _start_ }}
  undo port trunk permit vlan {{ no-permit-vlan | re("\d+") }}
  port access vlan {{ vlan-id | re("\d+") | to_int }}
  stp edged-port {{ edged-port | set(True) }}
- port link-aggregation group {{ aggregation-group | re("\d+") | to_int }}
+ port link-aggregation group {{ aggregation_group | re("\d+") | to_int }}
  link-aggregation mode  {{ aggregation_mode | re("\S+") }}
  ip address {{ ip | re("\d+.\d+.\d+.\d+") }} {{ mask | re("\d+.\d+.\d+.\d+") }}
  ip address dhcp-alloc {{ dhcp | set(True)}}
@@ -225,18 +229,40 @@ class H3cParse:
     def snmp(self, snmp):
         self.yaml_dict[self.host]['snmp'] = snmp
 
+    # def interface(self, interfaces):
+    #     self.yaml_dict[self.host]['interfaces'] = interfaces
+    #     for interface in interfaces:
+    #         if 'interface' not in interface.keys():
+    #             continue
+    #         # 接口FortyGigE1/0/49 因为有斜杠，系统会误判为路径，需要替换
+    #         sub_path = "{}{}/{}.txt".format(
+    #             CONFIG_PATH, self._dir, interface['name'].replace('/', '_'))
+    #         with open(sub_path, 'w', encoding='utf8') as f:
+    #             f.write(interface['interface'])
+    #         # {'interface': 'port link-mode bridge', 'name': 'Ten-GigabitEthernet1/0/45'}
 
     def get_yaml(self):
+        # 生成json
+        # sub_path = "{}{}/{}-{}.json".format(
+        #     CONFIG_PATH, self._dir, 'hp_comware', self.host)
+        # # print(sub_path)
+        # with open(sub_path, 'w', encoding='utf8') as f:
+        #     f.write(json.dumps(self.yaml_dict))
+        # print(self.yaml_dict)
         yaml_res = yaml.dump(self.yaml_dict)
+        # print(yaml_res)
         sub_path = "{}{}/{}-{}.yaml".format(
             CONFIG_PATH, self._dir, 'hp_comware', self.host)
+        # print(sub_path)
         with open(sub_path, 'w', encoding='utf8') as f:
             f.write(yaml_res)
         return
 
     def show_yaml(self):
         yaml_res = yaml.dump(self.yaml_dict)
-        # print(yaml_res)
+        print(yaml_res)
         return yaml_res
 
 
+if __name__ == "__main__":
+    pass
