@@ -284,7 +284,23 @@
       }
       // fsm解析测试
       function fsm_render() {
-        fsm_parse_modal_show.value = true
+        // fsm_parse_modal_show.value = true
+        post({
+          url: fsm_parse,
+          data: {
+            test_content: device_test_content.value,
+            fsm_platform: select_config_file.value,
+          },
+        }).then((res) => {
+          console.log(res)
+          if (res.code == 200) {
+            message.success(res.msg)
+            device_config_render_res.value = res.data
+            // fsm_parse_modal_show.value = false
+          } else {
+            message.error(res.msg)
+          }
+        })
       }
       // 解析模态框解析按钮
       function fsm_template_modal_btn() {

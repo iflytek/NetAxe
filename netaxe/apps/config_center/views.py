@@ -13,7 +13,7 @@ from ttp import ttp
 from netboost.settings import BASE_DIR
 from apps.api.tools.custom_pagination import LargeResultsSetPagination
 from apps.api.tools.custom_viewset_base import CustomViewBase
-from utils.connect_layer.auto_main import BatManFsm
+from utils.connect_layer.auto_main import BatManMain
 from apps.config_center.config_parse.config_parse import ConfigTree, FSMTree
 from apps.config_center.git_tools.git_proc import ConfigGit
 from utils.db.mongo_ops import MongoNetOps
@@ -296,10 +296,7 @@ class TextFSMParse(APIView):
         if any(k in post_data for k in ("test_content", "fsm_platform")):
             data_to_parse = post_data['test_content']
             fsm_platform = post_data['fsm_platform']
-            cmd = post_data['cmd']
-            res = BatManFsm.get_structured_data(platform=fsm_platform,
-                                                command=cmd,
-                                                raw_output=data_to_parse)
+            res = BatManMain.test_fsm(content=data_to_parse, template=fsm_platform)
             data = {
                 "code": 200,
                 "data": json.dumps(res),

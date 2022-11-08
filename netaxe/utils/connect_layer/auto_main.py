@@ -326,6 +326,15 @@ class BatManMain(object):
         result = ins.ParseTextToDicts(_content)
         return result
 
+    @staticmethod
+    def test_fsm(content, template):
+        # 将打开的解析模板文件对象传参给TextFSM模块
+        base_template = os.environ["NTC_TEMPLATES_DIR"] + '/'
+        ins = TextFSM(open(base_template + template, "r", encoding='utf8'))
+        # 将文本简析成字典
+        result = ins.ParseTextToDicts(content)
+        return result
+
 
 class HillstoneFsm:
     # 解析器映射
