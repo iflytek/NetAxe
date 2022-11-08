@@ -191,6 +191,18 @@
       label: 'HUAWEI',
       value: 'HUAWEI',
     },
+    {
+      label: 'Hillstone',
+      value: 'Hillstone',
+    },
+    {
+      label: 'Ruijie',
+      value: 'Ruijie',
+    },
+    {
+      label: 'Cisco_ios',
+      value: 'Cisco_ios',
+    },
   ])
   const ace_option = ref({ fontSize: 14 })
   const vendorOption = ref([
