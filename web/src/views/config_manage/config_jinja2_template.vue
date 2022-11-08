@@ -165,8 +165,6 @@
   const add_config_part_model = ref({
     id: 0,
     name: '',
-    config_yaml: '',
-    config_jinja2: '',
   })
   const device_config_yaml_content = ref('')
   const device_config_render_res = ref('')
