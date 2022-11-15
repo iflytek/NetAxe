@@ -281,6 +281,17 @@ class TextFSMParse(APIView):
 
     def post(self, request):
         post_data = request.data
+        if 'add_fsm_platform' in post_data.keys():
+            filename = post_data['add_fsm_platform']
+            with open(BASE_DIR + '/utils/connect_layer/my_netmiko/templates/' + filename, "w",
+                      encoding="utf-8") as f:
+                f.write('')
+            data = {
+                "code": 200,
+                "data": 'ok',
+                "msg": "新建配置文件内容成功"
+            }
+            return JsonResponse(data, safe=False)
         if any(k in post_data for k in ("save_fsm_template", "filename")):
             save_fsm_template = post_data['save_fsm_template']
             with open(BASE_DIR + '/utils/connect_layer/my_netmiko/templates/' + post_data['filename'], "w",
