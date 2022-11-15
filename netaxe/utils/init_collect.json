@@ -5,7 +5,7 @@
       "vendor": "H3C",
       "category": "交换机",
       "name": "华三V7早期版本标准",
-      "commands": "['display ip interface','display arp','display mac-address','display link-aggregation verbose','display interface brief','display lldp neighbor-information verbose']",
+      "commands": "[\"display ip interface\",\"display arp\",\"display mac-address\",\"display link-aggregation verbose\",\"display interface brief\",\"display lldp neighbor-information verbose\"]",
       "netconf_method": "[]",
       "memo": "仅命令采集",
       "netconf_class": null
