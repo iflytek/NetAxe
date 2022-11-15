@@ -103,6 +103,7 @@
             lang="json"
             theme="monokai"
             style="height: 820px"
+            :wrap="true"
             :options="ace_option"
           />
         </n-card>
@@ -190,6 +191,18 @@
       label: 'HUAWEI',
       value: 'HUAWEI',
     },
+    {
+      label: 'Hillstone',
+      value: 'Hillstone',
+    },
+    {
+      label: 'Ruijie',
+      value: 'Ruijie',
+    },
+    {
+      label: 'Cisco_ios',
+      value: 'Cisco_ios',
+    },
   ])
   const ace_option = ref({ fontSize: 14 })
   const vendorOption = ref([
@@ -200,6 +213,18 @@
     {
       label: 'HUAWEI',
       value: 'HUAWEI',
+    },
+    {
+      label: 'Hillstone',
+      value: 'Hillstone',
+    },
+    {
+      label: 'Ruijie',
+      value: 'Ruijie',
+    },
+    {
+      label: 'Cisco_ios',
+      value: 'Cisco_ios',
     },
   ])
   const message = useMessage()
@@ -340,13 +365,13 @@
         },
       }).then((res) => {
         if (res.code == 200) {
-          message.success(res.message)
+          message.success(res.msg)
           nextTick(() => {
             select_config_set()
             add_ttp_modal_show.value = false
           })
         } else {
-          message.error(res.message)
+          message.error(res.msg)
         }
       })
     } else {

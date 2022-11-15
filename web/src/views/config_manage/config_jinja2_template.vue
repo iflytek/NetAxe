@@ -165,8 +165,6 @@
   const add_config_part_model = ref({
     id: 0,
     name: '',
-    config_yaml: '',
-    config_jinja2: '',
   })
   const device_config_yaml_content = ref('')
   const device_config_render_res = ref('')
@@ -182,6 +180,18 @@
     {
       label: 'HUAWEI',
       value: 'HUAWEI',
+    },
+    {
+      label: 'Hillstone',
+      value: 'Hillstone',
+    },
+    {
+      label: 'Ruijie',
+      value: 'Ruijie',
+    },
+    {
+      label: 'Cisco_ios',
+      value: 'Cisco_ios',
     },
   ])
   const ace_option = ref({ fontSize: 14 })
@@ -332,13 +342,13 @@
         },
       }).then((res) => {
         if (res.code == 200) {
-          message.success(res.message)
+          message.success(res.msg)
           nextTick(() => {
             select_config_set()
             add_config_part_modal_show.value = false
           })
         } else {
-          message.error(res.message)
+          message.error(res.msg)
         }
       })
     } else {
@@ -351,13 +361,13 @@
       }).then((res) => {
         console.log(res)
         if (res.code == 201) {
-          message.success(res.message)
+          message.success(res.msg)
           nextTick(() => {
             select_config_set()
             add_config_part_modal_show.value = false
           })
         } else {
-          message.error(res.message)
+          message.error(res.msg)
         }
       })
     }
@@ -378,7 +388,7 @@
   // jinja2模板渲染事件
   function jinja2render() {
     post({
-      url: jinja2_parse + '/cluster_manage/',
+      url: jinja2_parse,
       data: {
         yaml_content: device_config_yaml_content.value,
         jinja2_content: device_config_jinja2_content.value,
