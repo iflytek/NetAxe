@@ -52,7 +52,7 @@ nornir-napalm==0.2.0
 nornir-netmiko==0.1.2
 nornir-utils==0.2.0
 packaging==21.3
-Pillow==9.2.0
+Pillow==9.3.0
 prompt-toolkit==3.0.30
 pyasn1==0.4.8
 pyasn1-modules==0.2.8
