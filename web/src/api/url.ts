@@ -67,6 +67,11 @@ export const fsm_parse = '/api/config_center/fsm_parse'
 export const jinja2_parse = '/api/config_center/jinja2_parse'
 export const config_center = '/api/config_center'
 
+// 微服务ipam测试环境
+export const getSubnetTree = '/ipam/v1/subnet_tree/'
+export const PostAddressHandel = '/ipam/v1/address_handel/'
+// export const getinterval_schedule = '/ipam/v1/interval_schedule/'
+export const getSubnetAddress = '/ipam/v1/subnet/'
 declare module '@vue/runtime-core' {
   interface ComponentCustomProperties {
     $urlPath: Record<string, string>

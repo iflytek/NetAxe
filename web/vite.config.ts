@@ -33,8 +33,8 @@ export default ({ mode }) => {
     },
     server: {
       open: true,
-      port: 5005,
-      host:"0.0.0.0",
+      port: 1005,
+      host: '0.0.0.0',
       proxy: {
         '/api': {
           target: env.VITE_BASIC_URL,
@@ -42,47 +42,11 @@ export default ({ mode }) => {
           changeOrigin: true, // 虚拟的站点需要更管origin
           rewrite: (path: string) => path.replace(/^\/api/, '/api'),
         },
-        '/net_backend': {
+        '/ipam': {
           target: env.VITE_BASIC_URL,
           ws: true, //代理websockets
           changeOrigin: true, // 虚拟的站点需要更管origin
-          rewrite: (path: string) => path.replace(/^\/net_backend/, '/backend'),
-        },
-        '/int_utilization': {
-          target: env.VITE_BASIC_URL,
-          ws: true, //代理websockets
-          changeOrigin: true, // 虚拟的站点需要更管origin
-          rewrite: (path: string) => path.replace(/^\/int_utilization/, '/int_utilization'),
-        },
-        '/automation': {
-          target: env.VITE_BASIC_URL,
-          ws: true, //代理websockets
-          changeOrigin: true, // 虚拟的站点需要更管origin
-          rewrite: (path: string) => path.replace(/^\/automation/, '/automation'),
-        },
-        '/resources_manage': {
-          target: env.VITE_BASIC_URL,
-          ws: true, //代理websockets
-          changeOrigin: true, // 虚拟的站点需要更管origin
-          rewrite: (path: string) => path.replace(/^\/resources_manage/, '/resources_manage'),
-        },
-        '/topology': {
-          target: env.VITE_BASIC_URL,
-          ws: true, //代理websockets
-          changeOrigin: true, // 虚拟的站点需要更管origin
-          rewrite: (path: string) => path.replace(/^\/topology/, '/topology'),
-        },
-        '/config_center': {
-          target: env.VITE_BASIC_URL,
-          ws: true, //代理websockets
-          changeOrigin: true, // 虚拟的站点需要更管origin
-          rewrite: (path: string) => path.replace(/^\/config_center/, '/config_center'),
-        },
-        '/network': {
-          target: env.VITE_BASIC_URL,
-          ws: true, //代理websockets
-          changeOrigin: true, // 虚拟的站点需要更管origin
-          rewrite: (path: string) => path.replace(/^\/network/, '/network'),
+          rewrite: (path: string) => path.replace(/^\/ipam/, '/ipam'),
         },
         '/ws': {
           target: env.VITE_BASIC_URL,
