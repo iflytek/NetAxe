@@ -36,19 +36,19 @@ class UserProfile(AbstractUser):
     user_type = models.IntegerField(
         choices=USER_TYPE, default=0, verbose_name="用户类型", null=True, blank=True, help_text="用户类型"
     )
-    post = models.ManyToManyField(
-        to="system.Post", blank=True, verbose_name="关联岗位", db_constraint=False, help_text="关联岗位")
-    role = models.ManyToManyField(
-        to="system.Role", blank=True, verbose_name="关联角色", db_constraint=False, help_text="关联角色")
-    dept = models.ForeignKey(
-        to="system.Dept",
-        verbose_name="所属部门",
-        on_delete=models.PROTECT,
-        db_constraint=False,
-        null=True,
-        blank=True,
-        help_text="关联部门",
-    )
+    # post = models.ManyToManyField(
+    #     to="system.Post", blank=True, verbose_name="关联岗位", db_constraint=False, help_text="关联岗位")
+    # role = models.ManyToManyField(
+    #     to="system.Role", blank=True, verbose_name="关联角色", db_constraint=False, help_text="关联角色")
+    # dept = models.ForeignKey(
+    #     to="system.Dept",
+    #     verbose_name="所属部门",
+    #     on_delete=models.PROTECT,
+    #     db_constraint=False,
+    #     null=True,
+    #     blank=True,
+    #     help_text="关联部门",
+    # )
 
     def get_login_status(self):
         return self.login_status
