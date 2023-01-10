@@ -1,7 +1,7 @@
 from django.contrib import admin
 
 # Register your models here.
-from apps.system.models import Menu
+from apps.system.models import Menu, Role, Dept
 
 
 class MenuAdmin(admin.ModelAdmin):
@@ -11,3 +11,6 @@ class MenuAdmin(admin.ModelAdmin):
 
 
 admin.site.register(Menu, MenuAdmin)
+
+admin.site.register(Role)
+admin.site.register(Dept)

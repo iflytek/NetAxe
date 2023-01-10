@@ -138,10 +138,11 @@ class UserViewSet(CustomModelViewSet):
         "nick_name": ["icontains"],
         "gender": ["icontains"],
         "is_active": ["icontains"],
-        "dept": ["exact"],
+        # "dept": ["exact"],
         "user_type": ["exact"],
     }
-    search_fields = ["username", "nick_name", "gender", "dept__name", "role__name"]
+    # search_fields = ["username", "nick_name", "gender", "dept__name", "role__name"]
+    search_fields = ["username", "nick_name", "gender"]
 
     @action(methods=["GET"], detail=False, permission_classes=[IsAuthenticated])
     def user_info(self, request):
