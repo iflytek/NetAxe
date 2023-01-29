@@ -17,7 +17,7 @@ class UserSerializer(CustomModelSerializer):
     用户管理-序列化器
     """
     dept_name = serializers.CharField(source='dept.name', read_only=True)
-    role_info = DynamicSerializerMethodField()
+    # role_info = DynamicSerializerMethodField()
 
     class Meta:
         model = UserProfile
@@ -29,14 +29,14 @@ class UserSerializer(CustomModelSerializer):
 
     # You can do what ever you want in here
     # `parsed_query` param is passed to BookSerializer to allow further querying
-    def get_role_info(self, instance, parsed_query):
-        roles = instance.role.all()
-        serializer = RoleSerializer(
-            roles,
-            many=True,
-            parsed_query=parsed_query
-        )
-        return serializer.data
+    # def get_role_info(self, instance, parsed_query):
+    #     roles = instance.role.all()
+    #     serializer = RoleSerializer(
+    #         roles,
+    #         many=True,
+    #         parsed_query=parsed_query
+    #     )
+    #     return serializer.data
 
 
 class UserCreateSerializer(CustomModelSerializer):
