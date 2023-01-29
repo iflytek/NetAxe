@@ -32,6 +32,10 @@ python3 manage.py makemigrations config_center
 
 python3 manage.py migrate config_center
 
+python3 manage.py makemigrations int_utilization
+
+python3 manage.py migrate int_utilization
+
 python3 manage.py makemigrations rest_framework_tracking
 
 python3 manage.py migrate rest_framework_tracking
