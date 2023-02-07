@@ -88,8 +88,8 @@ services:
     container_name: netaxeipam_server
     ports:
       - "38001:38001"
-    command: sh start.sh web
-#    command: sleep 999999
+#    command: sh start.sh web
+    command: sleep 999999
     volumes:
       - ./netaxe_ipam:/home/netaxeipam/
       - ./netaxeipam/logs/netaxeipam_log:/home/netaxeipam/logs
