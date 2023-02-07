@@ -73,28 +73,6 @@ services:
     networks:
       - netops-axe
 
-  celery_netaxe_ipam:
-    image: registry.cn-shanghai.aliyuncs.com/net-axe/axe-ipam:1.0.2
-    container_name: celery_netaxe_ipam
-    command: sh start.sh netaxe_ipam
-    depends_on:
-      - netaxeipam_server
-    volumes:
-      - ./netaxeipam:/home/netaxeipam
-    networks:
-      - netops-axe
-  netaxeipam_server:
-    image: registry.cn-shanghai.aliyuncs.com/net-axe/axe-ipam:1.0.2
-    container_name: netaxeipam_server
-    ports:
-      - "38001:38001"
-#    command: sh start.sh web
-    command: sleep 999999
-    volumes:
-      - ./netaxeipam:/home/netaxeipam/
-      - ./netaxeipam/logs/netaxeipam_log:/home/netaxeipam/logs
-    networks:
-      - netops-axe
   redis-cache:
     image: registry.cn-hangzhou.aliyuncs.com/netaxe/redis:latest
     container_name: redis-cache
