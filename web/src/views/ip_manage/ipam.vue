@@ -10,7 +10,7 @@
       </n-space>
       <div style="padding-top: 20px; border-top: 1px solid; border-right: 1px solid">
         <!--        <n-space justify="space-between">-->
-        <n-button size="medium" type="info" @click="open_export" style="float: left"
+        <n-button size="medium" type="info" @click="open_export" disabled style="float: left"
         >导出网段
         </n-button
         >
