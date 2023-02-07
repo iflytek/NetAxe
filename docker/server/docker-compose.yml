@@ -80,7 +80,7 @@ services:
     depends_on:
       - netaxeipam_server
     volumes:
-      - ./netaxe_ipam:/home/netaxeipam
+      - ./netaxeipam:/home/netaxeipam
     networks:
       - netops-axe
   netaxeipam_server:
@@ -91,7 +91,7 @@ services:
 #    command: sh start.sh web
     command: sleep 999999
     volumes:
-      - ./netaxe_ipam:/home/netaxeipam/
+      - ./netaxeipam:/home/netaxeipam/
       - ./netaxeipam/logs/netaxeipam_log:/home/netaxeipam/logs
     networks:
       - netops-axe
