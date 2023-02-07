@@ -84,7 +84,7 @@ services:
     networks:
       - netops-axe
   netaxeipam_server:
-    image: registry.cn-shanghai.aliyuncs.com/net-axe/axe-ipam:1.0.0
+    image: registry.cn-shanghai.aliyuncs.com/net-axe/axe-ipam:1.0.1
     container_name: netaxeipam_server
     ports:
       - "38001:38001"
