@@ -29,6 +29,24 @@ services:
     networks:
       - netops-databases
 
+  ipam-mysql-server:
+    image: registry.cn-hangzhou.aliyuncs.com/netaxe/mysql:5.7
+    restart: always
+    container_name: ipam-mysql-server
+    environment:
+      TZ: Asia/Shanghai
+      MYSQL_USER: "root"
+      MYSQL_DATABASE: "netaxe_ipam"
+      MYSQL_ROOT_PASSWORD: "root_devnet@2022"
+    volumes:
+      - /etc/localtime:/etc/localtime
+      - ./mysql_data:/var/lib/mysql
+      - ./my.cnf:/etc/mysql/my.cnf
+    command: ['--character-set-server=utf8mb4', '--collation-server=utf8mb4_bin']
+    ports:
+      - "8306:3306"
+    networks:
+      - netops-databases
   mongodb:
     image: registry.cn-hangzhou.aliyuncs.com/netaxe/mongo:latest
     container_name: mongodb

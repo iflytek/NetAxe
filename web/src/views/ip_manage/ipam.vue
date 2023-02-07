@@ -19,6 +19,7 @@
         </n-button
         >
         <!--        </n-space>-->
+        <!--        左侧树形结构展示网段信息-->
         <n-tree
             :data="tree_data"
             virtual-scroll
@@ -36,6 +37,7 @@
         <!--        </n-card>-->
       </div>
     </div>
+    <!--    详情-饼图-文字-展示图-->
     <div
         v-show="detail_show"
         style="width: 70%; height: 100%; padding: 10px; float: right; border-top: 1px solid #000"
@@ -43,6 +45,8 @@
       <n-grid x-gap="2" :cols="2">
         <n-gi>
           <div class="bold-attribute" style="font-size: 20px">详情</div>
+          <div v-show="subnet_info.subnet.indexOf(':')!==-1" style="color: red">因ipv6网段地址较多,下图仅展示单次请求结果数据-可滚动查询下一分页
+          </div>
           <div style="float: left; width: 100%">
             <div>
               <span class="bold-attribute">网段:</span>
@@ -82,79 +86,42 @@
           </div>
         </n-gi>
       </n-grid>
-      <!--      <div >-->
-      <!--      @click="subnet_click"-->
-      <n-space>
-        <n-button size="medium" @click="dispatch_ip" type="primary">分配</n-button>
-        <n-button size="medium" @click="dispatch_many_func" type="info">批量分配</n-button>
+      <n-space style="margin-bottom: 5px">
+        <n-button size="small" @click="dispatch_ip" type="primary">分配</n-button>
+        <n-button size="small" @click="dispatch_many_func" type="info">批量分配</n-button>
         <n-popconfirm @positive-click="recycle_many_func" @negative-click="">
           <template #trigger>
-            <n-button size="medium" type="error">回收</n-button>
+            <n-button size="small" type="error">回收</n-button>
           </template>
           请确认是否回收该地址
         </n-popconfirm>
         <!--        <n-button size="medium" type="error" @click="back_ip" >回收</n-button>-->
-        <n-button size="medium" @click="clear_select" type="warning">清除选中</n-button>
-        <n-button size="medium" @click="select_all" type="success">全选</n-button>
-        <n-button size="medium" @click="table_type_func">表格形式</n-button>
+        <n-button size="small" @click="clear_select" type="warning">清除选中</n-button>
+        <n-button size="small" @click="select_all" type="success">全选</n-button>
+        <n-button size="small" @click="table_type_func">表格形式</n-button>
         <div v-for="item in uniq4(subnet_tag_list)" :key="item">
           <n-tag size="small" type="info" closable @close="handleCloseTag(item)"> {{ item }}</n-tag>
         </div>
       </n-space>
-      <div v-if="start_num === 0">
-        <n-button
-            style="width: 50px"
-            :id="index"
-            v-for="index of subnet_info.count"
-            :key="index"
-            @click="subnet_click(index)"
-            :value="index"
-            :class="
-              port_style(
-                subnet_info.table_type.filter((ele) => {
-                  return parseInt(ele.address.split('.')[3]) === index
-                }).length !== 0
-                  ? subnet_info.table_type.filter((ele) => {
-                      return parseInt(ele.address.split('.')[3]) === index
-                    })[0]['tag']
-                  : '7'
-              )
+      <n-scrollbar trigger="none" style="max-height: 500px" @scroll="handleScroll">
+        <div>
+          <n-button
+              style="width: 160px;padding:5px 0;margin: 0 10px 10px 0px;"
+              :id="ip_info.address"
+              v-for="ip_info of subnet_info.result_list"
+              :key="ip_info.address"
+              @click="subnet_click(ip_info.address)"
+              :value="ip_info.address"
+              :class="
+              port_style(ip_info.tag)
             "
-        >
-          {{ parseInt(subnet_info.subnet.split('.')[3].split('/')[0]) + index }}
-        </n-button>
-      </div>
-      <div v-else>
-        <n-button
-            style="width: 50px"
-            :id="index"
-            v-for="index of subnet_info.count"
-            :key="index"
-            @click="subnet_click(index)"
-            :value="index"
-            :class="
-              port_style(
-                subnet_info.table_type.filter((ele) => {
-                  return parseInt(ele.address.split('.')[3]) === index + start_num
-                }).length !== 0
-                  ? subnet_info.table_type.filter((ele) => {
-                      return parseInt(ele.address.split('.')[3]) === index + start_num
-                    })[0]['tag']
-                  : '7'
-              )
-            "
-        >
-          {{ parseInt(subnet_info.subnet.split('.')[3].split('/')[0]) + index }}
-        </n-button>
-      </div>
+          >
+            {{ ip_info.address }}
+          </n-button>
+        </div>
+      </n-scrollbar>
 
-      <!--      </div>-->
 
-      <!--      <p>网段 {{subnet_info.subnet}}</p>-->
-      <!--      <p>已使用 {{subnet_info.used}}</p>-->
-      <!--      <p>未使用 {{subnet_info.freehosts}}</p>-->
-      <!--      <p>使用率 Used:{{subnet_info.desc}}</p>-->
-      <!--      <p>描述 {{subnet_info.desc}}</p>-->
     </div>
 
     <ModalDialog ref="modalDialog" title="网段信息" :style="{ height: '768px', width: '1000px' }">
@@ -399,8 +366,10 @@ export default defineComponent({
   },
 
   setup() {
+    const roll = ref(null)
     const used_port = []
     const channelsChart = ref<HTMLDivElement | null>(null)
+    const button_roll = ref<HTMLDivElement | null>(null)
     const utilization_option = {
       tooltip: {
         trigger: 'item',
@@ -447,10 +416,16 @@ export default defineComponent({
         },
       ],
     }
+    const request_next_status = ref(false)
     const subnet_info = ref({
       desc: ref(''),
       table_type: ref([]),
       subnet_id: ref(0),
+      subnet: ref(''),
+      next_page_url: ref(''),
+      result_list: shallowReactive([]) as Array<any>,
+      count: ref(0),
+      maxhosts: ref(0),
     })
     const refresh_subnet_id = ref(0)
     const change_desc_form = ref({})
@@ -922,28 +897,44 @@ export default defineComponent({
           ele['key'] = ele['id']
           // tree_list.push(ele)
           ele['suffix'] = () => {
-            return h(
-                NButton,
-                { text: false, round: true, type: 'primary', style: { float: 'right' } },
-                { default: () => ele['children'].length },
-            )
+            // console.log(ele['children'])
+            if (ele['children']) {
+              return h(
+                  NButton,
+                  { text: false, round: true, type: 'primary', size: 'tiny', style: { float: 'right' } },
+                  { default: () => ele['children'].length },
+              )
+            } else {
+              return h(
+                  NButton,
+                  { text: false, round: true, type: 'primary', size: 'tiny', style: { float: 'right' } },
+                  { default: () => 0 },
+              )
+            }
+
           }
           if (ele.children) {
-            ele.children.forEach((item) => {
-              item['key'] = item['id']
+            if (ele.children.length === 0) {
+              // console.log('第一层级下面children为空')
+              delete ele.children
+            } else {
+              ele.children.forEach((item) => {
+                item['key'] = item['id']
 
-              if (item.children.length === 0) {
-                delete item.children
-              }
-              if (item.children) {
-                item.children.forEach((child) => {
-                  child['key'] = child['id']
-                  if (child.children.length === 0) {
-                    delete child.children
-                  }
-                })
-              }
-            })
+                if (item.children.length === 0) {
+                  delete item.children
+                }
+                if (item.children) {
+                  item.children.forEach((child) => {
+                    child['key'] = child['id']
+                    if (child.children.length === 0) {
+                      delete child.children
+                    }
+                  })
+                }
+              })
+            }
+
           }
           nextTick(() => {
             tree_data.value.push(ele)
@@ -955,20 +946,61 @@ export default defineComponent({
       })
     }
 
-    function nodeProps({ option }: { option: TreeOption }) {
+    function get_new() {
+
+      if (subnet_info.value['next_page_url']) {
+        console.log('到底了，请二次请求滚动加载最新')
+        console.log(subnet_info.value['next_page_url'])
+        var start_ipaddress = subnet_info.value['next_page_url'].split('?start=')[1]
+        request_next_status.value = true
+        get({
+          url: getSubnetAddress + subnet_info.value['subnet_id'] + '/ip_address/',
+          data: () => {
+            return {
+              start: decodeURIComponent(start_ipaddress), // # 取消冒号转义
+            }
+          },
+        }).then((next_res) => {
+          request_next_status.value = false
+          // console.log(next_res)
+          subnet_info.value.result_list = subnet_info.value.result_list.concat(next_res['results'])
+          subnet_info.value.next_page_url = next_res['next']
+          subnet_info.value.maxhosts = Number(subnet_info.value.maxhosts) + Number(next_res['results'].length)
+          console.log(subnet_info.value.result_list.length)
+        })
+      }
+
+
+    }
+
+    function handleScroll(event) {
+      // console.log(event)
+      // console.log(button_roll.value.scrollTop)
+      //
+      // //如果数据有在加载中则这次请求退出
+      if (request_next_status.value) return
+      // //已经滚动的距离加页面的高度等于整个内容区高度时,视为接触到底部
+      // //scrollTop 获取到顶部的滚动距离
+      // // clientHeight 表示页面视口高度
+      // // scrollHeight 页面内容的高度
+      if (event.srcElement.scrollTop + document.body.clientHeight >= event.srcElement.scrollHeight) {
+        get_new()
+      }
+    }
+
+    function nodeProps({ option }
+                           :
+                           {
+                             option: TreeOption
+                           },
+    ) {
       return {
         onClick() {
           add_subnet_form.value.master_subnet_id = ''
           subnet_tag_list.length = 0
-          // console.log(option)
-          start_num.value = parseInt(option.label.split('.')[3].split('/')[0])
-          if (option.children) {
-            //console.log('还有子元素不做查询', option)
-            detail_show.value = false
-            add_subnet_form.value.master_subnet_id = option.label + '-' + option.id
-            return
-          } else {
-            // message.info('当前选中最后一层元素做查询' + option.label)
+
+          if (option.label.indexOf((':')) !== -1) {
+            // console.log('v6网段')
             add_subnet_form.value.master_subnet_id = option.label + '-' + option.id
             get({
               url: getSubnetAddress + option.id + '/ip_address/',
@@ -981,6 +1013,8 @@ export default defineComponent({
               if (resp) {
                 detail_show.value = true
                 var res = resp['data']
+                var res_results = resp['results']
+                var next_page_url = resp['next']
                 //console.log('详细网段数据', res)
                 nextTick(() => {
                   utilization_option.series[0].data.length = 0
@@ -1029,12 +1063,87 @@ export default defineComponent({
                   count: parseInt(res.subnet_used.maxhosts),
                   table_type: ip_used_list,
                   subnet_id: option.id,
+                  result_list: res_results,
+                  next_page_url: next_page_url,
                 }
-                // nextTick(()=>{
-                //
-                // })
               }
             })
+          } else {
+            // message.info('当前选中最后一层元素做查询' + option.label)
+            if (option.children) {
+              //console.log('还有子元素不做查询', option)
+              detail_show.value = false
+              add_subnet_form.value.master_subnet_id = option.label + '-' + option.id
+              return
+            } else {
+              add_subnet_form.value.master_subnet_id = option.label + '-' + option.id
+              get({
+                url: getSubnetAddress + option.id + '/ip_address/',
+                data: () => {
+                  return {
+                    // subnet_used: option.label,
+                  }
+                },
+              }).then((resp) => {
+                if (resp) {
+                  detail_show.value = true
+                  var res = resp['data']
+                  var res_results = resp['results']
+                  var next_page_url = resp['next']
+                  //console.log('详细网段数据', res)
+                  nextTick(() => {
+                    utilization_option.series[0].data.length = 0
+                    utilization_option.series[0].data.push({
+                      value: res.subnet_used['已分配已使用_percent'],
+                      name: '已分配已使用',
+                      itemStyle: { color: '#e6b600' },
+                    })
+                    utilization_option.series[0].data.push({
+                      value: res.subnet_used['未分配已使用_percent'],
+                      name: '未分配已使用',
+                      itemStyle: { color: '#1595c4' },
+                    })
+                    utilization_option.series[0].data.push({
+                      value: res.subnet_used['自定义空闲_percent'] + res.subnet_used['empty_percent'],
+                      name: '空闲IP',
+                      itemStyle: { color: '#e9e9eb' },
+                    })
+                    utilization_option.series[0].data.push({
+                      value: res.subnet_used['已分配未使用_percent'],
+                      name: '已分配未使用',
+                      itemStyle: { color: '#11eec2' },
+                    })
+                    utilization_option.series[0].data.push({
+                      value: res.subnet_used['保留_percent'],
+                      name: '保留',
+                      itemStyle: { color: '#22dd22' },
+                    })
+                    useEcharts(channelsChart.value as HTMLDivElement).setOption(utilization_option)
+                  })
+                  var ip_used_list = []
+                  if (res.ip_used) {
+                    ip_used_list = res.ip_used
+                  } else {
+                    ip_used_list = []
+                  }
+                  // console.log('ip_used_list', ip_used_list)
+                  subnet_info.value = {
+                    subnet: option.label,
+                    desc: res.sub_net[0]['description'],
+                    used: res.subnet_used.used.toString(),
+                    freehosts: res.subnet_used.freehosts.toString(),
+                    Used_percent: res.subnet_used['Used_percent'],
+                    freehosts_percent: res.subnet_used.freehosts_percent.toString(),
+                    maxhosts: res.subnet_used.maxhosts.toString(),
+                    count: parseInt(res.subnet_used.maxhosts),
+                    table_type: ip_used_list,
+                    subnet_id: option.id,
+                    result_list: res_results,
+                    next_page_url: next_page_url,
+                  }
+                }
+              })
+            }
           }
         },
       }
@@ -1161,7 +1270,7 @@ export default defineComponent({
       let csrf_token = Cookies.get('csrftoken')
       post_data.append('csrfmiddlewaretoken', csrf_token)
       post({
-        url: getSubnetTree,
+        url: PostAddressHandel,
         data: post_data,
       }).then((res) => {
         //console.log(res)
@@ -1186,7 +1295,7 @@ export default defineComponent({
       let csrf_token = Cookies.get('csrftoken')
       post_data.append('csrfmiddlewaretoken', csrf_token)
       post({
-        url: getSubnetTree,
+        url: PostAddressHandel,
         data: post_data,
       }).then((res) => {
         //console.log(res)
@@ -1200,19 +1309,19 @@ export default defineComponent({
       add_root_show.value = false
     }
 
-    function subnet_click(index) {
-      if (start_num.value === 0) {
-        let prefix = subnet_info.value['subnet'].split('.')
-        prefix.pop()
-        let current_select =
-            prefix.join('.') + '.' + document.getElementById(index).getAttribute('value').toString()
-        subnet_tag_list.push(current_select)
-      } else {
-        let prefix = subnet_info.value['subnet'].split('.')
-        prefix.pop()
-        let current_select = prefix.join('.') + '.' + (start_num.value + index).toString()
-        subnet_tag_list.push(current_select)
-      }
+    function subnet_click(ip_address) {
+      let current_select = document.getElementById(ip_address).getAttribute('value').toString()
+      subnet_tag_list.push(current_select)
+      // if (start_num.value === 0) {
+      // let prefix = subnet_info.value['subnet'].split('.')
+      // prefix.pop()
+
+      // } else {
+      //   let prefix = subnet_info.value['subnet'].split('.')
+      //   prefix.pop()
+      //   let current_select = prefix.join('.') + '.' + (start_num.value + index).toString()
+      //   subnet_tag_list.push(current_select)
+      // }
 
       // var button_ele = document.getElementById((index-1).toString())
       // button_ele.setAttribute('class','button_border')
@@ -1299,7 +1408,7 @@ export default defineComponent({
       }
     }
 
-    //批量回收地址
+//批量回收地址
     function recycle_many_func() {
       let delete_result = []
       if (subnet_tag_list.length > 0) {
@@ -1321,6 +1430,7 @@ export default defineComponent({
           data: formdata,
         }).then((res) => {
           message.success('回收成功')
+
           nextTick(() => {
             // dispatch_many_modalDialog.value!.toggle()
             refresh_subnet(refresh_subnet_id.value)
@@ -1388,7 +1498,7 @@ export default defineComponent({
         const dict = {
           ipaddr: item.ip,
           subnet_id: subnet_info.value['subnet_id'],
-          tag: item['dispatch_status'],
+          tag: 6,
           description: item.description ? item.description : item.ip,
         }
         // update_data.value += (JSON.stringify(dict)) + ','
@@ -1426,12 +1536,14 @@ export default defineComponent({
       }).then((resp) => {
         if (resp) {
           var res = resp['data']
+          var res_results = resp['results']
+          var next_page_url = resp['next']
           detail_show.value = true
           //console.log('详细网段数据', res)
           nextTick(() => {
             subnet_tag_list.length = 0
             utilization_option.series[0].data.length = 0
-            console.log(res.subnet_used)
+            // console.log(res.subnet_used)
             utilization_option.series[0].data.push({
               value: res.subnet_used['已分配已使用_percent'],
               name: '已分配已使用',
@@ -1470,6 +1582,8 @@ export default defineComponent({
             count: parseInt(res.subnet_used.maxhosts),
             table_type: res.ip_used,
             subnet_id: res.sub_net[0].id,
+            result_list: res_results,
+            next_page_url: next_page_url,
           }
           // nextTick(()=>{
           //
@@ -1609,12 +1723,13 @@ export default defineComponent({
       post_data.append('room_group_name', room_group_name.value)
       let csrf_token = Cookies.get('csrftoken')
       post_data.append('csrfmiddlewaretoken', csrf_token)
-
+      //TODO
       post({
-        url: getSubnetTree,
+        url: PostAddressHandel,
         data: post_data,
       }).then((res) => {
         console.log('change_desc', res)
+        message.info("更新网段描述成功")
         // change_desc_form.value['subnet_id'] = ''
         // change_desc_form.value['description'] = ''
         change_desc_show.value = false
@@ -1696,6 +1811,8 @@ export default defineComponent({
       clear_select,
       select_all,
       checkRef,
+      handleScroll,
+      get_new,
       nodeProps,
       get_tree_data,
       data,
@@ -1721,6 +1838,8 @@ export default defineComponent({
       AddSubnetConfirm,
       CancelRoot,
       used_port,
+      button_roll,
+      request_next_status,
       dispatch_rowKey,
       renderSwitcherIcon: () => h(NIcon, null, { default: () => h(ChevronForward) }),
     }
@@ -1729,6 +1848,14 @@ export default defineComponent({
 </script>
 
 <style lang="scss" scoped>
+.roll_div {
+  height: calc(100% - 191px);
+  padding: 10px 24px;
+  position: relative;
+  background-color: #fbfcfe;
+  overflow-y: auto;
+}
+
 .bold-attribute {
   font-weight: bold;
   padding-right: 5px;
