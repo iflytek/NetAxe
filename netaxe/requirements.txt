@@ -45,6 +45,7 @@ idna==3.3
 importlib-metadata==4.12.0
 incremental==21.3.0
 kombu==5.2.4
+pandas==1.5.0
 lizard==1.17.10
 msgpack==1.0.4
 mypy-extensions==0.4.3
