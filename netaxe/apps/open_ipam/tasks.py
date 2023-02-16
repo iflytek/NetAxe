@@ -101,6 +101,7 @@ def ip_am_update_sub_task(ip):
             # subnet_16_instance = Subnet(subnet=str(subnet16) + "/16", mask=16,
             #                             description=f'netaxe_ipam {file_time} 新建16位网段')
             # subnet_16_instance.save()
+            time.sleep(2)
             Subnet.objects.update_or_create(subnet=str(subnet16) + "/16", mask=16,
                                         description=f'netaxe_ipam {file_time} 新建16位网段')
             print('请先创建此IP归属网段：{}'.format(ip))
