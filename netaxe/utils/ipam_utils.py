@@ -299,11 +299,18 @@ class IpAmForNetwork(object):
         return tree
 
     def get_sixteen_subnet_id(ip):
-        ip_mask = "{}/{}".format(ip, 16)
-        subnet = "{}/{}".format(IPNetwork(ip_mask).network, 16)
-        res = Subnet.objects.filter(subnet=subnet).values().first()
-        if res:
-            return res['id']
+        # 排除ipv6地址同步操作
+        if ":" not in ip:
+            try:
+                ip_mask = "{}/{}".format(ip, 16)
+                subnet = "{}/{}".format(IPNetwork(ip_mask).network, 16)
+                res = Subnet.objects.filter(subnet=subnet).values().first()
+                if res:
+                    return res['id']
+            except Exception as e:
+                return
+        else:
+            return
 
     def get_24_subnet_id(ip):
         ip_mask = "{}/{}".format(ip, 24)
