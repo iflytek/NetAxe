@@ -98,9 +98,11 @@ def ip_am_update_sub_task(ip):
             # 不存在16位网段-直接 TODO 丢弃到失败列表
             # TODO 新建16位网段、方便下一次任务更新地址成功
             subnet16 = IPNetwork(f'{ip}/16').network
-            subnet_16_instance = Subnet(subnet=str(subnet16) + "/16", mask=16,
+            # subnet_16_instance = Subnet(subnet=str(subnet16) + "/16", mask=16,
+            #                             description=f'netaxe_ipam {file_time} 新建16位网段')
+            # subnet_16_instance.save()
+            Subnet.objects.update_or_create(subnet=str(subnet16) + "/16", mask=16,
                                         description=f'netaxe_ipam {file_time} 新建16位网段')
-            subnet_16_instance.save()
             print('请先创建此IP归属网段：{}'.format(ip))
             IpamOps.post_fail_ip(ip)
             _tmp_data = []
