@@ -419,7 +419,7 @@ class NetworkDevice(models.Model):
     account = models.ManyToManyField('AssetAccount', verbose_name='管理账户', blank=True)
     plan = models.ForeignKey("automation.CollectionPlan", verbose_name='采集方案',
                              blank=True, null=True, related_name='releate_device', on_delete=models.SET_NULL)
-    bgbu = models.ManyToManyField("users.BgBu", verbose_name='BGBU', blank=True)
+    # bgbu = models.ManyToManyField("users.BgBu", verbose_name='BGBU', blank=True)
 
     def __str__(self):
         return '{}_{}_{}'.format(self.manage_ip, self.name, self.idc.name)

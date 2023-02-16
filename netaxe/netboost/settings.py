@@ -11,6 +11,7 @@ https://docs.djangoproject.com/en/4.0/ref/settings/
 """
 import os
 from datetime import timedelta
+
 # Build paths inside the project like this: BASE_DIR / "subdir".
 # BASE_DIR = Path(__file__).resolve().parent.parent
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
@@ -38,6 +39,7 @@ os.environ.setdefault("DJANGO_ALLOW_ASYNC_UNSAFE", "true")
 
 # Application definition
 INSTALLED_APPS = [
+    # "simpleui",
     "captcha",
     "channels",
     "guardian",
@@ -64,6 +66,9 @@ INSTALLED_APPS = [
     "apps.config_center.apps.ConfigCenterConfig",
     "apps.route_backend.apps.RouteBackendConfig",
     "apps.int_utilization.apps.IntUtilizationConfig",
+    'reversion',
+    "apps.open_ipam.apps.OpenIpamConfig",
+
 ]
 
 MIDDLEWARE = [
