@@ -31,7 +31,7 @@ from utils.ipam_utils import IpAmForNetwork
 
 
 class HostsResponse(object):
-    def __init__(self, address, used, tag, subnet, lastOnlineTime, description, bgbu):
+    def __init__(self, address, used, tag, subnet, lastOnlineTime, description):
         # def __init__(self, address, used, tag, subnet):
         self.address = address
         self.used = used
@@ -39,7 +39,7 @@ class HostsResponse(object):
         self.subnet = subnet
         self.lastOnlineTime = lastOnlineTime
         self.description = description
-        self.bgbu = bgbu
+        # self.bgbu = bgbu
 
 
 class HostsSet:
@@ -79,12 +79,12 @@ class HostsSet:
             tag = host_instance.tag
         description = ''
         lastOnlineTime = ''
-        bgbu = []
+        # bgbu = []
         if host_instance:
             description = host_instance.description
             lastOnlineTime = host_instance.lastOnlineTime
-            bgbu = [i['name'] for i in list(host_instance.bgbu.all().values())]
-        return HostsResponse(str(host), used, tag, self.subnet, lastOnlineTime, description, bgbu)
+            # bgbu = [i['name'] for i in list(host_instance.bgbu.all().values())]
+        return HostsResponse(str(host), used, tag, self.subnet, lastOnlineTime, description)
 
     def count(self):
         if self.stop is not None:

@@ -187,7 +187,7 @@
         >目前网络自动化工作还处于起步阶段，平台稳定性、功能模块逻辑、设备自身BUG都会导致数据偏移，尤其设备自身bug或版本差异导致的结果差异很难在前期功能开发过程中一一发现识别
         </li
         >
-        <li><span style="color: red">总之: 网络不能再出事，我们已不能再承受</span></li>
+<!--        <li><span style="color: red">总之: 网络不能再出事，我们已不能再承受</span></li>-->
         <!--        <n-button type="info" size="small" style="float: right" @click="export_ipam_detail">导出EXCEL</n-button>-->
         <n-data-table
             :data="
@@ -224,7 +224,7 @@
         >目前网络自动化工作还处于起步阶段，平台稳定性、功能模块逻辑、设备自身BUG都会导致数据偏移，尤其设备自身bug或版本差异导致的结果差异很难在前期功能开发过程中一一发现识别
         </li
         >
-        <li><span style="color: red">总之: 网络不能再出事，我们已不能再承受</span></li>
+<!--        <li><span style="color: red">总之: 网络不能再出事，我们已不能再承受</span></li>-->
         <!--        <n-button type="info" size="small" style="float: right" @click="export_ipam_detail">导出EXCEL</n-button>-->
         <!--        <template #content>-->
         <DataForm
@@ -510,22 +510,22 @@ export default defineComponent({
           })
         },
       },
-      {
-        key: 'bgbu',
-        label: 'BGBU',
-        value: ref(''),
-        optionItems: shallowReactive([] as Array<SelectOption>),
-        render: (formItem) => {
-          return h(NInput, {
-            value: formItem.value.value,
-            onUpdateValue: (newVal: any) => {
-              formItem.value.value = newVal
-            },
-            maxlength: 50,
-            placeholder: '',
-          })
-        },
-      },
+      // {
+      //   key: 'bgbu',
+      //   label: 'BGBU',
+      //   value: ref(''),
+      //   optionItems: shallowReactive([] as Array<SelectOption>),
+      //   render: (formItem) => {
+      //     return h(NInput, {
+      //       value: formItem.value.value,
+      //       onUpdateValue: (newVal: any) => {
+      //         formItem.value.value = newVal
+      //       },
+      //       maxlength: 50,
+      //       placeholder: '',
+      //     })
+      //   },
+      // },
     ]
     const get = useGet()
     const post = usePost()
@@ -670,21 +670,21 @@ export default defineComponent({
                 },
               },
 
-              {
-                title: 'BGBU',
-                key: 'bgbu',
-                // width: '150px',
-                render: (rowData) => {
-                  return h(NInput, {
-                    value: rowData.bgbu,
-                    onUpdateValue: (newVal: any) => {
-                      // rowData.u_location_start = newVal
-                      //console.log('rowData.value', rowData)
-                      rowData.bgbu = newVal
-                    },
-                  })
-                },
-              },
+              // {
+              //   title: 'BGBU',
+              //   key: 'bgbu',
+              //   // width: '150px',
+              //   render: (rowData) => {
+              //     return h(NInput, {
+              //       value: rowData.bgbu,
+              //       onUpdateValue: (newVal: any) => {
+              //         // rowData.u_location_start = newVal
+              //         //console.log('rowData.value', rowData)
+              //         rowData.bgbu = newVal
+              //       },
+              //     })
+              //   },
+              // },
             ],
             {
               align: 'center',

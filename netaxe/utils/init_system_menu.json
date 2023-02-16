@@ -42,13 +42,13 @@
       "parent_id": null,
       "visible": "True",
       "web_path": "/ipam_manage",
-      "sort": 1,
-       "id": 105
+      "sort": 5,
+       "id": 180
     },
     {
-      "name": "IPAM",
+      "name": "IPAM页面",
       "status": "True",
-      "parent_id": 105,
+      "parent_id": 180,
       "visible": "True",
       "web_path": "/ipam_manage/ipam",
       "sort": 1

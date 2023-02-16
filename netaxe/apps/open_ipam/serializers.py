@@ -47,7 +47,7 @@ class HostsResponseSerializer(serializers.Serializer):
     tag = serializers.IntegerField()
     subnet = serializers.CharField()
 
-    bgbu = serializers.CharField()
+    # bgbu = serializers.CharField()
     description = serializers.CharField()
     lastOnlineTime = serializers.DateField()
 

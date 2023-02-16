@@ -214,7 +214,7 @@ class IpAddressAdminForm(forms.ModelForm):
 @admin.register(IpAddress)
 class AdminIpAddressModel(ImportExportModelAdmin):
     """自定义IP地址显示字段"""
-    list_display = ['ip_address', 'subnet', 'description', 'tag', 'get_bgbu', 'lastOnlineTime']
+    list_display = ['ip_address', 'subnet', 'description', 'tag',  'lastOnlineTime']
     # list_filter = ['ip_address', 'subnet', 'description', 'tag', 'lastOnlineTime']
     search_fields = ['ip_address', 'subnet__name', 'description', 'tag', 'lastOnlineTime']
     autocomplete_fields = ['subnet']
@@ -232,8 +232,8 @@ class AdminIpAddressModel(ImportExportModelAdmin):
             'openwisp-ipam/js/ip-request.js',
         )
 
-    def get_bgbu(self, instance):
-        return [bgbu.name for bgbu in instance.bgbu.all()]
+    # def get_bgbu(self, instance):
+    #     return [bgbu.name for bgbu in instance.bgbu.all()]
 
     def get_urls(self):
         urls = super().get_urls()
