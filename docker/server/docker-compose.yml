@@ -60,7 +60,17 @@ services:
       - ../../netaxe:/home/netaxe
     networks:
       - netops-axe
-
+  netaxe_ipam:
+    image: registry.cn-hangzhou.aliyuncs.com/netaxe/netaxe-backend:1.0.6
+    container_name: netaxe_ipam
+    command: sh start.sh netaxe_ipam
+    depends_on:
+      - redis-cache
+      - netaxe-server
+    volumes:
+      - ../../netaxe:/home/netaxe
+    networks:
+      - netops-axe
   celery-config:
     image: registry.cn-hangzhou.aliyuncs.com/netaxe/netaxe-backend:1.0.6
     container_name: celery-config

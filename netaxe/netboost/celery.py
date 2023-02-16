@@ -27,6 +27,7 @@ app.config_from_object('django.conf:settings', namespace='CELERY')
 
 default_exchange = Exchange('default', type='direct')
 config_exchange = Exchange('config', type='direct')
+ipam_exchange = Exchange('netaxe_ipam', type='direct')
 
 app.conf.task_time_limit = 86400
 app.conf.worker_prefetch_multiplier = 10
@@ -38,6 +39,7 @@ app.conf.task_default_exchange_type = 'direct'
 app.conf.task_queues = (
     Queue('default', default_exchange, routing_key='default'),
     Queue('config', config_exchange, routing_key='config'),
+    Queue('netaxe_ipam', ipam_exchange, routing_key='netaxe_ipam'),
 )
 
 app.autodiscover_tasks(lambda: [n.name for n in apps.get_app_configs()])
