@@ -15,7 +15,7 @@ click-didyoumean==0.3.0
 click-plugins==1.1.1
 click-repl==0.2.0
 constantly==15.1.0
-cryptography==37.0.4
+cryptography==39.0.1
 daphne==2.5.0
 Deprecated==1.2.13
 Django==3.2.17
