@@ -49,7 +49,8 @@ NetAxe 是一个让NetDevOps更简单、更快速、更高效的快速集成前�
 ##  8.任务调度管理
 ![任务调度管理](https://cdn.staticaly.com/gh/xuehaoweng/netaxe-image@master/netaxe-dispatch.3x68huinuzi0.webp)
 
-
+## 9. 地址管理
+![地址管理](https://cdn.staticaly.com/gh/xuehaoweng/netaxe-image@master/image.67ht05xvuvo0.webp)
 
 ## 交流
 ![NetAxe开源社区](https://cdn.staticaly.com/gh/xuehaoweng/netaxe-image@master/微信图片_20230106172200.240x6tqonx9c.webp)
