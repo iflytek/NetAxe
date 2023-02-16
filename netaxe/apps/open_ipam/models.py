@@ -24,7 +24,7 @@ class CsvImportException(Exception):
 class Subnet(models.Model):
     subnet_id = models.IntegerField(default=0, verbose_name='网段ID')
     name = models.CharField(max_length=100, db_index=True, verbose_name='名称')
-    subnet = IPNetworkField(db_index=True, verbose_name='子网段')
+    subnet = IPNetworkField(db_index=True, verbose_name='子网段',unique=True)
     mask = models.IntegerField(default=24, verbose_name='掩码')
     freehosts_percent = models.FloatField(verbose_name='空闲率', blank=True, null=True, default=0)
     description = models.CharField(max_length=300, blank=True, verbose_name='描述', null=True)

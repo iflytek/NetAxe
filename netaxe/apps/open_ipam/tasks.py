@@ -76,12 +76,15 @@ def ip_am_update_sub_task(ip):
                 subnet_insert_id = subnet24_instance.id
             else:
                 # 新建24位网段
-                subnet_instance = Subnet(subnet=str(subnet24) + "/24", mask=24, master_subnet_id=subnet16_id,
-                                         description=f'netaxe_ipam {file_time} 新建网段')
+                try:
+                    subnet_instance = Subnet(subnet=str(subnet24) + "/24", mask=24, master_subnet_id=subnet16_id,
+                                             description=f'netaxe_ipam {file_time} 新建网段')
 
-                subnet_instance.save()
-                # ip归属子网ID为 TODO 新建24位网段id
-                subnet_insert_id = subnet_instance.id
+                    subnet_instance.save()
+                    # ip归属子网ID为 TODO 新建24位网段id
+                    subnet_insert_id = subnet_instance.id
+                except Exception as e:
+                    subnet_insert_id = Subnet.objects.filter(subnet=str(subnet24) + "/24").first().id
 
             """
             # 新增IP地址信息置位tag=4  未分配已使用
@@ -98,12 +101,15 @@ def ip_am_update_sub_task(ip):
             # 不存在16位网段-直接 TODO 丢弃到失败列表
             # TODO 新建16位网段、方便下一次任务更新地址成功
             subnet16 = IPNetwork(f'{ip}/16').network
-            # subnet_16_instance = Subnet(subnet=str(subnet16) + "/16", mask=16,
+            try:
+                subnet_16_instance = Subnet(subnet=str(subnet16) + "/16", mask=16,
+                                            description=f'netaxe_ipam {file_time} 新建16位网段')
+                subnet_16_instance.save()
+            except Exception as e:
+                print('已存在16位网段')
+            # time.sleep(2)
+            # Subnet.objects.update_or_create(subnet=str(subnet16) + "/16", mask=16,
             #                             description=f'netaxe_ipam {file_time} 新建16位网段')
-            # subnet_16_instance.save()
-            time.sleep(2)
-            Subnet.objects.update_or_create(subnet=str(subnet16) + "/16", mask=16,
-                                        description=f'netaxe_ipam {file_time} 新建16位网段')
             print('请先创建此IP归属网段：{}'.format(ip))
             IpamOps.post_fail_ip(ip)
             _tmp_data = []
