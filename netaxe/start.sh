@@ -22,6 +22,10 @@ config(){
     sleep 10
     celery -A netboost worker -Q config -c 10 -l info -n config
 }
+netaxe_ipam(){
+    sleep 10
+    celery -A netboost worker -Q netaxe_ipam -c 10 -l info -n netaxe_ipam
+}
 case "$1" in
 web)
 web
@@ -32,8 +36,11 @@ default
 config)
 config
 ;;
+netaxe_ipam)
+netaxe_ipam
+;;
 *)
-echo "Usage: $1 {web|default|config}"
+echo "Usage: $1 {web|default|config|netaxe_ipam}"
 ;;
 esac
 echo "start running!"
