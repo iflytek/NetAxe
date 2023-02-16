@@ -13,7 +13,9 @@ Including another URLconf
     1. Import the include() function: from django.urls import include, path
     2. Add a URL to urlpatterns:  path('blog/', include('blog.urls'))
 """
-from netboost import views
+from django.views.static import serve
+
+from netboost import views, settings
 from drf_yasg import openapi
 from django.contrib import admin
 from django.urls import include, path, re_path
@@ -29,7 +31,6 @@ from rest_framework_simplejwt.views import (
     TokenObtainPairView
 )
 
-
 schema_view = get_schema_view(
     openapi.Info(
         title="Snippets API",
@@ -39,10 +40,10 @@ schema_view = get_schema_view(
     permission_classes=[permissions.AllowAny, ],
 )
 
-
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('admin/login/', views.extend_admin_login),
+    re_path(r'^media/(?P<path>.*)', serve, {"document_root": settings.MEDIA_ROOT}),
     re_path(r'^captcha/', include('captcha.urls')),
     # path("swagger/",schema_view.with_ui("swagger", cache_timeout=0), name="schema-swagger-ui",),
     re_path('^api-auth/', include('rest_framework.urls', namespace='rest_framework')),
