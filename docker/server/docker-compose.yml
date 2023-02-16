@@ -8,7 +8,7 @@ networks:
 
 services:
   netaxe-server:
-    image: registry.cn-hangzhou.aliyuncs.com/netaxe/netaxe-backend:1.0.6
+    image: registry.cn-hangzhou.aliyuncs.com/netaxe/netaxe-backend:1.0.7
     container_name: netaxe-server
     ports:
       - "8001:8001"
@@ -50,7 +50,7 @@ services:
       - netops-axe
 
   celery-default:
-    image: registry.cn-hangzhou.aliyuncs.com/netaxe/netaxe-backend:1.0.6
+    image: registry.cn-hangzhou.aliyuncs.com/netaxe/netaxe-backend:1.0.7
     container_name: celery-default
     command: sh start.sh default
     depends_on:
@@ -61,7 +61,7 @@ services:
     networks:
       - netops-axe
   netaxe_ipam:
-    image: registry.cn-hangzhou.aliyuncs.com/netaxe/netaxe-backend:1.0.6
+    image: registry.cn-hangzhou.aliyuncs.com/netaxe/netaxe-backend:1.0.7
     container_name: netaxe_ipam
     command: sh start.sh netaxe_ipam
     depends_on:
@@ -72,7 +72,7 @@ services:
     networks:
       - netops-axe
   celery-config:
-    image: registry.cn-hangzhou.aliyuncs.com/netaxe/netaxe-backend:1.0.6
+    image: registry.cn-hangzhou.aliyuncs.com/netaxe/netaxe-backend:1.0.7
     container_name: celery-config
     command: sh start.sh config
     depends_on:
