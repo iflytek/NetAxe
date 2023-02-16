@@ -19,6 +19,10 @@ cryptography==37.0.4
 daphne==2.5.0
 Deprecated==1.2.13
 Django==3.2.17
+django-import-export==2.9.0
+openwisp-utils==1.0.4
+django-reversion==5.0.3
+reversion==0.2
 django-annoying==0.10.6
 django-celery-beat==2.2.0
 django-celery-results==2.0.1
@@ -115,7 +119,4 @@ django-restql==0.15.2
 user-agents==2.2.0
 drf-yasg==1.21.4
 xlrd==1.2.0
-django-import-export==2.9.0
-openwisp-utils==1.0.4
-django-reversion==5.0.3
-reversion==0.2
+
