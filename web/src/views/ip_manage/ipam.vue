@@ -242,13 +242,14 @@
     <n-modal v-model:show="add_root_show" preset="dialog" title="新增根网络">
       <div>
         <n-form :model="add_root_form" label-placement="top" label-width="auto">
+          选中网段即为父节点网段，若需要新建一级网段则需要选择空白处
           <n-form-item label="子网Subnet">
             <n-input
                 v-model:value="add_root_form.add_subnet"
                 placeholder="8.8.0.0/16严格CIDR格式"
             />
           </n-form-item>
-          <n-form-item label="网段描述\nDescription">
+          <n-form-item label="网段描述Description">
             <n-input v-model:value="add_root_form.add_description" placeholder="Description"/>
           </n-form-item>
 
@@ -605,14 +606,14 @@ export default defineComponent({
                   return rowData['lastOnlineTime']
                 },
               },
-              {
-                title: 'BGBU',
-                key: 'bgbu',
-                // width: '150px',
-                render: (rowData) => {
-                  return rowData['bgbu']
-                },
-              },
+              // {
+              //   title: 'BGBU',
+              //   key: 'bgbu',
+              //   // width: '150px',
+              //   render: (rowData) => {
+              //     return rowData['bgbu']
+              //   },
+              // },
             ],
             {
               align: 'center',
