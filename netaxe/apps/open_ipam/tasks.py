@@ -139,13 +139,14 @@ def ip_am_update_sub_task(ip):
         #                         bgbu_instance.save()
         #                         bgbu_id = bgbu_instance.id
         #                 bgbu_id_list.append(bgbu_id)
-        if ip_address_tag == 6:  # 已分配未使用变更到已分配已使用、最近在线时间、描述信息、BgBu
+        if ip_address_tag == 6:  # 已分配未使用变更到已分配已使用、最近在线时间、BgBu
             # TODO 更新 6>> 2
+            ## 描述信息 不更新 -避免影响前端冲突
             IpamOps.post_update_ip(ip)
             ip_update_6_instance = IpAddress.objects.get(id=ip_address_id)
             ip_update_6_instance.tag = 2
             ip_update_6_instance.lastOnlineTime = lastOnlineTime
-            ip_update_6_instance.description = tmp_description
+            ip_update_6_instance.description =ip_address_desc if ip_address_desc else tmp_description
             # ip_update_6_instance.bgbu.set(bgbu_id_list)
             ip_update_6_instance.save()
         if ip_address_tag == 7:  # 自定义空闲变更到未分配已使用、最近在线时间、描述信息、BgBu
@@ -157,13 +158,13 @@ def ip_am_update_sub_task(ip):
             ip_update_7_instance.description = tmp_description
             # ip_update_7_instance.bgbu.set(bgbu_id_list)
             ip_update_7_instance.save()
-        else:  # 更新tag、最近在线时间、描述信息、BgBu
+        else:  # 更新tag、最近在线时间、BgBu、其他类型不修改描述信息、避免
             # TODO 更新 未使用-仅更新在线时间、描述信息、BGBU等
             IpamOps.post_update_ip(ip)
             ip_update_else_instance = IpAddress.objects.get(id=ip_address_id)
             ip_update_else_instance.tag = ip_address_tag
             ip_update_else_instance.lastOnlineTime = lastOnlineTime
-            # ip_update_else_instance.description = tmp_description
+            ip_update_else_instance.description = ip_address_desc if ip_address_desc else tmp_description
             # ip_update_else_instance.bgbu.set(bgbu_id_list)
             ip_update_else_instance.save()
 
