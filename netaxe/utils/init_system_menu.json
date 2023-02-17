@@ -1,6 +1,159 @@
 {
   "Menu": [
     {
+      "name": "TTP模板",
+      "status": "True",
+      "parent_id": 105,
+      "visible": "True",
+      "web_path": "/config_manage/ttp_template",
+      "sort": 1,
+      "id": 112
+    },
+    {
+      "name": "IPAM",
+      "status": "True",
+      "parent_id": 183,
+      "visible": "True",
+      "web_path": "/ip_manage/ipam",
+      "sort": 1,
+      "id": 184
+    },
+    {
+      "name": "接口清单",
+      "status": "True",
+      "parent_id": 103,
+      "visible": "True",
+      "web_path": "/cmdb/interfaceused",
+      "sort": 1,
+      "id": 119
+    },
+    {
+      "name": "网络设备",
+      "status": "True",
+      "parent_id": 103,
+      "visible": "True",
+      "web_path": "/cmdb/network_device",
+      "sort": 1,
+      "id": 118
+    },
+    {
+      "name": "FSM模板",
+      "status": "True",
+      "parent_id": 101,
+      "visible": "True",
+      "web_path": "/config_manage/fsm_template",
+      "sort": 1,
+      "id": 117
+    },
+    {
+      "name": "TTP模板",
+      "status": "True",
+      "parent_id": 101,
+      "visible": "True",
+      "web_path": "/config_manage/ttp_template",
+      "sort": 1,
+      "id": 116
+    },
+    {
+      "name": "配置模板",
+      "status": "True",
+      "parent_id": 101,
+      "visible": "True",
+      "web_path": "/config_manage/config_jinja2_template",
+      "sort": 1,
+      "id": 115
+    },
+    {
+      "name": "配置合规",
+      "status": "True",
+      "parent_id": 101,
+      "visible": "True",
+      "web_path": "/config_manage/compliance",
+      "sort": 1,
+      "id": 114
+    },
+    {
+      "name": "配置模板",
+      "status": "True",
+      "parent_id": 104,
+      "visible": "True",
+      "web_path": "/config_manage/config_jinja2_template",
+      "sort": 1,
+      "id": 111
+    },
+    {
+      "name": "采集方案",
+      "status": "True",
+      "parent_id": 102,
+      "visible": "True",
+      "web_path": "/automated/collect",
+      "sort": 1,
+      "id": 109
+    },
+    {
+      "name": "配置差异",
+      "status": "True",
+      "parent_id": 101,
+      "visible": "True",
+      "web_path": "/config_manage/gitdiff",
+      "sort": 1,
+      "id": 108
+    },
+    {
+      "name": "调度管理",
+      "status": "True",
+      "parent_id": 100,
+      "visible": "True",
+      "web_path": "/task_center/dispatch_manage",
+      "sort": 1,
+      "id": 106
+    },
+    {
+      "name": "资源管理",
+      "status": "True",
+      "parent_id": null,
+      "visible": "True",
+      "web_path": "/cmdb",
+      "sort": 1,
+      "id": 103
+    },
+    {
+      "name": "任务列表",
+      "status": "True",
+      "parent_id": 100,
+      "visible": "True",
+      "web_path": "/task_center/task_list",
+      "sort": 2,
+      "id": 107
+    },
+    {
+      "name": "自动化",
+      "status": "True",
+      "parent_id": null,
+      "visible": "True",
+      "web_path": "/automated",
+      "sort": 2,
+      "id": 102
+    },
+    {
+      "name": "接口清单",
+      "status": "True",
+      "parent_id": 103,
+      "visible": "True",
+      "web_path": "/cmdb/interfaceused",
+      "sort": 2,
+      "id": 182
+    },
+    {
+      "name": "配置中心",
+      "status": "True",
+      "parent_id": null,
+      "visible": "True",
+      "web_path": "/config_manage",
+      "sort": 3,
+      "id": 101
+    },
+    {
       "name": "作业中心",
       "status": "True",
       "parent_id": null,
@@ -10,128 +163,13 @@
       "id": 100
     },
     {
-      "name": "配置中心",
-      "status": "True",
-      "parent_id": null,
-      "visible": "True",
-      "web_path": "/config_manage",
-      "sort": 3,
-       "id": 101
-    },
-    {
-      "name": "自动化",
-      "status": "True",
-      "parent_id": null,
-      "visible": "True",
-      "web_path": "/automated",
-      "sort": 2,
-       "id": 102
-    },
-    {
-      "name": "资源管理",
-      "status": "True",
-      "parent_id": null,
-      "visible": "True",
-      "web_path": "/cmdb",
-      "sort": 1,
-       "id": 103
-    },
-    {
       "name": "地址管理",
       "status": "True",
       "parent_id": null,
       "visible": "True",
-      "web_path": "/ipam_manage",
+      "web_path": "/ip_manage",
       "sort": 5,
-       "id": 180
-    },
-    {
-      "name": "IPAM页面",
-      "status": "True",
-      "parent_id": 180,
-      "visible": "True",
-      "web_path": "/ipam_manage/ipam",
-      "sort": 1
-    },
-    {
-      "name": "网络设备",
-      "status": "True",
-      "parent_id": 103,
-      "visible": "True",
-      "web_path": "/cmdb/network_device",
-      "sort": 1
-    },
-    {
-      "name": "接口清单",
-      "status": "True",
-      "parent_id": 103,
-      "visible": "True",
-      "web_path": "/cmdb/interfaceused",
-      "sort": 2
-    },
-    {
-      "name": "调度管理",
-      "status": "True",
-      "parent_id": 100,
-      "visible": "True",
-      "web_path": "/task_center/dispatch_manage",
-      "sort": 1
-    },
-    {
-      "name": "任务列表",
-      "status": "True",
-      "parent_id": 100,
-      "visible": "True",
-      "web_path": "/task_center/task_list",
-      "sort": 2
-    },
-    {
-      "name": "配置差异",
-      "status": "True",
-      "parent_id": 101,
-      "visible": "True",
-      "web_path": "/config_manage/gitdiff",
-      "sort": 1
-    },
-    {
-      "name": "采集方案",
-      "status": "True",
-      "parent_id": 102,
-      "visible": "True",
-      "web_path": "/automated/collect",
-      "sort": 1
-    },
-    {
-      "name": "配置合规",
-      "status": "True",
-      "parent_id": 101,
-      "visible": "True",
-      "web_path": "/config_manage/compliance",
-      "sort": 1
-    },
-    {
-      "name": "配置模板",
-      "status": "True",
-      "parent_id": 101,
-      "visible": "True",
-      "web_path": "/config_manage/config_jinja2_template",
-      "sort": 1
-    },
-    {
-      "name": "TTP模板",
-      "status": "True",
-      "parent_id": 101,
-      "visible": "True",
-      "web_path": "/config_manage/ttp_template",
-      "sort": 1
-    },
-    {
-      "name": "FSM模板",
-      "status": "True",
-      "parent_id": 101,
-      "visible": "True",
-      "web_path": "/config_manage/fsm_template",
-      "sort": 1
+      "id": 183
     }
   ]
 }
