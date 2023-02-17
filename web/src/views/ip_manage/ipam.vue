@@ -1375,10 +1375,10 @@ export default defineComponent({
     }
 
     function select_all() {
-      //console.log(subnet_info.value['table_type'])
+      // console.log(subnet_info.value)
       let tag_array = []
-      subnet_info.value['table_type'].forEach((item) => {
-        tag_array.push(item.ip)
+      subnet_info.value['result_list'].forEach((item) => {
+        tag_array.push(item.address)
       })
       subnet_tag_list.length = 0
       subnet_tag_list.push(...tag_array)
