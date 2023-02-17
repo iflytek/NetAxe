@@ -56,7 +56,7 @@ def ip_am_update_sub_task(ip):
     # 在网络地址表取地址实例
     ip_address_instance = ip_address_model.objects.filter(ip_address=ip).values().first()
     # 预先定义初始化desc
-    tmp_description = {"Last Online Time": file_time, "BgBu": '[]'}
+    tmp_description = {"Last Online Time": file_time}
     # 最近在线时间
     lastOnlineTime = file_time
 
@@ -163,7 +163,7 @@ def ip_am_update_sub_task(ip):
             ip_update_else_instance = IpAddress.objects.get(id=ip_address_id)
             ip_update_else_instance.tag = ip_address_tag
             ip_update_else_instance.lastOnlineTime = lastOnlineTime
-            ip_update_else_instance.description = tmp_description
+            # ip_update_else_instance.description = tmp_description
             # ip_update_else_instance.bgbu.set(bgbu_id_list)
             ip_update_else_instance.save()
 
