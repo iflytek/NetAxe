@@ -121,7 +121,7 @@ def ip_am_update_sub_task(ip):
         ip_address_id = ip_address_instance['id']
         ip_address_tag = ip_address_instance['tag']
         ip_address_desc = ip_address_instance['description']
-        bgbu_id_list = []
+        # bgbu_id_list = []
         # if ip_address_desc != "":
         #     ip_address_desc = eval(ip_address_desc)
         #     if 'BgBu' in ip_address_desc.keys() and ip_address_desc['BgBu'] != "[]":
@@ -146,7 +146,7 @@ def ip_am_update_sub_task(ip):
             ip_update_6_instance.tag = 2
             ip_update_6_instance.lastOnlineTime = lastOnlineTime
             ip_update_6_instance.description = tmp_description
-            ip_update_6_instance.bgbu.set(bgbu_id_list)
+            # ip_update_6_instance.bgbu.set(bgbu_id_list)
             ip_update_6_instance.save()
         if ip_address_tag == 7:  # 自定义空闲变更到未分配已使用、最近在线时间、描述信息、BgBu
             # TODO 更新 7>> 4
@@ -155,7 +155,7 @@ def ip_am_update_sub_task(ip):
             ip_update_7_instance.tag = 4
             ip_update_7_instance.lastOnlineTime = lastOnlineTime
             ip_update_7_instance.description = tmp_description
-            ip_update_7_instance.bgbu.set(bgbu_id_list)
+            # ip_update_7_instance.bgbu.set(bgbu_id_list)
             ip_update_7_instance.save()
         else:  # 更新tag、最近在线时间、描述信息、BgBu
             # TODO 更新 未使用-仅更新在线时间、描述信息、BGBU等
@@ -164,7 +164,7 @@ def ip_am_update_sub_task(ip):
             ip_update_else_instance.tag = ip_address_tag
             ip_update_else_instance.lastOnlineTime = lastOnlineTime
             ip_update_else_instance.description = tmp_description
-            ip_update_else_instance.bgbu.set(bgbu_id_list)
+            # ip_update_else_instance.bgbu.set(bgbu_id_list)
             ip_update_else_instance.save()
 
     return
@@ -227,16 +227,6 @@ def ip_am_update_main():
 
 # 定时回收地址
 # 讯飞云地址不回收？
-'''
-# 子网白名单
- "172.22.143.0/24",  # 音乐服务
- "172.22.144.0/24",  # 音乐服务
- "172.22.145.0/24",  # 音乐服务
- "172.22.98.0/24",  # 音乐服务
- "172.22.104.0/24",  # 音乐服务
- "172.22.149.0/24",  # 阅读
- 172.22.149.0/24",  # 阅读
-'''
 
 
 @shared_task(base=AxeTask, once={'graceful': True})
