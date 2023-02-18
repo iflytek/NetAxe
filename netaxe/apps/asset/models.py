@@ -270,7 +270,7 @@ class AssetAccount(models.Model):
 
     en_pwd = models.CharField(
         verbose_name='特权密码',
-        max_length=20,
+        max_length=200,
         default='', blank=True,
         null=True)
 
