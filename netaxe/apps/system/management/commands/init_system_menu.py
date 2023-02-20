@@ -29,12 +29,13 @@ def main():
         code_list = json.load(load_f)
         for table, values in code_list.items():
             my_model = apps.get_model("system", table)
-            print("my_model", my_model)
             if my_model:
                 for value in values:
-                    # if table == "CollectionPlan":
-                    #     value['id'] = CollectionPlan.objects.get(id=value['id'])
-                    my_model.objects.get_or_create(**value)
+                    # my_model.objects.update_or_create(**value)
+                    try:
+                        my_model.objects.get_or_create(**value)
+                    except Exception as e:
+                        print(e)
 
 
 class Command(BaseCommand):
