@@ -363,7 +363,7 @@ class IpAmHandelView(APIView):
             return JsonResponse(res, safe=True)
 
         if description:
-            Subnet.objects.update(description=description)
+            Subnet.objects.filter(id=subnet_id).update(description=description)
             res = {'message': '网段描述更新成功', 'code': 200, }
             return JsonResponse(res, safe=True)
 
