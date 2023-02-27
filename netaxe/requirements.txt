@@ -117,6 +117,5 @@ django-restql==0.15.2
 user-agents==2.2.0
 drf-yasg==1.21.4
 xlrd==1.2.0
-pandas==1.5.2
 django-restql==0.15.2
 django-simple-history==3.2.0
