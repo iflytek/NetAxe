@@ -12,7 +12,7 @@
 """
 import json
 from rest_framework import serializers
-from .models import Topology, TopologyHost
+from .models import Topology
 
 
 # bgbu field
