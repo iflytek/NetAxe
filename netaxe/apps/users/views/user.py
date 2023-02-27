@@ -1,6 +1,6 @@
 from django.contrib.auth.hashers import make_password
 from django_restql.fields import DynamicSerializerMethodField
-from rest_framework import serializers, permissions, filters
+from rest_framework import serializers, permissions, filters, viewsets
 from rest_framework.decorators import action
 from rest_framework.permissions import IsAuthenticated
 from django_filters.rest_framework import DjangoFilterBackend
@@ -217,7 +217,7 @@ class UserViewSet(CustomModelViewSet):
             return ErrorResponse(msg="未获取到用户")
 
 
-class BgBuViewSet(CustomModelViewSet):
+class BgBuViewSet(viewsets.ModelViewSet):
     """
     BgBu表---处理  GET POST , 处理 /api/post/<pk>/ GET PUT PATCH DELETE
     """
