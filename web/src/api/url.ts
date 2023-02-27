@@ -11,25 +11,28 @@ export const getMenuList = '/api/system/menu/'
 export const getDepartmentList = '/api/system/dept/'
 export const getMenuListByRole = '/api/system/menu/web_router/'
 
-// export const test = '/test'
-// export const BackendApi = '/api/'
-// export const captcha = '/net_backend/captcha'
-// export const device_import_template = '/api/asset/excel/'
 // 调度管理
 export const getdispach = '/api/backend/dispatch_page/'
 // 任务列表
 export const jobcenterTaskUrl = '/api/backend/jobCenter/'
-// 未知
+// 网络设备
 export const get_device_expand = '/api/backend/networklist/'
+// 采集方案
 export const deviceCollect = '/api/backend/deviceCollect/'
-// 未知
-export const networkDeviceUrl = '/api/backend/networkDevice/'
+// webssh
 export const deviceWebSshLogin = '/api/backend/deviceWebSsh/'
 export const automation_chart = '/api/backend/automationChart/'
 // 未知
 export const deviceInfoChange = '/api/backend/deviceInfoChange/'
 export const getperiodic_taskList = '/api/backend/periodic_task/'
-// 未知
+// 拓扑图
+export const get_topology = '/api/topology/index/'
+export const topology_show = '/api/topology/show/'
+export const topology_media_img = '/media/topology/img/'
+export const topology_icon = '/api/topology/topology_icon/'
+// 获取业务对应表
+export const getBgbuList = '/api/user/bgbu/'
+// 获取变更路径(废弃ing)
 export const get_api_request_log = '/api/backend/api_request_log/'
 export const getinterval_schedule = '/api/backend/interval_schedule/'
 

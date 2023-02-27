@@ -7,7 +7,7 @@
           <div class="logo-wrapper">
             <img src="../../assets/logo.png" />
           </div>
-          <div class="title">NetAxe</div>
+          <!-- <div class="title">NetAxe</div> -->
           <div class="sub-title">Vue3 + Vite2 + Typescript + Naive UI</div>
           <div class="flex-1 flex justify-center items-center ttppii"> 生活，应该还有诗和远方</div>
           <div class="bottom-wrapper">NetAxe {{ version }} </div>

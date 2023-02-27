@@ -16,7 +16,7 @@ interface Setting {
   }
 }
 
-export const projectName = 'Net-Axe'
+export const projectName = ''
 
 export default Object.assign(
   {
