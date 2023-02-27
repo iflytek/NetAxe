@@ -217,7 +217,7 @@ class UserViewSet(CustomModelViewSet):
             return ErrorResponse(msg="未获取到用户")
 
 
-class BgBuViewSet(serializers.ModelSerializer):
+class BgBuViewSet(CustomModelViewSet):
     """
     BgBu表---处理  GET POST , 处理 /api/post/<pk>/ GET PUT PATCH DELETE
     """
