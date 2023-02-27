@@ -1,7 +1,7 @@
 import hashlib
 from django.db import models
 from django.contrib.auth.models import AbstractUser
-
+import uuid
 
 class UserProfile(AbstractUser):
     username = models.CharField(
@@ -36,6 +36,10 @@ class UserProfile(AbstractUser):
     user_type = models.IntegerField(
         choices=USER_TYPE, default=0, verbose_name="用户类型", null=True, blank=True, help_text="用户类型"
     )
+    jwt_secret = models.UUIDField(default=uuid.uuid4)
+
+    def jwt_get_secret_key(self):
+        return self.jwt_secret
     # post = models.ManyToManyField(
     #     to="system.Post", blank=True, verbose_name="关联岗位", db_constraint=False, help_text="关联岗位")
     # role = models.ManyToManyField(

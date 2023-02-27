@@ -54,7 +54,8 @@ INSTALLED_APPS = [
     "django_celery_beat",
     "django_celery_results.apps.CeleryResultConfig",
     "rest_framework",
-    "rest_framework_tracking",
+    "simple_history",
+    # "rest_framework_tracking",
     # "rest_framework.authtoken",
     # "rest_framework.apps.RestFrameworkConfig",
 
@@ -127,7 +128,6 @@ AUTH_USER_MODEL = "users.UserProfile"
 # Internationalization
 # https://docs.djangoproject.com/en/4.0/topics/i18n/
 
-# LANGUAGE_CODE = "en-us"
 LANGUAGE_CODE = "zh-hans"
 
 TIME_ZONE = "Asia/Shanghai"
@@ -276,9 +276,13 @@ STATICFILES_FINDERS = (
 DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
 # simple jwt 设置
 SIMPLE_JWT = {
-    "ACCESS_TOKEN_LIFETIME": timedelta(days=1),  # access token 有效期 30分钟
-    "REFRESH_TOKEN_LIFETIME": timedelta(days=2),  # refresh token 有效期 2 天
+    "ACCESS_TOKEN_LIFETIME": timedelta(hours=1),  # access token 有效期 30分钟
+    "REFRESH_TOKEN_LIFETIME": timedelta(days=1),  # refresh token 有效期 2 天
     "ROTATE_REFRESH_TOKENS": True,
+    'ALGORITHM': 'HS256',
+    'SIGNING_KEY': SECRET_KEY,
+    'VERIFYING_KEY': None,
+    'AUTH_HEADER_TYPES': ('Bearer',),
 }
 
 # restful api 配置
@@ -298,7 +302,7 @@ REST_FRAMEWORK = {
     "DEFAULT_AUTHENTICATION_CLASSES": (
         # "rest_framework.authentication.BasicAuthentication",
         # "rest_framework.authentication.SessionAuthentication",
-        "rest_framework.authentication.TokenAuthentication",
+        # "rest_framework.authentication.TokenAuthentication",
         "rest_framework_simplejwt.authentication.JWTAuthentication",
         # "apps.api.authentication.ExpiringTokenAuthentication",
     ),
@@ -347,7 +351,8 @@ CACHES = {
 # 认证配置
 AUTHENTICATION_BACKENDS = (
     # "django_auth_ldap.backend.LDAPBackend",
-    "utils.custom.backends.CustomBackend",
+    # "utils.custom.backends.CustomBackend",
+    "django.contrib.auth.backends.ModelBackend",
     "guardian.backends.ObjectPermissionBackend",  # 这是guardian的
 )
 

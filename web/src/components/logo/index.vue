@@ -45,7 +45,7 @@
     align-items: center;
     border-bottom: 1px dashed var(--border-color);
     .logo-img {
-      width: 30px;
+      width: 40%;
     }
     .logo-title {
       font-weight: bold;

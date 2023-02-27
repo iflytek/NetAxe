@@ -3,13 +3,13 @@ import urllib
 import logging
 import hashlib
 import threading
-import requests,time
+import requests, time
 
 logger = logging.getLogger('server')
 
 
 class nacos:
-    def __init__(self,ip="127.0.0.1",port=8848):
+    def __init__(self, ip="127.0.0.1", port=8848):
         self.ip = ip
         self.port = port
         self.__registerDict = {}
@@ -17,7 +17,7 @@ class nacos:
 
     def __healthyCheckThreadRun(self):
         while True:
-            #检查registerThread
+            # 检查registerThread
             try:
                 time.sleep(5)
                 serviceIp = self.__registerDict["serviceIp"]
@@ -30,20 +30,22 @@ class nacos:
                 metadata = self.__registerDict["metadata"]
                 weight = self.__registerDict["weight"]
                 enabled = self.__registerDict["enabled"]
-                self.registerService(serviceIp,servicePort,serviceName,
-                                        namespaceId,groupName,clusterName,
-                                        ephemeral,metadata,weight,enabled)
+                self.registerService(serviceIp, servicePort, serviceName,
+                                     namespaceId, groupName, clusterName,
+                                     ephemeral, metadata, weight, enabled)
             except:
-                logging.exception("服务注册心跳进程健康检查失败",exc_info=True)
+                logging.exception("服务注册心跳进程健康检查失败", exc_info=True)
 
     def healthyCheck(self):
         t = threading.Thread(target=self.__healthyCheckThreadRun)
         t.start()
         logging.info("健康检查线程已启动")
 
-    def registerService(self,serviceIp,servicePort,serviceName,namespaceId="public",
-                        groupName="DEFAULT_GROUP",clusterName="DEFAULT",
-                        ephemeral=True,metadata={},weight=1,enabled=True):
+    def registerService(self, serviceIp, servicePort, serviceName, namespaceId="public",
+                        groupName="DEFAULT_GROUP", clusterName="DEFAULT",
+                        ephemeral=True, metadata=None, weight=1, enabled=True):
+        if metadata is None:
+            metadata = {}
         self.__registerDict["serviceIp"] = serviceIp
         self.__registerDict["servicePort"] = servicePort
         self.__registerDict["serviceName"] = serviceName
@@ -55,7 +57,6 @@ class nacos:
         self.__registerDict["weight"] = weight
         self.__registerDict["enabled"] = enabled
         self.__registerDict["healthy"] = int(time.time())
-
 
         registerUrl = "http://" + self.ip + ":" + str(self.port) + "/nacos/v1/ns/instance"
         params = {
@@ -72,14 +73,29 @@ class nacos:
         }
         try:
             re = requests.post(registerUrl, params=params)
-            if (re.text == "ok"):
+            if re.text == "ok":
                 logging.info("服务注册成功。")
             else:
-                logging.error("服务注册失败 "+re.text)
+                logging.error("服务注册失败 " + re.text)
         except:
-            logging.exception("服务注册失败",exc_info=True)
+            logging.exception("服务注册失败", exc_info=True)
+
 
 def fallbackFun():
     return "request Error"
+
+
 def timeOutFun():
     return "request time out"
+
+
+# class NacosManage:
+#     def __init__(self, server_addr,name_space, data_id, group):
+#         self.SERVER_ADDRESS = server_addr
+#         self.NAMESPACE = name_space
+#         self.data_id = data_id
+#         self.group = group
+#
+#     def getNacosConf(self):
+#         try:
+#             client = nacos.NacosClietn

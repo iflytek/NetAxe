@@ -7,7 +7,6 @@ from django.views import View
 from django.http import JsonResponse, FileResponse, Http404
 from django_filters.rest_framework import DjangoFilterBackend
 from rest_framework.views import APIView
-from rest_framework_tracking.mixins import LoggingMixin
 from rest_framework import viewsets, permissions, filters
 
 from netboost.settings import MEDIA_ROOT
@@ -368,11 +367,10 @@ class NetworkDeviceFilter(django_filters.FilterSet):
         fields = '__all__'
 
 
-class NetworkDeviceViewSet(LoggingMixin, viewsets.ModelViewSet):
+class NetworkDeviceViewSet(viewsets.ModelViewSet):
     """
     处理  GET POST , 处理 /api/post/<pk>/ GET PUT PATCH DELETE
     """
-    logging_methods = ['POST', 'PUT', 'PATCH', 'DELETE']
     queryset = NetworkDevice.objects.all().order_by('-id')
     queryset = NetworkDeviceSerializer.setup_eager_loading(queryset)
     serializer_class = NetworkDeviceSerializer
@@ -417,30 +415,3 @@ class NetworkDeviceViewSet(LoggingMixin, viewsets.ModelViewSet):
         print('更新', super().update(request, *args, **kwargs))
         return super().update(request, *args, **kwargs)
 
-    # 拼接log记录中data字段前后变化
-    def handle_log(self):
-        # Do some stuff before saving.
-        print('before', self.log['data'])
-        # print(self.request)
-        if self.request.POST.get('serial_num'):
-            # print('PUT记录写入')
-            for key in self.request.POST.keys():
-                if key == 'serial_num':
-                    continue
-                self.log['data'][key] += " => " + str(self.request.POST[key])
-            self.log['data'].pop('serial_num')
-            if self.log['data'].get('id'):
-                self.log['data'].pop('id')
-            if self.log['view_method'] == 'create':
-                tmp = json.loads(self.log['response'])
-                if isinstance(tmp['data'], dict):
-                    if 'id' in tmp['data'].keys():
-                        self.log['path'] += str(tmp['data']['id']) + '/'
-        elif self.request.data.get('serial_num'):
-            print('PATCH记录写入')
-            for key in self.request.data.keys():
-                if key == 'serial_num':
-                    continue
-                self.log['data'][key] += " => " + str(self.request.data[key])
-            self.log['data'].pop('serial_num')
-        super(NetworkDeviceViewSet, self).handle_log()

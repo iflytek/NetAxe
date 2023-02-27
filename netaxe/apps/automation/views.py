@@ -1,7 +1,6 @@
 import django_filters
 from django_filters.rest_framework import DjangoFilterBackend
 
-from rest_framework_tracking.mixins import LoggingMixin
 from rest_framework import viewsets, permissions, filters, pagination
 
 from apps.route_backend.views import LimitSet
@@ -23,11 +22,10 @@ class CollectionPlanFilter(django_filters.FilterSet):
         fields = '__all__'
 
 
-class CollectionPlanViewSet(LoggingMixin, CustomViewBase):
+class CollectionPlanViewSet(CustomViewBase):
     """
     处理  GET POST , 处理 /api/post/<pk>/ GET PUT PATCH DELETE
     """
-    logging_methods = ['POST', 'PUT', 'PATCH', 'DELETE']
     queryset = CollectionPlan.objects.all().order_by('-id')
     queryset = CollectionPlanSerializer.setup_eager_loading(queryset)
     serializer_class = CollectionPlanSerializer

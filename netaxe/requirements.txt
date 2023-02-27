@@ -87,8 +87,6 @@ wrapt==1.14.1
 zipp==3.8.0
 zope.interface==5.4.0
 pymongo==3.10.1
-# rest api 日志记录模块
-drf-api-tracking==1.8.0
 xmltodict==0.13.0
 requests==2.28.1
 pycryptodome==3.15.0
@@ -119,4 +117,6 @@ django-restql==0.15.2
 user-agents==2.2.0
 drf-yasg==1.21.4
 xlrd==1.2.0
-
+pandas==1.5.2
+django-restql==0.15.2
+django-simple-history==3.2.0

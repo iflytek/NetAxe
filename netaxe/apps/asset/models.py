@@ -2,6 +2,7 @@ from django.db import models
 from django.core.validators import MaxValueValidator, MinValueValidator
 from django.utils import timezone
 from utils.crypt_pwd import CryptPwd
+from simple_history.models import HistoricalRecords
 # Create your models here.
 
 
@@ -420,6 +421,7 @@ class NetworkDevice(models.Model):
     plan = models.ForeignKey("automation.CollectionPlan", verbose_name='采集方案',
                              blank=True, null=True, related_name='releate_device', on_delete=models.SET_NULL)
     # bgbu = models.ManyToManyField("users.BgBu", verbose_name='BGBU', blank=True)
+    history = HistoricalRecords()
 
     def __str__(self):
         return '{}_{}_{}'.format(self.manage_ip, self.name, self.idc.name)
