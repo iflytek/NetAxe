@@ -1392,7 +1392,7 @@
             }
           }
         })
-        console.log(drawerImgOptions.value)
+        // console.log(drawerImgOptions.value)
       })
     })
   }

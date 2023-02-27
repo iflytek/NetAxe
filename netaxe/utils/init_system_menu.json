@@ -161,6 +161,15 @@
       "web_path": "/net_topology/show",
       "sort": 1,
       "id": 20011
+    },
+        {
+      "name": "图标库",
+      "status": "True",
+      "parent_id": 20006,
+      "visible": "True",
+      "web_path": "/net_topology/topology_icon",
+      "sort": 2,
+      "id": 20012
     }
   ]
 }
