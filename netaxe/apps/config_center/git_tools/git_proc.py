@@ -2,11 +2,18 @@ import os
 from datetime import datetime
 
 from git import Actor
-from git.repo import Repo
+from git import Repo
 from pydriller import Repository
 from netboost.settings import BASE_DIR
 repo_path = os.path.join(BASE_DIR, 'media/device_config')
-repo = Repo(path=repo_path)
+
+if not os.path.exists(os.path.join(BASE_DIR, 'media/device_config')):
+    os.makedirs(os.path.join(BASE_DIR, 'media/device_config'))
+
+try:
+    repo = Repo(path=repo_path)
+except:
+    repo = Repo.init(os.path.join(repo_path))
 
 
 class ConfigGit:
@@ -106,10 +113,11 @@ def push_file():
         author = Actor("netaxe", "netaxe@example.com")
         committer = Actor(log_time, "netops@example.com")
         commit = repo.index.commit(f"automation commit by {log_time}", author=author, committer=committer)
-        print(commit)
-        repo.remote('origin').push()
-        o = repo.remotes.origin
-        o.pull()
+        if repo.remotes:
+            for _origin in repo.remotes:
+                repo.remote(_origin).push()
+                o = repo.remotes.origin
+                o.pull()
         return commit, changedFiles, untracked_files
     return '', '', ''
 
