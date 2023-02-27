@@ -143,6 +143,24 @@
       "web_path": "/task_center/task_list",
       "sort": 2,
       "id": 10021
+    },
+    {
+      "name": "拓扑管理",
+      "status": "True",
+      "parent_id": null,
+      "visible": "True",
+      "web_path": "/net_topology",
+      "sort": 6,
+      "id": 20006
+    },
+    {
+      "name": "拓扑展示",
+      "status": "True",
+      "parent_id": 20006,
+      "visible": "True",
+      "web_path": "/net_topology/show",
+      "sort": 1,
+      "id": 20011
     }
   ]
 }
