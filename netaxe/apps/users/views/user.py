@@ -1,10 +1,12 @@
 from django.contrib.auth.hashers import make_password
 from django_restql.fields import DynamicSerializerMethodField
-from rest_framework import serializers
+from rest_framework import serializers, permissions, filters
 from rest_framework.decorators import action
 from rest_framework.permissions import IsAuthenticated
-
-from apps.users.models import UserProfile
+from django_filters.rest_framework import DjangoFilterBackend
+from utils.tools.custom_pagination import LargeResultsSetPagination
+from apps.users.models import UserProfile, BgBu
+from apps.users.serializers import BgBuSerializer
 from apps.system.views.role import RoleSerializer
 from utils.custom.json_response import ErrorResponse, DetailResponse
 from utils.custom.serializers import CustomModelSerializer
@@ -213,3 +215,19 @@ class UserViewSet(CustomModelViewSet):
                 return DetailResponse(data=None, msg="修改成功")
         else:
             return ErrorResponse(msg="未获取到用户")
+
+
+class BgBuViewSet(CustomModelViewSet):
+    """
+    BgBu表---处理  GET POST , 处理 /api/post/<pk>/ GET PUT PATCH DELETE
+    """
+    queryset = BgBu.objects.all().order_by('name')
+    serializer_class = BgBuSerializer
+    permission_classes = (permissions.IsAuthenticated,)
+    # pagination_class = LimitSet
+    pagination_class = LargeResultsSetPagination
+    # 配置搜索功能
+    filter_backends = (DjangoFilterBackend, filters.SearchFilter, filters.OrderingFilter)
+    # 如果要允许对某些字段进行过滤，可以使用filter_fields属性。
+    # filterset_class = DeviceBackupConfigFilter
+    filter_fields = '__all__'

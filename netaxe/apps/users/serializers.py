@@ -14,6 +14,7 @@ import json
 from rest_framework import serializers
 from .models import BgBu
 
+
 class BgBuSerializer(serializers.ModelSerializer):
     """bgbu表，用于运营平台数据对应关系"""
 

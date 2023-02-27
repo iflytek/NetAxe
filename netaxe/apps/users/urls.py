@@ -1,11 +1,11 @@
 from django.urls import path, include
-from rest_framework import routers
+from rest_framework.routers import DefaultRouter
 
 from apps.users.views.user import UserViewSet
-from .views import BgBuViewSet
+from apps.users.views.user import BgBuViewSet
 
 
-router = routers.SimpleRouter()
+router = DefaultRouter()
 router.register(r'user', UserViewSet)
 router.register(r'bgbu', BgBuViewSet)
 
