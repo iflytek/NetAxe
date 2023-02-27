@@ -58,10 +58,9 @@ INSTALLED_APPS = [
     # "rest_framework_tracking",
     # "rest_framework.authtoken",
     # "rest_framework.apps.RestFrameworkConfig",
-
     "apps.users.apps.UsersConfig",
     "apps.system.apps.SystemConfig",
-
+    "apps.topology.apps.TopologyConfig",
     "apps.asset.apps.AssetConfig",
     "apps.automation.apps.AutomationConfig",
     "apps.config_center.apps.ConfigCenterConfig",

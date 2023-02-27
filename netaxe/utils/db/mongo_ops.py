@@ -270,9 +270,32 @@ class MongoOps:
 xunmi_mongo = MongoOps(db='netops', coll='XunMi')
 lagg_mongo = MongoOps(db='Automation', coll='AggreTable')
 compliance_mongo = MongoOps(db='Automation', coll='ConfigCompliance')
+topology_mongo = MongoOps(db='Automation', coll='topology')
 
 
 class MongoNetOps(object):
+    @staticmethod
+    def del_topology(name):
+        topology_mongo.delete_many(query={'name': name})
+        return
+
+    @staticmethod
+    def get_topology(name):
+        _query = topology_mongo.find(query_dict={'name': name}, fileds={'_id': 0})
+        if _query:
+            return _query[0]
+        return []
+
+    @staticmethod
+    def topology_ops(**data):
+        _query = topology_mongo.find(query_dict={'name': data['name']}, fileds={'_id': 0})
+        if _query:
+            topology_mongo.delete_many(query={'name': data['name']})
+            topology_mongo.insert(data)
+        else:
+            topology_mongo.insert(data)
+        return
+
     @staticmethod
     def compliance_result(**kwargs):
         res = compliance_mongo.find(query_dict=kwargs, fileds={'_id': 0})
