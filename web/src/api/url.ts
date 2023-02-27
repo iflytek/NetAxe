@@ -31,7 +31,7 @@ export const topology_show = '/api/topology/show/'
 export const topology_media_img = '/media/topology/img/'
 export const topology_icon = '/api/topology/topology_icon/'
 // 获取业务对应表
-export const getBgbuList = '/api/user/bgbu/'
+export const getBgbuList = '/api/users/bgbu/'
 // 获取变更路径(废弃ing)
 export const get_api_request_log = '/api/backend/api_request_log/'
 export const getinterval_schedule = '/api/backend/interval_schedule/'
