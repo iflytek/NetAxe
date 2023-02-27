@@ -48,6 +48,12 @@ export default ({ mode }) => {
           changeOrigin: true, // 虚拟的站点需要更管origin
           rewrite: (path: string) => path.replace(/^\/ipam/, '/ipam'),
         },
+        '/media': {
+          target: env.VITE_BASIC_URL,
+          ws: true, //代理websockets
+          changeOrigin: true, // 虚拟的站点需要更管origin
+          rewrite: (path: string) => path.replace(/^\/media/, '/media'),
+        },
         '/ws': {
           target: env.VITE_BASIC_URL,
           timeout: 60000,
