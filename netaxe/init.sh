@@ -44,6 +44,10 @@ python3 manage.py makemigrations rest_framework_tracking
 
 python3 manage.py migrate rest_framework_tracking
 
+python3 manage.py makemigrations topology
+
+python3 manage.py migrate topology
+
 python3 manage.py init_asset # 资产初始化
 python3 manage.py init_collect # 采集方案初始化
 python3 manage.py init_system_menu # 系统菜单初始化
