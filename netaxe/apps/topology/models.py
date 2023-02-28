@@ -30,8 +30,6 @@ class Topology(models.Model):
         unique=True)
     memo = models.TextField(verbose_name='描述', null=True, blank=True)
 
-    def bgbu_list(self):
-        return ','.join([i.name for i in self.bgbu.all()])
 
     def __str__(self):
         return self.name

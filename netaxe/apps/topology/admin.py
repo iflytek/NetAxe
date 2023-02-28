@@ -5,8 +5,8 @@ from .models import Topology
 
 class AdminTopology(admin.ModelAdmin):
     """拓扑图总表"""
-    list_display = ['name', 'bgbu_list']
-    search_fields = ['name', 'bgbu_list']
+    list_display = ['name']
+    search_fields = ['name']
 
 
 admin.site.register(Topology, AdminTopology)
