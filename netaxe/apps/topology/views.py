@@ -6,10 +6,7 @@ from django.core.files.base import ContentFile
 from django.core.files.storage import default_storage
 from django.http import JsonResponse
 from django_filters.rest_framework import DjangoFilterBackend
-from rest_framework.views import APIView
-from rest_framework import viewsets, permissions, filters
-from django.shortcuts import render
-from django.views import View
+from rest_framework import permissions, filters
 from rest_framework.permissions import IsAuthenticated
 from rest_framework.views import APIView
 from apps.topology.icon_manage import IconTree
@@ -18,6 +15,7 @@ from apps.topology.models import Topology
 from .serializers import TopologySerializer
 from utils.db.mongo_ops import MongoOps, MongoNetOps
 from utils.tools.custom_pagination import LargeResultsSetPagination
+from utils.tools.custom_viewset_base import CustomViewBase
 
 # Create your views here.
 # 设备二层接口表
@@ -37,7 +35,7 @@ class DateEncoder(json.JSONEncoder):
 
 
 # 拓扑清单
-class TopologyViewSet(viewsets.ModelViewSet):
+class TopologyViewSet(CustomViewBase):
     """
     处理  GET POST , 处理 /api/post/<pk>/ GET PUT PATCH DELETE
     """
