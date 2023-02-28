@@ -11,7 +11,7 @@
       />
       <n-button type="info" size="small" @click="addGraph">新建</n-button>
       <n-button type="info" size="small" @click="save_graph">保存</n-button>
-      <n-button type="error" size="small">删除</n-button>
+      <n-button type="error" size="small" @click="del_graph">删除</n-button>
       <n-button type="info" size="small" @click="Brush">框选</n-button>
       <n-button type="info" size="small" @click="addDevice" v-show="showAddNodeButton"
         >添加设备</n-button
@@ -356,6 +356,7 @@
   import * as d3 from 'd3'
   import usePost from '@/hooks/usePost'
   import useGet from '@/hooks/useGet'
+  import useDelete from '@/hooks/useDelete'
   const show_drawer = ref(false)
   const show_link_drawer = ref(false)
   const placement = ref<DrawerPlacement>('right')
@@ -575,6 +576,7 @@
   const viewBox = ref('200 300 800 800')
   const get = useGet()
   const post = usePost()
+  const n_del = useDelete()
   const graph = ref({
     links: [],
     nodes: [],
@@ -604,6 +606,7 @@
       },
     }).then((res) => {
       //console.log(res)
+      topology_options.length = 0
       res.results.forEach((item) => {
         var dict = {
           value: item['name'],
@@ -1517,13 +1520,29 @@
       addGraphFormOptions.value?.reset()
     })
   }
+  // 删除拓扑
+  function del_graph() {
+    post({
+      url: topology_show,
+      data: { name: topology_value.value, del_graph: 'delete' },
+    }).then((res) => {
+      if (res.code == 200) {
+        message.success(res.msg)
+        nextTick(() => {
+          topology_value.value = ''
+          get_topology_list()
+        })
+      } else {
+        message.error(res.msg)
+      }
+    })
+  }
   // 新建拓扑
   function onAddGraphConfirm() {
     // if (addGraphDataFormRef.value?.validator()) {
     // console.log('确认数据', addGraphDataFormRef.value.generatorParams())
     // }
     let post_data = addGraphDataFormRef.value.generatorParams()
-
     post({
       url: get_topology,
       data: {
@@ -1531,8 +1550,10 @@
         memo: post_data.memo,
       },
     }).then((res) => {
+      console.log(res)
       if (res.code == 201) {
         message.success(res.message)
+        showAddGraphModal.value = false
         get_topology_list()
       } else {
         message.error(res.message)
