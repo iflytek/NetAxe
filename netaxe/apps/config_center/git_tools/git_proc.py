@@ -9,6 +9,7 @@ repo_path = os.path.join(BASE_DIR, 'media/device_config')
 
 if not os.path.exists(os.path.join(BASE_DIR, 'media/device_config')):
     os.makedirs(os.path.join(BASE_DIR, 'media/device_config'))
+    repo = Repo.init(os.path.join(repo_path))
 
 try:
     repo = Repo(path=repo_path)
