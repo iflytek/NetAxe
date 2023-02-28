@@ -28,7 +28,6 @@ class Topology(models.Model):
         max_length=50,
         null=False,
         unique=True)
-    bgbu = models.ManyToManyField("users.BgBu", verbose_name='关联业务', blank=True, related_name='bgbu_topology_group')
     memo = models.TextField(verbose_name='描述', null=True, blank=True)
 
     def bgbu_list(self):

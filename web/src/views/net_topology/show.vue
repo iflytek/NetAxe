@@ -334,7 +334,6 @@
     topology_show,
     topology_media_img,
     topology_icon,
-    getBgbuList,
     getNetworkDeviceList,
     getCmdbIdcList,
   } from '@/api/url'
@@ -1467,7 +1466,6 @@
       init_svg()
     })
   }
-  const bgbu_options = ref([])
   // 新建拓扑模态框
   const showAddGraphModal = ref(false)
   // 添加节点模态框
@@ -1486,24 +1484,6 @@
           value: formItem.value.value,
           onUpdateValue: (newVal: any) => {
             formItem.value.value = newVal
-          },
-        })
-      },
-    },
-    {
-      key: 'bgbu',
-      label: 'BGBU',
-      value: ref(''),
-      optionItems: bgbu_options.value,
-      render: (formItem) => {
-        return h(NSelect, {
-          options: formItem.optionItems as Array<SelectOption>,
-          value: formItem.value.value,
-          filterable: true,
-          multiple: true,
-          'max-tag-count': 5,
-          onUpdateValue: (val) => {
-            formItem.value.value = val
           },
         })
       },
@@ -1540,15 +1520,14 @@
   // 新建拓扑
   function onAddGraphConfirm() {
     // if (addGraphDataFormRef.value?.validator()) {
-    console.log('确认数据', addGraphDataFormRef.value.generatorParams())
+    // console.log('确认数据', addGraphDataFormRef.value.generatorParams())
     // }
     let post_data = addGraphDataFormRef.value.generatorParams()
-    console.log(post_data.bgbu)
+
     post({
       url: get_topology,
       data: {
         name: post_data.name,
-        bgbu: [JSON.stringify(post_data.bgbu)],
         memo: post_data.memo,
       },
     }).then((res) => {
@@ -1593,24 +1572,6 @@
     })
     console.log(add_nodes)
   }
-  // 获取BGBU
-  function doBgbuList() {
-    get({
-      url: getBgbuList,
-      data: () => {
-        return {
-          limit: 1000,
-        }
-      },
-    }).then((res) => {
-      res.results.forEach((ele) => {
-        bgbu_options.value.push({
-          value: ele['id'],
-          label: ele['name'],
-        })
-      })
-    })
-  }
   // 获取IDC
   function doIdc() {
     get({
@@ -1632,7 +1593,6 @@
   onMounted(init_svg)
   onMounted(get_topology_list)
   onMounted(get_icon_tree)
-  onMounted(doBgbuList)
   onMounted(doIdc)
   onMounted(() => {
     //   console.log(document.documentElement.clientWidth)
