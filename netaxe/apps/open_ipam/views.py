@@ -385,9 +385,11 @@ class IpAmHandelView(APIView):
                 # print(add_kwargs)
                 # 校验是否有归属关系
                 master_subnet = Subnet.objects.get(id=add_master_id)
-                merge_subnet_list = [netaddr.IPNetwork(str(master_subnet.subnet)), netaddr.IPNetwork(add_subnet)]
+                merge_subnet_list = [netaddr.IPNetwork(str(master_subnet.subnet)), netaddr.IPNetwork(str(add_subnet))]
+                merge_subnet_len = netaddr.cidr_merge(merge_subnet_list)
                 print(merge_subnet_list)
-                if len(merge_subnet_list) == 1:
+                print(merge_subnet_len)
+                if len(merge_subnet_len) == 1:
 
                     Subnet.objects.update_or_create(**add_kwargs)
                     res = {'message': '新增网段成功', 'code': 200, }
