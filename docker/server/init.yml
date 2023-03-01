@@ -20,7 +20,7 @@ services:
     container_name: netaxe-server
     ports:
       - "5555:5555"
-    command: sh init.sh
+    command: sleep 9999999
     depends_on:
       - redis-cache
     volumes:
