@@ -1,6 +1,7 @@
 import json
 from collections import OrderedDict
 
+import netaddr
 from celery import current_app
 from django.db.models import Sum
 from django.http import JsonResponse, HttpResponse
@@ -382,8 +383,16 @@ class IpAmHandelView(APIView):
                     add_kwargs.pop('master_subnet')
 
                 # print(add_kwargs)
-                Subnet.objects.update_or_create(**add_kwargs)
-                res = {'message': '新增网段成功', 'code': 200, }
+                # 校验是否有归属关系
+                master_subnet = Subnet.objects.get(id=add_master_id)
+                merge_subnet_list = [netaddr.IPNetwork(str(master_subnet.subnet)), netaddr.IPNetwork(add_subnet)]
+                print(merge_subnet_list)
+                if len(merge_subnet_list) == 1:
+
+                    Subnet.objects.update_or_create(**add_kwargs)
+                    res = {'message': '新增网段成功', 'code': 200, }
+                else:
+                    res = {'message': '新增网段失败,请校验网段归属', 'code': 400, }
                 return JsonResponse(res, safe=True)
             except Exception as e:
                 res = {'message': e, 'code': 400, }
