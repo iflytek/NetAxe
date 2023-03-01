@@ -72,7 +72,7 @@ services:
     networks:
       - netops-axe
   celery-config:
-    image: registry.cn-hangzhou.aliyuncs.com/netaxe/netaxe-backend:1.0.7
+    image: registry.cn-hangzhou.aliyuncs.com/netaxe/netaxe-backend:1.0.8
     container_name: celery-config
     command: sh start.sh config
     depends_on:
