@@ -2,9 +2,9 @@
 #license:MIT
 #Another:jmli12
 #date:2023.1.4
-cd /home/netaxe && git pull
-pip3 install --upgrade pip -i https://mirrors.aliyun.com/pypi/simple/
-pip3 install -r requirements.txt -i https://mirrors.aliyun.com/pypi/simple/
+# cd /home/netaxe && git pull
+# pip3 install --upgrade pip -i https://mirrors.aliyun.com/pypi/simple/
+# pip3 install -r requirements.txt -i https://mirrors.aliyun.com/pypi/simple/
 
 python3 manage.py migrate users
 
