@@ -593,10 +593,6 @@
   }
 
   function get_topology_list() {
-    // topology_src.value = window.location.protocol +'//'+ window.location.host + '/topology/show/'
-    //  //console.log(topology_src.value)
-    // topology_src.value = 'https://netops.iflytek.com/topology/show/'
-    // window.open('https://netops.iflytek.com/topology/show/')
     get({
       url: get_topology,
       data: () => {
@@ -1633,7 +1629,7 @@
   }
 
   #container {
-    background: url(https://netops.iflytek.com/static/images/bkg.jpeg) no-repeat;
+    background: url('../../assets/topology_bkg.jpeg') no-repeat;
     background-size: 100% 100%;
   }
 </style>

@@ -466,28 +466,4 @@
     align-content: space-around;
     height: 5px;
   }
-  div.tooltip {
-    position: absolute;
-    background-color: white;
-    max-width: 400px;
-    height: auto;
-    padding: 1px;
-    border-style: solid;
-    border-radius: 4px;
-    border-width: 1px;
-    box-shadow: 3px 3px 10px rgba(0, 0, 0, 0.5);
-    pointer-events: none;
-  }
-  /* 透明度 */
-  .unselected {
-    opacity: 1;
-  }
-
-  .selected {
-    opacity: 1;
-  }
-  #container {
-    background: url(https://netops.iflytek.com/static/images/bkg.jpeg) no-repeat;
-    background-size: 100% 100%;
-  }
 </style>
