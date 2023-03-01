@@ -650,8 +650,19 @@
           showAddNodeButton.value = true
         })
       } else {
+        graph.value = {
+          links: [],
+          nodes: [],
+          name: '',
+          cmdb: '',
+          interface: [],
+        }
         message.error(res.msg)
-        showAddNodeButton.value = true
+        group.value.selectAll('*').remove()
+        nextTick(() => {
+          init_svg()
+          showAddNodeButton.value = true
+        })
       }
     })
   }
