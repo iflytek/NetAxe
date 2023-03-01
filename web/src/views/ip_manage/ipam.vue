@@ -1311,6 +1311,7 @@
 
             function CancelRoot() {
                 add_root_show.value = false
+                add_subnet_show.value = false
             }
 
             function subnet_click(ip_address) {
