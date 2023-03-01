@@ -1,0 +1,578 @@
+{
+  "components": {},
+  "info": {
+    "title": "RoutesExport",
+    "version": "3.0.0"
+  },
+  "openapi": "3.0.0",
+  "paths": {
+    "/api/{params}": {
+      "delete": {
+        "operationId": "authDELETE",
+        "parameters": [{
+          "description": "params in path",
+          "in": "path",
+          "name": "params",
+          "required": true,
+          "schema": {
+            "type": "string"
+          }
+        }],
+        "requestBody": {},
+        "responses": {
+          "default": {
+            "description": ""
+          }
+        },
+        "security": [],
+        "x-apisix-enable_websocket": true,
+        "x-apisix-id": "434632219445691254",
+        "x-apisix-priority": 0,
+        "x-apisix-status": 1,
+        "x-apisix-upstream": {
+          "timeout": {
+            "connect": 6,
+            "send": 6,
+            "read": 6
+          },
+          "type": "roundrobin",
+          "scheme": "http",
+          "discovery_type": "nacos",
+          "discovery_args": {
+            "group_name": "default"
+          },
+          "pass_host": "pass",
+          "service_name": "auth",
+          "keepalive_pool": {
+            "idle_timeout": 60,
+            "requests": 1000,
+            "size": 320
+          }
+        }
+      },
+      "get": {
+        "operationId": "authGET",
+        "parameters": [{
+          "description": "params in path",
+          "in": "path",
+          "name": "params",
+          "required": true,
+          "schema": {
+            "type": "string"
+          }
+        }],
+        "requestBody": {},
+        "responses": {
+          "default": {
+            "description": ""
+          }
+        },
+        "security": [],
+        "x-apisix-enable_websocket": true,
+        "x-apisix-id": "434632219445691254",
+        "x-apisix-priority": 0,
+        "x-apisix-status": 1,
+        "x-apisix-upstream": {
+          "timeout": {
+            "connect": 6,
+            "send": 6,
+            "read": 6
+          },
+          "type": "roundrobin",
+          "scheme": "http",
+          "discovery_type": "nacos",
+          "discovery_args": {
+            "group_name": "default"
+          },
+          "pass_host": "pass",
+          "service_name": "auth",
+          "keepalive_pool": {
+            "idle_timeout": 60,
+            "requests": 1000,
+            "size": 320
+          }
+        }
+      },
+      "head": {
+        "operationId": "authHEAD",
+        "parameters": [{
+          "description": "params in path",
+          "in": "path",
+          "name": "params",
+          "required": true,
+          "schema": {
+            "type": "string"
+          }
+        }],
+        "requestBody": {},
+        "responses": {
+          "default": {
+            "description": ""
+          }
+        },
+        "security": [],
+        "x-apisix-enable_websocket": true,
+        "x-apisix-id": "434632219445691254",
+        "x-apisix-priority": 0,
+        "x-apisix-status": 1,
+        "x-apisix-upstream": {
+          "timeout": {
+            "connect": 6,
+            "send": 6,
+            "read": 6
+          },
+          "type": "roundrobin",
+          "scheme": "http",
+          "discovery_type": "nacos",
+          "discovery_args": {
+            "group_name": "default"
+          },
+          "pass_host": "pass",
+          "service_name": "auth",
+          "keepalive_pool": {
+            "idle_timeout": 60,
+            "requests": 1000,
+            "size": 320
+          }
+        }
+      },
+      "patch": {
+        "operationId": "authPATCH",
+        "parameters": [{
+          "description": "params in path",
+          "in": "path",
+          "name": "params",
+          "required": true,
+          "schema": {
+            "type": "string"
+          }
+        }],
+        "requestBody": {},
+        "responses": {
+          "default": {
+            "description": ""
+          }
+        },
+        "security": [],
+        "x-apisix-enable_websocket": true,
+        "x-apisix-id": "434632219445691254",
+        "x-apisix-priority": 0,
+        "x-apisix-status": 1,
+        "x-apisix-upstream": {
+          "timeout": {
+            "connect": 6,
+            "send": 6,
+            "read": 6
+          },
+          "type": "roundrobin",
+          "scheme": "http",
+          "discovery_type": "nacos",
+          "discovery_args": {
+            "group_name": "default"
+          },
+          "pass_host": "pass",
+          "service_name": "auth",
+          "keepalive_pool": {
+            "idle_timeout": 60,
+            "requests": 1000,
+            "size": 320
+          }
+        }
+      },
+      "post": {
+        "operationId": "authPOST",
+        "parameters": [{
+          "description": "params in path",
+          "in": "path",
+          "name": "params",
+          "required": true,
+          "schema": {
+            "type": "string"
+          }
+        }],
+        "requestBody": {},
+        "responses": {
+          "default": {
+            "description": ""
+          }
+        },
+        "security": [],
+        "x-apisix-enable_websocket": true,
+        "x-apisix-id": "434632219445691254",
+        "x-apisix-priority": 0,
+        "x-apisix-status": 1,
+        "x-apisix-upstream": {
+          "timeout": {
+            "connect": 6,
+            "send": 6,
+            "read": 6
+          },
+          "type": "roundrobin",
+          "scheme": "http",
+          "discovery_type": "nacos",
+          "discovery_args": {
+            "group_name": "default"
+          },
+          "pass_host": "pass",
+          "service_name": "auth",
+          "keepalive_pool": {
+            "idle_timeout": 60,
+            "requests": 1000,
+            "size": 320
+          }
+        }
+      },
+      "put": {
+        "operationId": "authPUT",
+        "parameters": [{
+          "description": "params in path",
+          "in": "path",
+          "name": "params",
+          "required": true,
+          "schema": {
+            "type": "string"
+          }
+        }],
+        "requestBody": {},
+        "responses": {
+          "default": {
+            "description": ""
+          }
+        },
+        "security": [],
+        "x-apisix-enable_websocket": true,
+        "x-apisix-id": "434632219445691254",
+        "x-apisix-priority": 0,
+        "x-apisix-status": 1,
+        "x-apisix-upstream": {
+          "timeout": {
+            "connect": 6,
+            "send": 6,
+            "read": 6
+          },
+          "type": "roundrobin",
+          "scheme": "http",
+          "discovery_type": "nacos",
+          "discovery_args": {
+            "group_name": "default"
+          },
+          "pass_host": "pass",
+          "service_name": "auth",
+          "keepalive_pool": {
+            "idle_timeout": 60,
+            "requests": 1000,
+            "size": 320
+          }
+        }
+      }
+    },
+    "/media/{params}": {
+      "delete": {
+        "operationId": "mediaDELETE",
+        "parameters": [{
+          "description": "params in path",
+          "in": "path",
+          "name": "params",
+          "required": true,
+          "schema": {
+            "type": "string"
+          }
+        }, {
+          "description": "params in path",
+          "in": "path",
+          "name": "params",
+          "required": true,
+          "schema": {
+            "type": "string"
+          }
+        }],
+        "requestBody": {},
+        "responses": {
+          "default": {
+            "description": ""
+          }
+        },
+        "security": [],
+        "x-apisix-enable_websocket": false,
+        "x-apisix-id": "449810083157640056",
+        "x-apisix-priority": 0,
+        "x-apisix-status": 1,
+        "x-apisix-upstream": {
+          "timeout": {
+            "connect": 6,
+            "send": 6,
+            "read": 6
+          },
+          "type": "roundrobin",
+          "scheme": "http",
+          "discovery_type": "nacos",
+          "discovery_args": {
+            "group_name": "default"
+          },
+          "pass_host": "pass",
+          "service_name": "auth",
+          "keepalive_pool": {
+            "idle_timeout": 60,
+            "requests": 1000,
+            "size": 320
+          }
+        }
+      },
+      "get": {
+        "operationId": "mediaGET",
+        "parameters": [{
+          "description": "params in path",
+          "in": "path",
+          "name": "params",
+          "required": true,
+          "schema": {
+            "type": "string"
+          }
+        }, {
+          "description": "params in path",
+          "in": "path",
+          "name": "params",
+          "required": true,
+          "schema": {
+            "type": "string"
+          }
+        }],
+        "requestBody": {},
+        "responses": {
+          "default": {
+            "description": ""
+          }
+        },
+        "security": [],
+        "x-apisix-enable_websocket": false,
+        "x-apisix-id": "449810083157640056",
+        "x-apisix-priority": 0,
+        "x-apisix-status": 1,
+        "x-apisix-upstream": {
+          "timeout": {
+            "connect": 6,
+            "send": 6,
+            "read": 6
+          },
+          "type": "roundrobin",
+          "scheme": "http",
+          "discovery_type": "nacos",
+          "discovery_args": {
+            "group_name": "default"
+          },
+          "pass_host": "pass",
+          "service_name": "auth",
+          "keepalive_pool": {
+            "idle_timeout": 60,
+            "requests": 1000,
+            "size": 320
+          }
+        }
+      },
+      "head": {
+        "operationId": "mediaHEAD",
+        "parameters": [{
+          "description": "params in path",
+          "in": "path",
+          "name": "params",
+          "required": true,
+          "schema": {
+            "type": "string"
+          }
+        }, {
+          "description": "params in path",
+          "in": "path",
+          "name": "params",
+          "required": true,
+          "schema": {
+            "type": "string"
+          }
+        }],
+        "requestBody": {},
+        "responses": {
+          "default": {
+            "description": ""
+          }
+        },
+        "security": [],
+        "x-apisix-enable_websocket": false,
+        "x-apisix-id": "449810083157640056",
+        "x-apisix-priority": 0,
+        "x-apisix-status": 1,
+        "x-apisix-upstream": {
+          "timeout": {
+            "connect": 6,
+            "send": 6,
+            "read": 6
+          },
+          "type": "roundrobin",
+          "scheme": "http",
+          "discovery_type": "nacos",
+          "discovery_args": {
+            "group_name": "default"
+          },
+          "pass_host": "pass",
+          "service_name": "auth",
+          "keepalive_pool": {
+            "idle_timeout": 60,
+            "requests": 1000,
+            "size": 320
+          }
+        }
+      },
+      "patch": {
+        "operationId": "mediaPATCH",
+        "parameters": [{
+          "description": "params in path",
+          "in": "path",
+          "name": "params",
+          "required": true,
+          "schema": {
+            "type": "string"
+          }
+        }, {
+          "description": "params in path",
+          "in": "path",
+          "name": "params",
+          "required": true,
+          "schema": {
+            "type": "string"
+          }
+        }],
+        "requestBody": {},
+        "responses": {
+          "default": {
+            "description": ""
+          }
+        },
+        "security": [],
+        "x-apisix-enable_websocket": false,
+        "x-apisix-id": "449810083157640056",
+        "x-apisix-priority": 0,
+        "x-apisix-status": 1,
+        "x-apisix-upstream": {
+          "timeout": {
+            "connect": 6,
+            "send": 6,
+            "read": 6
+          },
+          "type": "roundrobin",
+          "scheme": "http",
+          "discovery_type": "nacos",
+          "discovery_args": {
+            "group_name": "default"
+          },
+          "pass_host": "pass",
+          "service_name": "auth",
+          "keepalive_pool": {
+            "idle_timeout": 60,
+            "requests": 1000,
+            "size": 320
+          }
+        }
+      },
+      "post": {
+        "operationId": "mediaPOST",
+        "parameters": [{
+          "description": "params in path",
+          "in": "path",
+          "name": "params",
+          "required": true,
+          "schema": {
+            "type": "string"
+          }
+        }, {
+          "description": "params in path",
+          "in": "path",
+          "name": "params",
+          "required": true,
+          "schema": {
+            "type": "string"
+          }
+        }],
+        "requestBody": {},
+        "responses": {
+          "default": {
+            "description": ""
+          }
+        },
+        "security": [],
+        "x-apisix-enable_websocket": false,
+        "x-apisix-id": "449810083157640056",
+        "x-apisix-priority": 0,
+        "x-apisix-status": 1,
+        "x-apisix-upstream": {
+          "timeout": {
+            "connect": 6,
+            "send": 6,
+            "read": 6
+          },
+          "type": "roundrobin",
+          "scheme": "http",
+          "discovery_type": "nacos",
+          "discovery_args": {
+            "group_name": "default"
+          },
+          "pass_host": "pass",
+          "service_name": "auth",
+          "keepalive_pool": {
+            "idle_timeout": 60,
+            "requests": 1000,
+            "size": 320
+          }
+        }
+      },
+      "put": {
+        "operationId": "mediaPUT",
+        "parameters": [{
+          "description": "params in path",
+          "in": "path",
+          "name": "params",
+          "required": true,
+          "schema": {
+            "type": "string"
+          }
+        }, {
+          "description": "params in path",
+          "in": "path",
+          "name": "params",
+          "required": true,
+          "schema": {
+            "type": "string"
+          }
+        }],
+        "requestBody": {},
+        "responses": {
+          "default": {
+            "description": ""
+          }
+        },
+        "security": [],
+        "x-apisix-enable_websocket": false,
+        "x-apisix-id": "449810083157640056",
+        "x-apisix-priority": 0,
+        "x-apisix-status": 1,
+        "x-apisix-upstream": {
+          "timeout": {
+            "connect": 6,
+            "send": 6,
+            "read": 6
+          },
+          "type": "roundrobin",
+          "scheme": "http",
+          "discovery_type": "nacos",
+          "discovery_args": {
+            "group_name": "default"
+          },
+          "pass_host": "pass",
+          "service_name": "auth",
+          "keepalive_pool": {
+            "idle_timeout": 60,
+            "requests": 1000,
+            "size": 320
+          }
+        }
+      }
+    }
+  }
+}
