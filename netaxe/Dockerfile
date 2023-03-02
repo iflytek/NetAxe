@@ -12,11 +12,7 @@ RUN set -ex \
     && wget -O /etc/yum.repos.d/CentOS-Base.repo http://mirrors.aliyun.com/repo/Centos-7.repo \
     && sed -i 's/gpgcheck=1/gpgcheck=0/g' /etc/yum.repos.d/CentOS-Base.repo \
     && yum clean all \
-    && yum makecache \
-    && mv /etc/yum.repos.d/epel.repo /etc/yum.repos.d/epel.repo.bak \
-    && wget -O /etc/yum.repos.d/epel.repo http://mirrors.aliyun.com/repo/epel-7.repo \
-    && yum clean all \
-    && yum makecache 
+    && yum makecache
 # 系统环境依赖配置
 # 目录设置
 WORKDIR /netaxe
