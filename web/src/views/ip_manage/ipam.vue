@@ -1255,7 +1255,7 @@
 
             function AddRootConfirm() {
                 //console.log(add_root_form.value)
-                add_root_show.value = false
+                // add_root_show.value = false
                 const post_data = new FormData()
                 var master_subnet_id = add_root_form.value['master_subnet_id'].split('-')[1]
                 // if (master_subnet_id === 'ROOT') {
@@ -1272,9 +1272,17 @@
                     data: post_data,
                 }).then((res) => {
                     //console.log(res)
-                    add_root_show.value = false
-                    message.success('新增根网段成功')
-                    get_tree_data()
+
+                    if(res.code===200){
+                        message.success(res.message)
+                        add_root_show.value = false
+                        get_tree_data()
+                    }else{
+                        message.error(res.message)
+                        add_root_show.value = true
+                    }
+
+
                 })
             }
 
