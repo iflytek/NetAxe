@@ -6,7 +6,9 @@
 FROM registry.cn-hangzhou.aliyuncs.com/netaxe/netaxe-backend:1.0.5
 
 # 更新pip版本
-RUN pip3 install -i https://pypi.doubanio.com/simple/ uwsgi --upgrade pip
+RUN pip3 install -i https://mirrors.aliyun.com/pypi/simple/ uwsgi --upgrade pip
+RUN pip3 install -i https://mirrors.aliyun.com/pypi/simple/ --upgrade wheel
+RUN pip3 install -i https://mirrors.aliyun.com/pypi/simple/ --upgrade setuptools
 
 COPY . /home/netaxe
 # 再次切换工作目录为Django主目录
