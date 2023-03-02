@@ -1,6 +1,6 @@
 import json
 from collections import OrderedDict
-
+import ipaddr
 import netaddr
 from celery import current_app
 from django.db.models import Sum
@@ -379,23 +379,40 @@ class IpAmHandelView(APIView):
                     "description": add_description,
                     "master_subnet": master_subnet_id
                 }
+                subnet_list = [str(i.subnet) for i in Subnet.objects.all()]
                 if add_master_id == "0":
                     add_kwargs.pop('master_subnet')
+                    if add_subnet in subnet_list:
+                        res = {'message': '新增网段失败,当前新增网段已经存在', 'code': 400, }
+                    else:
+                        Subnet.objects.update_or_create(**add_kwargs)
+                        res = {'message': '新增网段成功', 'code': 200, }
+                    return JsonResponse(res, safe=True)
+                else:
+                    master_subnet = Subnet.objects.get(id=add_master_id)
+                    if str(master_subnet.subnet) == str(add_subnet):
+                        res = {'message': '新增网段失败,请校验参数,不能新建跟父节点相同的子网段', 'code': 400, }
+                        return JsonResponse(res, safe=True)
+                    else:
 
+                        master_subnet_detail = ipaddr.IPv4Network(str(master_subnet.subnet))
+                        add_subnet_detail = ipaddr.IPv4Network(str(str(add_subnet)))
+                        if add_subnet_detail in master_subnet_detail:
+                            if add_subnet in subnet_list:
+                                res = {'message': '新增网段失败,当前新增网段已经存在', 'code': 400, }
+                            else:
+                                Subnet.objects.update_or_create(**add_kwargs)
+                                res = {'message': '新增网段成功', 'code': 200, }
+                        else:
+                            res = {'message': '新增网段失败,请校验网段归属', 'code': 400, }
+                        return JsonResponse(res, safe=True)
                 # print(add_kwargs)
                 # 校验是否有归属关系
-                master_subnet = Subnet.objects.get(id=add_master_id)
-                merge_subnet_list = [netaddr.IPNetwork(str(master_subnet.subnet)), netaddr.IPNetwork(str(add_subnet))]
-                merge_subnet_len = netaddr.cidr_merge(merge_subnet_list)
-                print(merge_subnet_list)
-                print(merge_subnet_len)
-                if len(merge_subnet_len) == 1:
 
-                    Subnet.objects.update_or_create(**add_kwargs)
-                    res = {'message': '新增网段成功', 'code': 200, }
-                else:
-                    res = {'message': '新增网段失败,请校验网段归属', 'code': 400, }
-                return JsonResponse(res, safe=True)
+                # print(str(master_subnet.subnet))
+                # print(str(add_subnet))
+                # print(str(add_subnet) == str(add_subnet))
+                # 判断是否和父节点一致
             except Exception as e:
                 res = {'message': e, 'code': 400, }
                 return JsonResponse(res, safe=True)
