@@ -34,8 +34,8 @@ RUN set -ex \
     && rm -rf /netaxe/Python-3.9.11* \
     && yum install -y python-pip \
     && yum install -y python-devel \
+    && yum install -y python39-devel \
     && yum install -y openldap-devel \
-    && yum install -y python36-devel \
     && yum install -y git
 # 设置默认为python3
 RUN set -ex \
