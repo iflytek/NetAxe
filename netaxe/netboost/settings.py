@@ -43,7 +43,6 @@ INSTALLED_APPS = [
     "captcha",
     "channels",
     "guardian",
-    "drf_yasg",
     "multi_captcha_admin",
     "django.contrib.admin",
     "django.contrib.auth",
