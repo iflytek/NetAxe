@@ -121,7 +121,7 @@ class H3cProc(BaseConn):
             SrcZoneItem: 'taibao'
         },
         DestZoneList: {
-            DestZoneItem: 'iflytek'
+            DestZoneItem: 'aaa'
         },
         DestAddrList: {
             DestAddrItem: 'Server-AIaaS'

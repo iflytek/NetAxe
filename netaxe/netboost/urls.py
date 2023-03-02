@@ -16,10 +16,10 @@ Including another URLconf
 from django.views.static import serve
 
 from netboost import views, settings
-from drf_yasg import openapi
+# from drf_yasg import openapi
 from django.contrib import admin
 from django.urls import include, path, re_path
-from drf_yasg.views import get_schema_view
+# from drf_yasg.views import get_schema_view
 from rest_framework import permissions
 from apps.system.views.login import (
     LoginView,
@@ -31,14 +31,14 @@ from rest_framework_simplejwt.views import (
     TokenObtainPairView
 )
 
-schema_view = get_schema_view(
-    openapi.Info(
-        title="Snippets API",
-        default_version="v1",
-    ),
-    public=True,
-    permission_classes=[permissions.AllowAny, ],
-)
+# schema_view = get_schema_view(
+#     openapi.Info(
+#         title="Snippets API",
+#         default_version="v1",
+#     ),
+#     public=True,
+#     permission_classes=[permissions.AllowAny, ],
+# )
 
 urlpatterns = [
     path('admin/', admin.site.urls),

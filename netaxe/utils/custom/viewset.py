@@ -8,8 +8,8 @@
 """
 from django.http import JsonResponse
 from django_filters import rest_framework
-from drf_yasg import openapi
-from drf_yasg.utils import swagger_auto_schema
+# from drf_yasg import openapi
+# from drf_yasg.utils import swagger_auto_schema
 from rest_framework import viewsets, filters, status
 from rest_framework.decorators import action
 from rest_framework.viewsets import ModelViewSet
@@ -103,12 +103,12 @@ class CustomModelViewSet(ModelViewSet,QueryArgumentsMixin):
         return DetailResponse(data=[], msg="删除成功")
 
 
-    keys = openapi.Schema(description='主键列表',type=openapi.TYPE_ARRAY,items=openapi.TYPE_STRING)
-    @swagger_auto_schema(request_body=openapi.Schema(
-        type=openapi.TYPE_OBJECT,
-        required=['keys'],
-        properties={'keys': keys}
-    ), operation_summary='批量删除')
+    # keys = openapi.Schema(description='主键列表',type=openapi.TYPE_ARRAY,items=openapi.TYPE_STRING)
+    # @swagger_auto_schema(request_body=openapi.Schema(
+    #     type=openapi.TYPE_OBJECT,
+    #     required=['keys'],
+    #     properties={'keys': keys}
+    # ), operation_summary='批量删除')
     @action(methods=['delete'],detail=False)
     def multiple_delete(self,request,*args,**kwargs):
         '''
