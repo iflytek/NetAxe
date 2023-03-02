@@ -34,23 +34,6 @@
         </n-descriptions-item>
       </n-descriptions>
     </n-card>
-    <n-modal
-      v-model:show="showContact"
-      display-directive="show"
-      :style="{ width: state.device === 'mobile' ? '80%' : '40%' }"
-    >
-      <n-card title="获取源码" :bordered="false" preset="card">
-        <template #header-extra>
-          <n-icon size="20">
-            <Close @click="showContact = false" />
-          </n-icon>
-        </template>
-        <div class="flex flex-col items-center justify-center">
-          <img src="/src/assets/qrcode.jpg" />
-          <div>关注公众号：<strong>知码前端</strong>获取源码</div>
-        </div>
-      </n-card>
-    </n-modal>
   </n-space>
 </template>
 
