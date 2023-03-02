@@ -8,14 +8,15 @@ FROM centos:centos7
 # 切换国内阿里YUM源镜像
 RUN set -ex \
     && yum install -y wget \
-    && cp /etc/yum.repos.d/CentOS-Base.repo /etc/yum.repos.d/CentOS-Base.repo.bak \
+    && mv /etc/yum.repos.d/CentOS-Base.repo /etc/yum.repos.d/CentOS-Base.repo.bak \
     && wget -O /etc/yum.repos.d/CentOS-Base.repo http://mirrors.aliyun.com/repo/Centos-7.repo \
     && sed -i 's/gpgcheck=1/gpgcheck=0/g' /etc/yum.repos.d/CentOS-Base.repo \
-    && sed -i 's/$releasever/7/g' /etc/yum.repos.d/CentOS-Base.repo \
     && yum clean all \
     && yum makecache \
-    && yum -y update \
-    && yum clean all
+    && mv /etc/yum.repos.d/epel.repo /etc/yum.repos.d/epel.repo.bak \
+    && wget -O /etc/yum.repos.d/epel.repo http://mirrors.aliyun.com/repo/epel-7.repo \
+    && yum clean all \
+    && yum makecache 
 # 系统环境依赖配置
 # 目录设置
 WORKDIR /netaxe
