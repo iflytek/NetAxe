@@ -19,7 +19,7 @@ WORKDIR /home/netaxe
 # 指定setuptools的版本，必须指定，新版本有兼容问题
 RUN set -ex \
     && /usr/local/python3/bin/pip3 install setuptools_scm -i https://mirrors.aliyun.com/pypi/simple/ \
-    && /usr/local/python3/bin/pip3 install --upgrade pip setuptools==45.2.0 -i https://mirrors.aliyun.com/pypi/simple/ \
+#     && /usr/local/python3/bin/pip3 install --upgrade pip setuptools==45.2.0 -i https://mirrors.aliyun.com/pypi/simple/ \
     &&/usr/local/python3/bin/pip3 install -r requirements.txt -i https://mirrors.aliyun.com/pypi/simple/ \
     && rm -rf /home/netaxe/* \
     && rm -rf /var/cache/yum/*
