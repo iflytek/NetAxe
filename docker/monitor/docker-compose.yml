@@ -1,0 +1,32 @@
+version: "3.2"
+networks:
+  netaxe-monitor:
+    driver: bridge
+    ipam:
+      config:
+        - subnet: 192.168.15.0/24
+
+services:
+  prometheus:
+    image: prom/prometheus:v2.25.0
+    container_name: prometheus
+    restart: always
+    volumes:
+      - ./conf/prometheus_conf/prometheus.yml:/etc/prometheus/prometheus.yml
+    ports:
+      - "9090:9090"
+    networks:
+      - netaxe-monitor
+
+  grafana:
+    image: grafana/grafana:7.3.7
+    container_name: grafana
+    restart: always
+    ports:
+      - "3000:3000"
+    volumes:
+      - "./conf/grafana_conf/provisioning:/etc/grafana/provisioning"
+      - "./conf/grafana_conf/dashboards:/var/lib/grafana/dashboards"
+      - "./conf/grafana_conf/config/grafana.ini:/etc/grafana/grafana.ini"
+    networks:
+      - netaxe-monitor
