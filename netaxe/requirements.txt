@@ -66,3 +66,4 @@ PyDriller==2.1
 supervisor==4.2.4
 ipaddr==2.2.0
 netaddr==0.8.0
+flower==0.9.3
