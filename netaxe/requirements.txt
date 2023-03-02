@@ -65,4 +65,4 @@ channels-redis==4.0.0
 PyDriller==2.1
 supervisor==4.2.4
 ipaddr==2.2.0
-netaddr==0.7.19
+netaddr==0.8.0
