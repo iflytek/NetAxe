@@ -11,7 +11,7 @@ RUN set -ex \
     && cp /etc/yum.repos.d/CentOS-Base.repo /etc/yum.repos.d/CentOS-Base.repo.bak \
     && wget -O /etc/yum.repos.d/CentOS-Base.repo http://mirrors.aliyun.com/repo/Centos-7.repo \
     && sed -i 's/gpgcheck=1/gpgcheck=0/g' /etc/yum.repos.d/CentOS-Base.repo \
-    && sed -i '%s/$releasever/7/g' /etc/yum.repos.d/CentOS-Base.repo \
+    && sed -i 's/$releasever/7/g' /etc/yum.repos.d/CentOS-Base.repo \
     && yum clean all \
     && yum makecache \
     && yum -y update \
