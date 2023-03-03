@@ -60,10 +60,10 @@ services:
       - ../../netaxe:/home/netaxe
     networks:
       - netops-axe
-  celery-netaxe_ipam:
+  celery-netaxe-ipam:
     image: registry.cn-hangzhou.aliyuncs.com/netaxe/netaxe-backend:1.0.11
-    container_name: celery-netaxe_ipam
-    command: sh start.sh netaxe_ipam
+    container_name: celery-netaxe-ipam
+    command: sh start.sh ipam
     depends_on:
       - redis-cache
       - netaxe-server
