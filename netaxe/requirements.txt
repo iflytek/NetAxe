@@ -1,5 +1,5 @@
 amqp==2.6.1
-asgiref==3.3.2
+asgiref==3.2.10
 billiard==3.6.4.0
 boto3==1.23.10
 botocore==1.26.10
