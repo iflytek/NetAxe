@@ -1,9 +1,9 @@
-amqp==2.6.1
+amqp==5.1.1
 asgiref==3.4.0
 billiard==3.6.4.0
 boto3==1.23.10
 botocore==1.26.10
-celery==4.4.7
+celery==5.2.7
 certifi==2022.12.7
 charset-normalizer==2.0.12
 Django==3.2.17
@@ -13,7 +13,7 @@ idna==3.4
 importlib-metadata==4.8.3
 jmespath==0.10.0
 jsonschema==2.6.0
-kombu==4.6.11
+kombu==5.2.4
 Mako==1.1.6
 MarkupSafe==2.0.1
 prometheus-client==0.9.0
@@ -21,7 +21,7 @@ PyMySQL==1.0.2
 pyparsing==2.4.7
 python-crontab==2.7.1
 python-dateutil==2.8.2
-pytz==2019.3
+pytz==2022.7.1
 redis==4.5.1
 requests==2.27.1
 django-simple-captcha==0.5.17
@@ -66,4 +66,4 @@ PyDriller==2.1
 supervisor==4.2.4
 ipaddr==2.2.0
 netaddr==0.8.0
-flower==0.9.3
+flower==1.2.0
