@@ -351,7 +351,7 @@ AUTHENTICATION_BACKENDS = (
     # "django_auth_ldap.backend.LDAPBackend",
     # "utils.custom.backends.CustomBackend",
     "django.contrib.auth.backends.ModelBackend",
-    "guardian.backends.ObjectPermissionBackend",  # 这是guardian的
+    # "guardian.backends.ObjectPermissionBackend",  # 这是guardian的
 )
 
 # ================================================= #
