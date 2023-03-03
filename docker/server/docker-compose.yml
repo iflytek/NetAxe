@@ -35,7 +35,7 @@ services:
       - netaxe-server
     networks:
       - netops-axe
-      
+
   netaxe-web:
     image: registry.cn-hangzhou.aliyuncs.com/netaxe/netaxe-web:1.0.4
     build: 
@@ -48,7 +48,7 @@ services:
       - netaxe-server
     networks:
       - netops-axe
-
+      
   celery-default:
     image: registry.cn-hangzhou.aliyuncs.com/netaxe/netaxe-backend:1.0.11
     container_name: celery-default
@@ -60,9 +60,10 @@ services:
       - ../../netaxe:/home/netaxe
     networks:
       - netops-axe
-  celery-netaxe-ipam:
+      
+  celery-ipam:
     image: registry.cn-hangzhou.aliyuncs.com/netaxe/netaxe-backend:1.0.11
-    container_name: celery-netaxe-ipam
+    container_name: celery-ipam
     command: sh start.sh ipam
     depends_on:
       - redis-cache
@@ -71,6 +72,7 @@ services:
       - ../../netaxe:/home/netaxe
     networks:
       - netops-axe
+
   celery-config:
     image: registry.cn-hangzhou.aliyuncs.com/netaxe/netaxe-backend:1.0.11
     container_name: celery-config
@@ -93,7 +95,6 @@ services:
     networks:
       - netops-axe
 
-  # 新增nacos
   nacos:
     image: registry.cn-hangzhou.aliyuncs.com/netaxe/nacos-server:2.0.3
     container_name: nacos
