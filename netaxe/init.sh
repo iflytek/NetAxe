@@ -7,7 +7,7 @@
 # pip3 install -r requirements.txt -i https://mirrors.aliyun.com/pypi/simple/
 
 python3 manage.py migrate users
-
+python3 manage.py migrate
 python3 manage.py init_asset # 资产初始化
 python3 manage.py init_collect # 采集方案初始化
 python3 manage.py init_system_menu # 系统菜单初始化

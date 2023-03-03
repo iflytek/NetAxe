@@ -243,12 +243,10 @@ CELERY_TASK_RESULT_EXPIRES = 7200
 CELERY_TASK_TIME_LIMIT = 7200
 # 单个任务的运行时间不超过此值，否则会被SIGKILL 信号杀死
 CELERY_ENABLE_UTC = True
-CELERY_TIMEZONE = "UTC"
+
 CELERY_WORKER_CONCURRENCY = 40  # celery worker的并发数
-# 也是命令行-c指定的数目,事实上实践发现并不是worker也多越好,保证任务不堆积,加上一定新增任务的预留就可
-# 官方用来修复CELERY_ENABLE_UTC=False and USE_TZ = False 时时间比较错误的问题；
-# 详情见：https://github.com/celery/django-celery-beat/pull/216/files
 DJANGO_CELERY_BEAT_TZ_AWARE = False
+CELERY_TIMEZONE = "Asia/Shanghai"  # celery 时区问题
 
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/4.0/howto/static-files/

@@ -18,7 +18,6 @@ from django.utils import timezone
 from kombu import Queue, Exchange
 from celery import Celery, platforms, Task
 
-platforms.C_FORCE_ROOT = True
 os.environ.setdefault('DJANGO_SETTINGS_MODULE', 'netboost.settings')
 
 app = Celery('netboost')
@@ -41,7 +40,7 @@ app.conf.task_queues = (
     Queue('config', config_exchange, routing_key='config'),
     Queue('netaxe_ipam', ipam_exchange, routing_key='netaxe_ipam'),
 )
-
+platforms.C_FORCE_ROOT = True
 app.autodiscover_tasks(lambda: [n.name for n in apps.get_app_configs()])
 
 
