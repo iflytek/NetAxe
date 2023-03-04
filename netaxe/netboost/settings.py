@@ -247,7 +247,7 @@ CELERY_ENABLE_UTC = True
 CELERY_WORKER_CONCURRENCY = 40  # celery worker的并发数
 DJANGO_CELERY_BEAT_TZ_AWARE = False
 CELERY_TIMEZONE = "Asia/Shanghai"  # celery 时区问题
-
+CELERY_TASK_TRACK_STARTED=True
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/4.0/howto/static-files/
 STATICFILES_DIRS = [

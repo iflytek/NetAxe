@@ -34,12 +34,12 @@ const asynComponents = loadComponents()
 // 获取路由
 function getRoutes() {
   return get({
-      url: baseAddress + getMenuListByRole,
-      method: 'GET',
-      data: {parent__isnull:true}
-    }).then((res: any) => {
-      return generatorRoutes(res.results)
-    })
+    url: baseAddress + getMenuListByRole,
+    method: 'GET',
+    data: { parent__isnull: true },
+  }).then((res: any) => {
+    return generatorRoutes(res.results)
+  })
 }
 
 function getComponent(it: OriginRoute) {
@@ -108,13 +108,13 @@ router.beforeEach(async (to) => {
     } else {
       const isEmptyRoute = layoutStore.isEmptyPermissionRoute()
       if (isEmptyRoute) {
-        // 加载路由
-        const accessRoutes: Array<RouteRecordRaw> = []
-        const tempRoutes = await getRoutes()
-        accessRoutes.push(...tempRoutes)
-
-        if (localStorage.getItem('is_superuser') === 'true'){
-          const system_data = {
+        try {
+          // 加载路由
+          const accessRoutes: Array<RouteRecordRaw> = []
+          const tempRoutes = await getRoutes()
+          accessRoutes.push(...tempRoutes)
+          if (localStorage.getItem('is_superuser') === 'true') {
+            const system_data = {
               path: '/system',
               name: 'System',
               component: Layout,
@@ -166,19 +166,25 @@ router.beforeEach(async (to) => {
                 },
               ],
             }
-            accessRoutes.push(system_data)}
-
-        const mapRoutes = mapTwoLevelRouter(accessRoutes)
-        mapRoutes.forEach((it: any) => {
-          router.addRoute(it)
-        })
-        router.addRoute({
-          path: '/:pathMatch(.*)*',
-          redirect: '/404',
-          hidden: true,
-        } as RouteRecordRaw)
-        layoutStore.initPermissionRoute([...constantRoutes, ...accessRoutes])
-        return { ...to, replace: true }
+            accessRoutes.push(system_data)
+          }
+          const mapRoutes = mapTwoLevelRouter(accessRoutes)
+          mapRoutes.forEach((it: any) => {
+            router.addRoute(it)
+          })
+          router.addRoute({
+            path: '/:pathMatch(.*)*',
+            redirect: '/404',
+            hidden: true,
+          } as RouteRecordRaw)
+          layoutStore.initPermissionRoute([...constantRoutes, ...accessRoutes])
+          return { ...to, replace: true }
+        } catch {
+          return {
+            path: '/login',
+            query: { redirect: to.fullPath },
+          }
+        }
       } else {
         return true
       }

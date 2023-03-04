@@ -79,7 +79,7 @@ def clear_his_collect_res():
     return
 
 
-@shared_task(base=AxeTask, once={'graceful': True})
+@shared_task(base=AxeTask)
 def interface_used(device_ip=None):
     connections.close_all()
     """
@@ -518,7 +518,7 @@ def ping(host):
         return False
 
 
-@shared_task(base=AxeTask, once={'graceful': True})
+@shared_task(base=AxeTask)
 def collect_device(**kwargs):
     connections.close_all()
     hostip = kwargs['manage_ip']  # 设备管理IP地址
@@ -561,7 +561,7 @@ def collect_device(**kwargs):
 
 
 # 通用信息采集主调度任务
-@shared_task(base=AxeTask, once={'graceful': True})
+@shared_task(base=AxeTask)
 def collect_device_main(**kwargs):
     logger.info('开始执行信息采集主调度任务')
     MainIn.cmdb_to_mongo()
