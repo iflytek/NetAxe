@@ -26,6 +26,7 @@ netaxe/apps/route_backend/__pycache__/
 netaxe/__pycache__/
 netaxe/media/automation
 netaxe/media/device_config/current-configuration
+netaxe/media/ip_address_recycle/
 docker/server/logs/
 docker/databases/init/
 docker/databases/mysql_data/
