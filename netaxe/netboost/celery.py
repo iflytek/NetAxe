@@ -12,15 +12,26 @@
 """
 from __future__ import absolute_import, unicode_literals
 import os
+from celery_once import QueueOnce
 from django.apps import apps
 # set the default Django settings module for the 'celery' program.
 from django.utils import timezone
 from kombu import Queue, Exchange
-from celery import Celery, platforms, Task
+from celery import Celery, platforms
+from django.conf import settings
 
 os.environ.setdefault('DJANGO_SETTINGS_MODULE', 'netboost.settings')
 
 app = Celery('netboost')
+
+app.conf.ONCE = {
+  'backend': 'celery_once.backends.Redis',
+  'settings': {
+    'url': settings.CELERY_ONCE_URL,
+    'default_timeout': 60 * 60
+  }
+}
+
 app.now = timezone.now
 app.config_from_object('django.conf:settings', namespace='CELERY')
 
@@ -44,7 +55,7 @@ platforms.C_FORCE_ROOT = True
 app.autodiscover_tasks(lambda: [n.name for n in apps.get_app_configs()])
 
 
-class AxeTask(Task):
+class AxeTask(QueueOnce):
 
     # def run(self, *args, **kwargs):
     #     pass

@@ -518,7 +518,7 @@ def ping(host):
         return False
 
 
-@shared_task(base=AxeTask)
+@shared_task(base=AxeTask, once={'graceful': True})
 def collect_device(**kwargs):
     connections.close_all()
     hostip = kwargs['manage_ip']  # 设备管理IP地址
@@ -561,7 +561,7 @@ def collect_device(**kwargs):
 
 
 # 通用信息采集主调度任务
-@shared_task(base=AxeTask, max_retries=1, ignore_result=True)
+@shared_task(base=AxeTask, once={'graceful': True})
 def collect_device_main(**kwargs):
     logger.info('开始执行信息采集主调度任务')
     try:
