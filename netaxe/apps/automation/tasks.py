@@ -656,6 +656,9 @@ def collect_device_main(**kwargs):
                 '\n'.join(ping_result), int(total_time))
     logger.info(send_message)
     datas_to_cache()
-    standard_analysis_main()
-    interface_used.apply_async()
+    try:
+        standard_analysis_main()
+        interface_used.apply_async()
+    except Exception as e:
+        pass
     return
