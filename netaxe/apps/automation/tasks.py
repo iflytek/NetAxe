@@ -577,7 +577,10 @@ def collect_device_main(**kwargs):
     net_tower_tasks = []  # 寻觅任务id集合
     ping_result = []  # ping不通设备存储
     # 清空所有采集数据
-    clear_his_collect_res()
+    try:
+        clear_his_collect_res()
+    except Exception as e:
+        pass
     start_time = time.time()
     # 批量下发任务
     for host in hosts:
