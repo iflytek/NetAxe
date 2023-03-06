@@ -561,10 +561,13 @@ def collect_device(**kwargs):
 
 
 # 通用信息采集主调度任务
-@shared_task(base=AxeTask)
+@shared_task(base=AxeTask, max_retries=1, ignore_result=True)
 def collect_device_main(**kwargs):
     logger.info('开始执行信息采集主调度任务')
-    MainIn.cmdb_to_mongo()
+    try:
+        MainIn.cmdb_to_mongo()
+    except Exception as e:
+        pass
     if kwargs:
         hosts = get_device_info_v2(**kwargs)
     else:

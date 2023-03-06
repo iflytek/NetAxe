@@ -46,11 +46,11 @@ app.autodiscover_tasks(lambda: [n.name for n in apps.get_app_configs()])
 
 class AxeTask(Task):
 
-    def run(self, *args, **kwargs):
-        pass
+    # def run(self, *args, **kwargs):
+    #     pass
 
-    max_retries = 1
-    autoretry_for = (Exception, KeyError, RuntimeError)
+    max_retries = 3
+    # autoretry_for = (Exception, KeyError, RuntimeError)
     retry_kwargs = {'max_retries': 1}
     retry_backoff = False
 
