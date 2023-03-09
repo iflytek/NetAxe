@@ -194,10 +194,10 @@ def ip_am_update_main():
         if ip_info['ipaddress']:
             # print(ip_info['ipaddress'])
             # 异步函数方式-验证中
-            # ip_am_update_tasks.append(
-            #     ip_am_update_sub_task.apply_async(args=(ip_info['ipaddress'],), queue='netaxe_ipam'))
+            ip_am_update_tasks.append(
+                ip_am_update_sub_task.apply_async(args=(ip_info['ipaddress'],), queue='ipam'))
 
-            ip_am_update_sub_task(ip_info['ipaddress'])
+            # ip_am_update_sub_task(ip_info['ipaddress'])
     print("子任务下发完毕")
 
     # 等待子任务全部执行结束后执行下一步
