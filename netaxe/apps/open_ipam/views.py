@@ -22,13 +22,14 @@ from rest_framework.utils.urls import replace_query_param, remove_query_param
 from rest_framework.views import APIView
 
 from netboost.celery import app
-from .tasks import get_all_tasks
+# from .tasks import get_all_tasks
 from .models import Subnet, IpAddress, TagsModel
 from .serializers import HostsResponseSerializer, SubnetSerializer, IpAddressSerializer, \
     PeriodicTaskSerializer, IntervalScheduleSerializer, TagsModelSerializer
 from utils.custom.pagination import LargeResultsSetPagination
 from utils.custom.viewset import CustomViewBase
 from utils.ipam_utils import IpAmForNetwork
+# from ..route_backend.tasks import get_tasks
 
 
 class HostsResponse(object):
@@ -418,58 +419,58 @@ class IpAmHandelView(APIView):
                 return JsonResponse(res, safe=True)
 
 
-# 作业中心taskList
-class JobCenterView(APIView):
-    def get(self, request):
-        # Operationinfo = 'None'
-        get_current_tasks = request.GET.get('current_tasks')
-        get_crontab_schedules = request.GET.get('crontab_schedules')
-        get_queues = request.GET.get('get_queues')
-        celery_app = current_app
-        if get_current_tasks:
-            res = get_all_tasks()
-            # print(res.get())
-            # while True:
-            #     if res.ready():
-            #         result = res.get()
-            #         break
-            result = json.loads(res)
-            return JsonResponse(
-                {'code': 200, 'data': result['result'], 'count': len(result['result'])})
-        if get_crontab_schedules:
-            from django.core import serializers
-            crontab_schedules = serializers.serialize("json", CrontabSchedule.objects.all())
-            return JsonResponse(
-                {'code': 200, 'data': json.loads(crontab_schedules), 'count': len(json.loads(crontab_schedules))})
-        if get_queues:
-            queues_list = [queue.name for queue in app.conf.task_queues]
-            return JsonResponse({'code': 200, 'data': queues_list, 'count': len(queues_list)})
-
-    def post(self, request):
-        """ run tasks"""
-        celery_app = current_app
-        f = request.POST
-        f = json.loads(f['data'])
-        taskname = f['task']
-        args = f['args']
-        kwargs = f['kwargs']
-        queue = f['queue']
-        celery_app.loader.import_default_modules()
-        tasks = [(celery_app.tasks.get(taskname),
-                  loads(args),
-                  loads(kwargs),
-                  queue)]
-        if any(t[0] is None for t in tasks):
-            for i, t in enumerate(tasks):
-                if t[0] is None:
-                    break
-            return JsonResponse({'code': 400, 'data': None}, safe=False)
-        task_ids = [task.apply_async(args=args, kwargs=kwargs, queue=queue)
-                    if queue and len(queue)
-                    else task.apply_async(args=args, kwargs=kwargs)
-                    for task, args, kwargs, queue in tasks]
-        if task_ids[0] == None:
-            return JsonResponse({'code': 400, 'data': '执行失败'}, safe=False)
-        #  list:<class 'celery.result.AsyncResult'>
-        # print(task_ids[0],str(task_ids[0]))
-        return JsonResponse({'code': 200, 'data': str(task_ids[0])}, safe=False)
+# # 作业中心taskList
+# class JobCenterView(APIView):
+#     def get(self, request):
+#         # Operationinfo = 'None'
+#         get_current_tasks = request.GET.get('current_tasks')
+#         get_crontab_schedules = request.GET.get('crontab_schedules')
+#         get_queues = request.GET.get('get_queues')
+#         celery_app = current_app
+#         if get_current_tasks:
+#             res = get_tasks()
+#             # print(res.get())
+#             # while True:
+#             #     if res.ready():
+#             #         result = res.get()
+#             #         break
+#             result = json.loads(res)
+#             return JsonResponse(
+#                 {'code': 200, 'data': result['result'], 'count': len(result['result'])})
+#         if get_crontab_schedules:
+#             from django.core import serializers
+#             crontab_schedules = serializers.serialize("json", CrontabSchedule.objects.all())
+#             return JsonResponse(
+#                 {'code': 200, 'data': json.loads(crontab_schedules), 'count': len(json.loads(crontab_schedules))})
+#         if get_queues:
+#             queues_list = [queue.name for queue in app.conf.task_queues]
+#             return JsonResponse({'code': 200, 'data': queues_list, 'count': len(queues_list)})
+#
+#     def post(self, request):
+#         """ run tasks"""
+#         celery_app = current_app
+#         f = request.POST
+#         f = json.loads(f['data'])
+#         taskname = f['task']
+#         args = f['args']
+#         kwargs = f['kwargs']
+#         queue = f['queue']
+#         celery_app.loader.import_default_modules()
+#         tasks = [(celery_app.tasks.get(taskname),
+#                   loads(args),
+#                   loads(kwargs),
+#                   queue)]
+#         if any(t[0] is None for t in tasks):
+#             for i, t in enumerate(tasks):
+#                 if t[0] is None:
+#                     break
+#             return JsonResponse({'code': 400, 'data': None}, safe=False)
+#         task_ids = [task.apply_async(args=args, kwargs=kwargs, queue=queue)
+#                     if queue and len(queue)
+#                     else task.apply_async(args=args, kwargs=kwargs)
+#                     for task, args, kwargs, queue in tasks]
+#         if task_ids[0] == None:
+#             return JsonResponse({'code': 400, 'data': '执行失败'}, safe=False)
+#         #  list:<class 'celery.result.AsyncResult'>
+#         # print(task_ids[0],str(task_ids[0]))
+#         return JsonResponse({'code': 200, 'data': str(task_ids[0])}, safe=False)
