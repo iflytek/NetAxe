@@ -774,7 +774,7 @@ class IpamOps(object):
         log_time = datetime.now().strftime("%Y-%m-%d")
         my_mongo = MongoOps(db='IPAMData', coll='netaxe_ipam_update_ip')
         query_tmp = my_mongo.find(query_dict={'update_ip': ip})
-        print(query_tmp)
+        # print(query_tmp)
         if query_tmp:
             if query_tmp[0]['log_time'] != log_time:
                 return 'update', my_mongo.update(filter={'update_ip': ip}, update={"$set": {'log_time': log_time}})

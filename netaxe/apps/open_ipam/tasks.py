@@ -32,7 +32,8 @@ def write_log(filename, datas):
 
 
 @shared_task(base=AxeTask, once={'graceful': True})
-def ip_am_update_sub_task(ip):
+def ip_am_update_sub_task(**kwargs):
+    ip = kwargs['ip']
     # 获取地址表实例
     ip_address_model = IpAddress
     # 文件名-操作失败的IP地址写入文件中
@@ -154,7 +155,7 @@ def ip_am_update_sub_task(ip):
             # ip_update_else_instance.bgbu.set(bgbu_id_list)
             ip_update_else_instance.save()
 
-    return
+    return "OK"
 
 
 # IPAM地址全网更新main
@@ -179,9 +180,13 @@ def ip_am_update_main():
     for ip_info in total_ip:
         if ip_info['ipaddress']:
             # print(ip_info['ipaddress'])
+            tmp_dict = {
+                "ip":ip_info['ipaddress']
+            }
+
             # 异步函数方式-验证中
             ip_am_update_tasks.append(
-                ip_am_update_sub_task.apply_async(args=(ip_info['ipaddress'],), queue='ipam'))
+                ip_am_update_sub_task.apply_async(kwargs=tmp_dict, queue='ipam'))
 
             # ip_am_update_sub_task(ip_info['ipaddress'])
     print("子任务下发完毕")
@@ -200,7 +205,7 @@ def ip_am_update_main():
     ip_update_counts = IpamOps.get_coll_account(coll='netaxe_ipam_update_ip')  # 更新地址表
 
     # # 发送邮件和微信信息
-    send_message = 'PAM地址信息更新完成!\n新录入成功: {}个\n新录入失败: {}个\n更新成功: {}个\n总耗时: {}分钟\n'.format(
+    send_message = 'IPAM地址信息更新完成!\n新录入成功: {}个\n新录入失败: {}个\n更新成功: {}个\n总耗时: {}分钟\n'.format(
         ip_add_counts, ip_fail_counts, ip_update_counts, total_time)
 
     try:
