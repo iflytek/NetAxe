@@ -8,6 +8,7 @@ import time
 from datetime import datetime, timedelta
 import pandas as pd
 from celery import shared_task, current_app
+from django_celery_results.models import TaskResult
 
 from netboost import settings
 from netboost.celery import AxeTask
@@ -29,6 +30,9 @@ def write_log(filename, datas):
         for row in datas:
             f.write(row)
     print('Write Log Done!')
+
+
+logger = logging.getLogger('celery')
 
 
 @shared_task(base=AxeTask, once={'graceful': True})
@@ -181,7 +185,7 @@ def ip_am_update_main():
         if ip_info['ipaddress']:
             # print(ip_info['ipaddress'])
             tmp_dict = {
-                "ip":ip_info['ipaddress']
+                "ip": ip_info['ipaddress']
             }
 
             # 异步函数方式-验证中
@@ -189,29 +193,58 @@ def ip_am_update_main():
                 ip_am_update_sub_task.apply_async(kwargs=tmp_dict, queue='ipam'))
 
             # ip_am_update_sub_task(ip_info['ipaddress'])
-    print("子任务下发完毕")
-
+    logger.info("子任务下发完毕")
+    # 去除结果中的<EagerResult: None>
+    for task in ip_am_update_tasks:
+        if 'EagerResult' in str(type(task)):
+            logger.info("存在无效task")
+            ip_am_update_tasks.remove(task)
+    # 获取tasks任务数量
+    ip_am_update_tasks_counters = len(ip_am_update_tasks)
+    ip_am_update_tasks_bak = ip_am_update_tasks.copy()
     # 等待子任务全部执行结束后执行下一步
     while len(ip_am_update_tasks) != 0:
         for tasks in ip_am_update_tasks:
-            if tasks.ready():
+            try:
+                if tasks.ready():
+                    ip_am_update_tasks.remove(tasks)
+            except Exception as e:
+                logger.error(str(e))
                 ip_am_update_tasks.remove(tasks)
-    print('子任务执行完毕')
+        time.sleep(5)
+    logger.info('子任务执行完毕')
     total_time = int((time.time() - start_time) / 60)
-    print('花费总时间', total_time)
+    logger.info('花费总时间' + str(total_time))
+    FAILURE_TASK = []  # 失败任务
+    for task_id in ip_am_update_tasks_bak:
+        try:
+            task_result = TaskResult.objects.filter(task_id=task_id).values('task_args', 'task_kwargs', 'status',
+                                                                            'result')
+            task_status = list(task_result)[0]['status']  # str
+            if task_status == 'FAILURE':  # celery执行失败
+                FAILURE_TASK.append((task_id, task_status))
+                logger.error(
+                    'celery执行失败,\ntask_id:{},\ntask_status{}\n'.format(
+                        task_id, task_status))
+        except Exception as e:  # 查询task_results失败
+            FAILURE_TASK.append((task_id, e))
+            logger.error(
+                '查询task_results失败,\nTask_id:{},\nERROR:{}\n'.format(
+                    task_id, e))
+    logger.info('子任务执行结果查询结束')
 
     ip_fail_counts = IpamOps.get_coll_account(coll='netaxe_ipam_fail_ip')  # 失败地址表
     ip_add_counts = IpamOps.get_coll_account(coll='netaxe_ipam_success_ip')  # 新增地址表
     ip_update_counts = IpamOps.get_coll_account(coll='netaxe_ipam_update_ip')  # 更新地址表
 
     # # 发送邮件和微信信息
-    send_message = 'IPAM地址信息更新完成!\n新录入成功: {}个\n新录入失败: {}个\n更新成功: {}个\n总耗时: {}分钟\n'.format(
-        ip_add_counts, ip_fail_counts, ip_update_counts, total_time)
+    send_message = 'IPAM地址信息更新完成!\n新录入成功: {}个\n新录入失败: {}个\n更新成功: {}个\n总耗时: {}分钟\n失败任务{}'.format(
+        ip_add_counts, ip_fail_counts, ip_update_counts, total_time, len(FAILURE_TASK))
 
     try:
-        print(send_message)
+        logger.info(send_message)
     except Exception as e:
-        pass
+        logger.error(e)
     print("发送微信、邮件完毕")
 
     return
