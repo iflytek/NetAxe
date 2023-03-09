@@ -13,7 +13,7 @@ from netboost import settings
 from netboost.celery import AxeTask
 from .models import IpAddress, Subnet
 from utils.ipam_utils import IpAmForNetwork
-from utils.db.mongo_api import IpamOps
+from utils.db.mongo_ops import IpamOps
 from netboost.settings import BASE_DIR
 from netaddr import IPNetwork, IPSet
 
@@ -29,20 +29,6 @@ def write_log(filename, datas):
         for row in datas:
             f.write(row)
     print('Write Log Done!')
-
-
-@shared_task(base=AxeTask, once={'graceful': True})
-def get_all_tasks():
-    celery_app = current_app
-    # celery_tasks = [task for task in celery_app.tasks if not task.startswith('celery.')]
-    res = list(sorted(name for name in celery_app.tasks
-                      if not name.startswith('celery.')))
-    return json.dumps({'result': res})
-
-
-@shared_task(base=AxeTask, once={'graceful': True})
-def ipam_scan():
-    pass
 
 
 @shared_task(base=AxeTask, once={'graceful': True})
@@ -146,7 +132,7 @@ def ip_am_update_sub_task(ip):
             ip_update_6_instance = IpAddress.objects.get(id=ip_address_id)
             ip_update_6_instance.tag = 2
             ip_update_6_instance.lastOnlineTime = lastOnlineTime
-            ip_update_6_instance.description =ip_address_desc if ip_address_desc else tmp_description
+            ip_update_6_instance.description = ip_address_desc if ip_address_desc else tmp_description
             # ip_update_6_instance.bgbu.set(bgbu_id_list)
             ip_update_6_instance.save()
         if ip_address_tag == 7:  # 自定义空闲变更到未分配已使用、最近在线时间、描述信息、BgBu
@@ -229,7 +215,7 @@ def ip_am_update_main():
 # 定时回收地址
 # 讯飞云地址不回收？
 
-
+# 地址回收-目前仅保存文件-不发送邮件
 @shared_task(base=AxeTask, once={'graceful': True})
 def recycle_ip_main():
     today_date = datetime.now().strftime("%Y-%m-%d")
