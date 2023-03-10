@@ -66,6 +66,7 @@ INSTALLED_APPS = [
     "apps.route_backend.apps.RouteBackendConfig",
     "apps.int_utilization.apps.IntUtilizationConfig",
     'reversion',
+    'import_export',
     "apps.open_ipam.apps.OpenIpamConfig",
 
 ]
