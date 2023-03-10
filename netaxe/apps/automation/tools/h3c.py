@@ -9,7 +9,7 @@ import math
 import re
 import time
 from datetime import datetime
-
+from operator import methodcaller
 from django.core.cache import cache
 from ncclient.transport.errors import SessionCloseError
 from netaddr import IPNetwork, IPAddress
@@ -20,6 +20,8 @@ from utils.connect_layer.NETCONF.h3c_netconf import H3CinfoCollection, H3CSecPat
 from utils.db.mongo_ops import MongoNetOps, MongoOps
 from utils.wechat_api import send_msg_netops
 from .base_connection import BaseConn
+
+__all__ = ["H3cProc"]
 
 
 def h3c_interface_format(interface):
@@ -61,7 +63,13 @@ def h3c_speed_format(interface):
         return '40G'
 
     elif re.search(r'^(Twenty-FiveGigE)', interface):
-        return '100G'
+        return '25G'
+
+    elif re.search(r'^(TwoHundredGigE)', interface):
+        return '200G'
+
+    elif re.search(r'^(FourHundredGigE)', interface):
+        return '400G'
 
     elif re.search(r'^(HGE)', interface):
         return '100G'
@@ -110,6 +118,10 @@ class H3cProc(BaseConn):
         self.snat_data = []
         self.nat_addr_groups = {}
         self.addr_set = {}
+        self.mac_datas = []
+        self.methods = []
+        self.ntf_map = {}
+        self.device = None
 
     # 华三防火墙安全策略处理
     def h3c_secpath_sec_policy(self, datas):
@@ -121,7 +133,7 @@ class H3cProc(BaseConn):
             SrcZoneItem: 'taibao'
         },
         DestZoneList: {
-            DestZoneItem: 'aaa'
+            DestZoneItem: 'iflytek'
         },
         DestAddrList: {
             DestAddrItem: 'Server-AIaaS'
@@ -442,6 +454,7 @@ class H3cProc(BaseConn):
             tmp['src_ip'] = ''  # 单IP列表
             tmp['dst_ip'] = ''  # 单IP列表
             tmp['log'] = i['Log']
+            tmp['Count'] = i.get('Count')
             tmp['description'] = i.get('Comment')
             results.append(tmp)
         my_mongo.insert_many(results)
@@ -477,7 +490,6 @@ class H3cProc(BaseConn):
         if isinstance(res, list):
             mac_datas = []
             for i in res:
-                print('mac', i)
                 tmp = dict(
                     hostip=self.hostip,
                     hostname=self.hostname,
@@ -574,7 +586,6 @@ class H3cProc(BaseConn):
         # 会出现列表中全部都是三层route接口没有二层接口的情况，所以要判断类型
         if isinstance(res, list):
             for i in res:
-                print(i)
                 if i['interface'].startswith('BAGG'):
                     continue
                 elif i['interface'].startswith('RAGG'):
@@ -777,36 +788,57 @@ class H3cProc(BaseConn):
             print(i)
         return
 
-    def _null_proc(self, res):
+    def _version_proc(self, res):
         """
-        空处理
+        处理版本和型号
         :param res:
         :return:
         """
+        if isinstance(res, list):
+            for i in res:
+                model = Model.objects.filter(name=i['board_type'], vendor__alias='H3C')
+                if model:
+                    NetworkDevice.objects.filter(
+                        manage_ip=self.hostip,
+                        slot=int(i['slot'])).update(soft_version=i['version'],
+                                                    model=Model.objects.get(name=i['board_type'],
+                                                                            vendor__alias='H3C'))
+                else:
+                    NetworkDevice.objects.filter(
+                        manage_ip=self.hostip,
+                        slot=int(i['slot'])).update(soft_version=i['version'],
+                                                    model=Model.objects.create(name=i['board_type'],
+                                                                               vendor__alias='H3C'))
         return
 
-    # 文件解析映射
+        # 文件解析映射
+
     def path_map(self, file_name, res: list):
         fsm_map = {
-            'display_version': self._null_proc,
-            'display_irf': self._irf_proc,
-            'display_device_manuinfo': self._manuinfo_proc,
-            'display_arp': self._arp_proc,
-            'display_mac-address': self._mac_proc,
-            'display_interface_brief': self._interface_brief,
-            'display_ip_interface': self._ip_interface_proc,
-            'display_link-aggregation_verbose': self._aggre_port_proc,
-            'display_lldp_neighbor-information_verbose': self._lldp_proc,
-            'display_lldp_neighbor-information': self._lldp_proc,
-            'display_evpn_route_arp': self._evpn_route_arp_proc,
-            'display_evpn_route_mac': self._evpn_route_mac_proc,
+            'display_version': '_version_proc',
+            'display_irf': '_irf_proc',
+            'display_device_manuinfo': '_manuinfo_proc',
+            'display_arp': '_arp_proc',
+            'display_mac-address': '_mac_proc',
+            'display_interface_brief': '_interface_brief',
+            'display_ip_interface': '_ip_interface_proc',
+            'display_link-aggregation_verbose': '_aggre_port_proc',
+            'display_lldp_neighbor-information_verbose': '_lldp_proc',
+            'display_lldp_neighbor-information': '_lldp_proc',
+            'display_evpn_route_arp': '_evpn_route_arp_proc',
+            'display_evpn_route_mac': '_evpn_route_mac_proc',
             # 'display_l2vpn_vsi_verbose': self.l2vpn_vsi_verbose_proc,
             # 'display_l2vpn_mac-address': self.l2vpn_mac_proc
         }
         if file_name in fsm_map.keys():
-            fsm_map[file_name](res)
+            caller = methodcaller(fsm_map[file_name], res)
+            caller(self)
         else:
             send_msg_netops("设备:{}\n命令:{}\n没有对应数据处理方法".format(self.hostip, file_name))
+
+    # @staticmethod
+    # def get_method():
+    #     return [func for func in dir(H3cProc) if callable(getattr(H3cProc, func)) and not func.startswith("__")]
 
     # 命令采集分析
     def _collection_analysis(self, paths: list):
@@ -951,17 +983,13 @@ class H3cProc(BaseConn):
                 NetworkDevice.objects.filter(serial_num=res['SerialNumber']).update(
                     ha_status=0)
             if res.get('Model', ''):
-                tmp_model = res['Model']
+                tmp_model = res['Model'].lstrip('H3C ')
                 if self.model__name != tmp_model:
-                    model_q = Model.objects.filter(name=tmp_model)
-                    if model_q:
-                        model_id = Model.objects.get(name=tmp_model)
-                        NetworkDevice.objects.filter(manage_ip=self.hostip).update(model=model_id)
-                    else:
-                        model_id = Model.objects.create(
-                            name=tmp_model, vendor=Vendor.objects.get(alias='H3C'))
-                        NetworkDevice.objects.filter(manage_ip=self.hostip).update(model=model_id)
-            if self.serial_num != res['SerialNumber']:
+                    model_q, flag = Model.objects.get_or_create(
+                        name=tmp_model, vendor=Vendor.objects.get(alias='H3C'))
+                    NetworkDevice.objects.filter(manage_ip=self.hostip).update(model=model_q)
+            # 默认会以独立设备获取设备硬件信息，会返回设备的型号等基础信息，但是框式设备不会有序列号，需要二次执行指定参数获取板卡信息
+            if self.serial_num != res['SerialNumber'] and res['SerialNumber'] is not None:
                 send_msg_netops("独立设备{}序列号不一致,cmdb序列号为:{}, netconf序列号为:{}".format(
                     self.hostip, self.serial_num, res['SerialNumber']))
                 NetworkDevice.objects.filter(serial_num=self.serial_num).update(
@@ -970,36 +998,45 @@ class H3cProc(BaseConn):
             if self.chassis != int(res['Chassis']) or self.slot != int(
                     res['Slot']):
                 NetworkDevice.objects.filter(serial_num=res['SerialNumber']).update(
-                    chassis=int(res['Chassis']), slot=int(res['Slot']),
-                    soft_version=res['SoftwareRev'])
+                    chassis=int(res['Chassis']), slot=int(res['Slot']))
             # 软件版本对不上的，也需要更新
-            elif self.soft_version != res['SoftwareRev']:
-                NetworkDevice.objects.filter(serial_num=res['SerialNumber']).update(
-                    chassis=int(res['Chassis']), slot=int(res['Slot']),
+            if self.soft_version != res['SoftwareRev'] and res['SoftwareRev'] is not None:
+                NetworkDevice.objects.filter(manage_ip=self.hostip).update(
                     soft_version=res['SoftwareRev'])
+            # 框式设备，需要二次执行
+            if res['SerialNumber'] is None:
+                _method = [x for x in self.ntf_map.keys() for y in self.methods if
+                           x == y and self.ntf_map[x] == '_netconf_physical']
+                class_method = getattr(self.device, _method[0], None)
+                res = class_method(class_flag=9)
+                self._netconf_method_map(_method[0], res)
+                return
 
         elif isinstance(res, list):
             for _physical in res:
                 if _physical.get('Model'):
-                    tmp_model = _physical['Model']
+                    tmp_model = _physical['Model'].lstrip('H3C ')
                     if self.model__name != tmp_model:
-                        model_q = Model.objects.filter(name=tmp_model)
-                        if model_q:
-                            model_id = Model.objects.get(name=tmp_model)
-                            NetworkDevice.objects.filter(manage_ip=self.hostip).update(model=model_id)
-                        else:
-                            model_id = Model.objects.create(
-                                name=tmp_model, vendor=Vendor.objects.get(alias='H3C'))
-                            NetworkDevice.objects.filter(manage_ip=self.hostip).update(model=model_id)
-                NetworkDevice.objects.filter(serial_num=_physical['SerialNumber']).update(
-                    chassis=int(_physical['Chassis']), slot=int(_physical['Slot']),
-                    soft_version=_physical['SoftwareRev'])
+                        model_q, flag = Model.objects.get_or_create(
+                            name=tmp_model, vendor=Vendor.objects.get(alias='H3C'))
+                        NetworkDevice.objects.filter(manage_ip=self.hostip).update(model=model_q)
+                if _physical['SerialNumber'] is not None:
+                    NetworkDevice.objects.filter(serial_num=_physical['SerialNumber']).update(
+                        chassis=int(_physical['Chassis']), slot=int(_physical['Slot']))
+                if _physical['SoftwareRev'] is not None:
+                    NetworkDevice.objects.filter(manage_ip=self.hostip).update(soft_version=_physical['SoftwareRev'])
             _serial_nums = [x['SerialNumber'] for x in res]
             if self.serial_num not in _serial_nums:
                 send_msg_netops("堆叠设备{}序列号不一致,cmdb序列号为:{},netconf序列号为:{}".format(
                     self.hostip, self.serial_num, ','.join(_serial_nums)))
-                # NetworkDevice.objects.filter(serial_num=self.serial_num).update(
-                #     serial_num=res['SerialNumber'])
+
+            if None in _serial_nums:
+                _method = [x for x in self.ntf_map.keys() for y in self.methods if
+                           x == y and self.ntf_map[x] == '_netconf_physical']
+                class_method = getattr(self.device, _method[0], None)
+                res = class_method(class_flag=9)
+                self._netconf_method_map(_method[0], res)
+                return
 
     def _netconf_device_base(self, res):
         """
@@ -1130,7 +1167,7 @@ class H3cProc(BaseConn):
                     'Automation', self.hostip, lldp_datas, 'LLDPTable')
 
     def _netconf_mac_over_evpn(self, res):
-        l2vpn_mac_datas = []
+        # l2vpn_mac_datas = []
         for i in res:
             # 10.254.5.205 collection_mac_over_evpn
             # 会有部分没有portname的情况
@@ -1147,14 +1184,14 @@ class H3cProc(BaseConn):
                     interface=i.get('PortName'),
                     type='evpn',
                 )
-                l2vpn_mac_datas.append(tmp)
-        if l2vpn_mac_datas:
-            MongoNetOps.insert_table(
-                'Automation', self.hostip, l2vpn_mac_datas, 'MACTable')
+                self.mac_datas.append(tmp)
+        # if l2vpn_mac_datas:
+        #     MongoNetOps.insert_table(
+        #         'Automation', self.hostip, l2vpn_mac_datas, 'MACTable', delete=False)
 
     def _netconf_mac_unicasttable(self, res):
         if res:
-            mac_datas = []
+            # mac_datas = []
             status_map = {
                 '0': 'Other',
                 '1': 'Security',
@@ -1176,10 +1213,10 @@ class H3cProc(BaseConn):
                     type=status_map[i['Status']],
                     log_time=datetime.now()
                 )
-                mac_datas.append(tmp)
-            if mac_datas:
-                MongoNetOps.insert_table(
-                    'Automation', self.hostip, mac_datas, 'MACTable')
+                self.mac_datas.append(tmp)
+            # if mac_datas:
+            #     MongoNetOps.insert_table(
+            #         'Automation', self.hostip, mac_datas, 'MACTable')
 
     def _netconf_vrrp(self, res):
         if res:
@@ -1520,7 +1557,7 @@ class H3cProc(BaseConn):
                                     ))
                 if i.get('DstObjGrpList'):
                     # destination_ip
-                    dst_obj_group = i['DstObjGrpList']['DstIpObjGrou']
+                    dst_obj_group = i['DstObjGrpList']['DstIpObjGroup']
                     if isinstance(dst_obj_group, str):
                         dst_obj_group = [dst_obj_group]
                         for _dst in dst_obj_group:
@@ -1612,100 +1649,110 @@ class H3cProc(BaseConn):
 
     # netconf 方法和数据处理映射
     def _netconf_method_map(self, method, res):
-        ntf_map = {
-            "colleciton_arp_list": self._netconf_arp,
-            "colleciton_interface_list": self._netconf_interface_list,
-            "colleciton_lagg_list": self._netconf_lagg_list,
-            "collection_arp_over_evpn": self._netconf_arp_over_evpn,
-            "collection_device_PhysicalEntities": self._netconf_physical,
-            "get_secpath_physical": self._netconf_physical,
-            "collection_ipv4address_list": self._netconf_ipv4address,
-            "collection_ipv6address_list": self._netconf_ipv6address,
-            "collection_lldp_info": self._netconf_lldp,
-            "collection_mac_over_evpn": self._netconf_mac_over_evpn,
-            "collection_mac_unicasttable": self._netconf_mac_unicasttable,
-            "collection_vrrp_info": self._netconf_vrrp,
-            "patch_version": self._netconf_patch_version,
-            "collection_irf_info": self._netconf_irf,
-            "collection_device_base": self._netconf_device_base,
-            "get_nataddr_group": self._netconf_netaddr_group,  # 防火墙 NAT地址组
-            "get_server_on_policy": self._netconf_server_on_policy,  # 防火墙 接口下NAT Server
-            "get_ipv4_paging": self._netconf_ipv4_paging,  # 防火墙 地址集
-            "get_sec_policy": self._netconf_sec_policy,  # 防火墙 安全策略
-            "get_server_groups": self._netconf_server_groups,  # 防火墙 服务集
-            "get_global_nat_policy": self._netconf_global_nat_policy,  # 防火墙 全局下DNAT
-            "get_source_nat": self._netconf_source_nat,  # 防火墙 SNAT
+        self.ntf_map = {
+            "colleciton_arp_list": '_netconf_arp',
+            "colleciton_interface_list": '_netconf_interface_list',
+            "colleciton_lagg_list": '_netconf_lagg_list',
+            "collection_arp_over_evpn": '_netconf_arp_over_evpn',
+            "collection_device_PhysicalEntities": '_netconf_physical',
+            "get_secpath_physical": '_netconf_physical',
+            "collection_ipv4address_list": '_netconf_ipv4address',
+            "collection_ipv6address_list": '_netconf_ipv6address',
+            "collection_lldp_info": '_netconf_lldp',
+            "collection_mac_over_evpn": '_netconf_mac_over_evpn',
+            "collection_mac_unicasttable": '_netconf_mac_unicasttable',
+            "collection_vrrp_info": '_netconf_vrrp',
+            "patch_version": '_netconf_patch_version',
+            "collection_irf_info": '_netconf_irf',
+            "collection_device_base": '_netconf_device_base',
+            "get_nataddr_group": '_netconf_netaddr_group',  # 防火墙 NAT地址组
+            "get_server_on_policy": '_netconf_server_on_policy',  # 防火墙 接口下NAT Server
+            "get_ipv4_paging": '_netconf_ipv4_paging',  # 防火墙 地址集
+            "get_sec_policy": '_netconf_sec_policy',  # 防火墙 安全策略
+            "get_server_groups": '_netconf_server_groups',  # 防火墙 服务集
+            "get_global_nat_policy": '_netconf_global_nat_policy',  # 防火墙 全局下DNAT
+            "get_source_nat": '_netconf_source_nat',  # 防火墙 SNAT
         }
         if isinstance(res, str):
             return
-        if method in ntf_map.keys():
-            # print(method)
-            return ntf_map[method](res)
+        if method in self.ntf_map.keys():
+            caller = methodcaller(self.ntf_map[method], res)
+            res = caller(self)
         else:
             send_msg_netops("设备:{}\n方法:{}\n不被解析".format(self.hostip, method))
 
     def collection_run(self):
         # 先执行父类方法
         super(H3cProc, self).collection_run()
-        if self.netconf_class == 'H3CinfoCollection':
-            print('执行netconf采集')
-            device = H3CinfoCollection(host=self.netconf_params['ip'],
-                                       user=self.netconf_params['username'],
-                                       password=self.netconf_params['password'],
-                                       timeout=600)
-            methods = json.loads(self.plan['netconf_method'])
-            if methods:
-                for method in methods:
-                    print(method)
-                    class_method = getattr(device, method, None)
-                    if class_method:
-                        try:
-                            res = class_method()
-                            # print("netconf_method:{} ==> res:{}".format(method, str(res)))
-                            self._netconf_method_map(method, res)
-                        except SessionCloseError as e:
-                            time.sleep(3)
-                            device.closed()
-                            device = H3CinfoCollection(host=self.netconf_params['ip'],
-                                                       user=self.netconf_params['username'],
-                                                       password=self.netconf_params['password'],
-                                                       timeout=600)
-                            time.sleep(3)
-                            NetworkDevice.objects.filter(manage_ip=self.hostip).update(l2vpn=False)
-                            print("设备:{}\nnetconf方法:{}\n不被设备支持\n{}".format(self.hostip, method, str(e)))
-                            # send_msg_netops("设备:{}\nnetconf方法:{}\n不被设备支持\n{}".format(self.hostip, method, str(e)))
-                        except Exception as e:
-                            print("设备:{}\nnetconf方法:{}\n执行过程中异常\n{}".format(self.hostip, method, str(e)))
-            if self.dnat_data:
-                MongoNetOps.insert_table(db='Automation', hostip=self.hostip, datas=self.dnat_data,
-                                         tablename='DNAT')
-            device.closed()
-        elif self.netconf_class == 'H3CSecPath':
-            device = H3CSecPath(host=self.netconf_params['ip'],
-                                user=self.netconf_params['username'],
-                                password=self.netconf_params['password'],
-                                timeout=600)
-            methods = json.loads(self.plan['netconf_method'])
-            if methods:
-                for method in methods:
-                    class_method = getattr(device, method, None)
-                    if class_method:
-                        try:
-                            res = class_method()
-                            # print("netconf_method:{} ==> res:{}".format(method, str(res)))
-                            self._netconf_method_map(method, res)
-                        except Exception as e:
-                            send_msg_netops("设备:{}\nnetconf方法:{}\n不被设备支持\n{}".format(self.hostip, method, str(e)))
-                            print("设备:{}\nnetconf方法:{}\n不被设备支持\n{}".format(self.hostip, method, str(e)))
-            if self.dnat_data:
-                MongoNetOps.insert_table(db='Automation', hostip=self.hostip, datas=self.dnat_data,
-                                         tablename='DNAT')
-            if self.snat_data:
-                MongoNetOps.insert_table(db='Automation', hostip=self.hostip, datas=self.snat_data,
-                                         tablename='SNAT')
-            device.closed()
-        else:
-            print("未被识别的netconf连接类\n设备:{}\n类:{}".format(self.hostip, self.netconf_class))
+        if self.netconf_class is not None:
+            if self.netconf_class == 'H3CinfoCollection':
+                print('执行netconf采集')
+                self.device = H3CinfoCollection(host=self.netconf_params['ip'],
+                                                user=self.netconf_params['username'],
+                                                password=self.netconf_params['password'],
+                                                timeout=600)
+                self.methods = json.loads(self.plan['netconf_method'])
+                if self.methods:
+                    for method in self.methods:
+                        class_method = getattr(self.device, method, None)
+                        if class_method:
+                            try:
+                                res = class_method()
+                                # print("netconf_method:{} ==> res:{}".format(method, str(res)))
+                                self._netconf_method_map(method, res)
+                            except SessionCloseError as e:
+                                time.sleep(3)
+                                self.device.closed()
+                                device = H3CinfoCollection(host=self.netconf_params['ip'],
+                                                           user=self.netconf_params['username'],
+                                                           password=self.netconf_params['password'],
+                                                           timeout=600)
+                                time.sleep(3)
+                                NetworkDevice.objects.filter(manage_ip=self.hostip).update(l2vpn=False)
+                                print("设备:{}\nnetconf方法:{}\n不被设备支持\n{}".format(self.hostip, method, str(e)))
+                                # send_msg_netops("设备:{}\nnetconf方法:{}\n不被设备支持\n{}".format(self.hostip, method, str(e)))
+                            except Exception as e:
+                                print("设备:{}\nnetconf方法:{}\n执行过程中异常\n{}".format(self.hostip, method, str(e)))
+                if self.dnat_data:
+                    MongoNetOps.insert_table(db='Automation', hostip=self.hostip, datas=self.dnat_data,
+                                             tablename='DNAT')
+                if self.mac_datas:
+                    MongoNetOps.insert_table(
+                        'Automation', self.hostip, self.mac_datas, 'MACTable')
+                self.device.closed()
+            elif self.netconf_class == 'H3CSecPath':
+                self.device = H3CSecPath(host=self.netconf_params['ip'],
+                                         user=self.netconf_params['username'],
+                                         password=self.netconf_params['password'],
+                                         timeout=600)
+                self.methods = json.loads(self.plan['netconf_method'])
+                if self.methods:
+                    for method in self.methods:
+                        class_method = getattr(self.device, method, None)
+                        if class_method:
+                            try:
+                                res = class_method()
+                                # print("netconf_method:{} ==> res:{}".format(method, str(res)))
+                                self._netconf_method_map(method, res)
+                            except Exception as e:
+                                send_msg_netops("设备:{}\nnetconf方法:{}\n不被设备支持\n{}".format(self.hostip, method, str(e)))
+                                print("设备:{}\nnetconf方法:{}\n不被设备支持\n{}".format(self.hostip, method, str(e)))
+                                self.device.closed()
+                                device = H3CSecPath(host=self.netconf_params['ip'],
+                                                    user=self.netconf_params['username'],
+                                                    password=self.netconf_params['password'],
+                                                    timeout=600, device_params="hpcomware")
+                                res = class_method()
+                                self._netconf_method_map(method, res)
+                if self.dnat_data:
+                    MongoNetOps.insert_table(db='Automation', hostip=self.hostip, datas=self.dnat_data,
+                                             tablename='DNAT')
+                if self.snat_data:
+                    MongoNetOps.insert_table(db='Automation', hostip=self.hostip, datas=self.snat_data,
+                                             tablename='SNAT')
+                self.device.closed()
+            else:
+                print("未被识别的netconf连接类\n设备:{}\n类:{}".format(self.hostip, self.netconf_class))
 
     # netconf执行手动任务
     def manual_netconf_run(self, method):

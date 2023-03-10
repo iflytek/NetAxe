@@ -53,33 +53,6 @@ netconf_class_map = {
 # 接口格式化类
 class InterfaceFormat(object):
     @staticmethod
-    def h3c_interface_format(interface):
-        if re.search(r'^(GE)', interface):
-            return interface.replace('GE', 'GigabitEthernet')
-
-        elif re.search(r'^(BAGG)', interface):
-            return interface.replace('BAGG', 'Bridge-Aggregation')
-
-        elif re.search(r'^(RAGG)', interface):
-            return interface.replace('RAGG', 'Route-Aggregation')
-
-        elif re.search(r'^(XGE)', interface):
-            return interface.replace('XGE', 'Ten-GigabitEthernet')
-        elif re.search(r'^(HGE)', interface):
-            return interface.replace('XGE', 'HundredGigE')
-
-        elif re.search(r'^(FGE)', interface):
-            return interface.replace('FGE', 'FortyGigE')
-
-        elif re.search(r'^(MGE)', interface):
-            return interface.replace('MGE', 'M-GigabitEthernet')
-
-        elif re.search(r'^(M-GE)', interface):
-            return interface.replace('M-GE', 'M-GigabitEtherne')
-
-        return interface
-
-    @staticmethod
     def huawei_interface_format(interface):
         if re.search(r'^(GE)', interface):
             return interface.replace('GE', 'GigabitEthernet')
@@ -94,28 +67,6 @@ class InterfaceFormat(object):
         if re.search(r'^(te)', interface):
             return interface.replace('te', 'tengigabitethernet')
 
-        return interface
-
-    @staticmethod  # 按接口名称速率转换
-    def h3c_speed_format(interface):
-        if re.search(r'^(GE)', interface) or re.search(
-                r'^(GigabitEthernet)', interface):
-            return '1G'
-
-        elif re.search(r'^(XGE)', interface) or re.search(r'^(Ten-GigabitEthernet)', interface):
-            return '10G'
-
-        elif re.search(r'^(FGE)', interface) or re.search(r'^(FortyGigE)', interface):
-            return '40G'
-
-        elif re.search(r'^(Twenty-FiveGigE)', interface):
-            return '100G'
-
-        elif re.search(r'^(MGE)', interface) or re.search(r'^(MEth)', interface):
-            return '1G'
-
-        elif re.search(r'^(M-GE)', interface):
-            return '1G'
         return interface
 
     @staticmethod  # 按接口名称速率转换
@@ -145,7 +96,6 @@ class InterfaceFormat(object):
         elif re.search(r'^(HundredGigabitEthernet)', interface):
             return '100G'
         return interface
-
 
     @staticmethod
     def mathintspeed(value):

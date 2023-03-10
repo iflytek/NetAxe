@@ -20,6 +20,8 @@ class InterfaceUsedNew(models.Model):
     int_used_25g = models.IntegerField(verbose_name='25G接口使用', null=True, blank=True)
     int_used_40g = models.IntegerField(verbose_name='40G接口使用', null=True, blank=True)
     int_used_100g = models.IntegerField(verbose_name='100G接口使用', null=True, blank=True)
+    int_used_200g = models.IntegerField(verbose_name='200G接口使用', null=True, blank=True)
+    int_used_400g = models.IntegerField(verbose_name='400G接口使用', null=True, blank=True)
     int_used_irf = models.IntegerField(verbose_name='堆叠接口使用', null=True, blank=True)
     int_used_auto = models.IntegerField(verbose_name='auto接口使用', null=True, blank=True)
     int_unused_1g = models.IntegerField(verbose_name='1G接口未使用', null=True, blank=True)
@@ -30,10 +32,11 @@ class InterfaceUsedNew(models.Model):
     int_unused_25g = models.IntegerField(verbose_name='25G接口未使用', null=True, blank=True)
     int_unused_40g = models.IntegerField(verbose_name='40G接口未使用', null=True, blank=True)
     int_unused_100g = models.IntegerField(verbose_name='100G接口未使用', null=True, blank=True)
+    int_unused_200g = models.IntegerField(verbose_name='200G接口未使用', null=True, blank=True)
+    int_unused_400g = models.IntegerField(verbose_name='400G接口未使用', null=True, blank=True)
     int_unused_irf = models.IntegerField(verbose_name='堆叠接口未使用', null=True, blank=True)
     int_unused_auto = models.IntegerField(verbose_name='auto接口未使用', null=True, blank=True)
     log_time = models.DateTimeField(verbose_name='记录时间', null=True, blank=True)
-    # bgbu = models.ManyToManyField("network.BgBu", verbose_name='BGBU', blank=True)
 
     def __str__(self):
         return '%s-%s' % (self.host, self.utilization)
