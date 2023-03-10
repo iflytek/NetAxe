@@ -584,12 +584,7 @@ def collect_device_main(**kwargs):
     start_time = time.time()
     # 批量下发任务
     for host in hosts:
-        if host['idc__name'] == 'B3寰宇':
-            continue
         if ping(host['manage_ip']):
-            # 必须是私有地址
-            # _ip = netaddr.IPAddress(host['manage_ip'])
-            # if _ip.is_private():
             net_tower_tasks.append(
                 collect_device.apply_async(
                     kwargs=host,
