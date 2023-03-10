@@ -220,11 +220,13 @@ class MongoOps:
         """
         return self.coll.remove(spec_or_id)
 
-    def delete_many(self, query):
+    def delete_many(self, query=None):
         """
         删除所有日志记录
         :return:
         """
+        if query is None:
+            return self.coll.delete_many({})
         return self.coll.delete_many(query)
 
     def delete(self, spec_or_id=None):
@@ -306,7 +308,7 @@ class MongoNetOps(object):
     def post_cmdb(data):
         cmdb_mongo = MongoOps(db='Automation', coll='networkdevice')
         if len(data) > 0:
-            cmdb_mongo.delete()
+            cmdb_mongo.delete_many()
             cmdb_mongo.insert_many(data)
             cmdb_mongo.rebuild_index()
         return

@@ -88,7 +88,7 @@ def interface_used(device_ip=None):
     """
     # 接口利用率落库mongo
     interface_log_mongo = MongoOps(db='logs', coll='interface_used_log')
-    interface_log_mongo.delete()
+    interface_log_mongo.delete_many()
     data_time = datetime.now()
 
     def data_to_table(**data: any) -> None:
