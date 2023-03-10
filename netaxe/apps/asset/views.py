@@ -13,9 +13,9 @@ from netboost.settings import MEDIA_ROOT
 from apps.route_backend.views import LimitSet
 from utils.crypt_pwd import CryptPwd
 # from scripts.crypt_pwd import CryptPwd
-from utils.excel2list import excel2list
+# from utils.excel2list import excel2list
 # asset  import export excel
-from utils.netops_api import netOpsApi
+# from utils.netops_api import netOpsApi
 from utils.tools.custom_pagination import LargeResultsSetPagination
 from apps.asset.models import Idc, AssetAccount, Vendor, Role, Category, Model, Attribute, Framework, NetworkDevice, \
     IdcModel, NetZone, Rack
@@ -24,82 +24,32 @@ from apps.asset.serializers import IdcSerializer, AssetAccountSerializer, AssetV
     IdcModelSerializer, NetZoneSerializer, CmdbRackSerializer
 from utils.cmdb_import import search_cmdb_vendor_id, search_cmdb_idc_id, search_cmdb_netzone_id, search_cmdb_role_id, \
     search_cmdb_idc_model_id, search_cmdb_cabinet_id, search_cmdb_category_id, search_cmdb_attribute_id, \
-    search_cmdb_framework_id, returndate, csv_device_staus
+    search_cmdb_framework_id, returndate, csv_device_staus, pandas_read_file, old_import_parse
 
 
 class ResourceManageExcelView(View):
     def post(self, request):
         file = request.FILES.get('file')
+        # 获取文件位置
         filename = os.path.join(MEDIA_ROOT, 'upload', file.name)
         if not os.path.exists(os.path.dirname(filename)):
             os.makedirs(os.path.dirname(filename))
         with open(filename, 'wb') as f:
             for chunk in file.chunks():
                 f.write(chunk)
+        # pandas文件内容解析
+        import_content_df = pandas_read_file(filename)
+        # print(import_content_df)
+        import_list = []
+        for i in import_content_df.values:
+            import_list.append(i)
+
+        import_res, detail = old_import_parse(import_list)
         try:
-            data_list = excel2list(filename)
-            # print(data_list)
-
-            for data in data_list:
-                # 判断厂商是否存在，如 F5 Mellanox  华三  华为  山石网科  思科  成都数维  深信服  盛科  科来 锐捷
-                cmdb_vendor_id = search_cmdb_vendor_id(data[2].strip())
-                # 判断所属机房是否存在，如上海嘉定、北京鲁谷、北京大族、北京酒仙桥、广州新华园、合肥B3
-                cmdb_idc_id = search_cmdb_idc_id(data[4].strip())
-                # 判断网络区域是否存在，如生产公共区域、业务互联区域、IaaS网络区域、IPMI管理区域、公网区域、网络管理区域、
-                cmdb_netzone_id = search_cmdb_netzone_id(data[5].strip())
-                # 判断设备角色是否存在，如网络汇聚、业务互联、千兆电器接入、出口防火墙、Spine、Leaf、服务器
-                cmdb_role_id = search_cmdb_role_id(data[8].strip())
-
-                # 根据机房模块编号、机房ID进行检索，若机房模块不存在，则创建并返回机房模块ID
-                cmdb_idc_model_id = search_cmdb_idc_model_id(data[9].strip(), cmdb_idc_id)
-
-                # 根据机柜编号、机房ID进行检索，若机柜不存在，则创建并返回创建后机柜ID
-                cmdb_cabinet_id = search_cmdb_cabinet_id(data[10].strip(), cmdb_idc_model_id)
-                # 根据设备类型字段获取设备类型ID
-                cmdb_category_id = search_cmdb_category_id(data[3].strip())
-                cmdb_attribute_id = search_cmdb_attribute_id(data[6].strip())
-                cmdb_framework_id = search_cmdb_framework_id(data[7].strip())
-                # from apps.asset.models import AssetAccount
-                # account = AssetAccount.objects.get(name='网管账户_带域名')
-                # print('data[15]', data[15])
-                networkdevices = {
-                    "attribute": cmdb_attribute_id,
-                    "framework": cmdb_framework_id,
-                    'serial_num': data[0].strip(),
-                    'manage_ip': data[1].strip(),
-                    'vendor': cmdb_vendor_id,
-                    'idc': cmdb_idc_id,
-                    'zone': cmdb_netzone_id,
-                    'role': cmdb_role_id,
-                    'rack': int(cmdb_cabinet_id),
-                    'idc_model': cmdb_idc_model_id,
-                    'u_location_start': int(data[11].strip()),  # U位
-                    'u_location_end': int(data[11].strip()),  # U位
-                    # 'uptime': '2022-7-11',  # 上线时间必须要，默认当前日期
-                    'uptime': str(returndate(data[15].strip())),  # 上线时间必须要，默认当前日期
-                    'expire': '2099-01-01',  # 维保时间必须有，默认3年
-                    'status': csv_device_staus(data[13].strip()),
-                    'memo': data[12].strip() if data[12].strip() else data[1].strip() + "备注信息",  # memo为备注信息
-                    'name': data[1].strip(),  # 系统名称必须有。用管理IP代替
-                    'auto_enable': 'true',
-                    'bgbu': [],
-                    'category': cmdb_category_id,  # 设备类型字段
-                }
-
-                # print(networkdevices)
-                device_obj = NetworkDevice.objects.filter(serial_num=data[0].strip())
-                # print('查询结果', device_obj)
-                if device_obj:
-                    pass
-                else:
-                    netops_api = netOpsApi()
-                    # print('请求新增数据')
-                    res = netops_api.post_something(url="asset/asset_networkdevice/", data=networkdevices)
-                    # print('新增设备结果', res.json())
-                    if res.json().get('code', ''):
-                        if res.json()['code'] == 400:
-                            return JsonResponse({'code': 500, 'msg': '导入失败！{}'.format(res.json()['message'])})
-            return JsonResponse({'code': 200, 'msg': '导入成功！'})
+            if import_res:
+                return JsonResponse({'code': 200, 'msg': '导入成功！'})
+            else:
+                return JsonResponse({'code': 400, 'msg': '导入失败！' + detail})
         except Exception as e:
             return JsonResponse({'code': 500, 'msg': '导入失败！{}'.format(e)})
 
@@ -414,4 +364,3 @@ class NetworkDeviceViewSet(viewsets.ModelViewSet):
     def update(self, request, *args, **kwargs):
         print('更新', super().update(request, *args, **kwargs))
         return super().update(request, *args, **kwargs)
-
