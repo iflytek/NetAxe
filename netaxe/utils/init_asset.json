@@ -6,7 +6,8 @@
     {"name": "华为", "alias": "Huawei"},
     {"name": "锐捷", "alias": "Ruijie"},
     {"name": "山石网科", "alias": "Hillstone"},
-    {"name": "思科", "alias": "Cisco"}
+    {"name": "思科", "alias": "Cisco"},
+    {"name": "中兴", "alias": "ZTE"},
   ],
   "Category": [
     {"name": "交换机"},

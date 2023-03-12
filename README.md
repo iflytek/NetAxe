@@ -11,10 +11,6 @@ NetAxe 是一个让 NetDevOps 更简单、更快速、更高效的快速集成�
 
 📚 [NetAxe 文档教程使用说明](https://netaxe.github.io/) : https://netaxe.github.io/
 
-📚 [NetAxe 文档教程使用说明](https://netaxe.github.io/) : https://netaxe.github.io/
-
-📚 [NetAxe 文档教程使用说明](https://netaxe.github.io/) : https://netaxe.github.io/
-
 ## 体验环境
 
 [在线 demo](http://47.99.86.164:8888) 账号密码：adminnetaxe/netaxeadmin
@@ -66,20 +62,29 @@ NetAxe 是一个让 NetDevOps 更简单、更快速、更高效的快速集成�
 ## 交流
 
 ![NetAxe开源社区](https://cdn.staticaly.com/gh/xuehaoweng/netaxe-image@master/微信图片_20230106172200.240x6tqonx9c.webp)
-群名称:NetAxe 开源社区
 
-## 特别感谢
+## 🤝 参与贡献
 
-感谢伟大的 Django、VUE、vue-admin-work
+欢迎你参与到 NetAxe 项目的建设中来！🎉
 
-- [Django](https://github.com/django/django)
-- [VUE](https://github.com/vuejs/vue)
-- [vue-admin-work](https://github.com/qingqingxuan/vue-admin-work)
+我们可以一起：
+
+- 🎁 设计和开发功能模块
+- ⭐ 讨论实际运维场景和自动化的落地实践
+- 🎊 结识一群热爱学习、热爱开源的朋友
+
+## ✨ 维护者
+
+维护者是做出杰出贡献且在社区长期活跃的 NetAxe 社区成员。
+
+- [jamlee](https://github.com/M87NET)
+- [xhweng](https://github.com/xhweng)
+
+## ✨ 贡献者
+
+贡献者是在 NetAxe 社区中合并了 1 个或多个 PR 的社区成员。
+虚位以待。。。
 
 github: https://github.com/iflytek/NetAxe
 gitee: https://gitee.com/iflytek/NetAxe
 NetAxe 官网文档:https://netaxe.github.io/
-
-新功能上线：IPAM 网络地址管理工具
-支持：地址自动发现、IPv4 和 IPv6 地址管理、分层视图展示
-功能提供在网络上有效查看、监视和管理 IP 地址空间的能力
