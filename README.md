@@ -85,6 +85,6 @@ NetAxe 是一个让 NetDevOps 更简单、更快速、更高效的快速集成�
 贡献者是在 NetAxe 社区中合并了 1 个或多个 PR 的社区成员。
 虚位以待。。。
 
-github: https://github.com/iflytek/NetAxe
-gitee: https://gitee.com/iflytek/NetAxe
+github: https://github.com/iflytek/NetAxe  
+gitee: https://gitee.com/iflytek/NetAxe  
 NetAxe 官网文档:https://netaxe.github.io/
