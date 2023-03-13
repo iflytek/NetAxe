@@ -216,7 +216,7 @@ class BaseConn:
                 }
                 if self.vendor_alias in ['H3C', 'Huawei']:
                     # HRP_M<DZ.NET.IN.FW.001>
-                    hostname = re.search(r'(<[^)]*>)', prompt).group()
+                    hostname = re.search(r'(<\S+>)', prompt).group()
                     if self.hostname != hostname[1:-1]:
                         NetworkDevice.objects.filter(manage_ip=self.hostip).update(name=hostname[1:-1])
                 elif self.vendor_alias in ['Hillstone', 'Ruijie', 'centec', 'Maipu', 'Mellanox']:
