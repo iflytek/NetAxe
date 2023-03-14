@@ -290,7 +290,8 @@ class AssetAccount(models.Model):
             self.password = crypt.encrypt_pwd(self.password)
         if _encrypt_en_pwd:
             crypt = CryptPwd()
-            self.en_pwd = crypt.encrypt_pwd(self.en_pwd)
+            if self.en_pwd is not None:
+                self.en_pwd = crypt.encrypt_pwd(self.en_pwd)
         super(AssetAccount, self).save(*args, **kwargs)
 
     @property
