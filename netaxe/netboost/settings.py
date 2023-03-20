@@ -135,7 +135,7 @@ USE_I18N = True
 
 USE_L10N = True
 
-USE_TZ = False
+USE_TZ = True
 
 # ================================================= #
 # ********************* 日志配置 ******************* #
@@ -243,10 +243,10 @@ CELERY_TASK_RESULT_EXPIRES = 7200
 # 节省 backend 的资源（ redis 主要是内存）消耗，默认是 24 小时（ 86400 ），单位是秒。
 CELERY_TASK_TIME_LIMIT = 7200
 # 单个任务的运行时间不超过此值，否则会被SIGKILL 信号杀死
-CELERY_ENABLE_UTC = True
+CELERY_ENABLE_UTC = False
 
 CELERY_WORKER_CONCURRENCY = 40  # celery worker的并发数
-DJANGO_CELERY_BEAT_TZ_AWARE = False
+DJANGO_CELERY_BEAT_TZ_AWARE = True
 CELERY_TIMEZONE = "Asia/Shanghai"  # celery 时区问题
 CELERY_TASK_TRACK_STARTED = True
 # Static files (CSS, JavaScript, Images)
