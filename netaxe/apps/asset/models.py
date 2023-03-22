@@ -425,7 +425,8 @@ class NetworkDevice(models.Model):
     history = HistoricalRecords()
 
     def __str__(self):
-        return '{}_{}'.format(self.manage_ip, self.idc.name)
+        # return '{}_{}'.format(self.manage_ip, self.idc.name)
+        return self.manage_ip
 
     def account_list(self):
         return ','.join([i.name for i in self.account.all()])
