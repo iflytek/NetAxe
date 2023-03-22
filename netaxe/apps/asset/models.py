@@ -425,7 +425,7 @@ class NetworkDevice(models.Model):
     history = HistoricalRecords()
 
     def __str__(self):
-        return '{}_{}_{}'.format(self.manage_ip, self.name, self.idc.name)
+        return '{}_{}'.format(self.manage_ip, self.idc.name)
 
     def account_list(self):
         return ','.join([i.name for i in self.account.all()])
@@ -474,3 +474,4 @@ class AdminRecord(models.Model):
         db_table = 'asset_admin_record'
         verbose_name = '登录管理用户记录表'
         verbose_name_plural = '登录管理用户记录表'
+
