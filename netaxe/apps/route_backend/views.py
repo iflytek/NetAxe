@@ -33,6 +33,7 @@ from .serializers import CrontabSerializer, IntervalSerializer
 class QueryParamsKeyConstructor(DefaultKeyConstructor):
     all_query_params = bits.QueryParamsKeyBit()
 
+
 class LimitSet(pagination.LimitOffsetPagination):
     # 每页默认几条
     default_limit = 10
@@ -45,7 +46,11 @@ class LimitSet(pagination.LimitOffsetPagination):
     # 最大每页显示条数
     max_limit = None
 
+
 class DashboardChart(APIView):
+    permission_classes = ()
+    authentication_classes = ()
+
     def get(self, request):
         get_params = request.GET.dict()
         if "device_idc_dimension" in get_params:
@@ -61,6 +66,9 @@ class DashboardChart(APIView):
 
 
 class WebSshView(APIView):
+    permission_classes = ()
+    authentication_classes = ()
+
     def get(self, request):
         get_param = request.GET.dict()
         server_obj = NetworkDevice.objects.get(id=get_param.get('pk'))
@@ -101,6 +109,9 @@ class WebSshView(APIView):
 
 # 设备采集方案
 class DeviceCollectView(APIView):
+    permission_classes = ()
+    authentication_classes = ()
+
     def get(self, request):
         get_param = request.GET.dict()
         if all(k in get_param for k in ("vendor", "netconf_class")):
@@ -131,6 +142,9 @@ class DeviceCollectView(APIView):
 
 # 自动化chart
 class AutomationChart(APIView):
+    permission_classes = ()
+    authentication_classes = ()
+
     def get(self, request):
         get_params = request.GET.dict()
 
@@ -205,6 +219,9 @@ class DispatchManageView(View):
 
 # 作业中心taskList
 class JobCenterView(APIView):
+    permission_classes = ()
+    authentication_classes = ()
+
     def get(self, request):
         # Operationinfo = 'None'
         get_current_tasks = request.GET.get('current_tasks')
@@ -262,7 +279,8 @@ class PeriodicTaskViewSet(viewsets.ModelViewSet):
     # queryset = PeriodicTask.objects.all().order_by('id')
     queryset = PeriodicTask.objects.exclude(task__startswith='celery').order_by('id')
     serializer_class = PeriodicTaskSerializer
-    permission_classes = (permissions.IsAuthenticated,)
+    permission_classes = ()
+    authentication_classes = ()
     # 配置搜索功能
     filter_backends = (DjangoFilterBackend, filters.SearchFilter, filters.OrderingFilter)
     # 如果要允许对某些字段进行过滤，可以使用filter_fields属性。
@@ -273,10 +291,11 @@ class PeriodicTaskViewSet(viewsets.ModelViewSet):
     # list_cache_key_func = QueryParamsKeyConstructor()
 
 
-class IntervalScheduleViewSet(CacheResponseMixin, viewsets.ModelViewSet):
+class IntervalScheduleViewSet(viewsets.ModelViewSet):
     queryset = IntervalSchedule.objects.all().order_by('id')
     serializer_class = IntervalScheduleSerializer
-    permission_classes = (permissions.IsAuthenticated,)
+    permission_classes = ()
+    authentication_classes = ()
     # 配置搜索功能
     filter_backends = (DjangoFilterBackend, filters.SearchFilter, filters.OrderingFilter)
     # 如果要允许对某些字段进行过滤，可以使用filter_fields属性。
@@ -284,4 +303,3 @@ class IntervalScheduleViewSet(CacheResponseMixin, viewsets.ModelViewSet):
     pagination_class = LimitSet
     # 设置搜索的关键字
     search_fields = '__all__'
-    list_cache_key_func = QueryParamsKeyConstructor()

@@ -26,13 +26,14 @@ class InterfaceUsedNewViewSet(CustomViewBase):
     queryset = InterfaceUsedNew.objects.all().order_by('-log_time')
     # queryset = InterfaceUsedNewSerializer.setup_eager_loading(queryset)
     serializer_class = InterfaceUsedNewSerializer
-    permission_classes = (permissions.IsAuthenticated,)
+    # permission_classes = (permissions.IsAuthenticated,)
     pagination_class = LargeResultsSetPagination
     # 配置搜索功能
     filter_backends = (DjangoFilterBackend, filters.SearchFilter, filters.OrderingFilter)
     # 如果要允许对某些字段进行过滤，可以使用filter_fields属性。
-    filterset_class = InterfaceUsedFilter
+    # filterset_class = InterfaceUsedFilter
     search_fields = ('host_ip', 'host')
+    filter_fields = ('host_ip', 'host')
     ordering_fields = ('log_time', 'id')
 
     def get_queryset(self):

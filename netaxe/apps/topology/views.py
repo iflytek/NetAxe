@@ -51,7 +51,9 @@ class TopologyViewSet(CustomViewBase):
 
 # 拓扑显示
 class TopologyShow(APIView):
-    permission_classes = (IsAuthenticated,)
+    # permission_classes = (IsAuthenticated,)
+    permission_classes = ()
+    authentication_classes = ()
 
     def get(self, request):
         get_param = request.GET.dict()
@@ -195,7 +197,8 @@ class TopologyShow(APIView):
 
 # 图标库
 class IconView(APIView):
-    permission_classes = (IsAuthenticated,)
+    permission_classes = ()
+    authentication_classes = ()
 
     def get(self, request):
         get_param = request.GET.dict()

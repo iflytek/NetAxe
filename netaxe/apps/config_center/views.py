@@ -43,7 +43,7 @@ def jinja_render(data, template):
 class ConfigComplianceViewSet(CustomViewBase):
     queryset = ConfigCompliance.objects.all().order_by('-id')
     serializer_class = ConfigComplianceSerializer
-    permission_classes = (permissions.IsAuthenticated,)
+    # permission_classes = (permissions.IsAuthenticated,)
     pagination_class = LargeResultsSetPagination
     # 配置搜索功能
     filter_backends = (DjangoFilterBackend, filters.SearchFilter, filters.OrderingFilter)
@@ -58,7 +58,7 @@ class ConfigTemplateViewSet(CustomViewBase):
     """
     queryset = ConfigTemplate.objects.all().order_by('-id')
     serializer_class = ConfigTemplateSerializer
-    permission_classes = (permissions.IsAuthenticated,)
+    # permission_classes = (permissions.IsAuthenticated,)
     # pagination_class = LimitSet
     pagination_class = LargeResultsSetPagination
     # 配置搜索功能
@@ -76,7 +76,7 @@ class TTPTemplateViewSet(CustomViewBase):
     """
     queryset = TTPTemplate.objects.all().order_by('-id')
     serializer_class = TTPTemplateSerializer
-    permission_classes = (permissions.IsAuthenticated,)
+    # permission_classes = (permissions.IsAuthenticated,)
     # pagination_class = LimitSet
     pagination_class = LargeResultsSetPagination
     # 配置搜索功能
@@ -98,7 +98,9 @@ class DateEncoder(json.JSONEncoder):
 
 
 class GitConfig(APIView):
-    permission_classes = (IsAuthenticated,)
+    permission_classes = ()
+    authentication_classes = ()
+    # permission_classes = (IsAuthenticated,)
 
     # authentication_classes = (JWTAuthentication, SessionAuthentication)
 
@@ -170,6 +172,9 @@ class GitConfig(APIView):
 
 
 class ComplianceResults(APIView):
+    permission_classes = ()
+    authentication_classes = ()
+
     def get(self, request):
         get_param = request.GET.dict()
         if 'get_results' in get_param.keys():
@@ -191,6 +196,9 @@ class ComplianceResults(APIView):
 
 
 class RegexTest(APIView):
+    permission_classes = ()
+    authentication_classes = ()
+
     def get(self, request):
         get_param = request.GET.dict()
         data = {
@@ -222,6 +230,9 @@ class RegexTest(APIView):
 
 # TTP 前端页面接口
 class TTPParse(APIView):
+    permission_classes = ()
+    authentication_classes = ()
+
     def get(self, request):
         pass
 
@@ -251,6 +262,9 @@ class TTPParse(APIView):
 
 # TextFSM 前端页面接口
 class TextFSMParse(APIView):
+    permission_classes = ()
+    authentication_classes = ()
+
     def get(self, request):
         get_param = request.GET.dict()
         if 'get_tree' in get_param.keys():
@@ -324,6 +338,8 @@ class TextFSMParse(APIView):
 
 
 class Jinja2View(APIView):
+    permission_classes = ()
+    authentication_classes = ()
 
     def get(self, request):
         get_param = request.GET.dict()

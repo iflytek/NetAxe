@@ -1,16 +1,11 @@
 import json
 from collections import OrderedDict
 import ipaddr
-import netaddr
-from celery import current_app
-from django.db.models import Sum
-from django.http import JsonResponse, HttpResponse
-from django.shortcuts import render
+from django.http import JsonResponse
 
 # Create your views here.
-from django_celery_beat.models import CrontabSchedule, PeriodicTask, IntervalSchedule
+from django_celery_beat.models import PeriodicTask, IntervalSchedule
 from django_filters.rest_framework import DjangoFilterBackend
-from kombu.utils.json import loads
 from netaddr import iter_iprange
 from rest_framework import serializers, pagination, viewsets, permissions, filters
 from django.utils.translation import gettext_lazy as _
@@ -20,16 +15,12 @@ from rest_framework.permissions import DjangoModelPermissions
 from rest_framework.response import Response
 from rest_framework.utils.urls import replace_query_param, remove_query_param
 from rest_framework.views import APIView
-
-from netboost.celery import app
-# from .tasks import get_all_tasks
 from .models import Subnet, IpAddress, TagsModel
 from .serializers import HostsResponseSerializer, SubnetSerializer, IpAddressSerializer, \
     PeriodicTaskSerializer, IntervalScheduleSerializer, TagsModelSerializer
 from utils.custom.pagination import LargeResultsSetPagination
 from utils.custom.viewset import CustomViewBase
 from utils.ipam_utils import IpAmForNetwork
-# from ..route_backend.tasks import get_tasks
 
 
 class HostsResponse(object):
@@ -216,14 +207,12 @@ class AvailableIpView(RetrieveAPIView):
 
     def get(self, request, *args, **kwargs):
         subnet = get_object_or_404(self.subnet_model, pk=self.kwargs['subnet_id'])
-        print(subnet)
         return Response(subnet.get_next_available_ip())
 
 
 # 子网网段API
 class SubnetApiViewSet(CustomViewBase):
     # subnet_model = Subnet
-    permission_classes = (permissions.IsAuthenticated,)
     queryset = Subnet.objects.all().order_by('-id')
     serializer_class = SubnetSerializer
     pagination_class = LargeResultsSetPagination
@@ -259,7 +248,6 @@ class LimitSet(pagination.LimitOffsetPagination):
 
 # 任务列表
 class PeriodicTaskViewSet(viewsets.ModelViewSet):
-    # queryset = PeriodicTask.objects.all().order_by('id')
     queryset = PeriodicTask.objects.exclude(task__startswith='celery').order_by('id')
     serializer_class = PeriodicTaskSerializer
     permission_classes = (permissions.IsAuthenticated,)

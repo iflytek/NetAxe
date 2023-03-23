@@ -13,7 +13,7 @@ from .tools.custom_viewset_base import CustomViewBase
 # from rest_framework_extensions.cache.mixins import CacheResponseMixin
 from rest_framework_extensions.cache.decorators import cache_response
 from rest_framework_extensions.cache.mixins import BaseCacheResponseMixin, CacheResponseMixin
-from rest_framework_tracking.mixins import LoggingMixin
+# from rest_framework_tracking.mixins import LoggingMixin
 from .tools.custom_pagination import LargeResultsSetPagination
 from apps.api.serializers import *
 from rest_framework_extensions.key_constructor import bits
@@ -192,7 +192,6 @@ class LimitSet(pagination.LimitOffsetPagination):
 #         super(NetworkDeviceViewSet, self).handle_log()
 #         # print('after', self.log['data'])
 #         # Do some stuff after saving.
-
 
 # 任务列表
 class PeriodicTaskViewSet(viewsets.ModelViewSet):

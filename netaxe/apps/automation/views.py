@@ -29,10 +29,10 @@ class CollectionPlanViewSet(CustomViewBase):
     queryset = CollectionPlan.objects.all().order_by('-id')
     queryset = CollectionPlanSerializer.setup_eager_loading(queryset)
     serializer_class = CollectionPlanSerializer
-    permission_classes = (permissions.IsAuthenticated,)
+    # permission_classes = (permissions.IsAuthenticated,)
     # 配置搜索功能
     filter_backends = (DjangoFilterBackend, filters.SearchFilter, filters.OrderingFilter,)
-    # filter_fields = ('vendor', 'name',)
-    filterset_class = CollectionPlanFilter
+    filter_fields = ('vendor', 'name',)
+    # filterset_class = CollectionPlanFilter
     search_fields = ('vendor', 'name',)
     pagination_class = LimitSet

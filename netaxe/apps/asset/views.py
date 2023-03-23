@@ -101,8 +101,8 @@ class IdcViewSet(viewsets.ModelViewSet):
     """
     queryset = Idc.objects.all().order_by('-id')
     serializer_class = IdcSerializer
-    # permission_classes = (permissions.IsAuthenticated,)
-    permission_classes = (permissions.IsAuthenticated,)
+    permission_classes = ()
+    authentication_classes = ()
     pagination_class = LargeResultsSetPagination
     # 配置搜索功能
     filter_backends = (DjangoFilterBackend, filters.SearchFilter, filters.OrderingFilter)
@@ -111,45 +111,22 @@ class IdcViewSet(viewsets.ModelViewSet):
     search_fields = '__all__'
 
 
-class NetZoneFilter(django_filters.FilterSet):
-    """模糊字段过滤"""
-
-    # vendor = django_filters.CharFilter(lookup_expr='icontains')
-    # memo = django_filters.CharFilter(lookup_expr='icontains')
-    # name = django_filters.CharFilter(lookup_expr='icontains')
-
-    class Meta:
-        model = NetZone
-        fields = '__all__'
-
-
 class CmdbNetzoneModelViewSet(viewsets.ModelViewSet):
     """
     处理  GET POST , 处理 /api/post/<pk>/ GET PUT PATCH DELETE
     """
-    queryset = NetZone.objects.all().order_by('id')
-    # queryset = NetZoneSerializer.setup_eager_loading(queryset)
+    queryset = NetZone.objects.all().order_by('-id')
     serializer_class = NetZoneSerializer
-    # permission_classes = (permissions.IsAuthenticated,)
-    permission_classes = (permissions.IsAuthenticated,)
+    permission_classes = ()
+    authentication_classes = ()
     pagination_class = LargeResultsSetPagination
     # 配置搜索功能
     filter_backends = (DjangoFilterBackend, filters.SearchFilter, filters.OrderingFilter)
-    filterset_class = NetZoneFilter
-    # filter_fields = '__all__'
-    # list_cache_key_func = QueryParamsKeyConstructor()
+    filter_fields = '__all__'
+    # 设置搜索的关键字
+    search_fields = '__all__'
 
 
-class RackFilter(django_filters.FilterSet):
-    """模糊字段过滤"""
-
-    # vendor = django_filters.CharFilter(lookup_expr='icontains')
-    # memo = django_filters.CharFilter(lookup_expr='icontains')
-    # name = django_filters.CharFilter(lookup_expr='icontains')
-
-    class Meta:
-        model = Rack
-        fields = '__all__'
 
 
 class CmdbRackModelViewSet(viewsets.ModelViewSet):
@@ -160,25 +137,11 @@ class CmdbRackModelViewSet(viewsets.ModelViewSet):
     # queryset = NetZoneSerializer.setup_eager_loading(queryset)
     serializer_class = CmdbRackSerializer
     # permission_classes = (permissions.IsAuthenticated,)
-    permission_classes = (permissions.IsAuthenticated,)
+    permission_classes = ()
     pagination_class = LargeResultsSetPagination
     # 配置搜索功能
     filter_backends = (DjangoFilterBackend, filters.SearchFilter, filters.OrderingFilter)
-    filterset_class = RackFilter
-    # filter_fields = '__all__'
-    # list_cache_key_func = QueryParamsKeyConstructor()
-
-
-class IdcModelFilter(django_filters.FilterSet):
-    """模糊字段过滤"""
-
-    # vendor = django_filters.CharFilter(lookup_expr='icontains')
-    # memo = django_filters.CharFilter(lookup_expr='icontains')
-    # name = django_filters.CharFilter(lookup_expr='icontains')
-
-    class Meta:
-        model = IdcModel
-        fields = '__all__'
+    filter_fields = '__all__'
 
 
 class CmdbIdcModelViewSet(viewsets.ModelViewSet):
@@ -189,13 +152,11 @@ class CmdbIdcModelViewSet(viewsets.ModelViewSet):
     queryset = IdcModelSerializer.setup_eager_loading(queryset)
     serializer_class = IdcModelSerializer
     # permission_classes = (permissions.IsAuthenticated,)
-    permission_classes = (permissions.IsAuthenticated,)
+    permission_classes = ()
     pagination_class = LargeResultsSetPagination
     # 配置搜索功能
     filter_backends = (DjangoFilterBackend, filters.SearchFilter, filters.OrderingFilter)
-    filterset_class = IdcModelFilter
-    # filter_fields = '__all__'
-    # list_cache_key_func = QueryParamsKeyConstructor()
+    filter_fields = '__all__'
 
 
 # asset account
@@ -206,6 +167,7 @@ class AccountList(viewsets.ModelViewSet):
     queryset = AssetAccount.objects.all().order_by('id')
     serializer_class = AssetAccountSerializer
     pagination_class = LimitSet
+    permission_classes = ()
     # 配置搜索功能
     filter_backends = (DjangoFilterBackend, filters.SearchFilter, filters.OrderingFilter)
     # 如果要允许对某些字段进行过滤，可以使用filter_fields属性。
@@ -222,7 +184,7 @@ class VendorViewSet(viewsets.ModelViewSet):
     """
     queryset = Vendor.objects.all().order_by('id')
     serializer_class = AssetVendorSerializer
-    permission_classes = (permissions.IsAuthenticated,)
+    permission_classes = ()
     # 配置搜索功能
     filter_backends = (DjangoFilterBackend, filters.SearchFilter, filters.OrderingFilter)
     # 如果要允许对某些字段进行过滤，可以使用filter_fields属性。
@@ -239,7 +201,7 @@ class AssetRoleViewSet(viewsets.ModelViewSet):
     """
     queryset = Role.objects.all().order_by('id')
     serializer_class = RoleSerializer
-    permission_classes = (permissions.IsAuthenticated,)
+    permission_classes = ()
     # 配置搜索功能
     filter_backends = (DjangoFilterBackend, filters.SearchFilter, filters.OrderingFilter)
     # 如果要允许对某些字段进行过滤，可以使用filter_fields属性。
@@ -255,7 +217,7 @@ class CategoryViewSet(viewsets.ModelViewSet):
     """
     queryset = Category.objects.all().order_by('id')
     serializer_class = CategorySerializer
-    permission_classes = (permissions.IsAuthenticated,)
+    permission_classes = ()
     # 配置搜索功能
     filter_backends = (DjangoFilterBackend, filters.SearchFilter, filters.OrderingFilter)
     # 如果要允许对某些字段进行过滤，可以使用filter_fields属性。
@@ -272,7 +234,7 @@ class ModelViewSet(viewsets.ModelViewSet):
     queryset = Model.objects.all().order_by('id')
     queryset = ModelSerializer.setup_eager_loading(queryset)
     serializer_class = ModelSerializer
-    permission_classes = (permissions.IsAuthenticated,)
+    permission_classes = ()
     # 配置搜索功能
     filter_backends = (DjangoFilterBackend, filters.SearchFilter, filters.OrderingFilter)
     filter_fields = ('vendor', 'name')
@@ -285,7 +247,7 @@ class AttributelViewSet(viewsets.ModelViewSet):
     """
     queryset = Attribute.objects.all().order_by('id')
     serializer_class = AttributeSerializer
-    permission_classes = (permissions.IsAuthenticated,)
+    permission_classes = ()
     # 配置搜索功能
     filter_backends = (DjangoFilterBackend, filters.SearchFilter, filters.OrderingFilter)
     filter_fields = '__all__'
@@ -298,7 +260,7 @@ class FrameworkViewSet(viewsets.ModelViewSet):
     """
     queryset = Framework.objects.all().order_by('id')
     serializer_class = FrameworkSerializer
-    permission_classes = (permissions.IsAuthenticated,)
+    permission_classes = ()
     # 配置搜索功能
     filter_backends = (DjangoFilterBackend, filters.SearchFilter, filters.OrderingFilter)
     filter_fields = '__all__'
@@ -324,12 +286,16 @@ class NetworkDeviceViewSet(viewsets.ModelViewSet):
     queryset = NetworkDevice.objects.all().order_by('-id')
     queryset = NetworkDeviceSerializer.setup_eager_loading(queryset)
     serializer_class = NetworkDeviceSerializer
-    permission_classes = (permissions.IsAuthenticated,)
+    permission_classes = ()
+    authentication_classes = ()
     # authentication_classes = (authentication.JWTAuthentication,)
     # 配置搜索功能
     filter_backends = (DjangoFilterBackend, filters.SearchFilter, filters.OrderingFilter)
-    filterset_class = NetworkDeviceFilter
-    # filter_fields = ('asset', 'asset__idc__name', 'asset__idc_model__name', 'asset__rack__name')
+    # filterset_class = NetworkDeviceFilter
+    filter_fields = ('serial_num', 'manage_ip', 'bridge_mac', 'category__name', 'role__name',
+                     'name', 'vendor__name', 'idc__name', 'patch_version', 'idc_model__name', 'soft_version',
+                     'model__name', 'netzone__name', 'attribute__name', 'framework__name', 'rack__name',
+                     'u_location', 'memo', 'status', 'ha_status')
     # pagination_class = LimitSet
     pagination_class = LargeResultsSetPagination
     # 设置搜索的关键字
@@ -337,8 +303,6 @@ class NetworkDeviceViewSet(viewsets.ModelViewSet):
                      'name', 'vendor__name', 'idc__name', 'patch_version', 'idc_model__name', 'soft_version',
                      'model__name', 'netzone__name', 'attribute__name', 'framework__name', 'rack__name',
                      'u_location', 'memo', 'status', 'ha_status')
-
-    # list_cache_key_func = QueryParamsKeyConstructor()
 
     def get_queryset(self):
         """
@@ -361,6 +325,6 @@ class NetworkDeviceViewSet(viewsets.ModelViewSet):
             return self.queryset
 
     # 重新update方法主要用来捕获更改前的字段值并赋值给self.log
-    def update(self, request, *args, **kwargs):
-        print('更新', super().update(request, *args, **kwargs))
-        return super().update(request, *args, **kwargs)
+    # def update(self, request, *args, **kwargs):
+    #     print('更新', super().update(request, *args, **kwargs))
+    #     return super().update(request, *args, **kwargs)

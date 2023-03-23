@@ -17,6 +17,7 @@ class CustomViewBase(viewsets.ModelViewSet):
     queryset = ''
     serializer_class = ''
     permission_classes = ()
+    authentication_classes = ()
     filter_fields = ()
     search_fields = ()
     filter_backends = (rest_framework.DjangoFilterBackend, filters.SearchFilter, filters.OrderingFilter,)
