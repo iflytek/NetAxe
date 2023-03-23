@@ -3,8 +3,6 @@ from collections import OrderedDict
 import ipaddr
 from django.http import JsonResponse
 
-# Create your views here.
-from django_celery_beat.models import PeriodicTask, IntervalSchedule
 from django_filters.rest_framework import DjangoFilterBackend
 from netaddr import iter_iprange
 from rest_framework import serializers, pagination, viewsets, permissions, filters
@@ -15,24 +13,21 @@ from rest_framework.permissions import DjangoModelPermissions
 from rest_framework.response import Response
 from rest_framework.utils.urls import replace_query_param, remove_query_param
 from rest_framework.views import APIView
+from utils.tools.custom_pagination import LargeResultsSetPagination
+from utils.tools.custom_viewset_base import CustomViewBase
 from .models import Subnet, IpAddress, TagsModel
-from .serializers import HostsResponseSerializer, SubnetSerializer, IpAddressSerializer, \
-    PeriodicTaskSerializer, IntervalScheduleSerializer, TagsModelSerializer
-from utils.custom.pagination import LargeResultsSetPagination
-from utils.custom.viewset import CustomViewBase
+from .serializers import HostsResponseSerializer, SubnetSerializer, IpAddressSerializer, TagsModelSerializer
 from utils.ipam_utils import IpAmForNetwork
 
 
 class HostsResponse(object):
     def __init__(self, address, used, tag, subnet, lastOnlineTime, description):
-        # def __init__(self, address, used, tag, subnet):
         self.address = address
         self.used = used
         self.tag = tag
         self.subnet = subnet
         self.lastOnlineTime = lastOnlineTime
         self.description = description
-        # self.bgbu = bgbu
 
 
 class HostsSet:
@@ -108,6 +103,7 @@ class HostsSet:
         return index
 
 
+# 地址列表分页及数据格式化方法
 class HostsListPagination(pagination.BasePagination):
     limit = 256
     start_query_param = 'start'
@@ -187,6 +183,7 @@ class ProtectedAPIMixin(object):
     throttle_scope = 'ipam'
 
 
+# 给admin后台使用，根据子网id获取地址信息
 class SubnetHostsView(ProtectedAPIMixin, ListAPIView):
     subnet_model = Subnet
     queryset = Subnet.objects.none()
@@ -200,6 +197,7 @@ class SubnetHostsView(ProtectedAPIMixin, ListAPIView):
         return qs
 
 
+# 获取可用地址
 class AvailableIpView(RetrieveAPIView):
     subnet_model = Subnet
     queryset = IpAddress.objects.none()
@@ -210,71 +208,7 @@ class AvailableIpView(RetrieveAPIView):
         return Response(subnet.get_next_available_ip())
 
 
-# 子网网段API
-class SubnetApiViewSet(CustomViewBase):
-    # subnet_model = Subnet
-    queryset = Subnet.objects.all().order_by('-id')
-    serializer_class = SubnetSerializer
-    pagination_class = LargeResultsSetPagination
-    # 配置搜索功能
-    filter_backends = (DjangoFilterBackend, filters.SearchFilter, filters.OrderingFilter)
-    filter_fields = ('mask', 'name')
-
-
-# IP地址Api
-class IpAddressApiViewSet(CustomViewBase):
-    # subnet_model = Subnet
-    permission_classes = (permissions.IsAuthenticated,)
-    queryset = IpAddress.objects.all().order_by('-id')
-    serializer_class = IpAddressSerializer
-    pagination_class = LargeResultsSetPagination
-    # 配置搜索功能
-    filter_backends = (DjangoFilterBackend, filters.SearchFilter, filters.OrderingFilter)
-    filter_fields = '__all__'
-
-
-class LimitSet(pagination.LimitOffsetPagination):
-    # 每页默认几条
-    default_limit = 10
-    # 设置传入页码数参数名
-    page_query_param = "page"
-    # 设置传入条数参数名
-    limit_query_param = 'limit'
-    # 设置传入位置参数名
-    offset_query_param = 'start'
-    # 最大每页显示条数
-    max_limit = None
-
-
-# 任务列表
-class PeriodicTaskViewSet(viewsets.ModelViewSet):
-    queryset = PeriodicTask.objects.exclude(task__startswith='celery').order_by('id')
-    serializer_class = PeriodicTaskSerializer
-    permission_classes = (permissions.IsAuthenticated,)
-    # 配置搜索功能
-    filter_backends = (DjangoFilterBackend, filters.SearchFilter, filters.OrderingFilter)
-    # 如果要允许对某些字段进行过滤，可以使用filter_fields属性。
-    filter_fields = '__all__'
-    pagination_class = LimitSet
-    # 设置搜索的关键字
-    search_fields = '__all__'
-    # list_cache_key_func = QueryParamsKeyConstructor()
-
-
-class IntervalScheduleViewSet(viewsets.ModelViewSet):
-    queryset = IntervalSchedule.objects.all().order_by('id')
-    serializer_class = IntervalScheduleSerializer
-    permission_classes = (permissions.IsAuthenticated,)
-    # 配置搜索功能
-    filter_backends = (DjangoFilterBackend, filters.SearchFilter, filters.OrderingFilter)
-    # 如果要允许对某些字段进行过滤，可以使用filter_fields属性。
-    filter_fields = '__all__'
-    pagination_class = LimitSet
-    # 设置搜索的关键字
-    search_fields = '__all__'
-    # list_cache_key_func = QueryParamsKeyConstructor()
-
-
+# 根据网段ID获取对应下面IP地址信息
 class SubnetAddressView(ListAPIView):
     subnet_model = Subnet
     queryset = Subnet.objects.none()
@@ -307,7 +241,9 @@ class IpAmSubnetTreeView(APIView):
 
 
 # 地址操作
-class IpAmHandelView(APIView):
+class IpAmHandleView(APIView):
+    permission_classes = ()
+    authentication_classes = ()
     def post(self, request):
         update = request.POST.get('update')
         range_update = request.POST.get('range_update')
@@ -351,12 +287,10 @@ class IpAmHandelView(APIView):
                 IpAddress.objects.filter(ip_address=delete_info['ipaddr']).delete()
             res = {'message': '地址回收成功', 'code': 200, 'delete_ip_list': [j['ipaddr'] for j in delete_ip_list]}
             return JsonResponse(res, safe=True)
-
         if description:
             Subnet.objects.filter(id=subnet_id).update(description=description)
             res = {'message': '网段描述更新成功', 'code': 200, }
             return JsonResponse(res, safe=True)
-
         if add_subnet:
             try:
                 # print(add_master_id, type(add_master_id))
@@ -407,58 +341,4 @@ class IpAmHandelView(APIView):
                 return JsonResponse(res, safe=True)
 
 
-# # 作业中心taskList
-# class JobCenterView(APIView):
-#     def get(self, request):
-#         # Operationinfo = 'None'
-#         get_current_tasks = request.GET.get('current_tasks')
-#         get_crontab_schedules = request.GET.get('crontab_schedules')
-#         get_queues = request.GET.get('get_queues')
-#         celery_app = current_app
-#         if get_current_tasks:
-#             res = get_tasks()
-#             # print(res.get())
-#             # while True:
-#             #     if res.ready():
-#             #         result = res.get()
-#             #         break
-#             result = json.loads(res)
-#             return JsonResponse(
-#                 {'code': 200, 'data': result['result'], 'count': len(result['result'])})
-#         if get_crontab_schedules:
-#             from django.core import serializers
-#             crontab_schedules = serializers.serialize("json", CrontabSchedule.objects.all())
-#             return JsonResponse(
-#                 {'code': 200, 'data': json.loads(crontab_schedules), 'count': len(json.loads(crontab_schedules))})
-#         if get_queues:
-#             queues_list = [queue.name for queue in app.conf.task_queues]
-#             return JsonResponse({'code': 200, 'data': queues_list, 'count': len(queues_list)})
-#
-#     def post(self, request):
-#         """ run tasks"""
-#         celery_app = current_app
-#         f = request.POST
-#         f = json.loads(f['data'])
-#         taskname = f['task']
-#         args = f['args']
-#         kwargs = f['kwargs']
-#         queue = f['queue']
-#         celery_app.loader.import_default_modules()
-#         tasks = [(celery_app.tasks.get(taskname),
-#                   loads(args),
-#                   loads(kwargs),
-#                   queue)]
-#         if any(t[0] is None for t in tasks):
-#             for i, t in enumerate(tasks):
-#                 if t[0] is None:
-#                     break
-#             return JsonResponse({'code': 400, 'data': None}, safe=False)
-#         task_ids = [task.apply_async(args=args, kwargs=kwargs, queue=queue)
-#                     if queue and len(queue)
-#                     else task.apply_async(args=args, kwargs=kwargs)
-#                     for task, args, kwargs, queue in tasks]
-#         if task_ids[0] == None:
-#             return JsonResponse({'code': 400, 'data': '执行失败'}, safe=False)
-#         #  list:<class 'celery.result.AsyncResult'>
-#         # print(task_ids[0],str(task_ids[0]))
-#         return JsonResponse({'code': 200, 'data': str(task_ids[0])}, safe=False)
+
