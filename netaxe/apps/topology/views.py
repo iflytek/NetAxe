@@ -136,7 +136,7 @@ class TopologyShow(APIView):
         # 删除拓扑图
         if all(k in post_param for k in ("name", "del_graph")):
             _TopologyTask = TopologyTask(post_param['name'])
-            _TopologyTask.del_graph
+            _TopologyTask.del_graph()
             data = {
                 "code": 200,
                 "data": [],
