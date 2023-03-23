@@ -1,22 +1,17 @@
 import json
 import os
 from datetime import date
-
 import django_filters
 from django.views import View
 from django.http import JsonResponse, FileResponse, Http404
 from django_filters.rest_framework import DjangoFilterBackend
 from rest_framework.views import APIView
-from rest_framework import viewsets, permissions, filters
-
+from rest_framework import viewsets, filters
 from netboost.settings import MEDIA_ROOT
 from apps.route_backend.views import LimitSet
 from utils.crypt_pwd import CryptPwd
-# from scripts.crypt_pwd import CryptPwd
-# from utils.excel2list import excel2list
-# asset  import export excel
-# from utils.netops_api import netOpsApi
-from utils.tools.custom_pagination import LargeResultsSetPagination
+from apps.api.tools.custom_pagination import LargeResultsSetPagination
+from apps.api.tools.custom_viewset_base import CustomViewBase
 from apps.asset.models import Idc, AssetAccount, Vendor, Role, Category, Model, Attribute, Framework, NetworkDevice, \
     IdcModel, NetZone, Rack
 from apps.asset.serializers import IdcSerializer, AssetAccountSerializer, AssetVendorSerializer, RoleSerializer, \
@@ -95,7 +90,7 @@ class DeviceAccountView(APIView):
 
 
 # asset IDC
-class IdcViewSet(viewsets.ModelViewSet):
+class IdcViewSet(CustomViewBase):
     """
     IDC 处理  GET POST , 处理 /api/post/<pk>/ GET PUT PATCH DELETE
     """
@@ -111,7 +106,7 @@ class IdcViewSet(viewsets.ModelViewSet):
     search_fields = '__all__'
 
 
-class CmdbNetzoneModelViewSet(viewsets.ModelViewSet):
+class CmdbNetzoneModelViewSet(CustomViewBase):
     """
     处理  GET POST , 处理 /api/post/<pk>/ GET PUT PATCH DELETE
     """
@@ -127,9 +122,7 @@ class CmdbNetzoneModelViewSet(viewsets.ModelViewSet):
     search_fields = '__all__'
 
 
-
-
-class CmdbRackModelViewSet(viewsets.ModelViewSet):
+class CmdbRackModelViewSet(CustomViewBase):
     """
     处理  GET POST , 处理 /api/post/<pk>/ GET PUT PATCH DELETE
     """
@@ -144,7 +137,7 @@ class CmdbRackModelViewSet(viewsets.ModelViewSet):
     filter_fields = '__all__'
 
 
-class CmdbIdcModelViewSet(viewsets.ModelViewSet):
+class CmdbIdcModelViewSet(CustomViewBase):
     """
     处理  GET POST , 处理 /api/post/<pk>/ GET PUT PATCH DELETE
     """
@@ -160,7 +153,7 @@ class CmdbIdcModelViewSet(viewsets.ModelViewSet):
 
 
 # asset account
-class AccountList(viewsets.ModelViewSet):
+class AccountList(CustomViewBase):
     """
     处理  GET POST , 处理 /api/post/<pk>/ GET PUT PATCH DELETE
     """
@@ -178,7 +171,7 @@ class AccountList(viewsets.ModelViewSet):
 
 
 # asset vendor
-class VendorViewSet(viewsets.ModelViewSet):
+class VendorViewSet(CustomViewBase):
     """
     处理  GET POST , 处理 /api/post/<pk>/ GET PUT PATCH DELETE
     """
@@ -195,7 +188,7 @@ class VendorViewSet(viewsets.ModelViewSet):
 
 
 # asset role
-class AssetRoleViewSet(viewsets.ModelViewSet):
+class AssetRoleViewSet(CustomViewBase):
     """
     处理  GET POST , 处理 /api/post/<pk>/ GET PUT PATCH DELETE
     """
@@ -211,7 +204,7 @@ class AssetRoleViewSet(viewsets.ModelViewSet):
     search_fields = '__all__'
 
 
-class CategoryViewSet(viewsets.ModelViewSet):
+class CategoryViewSet(CustomViewBase):
     """
     处理  GET POST , 处理 /api/post/<pk>/ GET PUT PATCH DELETE
     """
@@ -227,7 +220,7 @@ class CategoryViewSet(viewsets.ModelViewSet):
     search_fields = '__all__'
 
 
-class ModelViewSet(viewsets.ModelViewSet):
+class ModelViewSet(CustomViewBase):
     """
     处理  GET POST , 处理 /api/post/<pk>/ GET PUT PATCH DELETE
     """
@@ -241,7 +234,7 @@ class ModelViewSet(viewsets.ModelViewSet):
     pagination_class = LimitSet
 
 
-class AttributelViewSet(viewsets.ModelViewSet):
+class AttributelViewSet(CustomViewBase):
     """
     处理 设备网络属性 GET POST , 处理 /api/post/<pk>/ GET PUT PATCH DELETE
     """
@@ -254,7 +247,7 @@ class AttributelViewSet(viewsets.ModelViewSet):
     pagination_class = LimitSet
 
 
-class FrameworkViewSet(viewsets.ModelViewSet):
+class FrameworkViewSet(CustomViewBase):
     """
     处理 设备网络架构 GET POST , 处理 /api/post/<pk>/ GET PUT PATCH DELETE
     """
@@ -279,7 +272,7 @@ class NetworkDeviceFilter(django_filters.FilterSet):
         fields = '__all__'
 
 
-class NetworkDeviceViewSet(viewsets.ModelViewSet):
+class NetworkDeviceViewSet(CustomViewBase):
     """
     处理  GET POST , 处理 /api/post/<pk>/ GET PUT PATCH DELETE
     """

@@ -5,9 +5,6 @@ from django.views import View
 from django.db.models import Count
 from django.http import JsonResponse
 from django_filters.rest_framework import DjangoFilterBackend
-from rest_framework_extensions.cache.mixins import BaseCacheResponseMixin, CacheResponseMixin
-from django_celery_beat.models import PeriodicTask, PeriodicTasks, CrontabSchedule, IntervalSchedule
-
 # 根据角色的菜单组件
 from celery import current_app
 from kombu.utils.json import loads
@@ -15,11 +12,10 @@ from rest_framework.views import APIView
 from rest_framework_extensions.key_constructor import bits
 from rest_framework import viewsets, permissions, filters, pagination
 from rest_framework_extensions.key_constructor.constructors import DefaultKeyConstructor
-
 from apps.route_backend.serializers import *
 from apps.asset.models import NetworkDevice
 from apps.automation.models import CollectionPlan
-
+from apps.api.tools.custom_viewset_base import CustomViewBase
 from .tasks import get_tasks
 from netboost import settings
 from netboost.celery import app
@@ -275,7 +271,7 @@ class JobCenterView(APIView):
         return JsonResponse({'code': 200, 'data': str(task_ids[0])}, safe=False)
 
 # 任务列表
-class PeriodicTaskViewSet(viewsets.ModelViewSet):
+class PeriodicTaskViewSet(CustomViewBase):
     # queryset = PeriodicTask.objects.all().order_by('id')
     queryset = PeriodicTask.objects.exclude(task__startswith='celery').order_by('id')
     serializer_class = PeriodicTaskSerializer
@@ -291,7 +287,7 @@ class PeriodicTaskViewSet(viewsets.ModelViewSet):
     # list_cache_key_func = QueryParamsKeyConstructor()
 
 
-class IntervalScheduleViewSet(viewsets.ModelViewSet):
+class IntervalScheduleViewSet(CustomViewBase):
     queryset = IntervalSchedule.objects.all().order_by('id')
     serializer_class = IntervalScheduleSerializer
     permission_classes = ()

@@ -6,8 +6,7 @@ from rest_framework import viewsets, permissions, filters, pagination
 from apps.route_backend.views import LimitSet
 from apps.automation.models import CollectionPlan
 from apps.automation.serializers import CollectionPlanSerializer
-
-from utils.tools.custom_viewset_base import CustomViewBase
+from apps.api.tools.custom_viewset_base import CustomViewBase
 
 
 class CollectionPlanFilter(django_filters.FilterSet):
