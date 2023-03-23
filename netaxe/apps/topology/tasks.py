@@ -44,7 +44,6 @@ class TopologyTask:
         return MongoNetOps.get_topology(self.topology.name)
 
     # 删除拓扑
-    @property
     def del_graph(self):
         self.topology.delete()
         MongoNetOps.del_topology(self.topology.name)
