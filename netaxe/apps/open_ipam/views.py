@@ -3,9 +3,8 @@ from collections import OrderedDict
 import ipaddr
 from django.http import JsonResponse
 
-from django_filters.rest_framework import DjangoFilterBackend
 from netaddr import iter_iprange
-from rest_framework import serializers, pagination, viewsets, permissions, filters
+from rest_framework import serializers, pagination
 from django.utils.translation import gettext_lazy as _
 from rest_framework.authentication import SessionAuthentication
 from rest_framework.generics import ListAPIView, get_object_or_404, RetrieveAPIView
@@ -13,10 +12,8 @@ from rest_framework.permissions import DjangoModelPermissions
 from rest_framework.response import Response
 from rest_framework.utils.urls import replace_query_param, remove_query_param
 from rest_framework.views import APIView
-from utils.tools.custom_pagination import LargeResultsSetPagination
-from utils.tools.custom_viewset_base import CustomViewBase
 from .models import Subnet, IpAddress, TagsModel
-from .serializers import HostsResponseSerializer, SubnetSerializer, IpAddressSerializer, TagsModelSerializer
+from .serializers import HostsResponseSerializer, TagsModelSerializer
 from utils.ipam_utils import IpAmForNetwork
 
 
@@ -339,6 +336,3 @@ class IpAmHandleView(APIView):
             except Exception as e:
                 res = {'message': e, 'code': 400, }
                 return JsonResponse(res, safe=True)
-
-
-
