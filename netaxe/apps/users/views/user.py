@@ -4,7 +4,7 @@ from rest_framework import serializers, permissions, filters, viewsets
 from rest_framework.decorators import action
 from rest_framework.permissions import IsAuthenticated
 from django_filters.rest_framework import DjangoFilterBackend
-from utils.tools.custom_pagination import LargeResultsSetPagination
+from apps.api.tools.custom_pagination import LargeResultsSetPagination
 from apps.users.models import UserProfile, BgBu
 from apps.users.serializers import BgBuSerializer
 from apps.system.views.role import RoleSerializer

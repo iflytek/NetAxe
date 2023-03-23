@@ -5,8 +5,8 @@ from rest_framework import viewsets, permissions, filters, pagination
 
 from .models import InterfaceUsedNew
 from .serializers import InterfaceUsedNewSerializer
-from utils.tools.custom_viewset_base import CustomViewBase
-from utils.tools.custom_pagination import LargeResultsSetPagination
+from apps.api.tools.custom_viewset_base import CustomViewBase
+from apps.api.tools.custom_pagination import LargeResultsSetPagination
 
 
 class InterfaceUsedFilter(django_filters.FilterSet):
