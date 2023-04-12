@@ -195,6 +195,7 @@ class AssetRoleViewSet(CustomViewBase):
     queryset = Role.objects.all().order_by('id')
     serializer_class = RoleSerializer
     permission_classes = ()
+    authentication_classes = ()
     # 配置搜索功能
     filter_backends = (DjangoFilterBackend, filters.SearchFilter, filters.OrderingFilter)
     # 如果要允许对某些字段进行过滤，可以使用filter_fields属性。

@@ -10,7 +10,8 @@ export const getRoleList = '/api/system/role/'
 export const getMenuList = '/api/system/menu/'
 export const getDepartmentList = '/api/system/dept/'
 export const getMenuListByRole = '/api/system/menu/web_router/'
-
+export const WebRouter = '/rbac/system/menu/web_router/'
+export const WebPermission = '/rbac/system/menu/web_permission/'
 // 调度管理
 export const getdispach = '/api/backend/dispatch_page/'
 // 任务列表

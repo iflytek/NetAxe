@@ -57,6 +57,7 @@ INSTALLED_APPS = [
     # "rest_framework_tracking",
     # "rest_framework.authtoken",
     # "rest_framework.apps.RestFrameworkConfig",
+    "corsheaders",
     "apps.users.apps.UsersConfig",
     "apps.system.apps.SystemConfig",
     "apps.topology.apps.TopologyConfig",
@@ -74,6 +75,7 @@ INSTALLED_APPS = [
 MIDDLEWARE = [
     "django.middleware.security.SecurityMiddleware",
     "django.contrib.sessions.middleware.SessionMiddleware",
+    "corsheaders.middleware.CorsMiddleware",
     "django.middleware.common.CommonMiddleware",
     # "django.middleware.csrf.CsrfViewMiddleware",
     "django.contrib.auth.middleware.AuthenticationMiddleware",
@@ -81,6 +83,36 @@ MIDDLEWARE = [
     "django.middleware.clickjacking.XFrameOptionsMiddleware",
     # "utils.custom.middleware.ApiLoggingMiddleware",
 ]
+# 跨域增加忽略
+CORS_ALLOW_CREDENTIALS = True
+CORS_ORIGIN_ALLOW_ALL = True
+CORS_ORIGIN_WHITELIST = (
+    ['http://10.254.2.188:*']
+)
+
+CORS_ALLOW_METHODS = (
+    'DELETE',
+    'GET',
+    'OPTIONS',
+    'PATCH',
+    'POST',
+    'PUT',
+    'VIEW',
+)
+
+CORS_ALLOW_HEADERS = (
+    'XMLHttpRequest',
+    'X_FILENAME',
+    'accept-encoding',
+    'authorization',
+    'content-type',
+    'dnt',
+    'origin',
+    'user-agent',
+    'x-csrftoken',
+    'x-requested-with',
+    'Pragma',
+)
 
 ROOT_URLCONF = "netboost.urls"
 
@@ -292,7 +324,7 @@ REST_FRAMEWORK = {
         "django_filters.rest_framework.DjangoFilterBackend",
     ),
     "DEFAULT_PERMISSION_CLASSES": (
-        "rest_framework.permissions.IsAuthenticated",
+        # "rest_framework.permissions.IsAuthenticated",
         # "rest_framework.permissions.DjangoModelPermissions",
         # "rest_framework.permissions.DjangoModelPermissionsOrAnonReadOnly"
     ),
@@ -300,7 +332,7 @@ REST_FRAMEWORK = {
         # "rest_framework.authentication.BasicAuthentication",
         # "rest_framework.authentication.SessionAuthentication",
         # "rest_framework.authentication.TokenAuthentication",
-        "rest_framework_simplejwt.authentication.JWTAuthentication",
+        # "rest_framework_simplejwt.authentication.JWTAuthentication",
         # "apps.api.authentication.ExpiringTokenAuthentication",
     ),
     "EXCEPTION_HANDLER": "utils.custom.exception.CustomExceptionHandler",  # 自定义的异常处理

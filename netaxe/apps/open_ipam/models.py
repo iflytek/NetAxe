@@ -14,8 +14,6 @@ from django.db.models import Q
 from django.utils.translation import gettext_lazy as _
 from rest_framework.exceptions import ValidationError
 
-# from users.models import OpLogs
-
 
 class CsvImportException(Exception):
     pass
@@ -266,23 +264,6 @@ class IpAddress(models.Model):
             )
             instance.subnet = Subnet.objects.filter(subnet=row[0]).first()
             instance.save()
-
-
-# class BgBu(models.Model):
-#     """ """
-#     name = models.CharField(verbose_name='业务线名称', max_length=20, null=False, unique=True)
-#
-#     # def user_list(self):
-#     #     return ','.join([i.username for i in self.authusers_set.all()])
-#
-#     def __str__(self):
-#         return self.name
-#
-#     class Meta:
-#         verbose_name = '业务线表'
-#         verbose_name_plural = '业务线表'
-#         db_table = 'ipam_bgbu'  # 通过db_table自定义数据表名
-#         indexes = [models.Index(fields=['name', ]), ]
 
 
 class TagsModel(models.Model):

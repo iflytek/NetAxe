@@ -221,6 +221,8 @@ class SubnetAddressView(ListAPIView):
 
 # 获取subnet_tree
 class IpAmSubnetTreeView(APIView):
+    permission_classes = ()
+    authentication_classes = ()
     def get(self, request):
         get_params = request.GET.dict()
         if 'subnet' in get_params:

@@ -26,7 +26,8 @@ class InterfaceUsedNewViewSet(CustomViewBase):
     queryset = InterfaceUsedNew.objects.all().order_by('-log_time')
     # queryset = InterfaceUsedNewSerializer.setup_eager_loading(queryset)
     serializer_class = InterfaceUsedNewSerializer
-    # permission_classes = (permissions.IsAuthenticated,)
+    # permission_classes = ()
+    # authentication_classes = ()
     pagination_class = LargeResultsSetPagination
     # 配置搜索功能
     filter_backends = (DjangoFilterBackend, filters.SearchFilter, filters.OrderingFilter)
