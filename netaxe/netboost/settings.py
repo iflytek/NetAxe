@@ -57,7 +57,6 @@ INSTALLED_APPS = [
     # "rest_framework_tracking",
     # "rest_framework.authtoken",
     # "rest_framework.apps.RestFrameworkConfig",
-    "corsheaders",
     "apps.users.apps.UsersConfig",
     "apps.system.apps.SystemConfig",
     "apps.topology.apps.TopologyConfig",
@@ -81,38 +80,10 @@ MIDDLEWARE = [
     "django.contrib.auth.middleware.AuthenticationMiddleware",
     "django.contrib.messages.middleware.MessageMiddleware",
     "django.middleware.clickjacking.XFrameOptionsMiddleware",
-    # "utils.custom.middleware.ApiLoggingMiddleware",
+    "utils.custom.middleware.CorsMiddleWare",
 ]
-# 跨域增加忽略
-CORS_ALLOW_CREDENTIALS = True
-CORS_ORIGIN_ALLOW_ALL = True
-CORS_ORIGIN_WHITELIST = (
-    ['http://10.254.2.188:*']
-)
+# MIDDLEWARE +=['']
 
-CORS_ALLOW_METHODS = (
-    'DELETE',
-    'GET',
-    'OPTIONS',
-    'PATCH',
-    'POST',
-    'PUT',
-    'VIEW',
-)
-
-CORS_ALLOW_HEADERS = (
-    'XMLHttpRequest',
-    'X_FILENAME',
-    'accept-encoding',
-    'authorization',
-    'content-type',
-    'dnt',
-    'origin',
-    'user-agent',
-    'x-csrftoken',
-    'x-requested-with',
-    'Pragma',
-)
 
 ROOT_URLCONF = "netboost.urls"
 
