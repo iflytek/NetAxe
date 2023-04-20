@@ -240,303 +240,317 @@ export default defineComponent({
         const selectValues = ref(null)
         const selectCollectValues = ref('')
         const EditFormOptions = [
-            {
-                key: 'manage_ip',
-                label: '管理地址',
-                value: ref(null),
-                // optionItems: shallowReactive([] as Array<SelectOption>),
-                render: (formItem) => {
-                    return h(NInput, {
-                        value: formItem.value.value,
-                        onUpdateValue: (newVal: any) => {
-                            formItem.value.value = newVal
-                        },
-                        maxlength: 50,
-                        placeholder: '',
-                    })
-                },
+      {
+        key: 'manage_ip',
+        label: '管理地址',
+        value: ref(null),
+        // optionItems: shallowReactive([] as Array<SelectOption>),
+        render: (formItem) => {
+          return h(NInput, {
+            value: formItem.value.value,
+            onUpdateValue: (newVal: any) => {
+              formItem.value.value = newVal
             },
-            {
-                key: 'framework',
-                label: '网络架构',
-                value: ref(null),
-                optionItems: shallowReactive([] as Array<SelectOption>),
-                render: (formItem) => {
-                    return h(NSelect, {
-                        options: formItem.optionItems as Array<SelectOption>,
-                        value: formItem.value.value,
-                        placeholder: '请选择架构',
-                        onUpdateValue: (val) => {
-                            formItem.value.value = val
-                        },
-                    })
-                },
+            maxlength: 50,
+            placeholder: '',
+          })
+        },
+      },
+      {
+        key: 'framework',
+        label: '网络架构',
+        value: ref(null),
+        optionItems: [
+          { value: 0, label: '' },
+          { value: 2, label: '二层' },
+          { value: 4, label: '三层' },
+          { value: 6, label: '大二层' },
+        ],
+        render: (formItem) => {
+          return h(NSelect, {
+            options: formItem.optionItems as Array<SelectOption>,
+            value: formItem.value.value,
+            placeholder: '请选择架构',
+            filterable: true,
+            onUpdateValue: (val) => {
+              formItem.value.value = val
             },
-            {
-                key: 'vendor',
-                label: '供应商',
-                value: ref(null),
-                optionItems: shallowReactive([] as Array<SelectOption>),
-                render: (formItem) => {
-                    return h(NSelect, {
-                        options: formItem.optionItems as Array<SelectOption>,
-                        value: formItem.value.value,
-                        placeholder: '请选择供应商',
-                        onUpdateValue: (val) => {
-                            formItem.value.value = val
-                        },
-                    })
-                },
+          })
+        },
+      },
+      {
+        key: 'vendor',
+        label: '供应商',
+        value: ref(null),
+        optionItems: shallowReactive([] as Array<SelectOption>),
+        render: (formItem) => {
+          return h(NSelect, {
+            options: formItem.optionItems as Array<SelectOption>,
+            value: formItem.value.value,
+            filterable: true,
+            placeholder: '请选择供应商',
+            onUpdateValue: (val) => {
+              formItem.value.value = val
             },
-            {
-                key: 'role',
-                label: '设备角色',
-                value: ref(null),
-                optionItems: shallowReactive([] as Array<SelectOption>),
-                render: (formItem) => {
-                    return h(NSelect, {
-                        options: formItem.optionItems as Array<SelectOption>,
-                        value: formItem.value.value,
-                        placeholder: '请选择角色',
-                        onUpdateValue: (val) => {
-                            formItem.value.value = val
-                        },
-                    })
-                },
+          })
+        },
+      },
+      {
+        key: 'role',
+        label: '设备角色',
+        value: ref(null),
+        optionItems: shallowReactive([] as Array<SelectOption>),
+        render: (formItem) => {
+          return h(NSelect, {
+            options: formItem.optionItems as Array<SelectOption>,
+            value: formItem.value.value,
+            filterable: true,
+            placeholder: '请选择角色',
+            onUpdateValue: (val) => {
+              formItem.value.value = val
             },
-            {
-                key: 'category',
-                label: '类型',
-                value: ref(null),
-                optionItems: shallowReactive([] as Array<SelectOption>),
-                render: (formItem) => {
-                    return h(NSelect, {
-                        options: formItem.optionItems as Array<SelectOption>,
-                        value: formItem.value.value,
-                        placeholder: '请选择角色',
-                        onUpdateValue: (val) => {
-                            formItem.value.value = val
-                        },
-                    })
-                },
+          })
+        },
+      },
+      {
+        key: 'category',
+        label: '类型',
+        value: ref(null),
+        optionItems: shallowReactive([] as Array<SelectOption>),
+        render: (formItem) => {
+          return h(NSelect, {
+            options: formItem.optionItems as Array<SelectOption>,
+            value: formItem.value.value,
+            filterable: true,
+            placeholder: '请选择角色',
+            onUpdateValue: (val) => {
+              formItem.value.value = val
             },
-            {
-                key: 'idc_model',
-                label: '模块',
-                value: ref(null),
-                optionItems: shallowReactive([] as Array<SelectOption>),
-                render: (formItem) => {
-                    return h(NSelect, {
-                        options: formItem.optionItems as Array<SelectOption>,
-                        value: formItem.value.value,
-                        placeholder: '请选择角色',
-                        onUpdateValue: (val) => {
-                            formItem.value.value = val
-                        },
-                    })
-                },
+          })
+        },
+      },
+      {
+        key: 'idc_model',
+        label: '模块',
+        value: ref(null),
+        optionItems: shallowReactive([] as Array<SelectOption>),
+        render: (formItem) => {
+          return h(NSelect, {
+            options: formItem.optionItems as Array<SelectOption>,
+            value: formItem.value.value,
+            filterable: true,
+            placeholder: '请选择角色',
+            onUpdateValue: (val) => {
+              formItem.value.value = val
             },
+          })
+        },
+      },
 
-            {
-                label: 'SN号',
-                key: 'serial_num',
-                value: ref(null),
-                render: (formItem) => {
-                    return h(NInput, {
-                        value: formItem.value.value,
-                        onUpdateValue: (val: any) => {
-                            formItem.value.value = val
-                        },
-                        placeholder: '请输入部门编号',
-                        disabled: true,
-                    })
-                },
+      {
+        label: 'SN号',
+        key: 'serial_num',
+        value: ref(null),
+        render: (formItem) => {
+          return h(NInput, {
+            value: formItem.value.value,
+            onUpdateValue: (val: any) => {
+              formItem.value.value = val
             },
-            {
-                key: 'rack',
-                label: '机柜',
-                value: ref(null),
-                optionItems: shallowReactive([] as Array<SelectOption>),
-                render: (formItem) => {
-                    return h(NSelect, {
-                        options: formItem.optionItems as Array<SelectOption>,
-                        value: formItem.value.value,
-                        placeholder: '请选择角色',
-                        onUpdateValue: (val) => {
-                            formItem.value.value = val
-                        },
-                    })
-                },
+            placeholder: '请输入部门编号',
+            disabled: true,
+          })
+        },
+      },
+      {
+        key: 'rack',
+        label: '机柜',
+        value: ref(null),
+        optionItems: shallowReactive([] as Array<SelectOption>),
+        render: (formItem) => {
+          return h(NSelect, {
+            options: formItem.optionItems as Array<SelectOption>,
+            value: formItem.value.value,
+            filterable: true,
+            placeholder: '请选择角色',
+            onUpdateValue: (val) => {
+              formItem.value.value = val
             },
-            {
-                key: 'idc',
-                label: '所属机房',
-                value: ref(null),
-                optionItems: shallowReactive([] as Array<SelectOption>),
-                render: (formItem) => {
-                    return h(NSelect, {
-                        options: formItem.optionItems as Array<SelectOption>,
-                        value: formItem.value.value,
-                        placeholder: '请选择角色',
-                        onUpdateValue: (val) => {
-                            formItem.value.value = val
-                        },
-                    })
-                },
+          })
+        },
+      },
+      {
+        key: 'idc',
+        label: '所属机房',
+        value: ref(null),
+        optionItems: shallowReactive([] as Array<SelectOption>),
+        render: (formItem) => {
+          return h(NSelect, {
+            options: formItem.optionItems as Array<SelectOption>,
+            value: formItem.value.value,
+            placeholder: '请选择角色',
+            filterable: true,
+            onUpdateValue: (val) => {
+              formItem.value.value = val
             },
-            {
-                key: 'u_location_value',
-                label: 'U位置',
-                value: ref(''),
-                render: (formItem) => {
-                    return h(NInputGroup, {}, [
-                        h(NInput, {
-                            // value: ref(''),
-                            value: formItem.value.value,
-                            onUpdateValue: (newVal: any) => {
-                                // rowData.u_location_start = newVal
-                                //console.log('formItem.value', newVal)
-                                formItem.value.value = newVal
-                            },
-                            maxlength: 50,
-                            placeholder: 'U位起始',
-                        }),
-                        h(NInput, {
-                            // value: ref(''),
-                            value: formItem.value.value,
-                            onUpdateValue: (newVal: any) => {
-                                formItem.value.value = newVal
-                                // rowData.u_location_start = newVal
-                            },
-                            maxlength: 50,
-                            placeholder: 'U位结束',
-                        }),
-                    ])
-                },
+          })
+        },
+      },
+      {
+        key: 'u_location_start',
+        label: 'U位起始',
+        value: ref(''),
+        render: (formItem) => {
+          return h(NInputGroup, {}, [
+            h(NInput, {
+              value: formItem.value.value,
+              onUpdateValue: (newVal: any) => {
+                formItem.value.value = newVal
+              },
+              maxlength: 50,
+              placeholder: 'U位起始',
+            }),
+
+          ])
+        },
+      },
+      {
+        key: 'u_location_end',
+        label: 'U位结束',
+        value: ref(''),
+        render: (formItem) => {
+          return h(NInputGroup, {}, [
+            h(NInput, {
+              value: formItem.value.value,
+              onUpdateValue: (newVal: any) => {
+                formItem.value.value = newVal
+              },
+              maxlength: 50,
+              placeholder: 'U位结束',
+            }),
+
+          ])
+        },
+      },
+      {
+        key: 'netzone',
+        label: '网络区域',
+        value: ref(null),
+        optionItems: shallowReactive([] as Array<SelectOption>),
+        render: (formItem) => {
+          return h(NSelect, {
+            options: formItem.optionItems as Array<SelectOption>,
+            value: formItem.value.value,
+            filterable: true,
+            placeholder: '请选择区域',
+            onUpdateValue: (val) => {
+              formItem.value.value = val
             },
-            {
-                key: 'netzone',
-                label: '网络区域',
-                value: ref(null),
-                optionItems: shallowReactive([] as Array<SelectOption>),
-                render: (formItem) => {
-                    return h(NSelect, {
-                        options: formItem.optionItems as Array<SelectOption>,
-                        value: formItem.value.value,
-                        placeholder: '请选择区域',
-                        onUpdateValue: (val) => {
-                            formItem.value.value = val
-                        },
-                    })
-                },
+          })
+        },
+      },
+      {
+        key: 'memo',
+        label: '备注',
+        value: ref(null),
+        optionItems: shallowReactive([] as Array<SelectOption>),
+        render: (formItem) => {
+          return h(NInput, {
+            value: formItem.value.value,
+            onUpdateValue: (newVal: any) => {
+              // rowData.u_location_start = newVal
+              //  //console.log('formItem.value', rowData)
+              formItem.value.value = newVal
             },
-            {
-                key: 'memo',
-                label: '备注',
-                value: ref(null),
-                optionItems: shallowReactive([] as Array<SelectOption>),
-                render: (formItem) => {
-                    return h(NInput, {
-                        value: formItem.value.value,
-                        onUpdateValue: (newVal: any) => {
-                            // rowData.u_location_start = newVal
-                            //  //console.log('formItem.value', rowData)
-                            formItem.value.value = newVal
-                        },
-                    })
-                },
+          })
+        },
+      },
+      {
+        key: 'attribute',
+        label: '网络属性',
+        value: ref(''),
+        optionItems: [
+          { value: '', label: '' },
+          { value: 2, label: '生产网络' },
+          { value: 4, label: '研发网络' },
+          { value: 6, label: '研测网络' },
+          { value: 8, label: '骨干网络' },
+          { value: 10, label: '公网网络' },
+          { value: 12, label: '测试网络' },
+        ],
+        render: (formItem) => {
+          return h(NSelect, {
+            options: formItem.optionItems as Array<SelectOption>,
+            value: formItem.value.value,
+            filterable: true,
+            placeholder: '请选择属性',
+            onUpdateValue: (val) => {
+              formItem.value.value = val
             },
-            {
-                key: 'attribute',
-                label: '网络属性',
-                value: ref(''),
-                optionItems: shallowReactive([] as Array<SelectOption>),
-                render: (formItem) => {
-                    return h(NSelect, {
-                        options: formItem.optionItems as Array<SelectOption>,
-                        value: formItem.value.value,
-                        placeholder: '请选择属性',
-                        onUpdateValue: (val) => {
-                            formItem.value.value = val
-                        },
-                    })
-                },
+          })
+        },
+      },
+      {
+        key: 'status',
+        label: '设备状态',
+        value: ref<number>(0),
+        optionItems: [
+          { value: '', label: '' },
+          { value: 0, label: '在线' },
+          { value: 1, label: '下线' },
+          { value: 2, label: '挂牌' },
+          { value: 3, label: '备用' },
+        ],
+        render: (formItem) => {
+          return h(NSelect, {
+            options: formItem.optionItems as Array<SelectOption>,
+            value: formItem.value.value,
+            filterable: true,
+            placeholder: '请选择角色',
+            onUpdateValue: (val) => {
+              formItem.value.value = val
             },
-            {
-                key: 'status',
-                label: '设备状态',
-                value: ref<number>(0),
-                optionItems: [
-                    { value: '', label: '' },
-                    { value: 0, label: '在线' },
-                    { value: 1, label: '下线' },
-                    { value: 2, label: '挂牌' },
-                    { value: 3, label: '备用' },
-                ],
-                render: (formItem) => {
-                    return h(NSelect, {
-                        options: formItem.optionItems as Array<SelectOption>,
-                        value: formItem.value.value,
-                        placeholder: '请选择角色',
-                        onUpdateValue: (val) => {
-                            formItem.value.value = val
-                        },
-                    })
-                },
+          })
+        },
+      },
+      {
+        key: 'auto_enable',
+        label: '数据采集',
+        value: ref(null),
+        optionItems: [
+          { value: '', label: '' },
+          { value: true, label: '是' },
+          { value: false, label: '否' },
+        ],
+        render: (formItem) => {
+          return h(NSelect, {
+            options: formItem.optionItems as Array<SelectOption>,
+            value: formItem.value.value,
+            placeholder: '请选择',
+            onUpdateValue: (val) => {
+              formItem.value.value = val
             },
-            {
-                key: 'auto_enable',
-                label: '数据采集',
-                value: ref(null),
-                optionItems: [
-                    { value: '', label: '' },
-                    { value: true, label: '是' },
-                    { value: false, label: '否' },
-                ],
-                render: (formItem) => {
-                    return h(NSelect, {
-                        options: formItem.optionItems as Array<SelectOption>,
-                        value: formItem.value.value,
-                        placeholder: '请选择',
-                        onUpdateValue: (val) => {
-                            formItem.value.value = val
-                        },
-                    })
-                },
+          })
+        },
+      },
+      {
+        label: 'id',
+        key: 'id',
+        value: ref(''),
+        render: (formItem) => {
+          return h(NInput, {
+            value: formItem.value.value,
+            disabled: true,
+            onUpdateValue: (newVal: any) => {
+              // rowData.u_location_start = newVal
+              //console.log('formItem.value', rowData)
+              formItem.value.value = newVal
             },
-            {
-                label: 'id',
-                key: 'id',
-                value: ref(''),
-                render: (formItem) => {
-                    return h(NInput, {
-                        value: formItem.value.value,
-                        disabled: true,
-                        onUpdateValue: (newVal: any) => {
-                            // rowData.u_location_start = newVal
-                            //console.log('formItem.value', rowData)
-                            formItem.value.value = newVal
-                        },
-                    })
-                },
-            },
-            // {
-            //   key: 'plan',
-            //   label: '采集方案',
-            //   value: ref(null),
-            //   optionItems: shallowReactive([] as Array<SelectOption>),
-            //   render: (formItem) => {
-            //     return h(NSelect, {
-            //       options: formItem.optionItems as Array<SelectOption>,
-            //       value: formItem.value.value,
-            //       placeholder: '请选择采集方案',
-            //       onUpdateValue: (val) => {
-            //         formItem.value.value = val
-            //       },
-            //     })
-            //   },
-            // },
-        ] as Array<FormItem>
+          })
+        },
+      },
+
+    ] as Array<FormItem>
         const connect_account_FormOptions = [
             {
                 key: 'account',
@@ -2476,8 +2490,8 @@ export default defineComponent({
             edit_formdata.append('idc_model', device_info['idc_model'])
             edit_formdata.append('rack', device_info['rack'])
             edit_formdata.append('idc', device_info['idc'])
-            edit_formdata.append('u_location_start', device_info['u_location_value'])
-            edit_formdata.append('u_location_end', device_info['u_location_value'])
+            edit_formdata.append('u_location_start', device_info['u_location_start'])
+            edit_formdata.append('u_location_end', device_info['u_location_end'])
             edit_formdata.append('memo', device_info['memo'])
             edit_formdata.append('attribute', device_info['attribute'])
             edit_formdata.append('status', device_info['status'])
@@ -2564,8 +2578,8 @@ export default defineComponent({
                 get({
                     url: getCmdbNetzoneList,
                 }).then((res) => {
-                    if (EditFormOptions[10].optionItems !== undefined) {
-                        EditFormOptions[10].optionItems.length = 0
+                    if (EditFormOptions[11].optionItems !== undefined) {
+                        EditFormOptions[11].optionItems.length = 0
                         let netzone_list = []
                         res.results.forEach((ele) => {
                             let dict = {
@@ -2574,7 +2588,7 @@ export default defineComponent({
                             }
                             netzone_list.push(dict)
                         })
-                        EditFormOptions[10].optionItems.push(...netzone_list)
+                        EditFormOptions[11].optionItems.push(...netzone_list)
                     }
                 })
 
@@ -2634,17 +2648,15 @@ export default defineComponent({
                 // 根据供应商查询型号
 
                 EditFormOptions.forEach((it) => {
-                    const key = it.key
-                    const propName = item[key]
-                    if (key === 'u_location') {
-                        it.value.value = item['u_location_start'] + '-' + item['u_location_end']
-                    }
-                    if (key === 'id') {
-                        it.value.value = JSON.stringify(propName)
-                    } else {
-                        it.value.value = propName
-                    }
-                })
+          const key = it.key
+          const propName = item[key]
+
+          if (key === 'id') {
+            it.value.value = JSON.stringify(propName)
+          } else {
+            it.value.value = propName
+          }
+        })
             })
         }
 
@@ -3101,8 +3113,8 @@ export default defineComponent({
                     if (conditionItems[15].optionItems != undefined) {
                         conditionItems[15].optionItems.push(dict)
                     }
-                    if (EditFormOptions[15].optionItems != undefined) {
-                        EditFormOptions[15].optionItems.push(dict)
+                    if (EditFormOptions[16].optionItems != undefined) {
+                        EditFormOptions[16].optionItems.push(dict)
                     }
                 }
                 nextTick(() => {
@@ -3164,8 +3176,8 @@ export default defineComponent({
                         conditionItems[13].optionItems.push(dict)
                     }
 
-                    if (EditFormOptions[12].optionItems != undefined) {
-                        EditFormOptions[12].optionItems.push(dict)
+                    if (EditFormOptions[13].optionItems != undefined) {
+                        EditFormOptions[13].optionItems.push(dict)
                     }
                     if (importFormOptions[12].optionItems != undefined) {
                         importFormOptions[12].optionItems.push(dict)
