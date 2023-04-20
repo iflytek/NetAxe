@@ -22,7 +22,7 @@ const service = Axios.create({
 })
 // 在正式发送请求之前进行拦截配置
 service.interceptors.request.use(
-  (config) => {
+  (config: { headers: { [x: string]: string; Authorization?: any }; data: any }) => {
     !config.headers && (config.headers = {})
     if (!config.headers.Authorization && Cookies.get('netops-token')) {
       config.headers.Authorization = Cookies.get('netops-token') ? Cookies.get('netops-token') : ''
@@ -35,7 +35,7 @@ service.interceptors.request.use(
     }
     return config
   },
-  (error) => {
+  (error: { response: any }) => {
     return Promise.reject(error.response)
   }
 )
@@ -55,7 +55,7 @@ service.interceptors.response.use(
       throw new Error(response.status.toString())
     }
   },
-  (error) => {
+  (error: any) => {
     if (import.meta.env.MODE === 'development') {
       console.log(error)
     }

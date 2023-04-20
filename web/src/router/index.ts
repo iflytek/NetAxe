@@ -57,31 +57,6 @@ export const constantRoutes = [
         ],
     },
 
-    // {
-    //     path: '/ip_manage',
-    //     component: Layout,
-    //     name: 'Ip_manage',
-    //     meta: {
-    //         title: '地址管理',
-    //         iconPrefix: 'iconfont',
-    //         icon: 'dashboard',
-    //     },
-    //     children: [
-    //         {
-    //             path: 'ipam',
-    //             name: 'ipam',
-    //             component: (): any => import('@/views/ip_manage/ipam.vue'),
-    //             meta: {
-    //                 title: 'IPAM',
-    //                 affix: true,
-    //                 iconPrefix: 'iconfont',
-    //                 icon: 'infomation',
-    //             },
-    //         },
-    //     ],
-    // },
-
-
     {
         path: '/redirect',
         component: Layout,

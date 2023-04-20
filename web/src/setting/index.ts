@@ -36,23 +36,3 @@ export default Object.assign(
   },
   settingInfo,
 ) as Setting
-// export const projectName = ''
-//
-// export default Object.assign(
-//   {
-//     theme: 'light',
-//     sideTheme: 'dark',
-//     themeColor: 'cyan@#18a058',
-//     layoutMode: 'ltr',
-//     sideWidth: 210,
-//     pageAnim: 'opacity',
-//     isFixedNavBar: true,
-//     actionBar: {
-//       isShowSearch: true,
-//       isShowMessage: true,
-//       isShowRefresh: true,
-//       isShowFullScreen: true,
-//     },
-//   },
-//   settingInfo
-// ) as Setting
