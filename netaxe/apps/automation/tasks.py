@@ -18,7 +18,6 @@ import math
 import re
 import subprocess
 import time
-import traceback
 from celery import shared_task
 from netboost.celery import AxeTask
 from collections import OrderedDict
@@ -26,6 +25,7 @@ from django_celery_results.models import TaskResult
 from django.core.cache import cache
 from django.db import connections
 from datetime import datetime, date
+from netaddr import IPAddress
 from apps.asset.models import AssetAccount, NetworkDevice
 from apps.int_utilization.models import InterfaceUsedNew
 from apps.automation.tools.h3c import H3cProc
@@ -508,13 +508,17 @@ class MainIn:
 
 
 def ping(host):
-    i = subprocess.call('ping -c 1 {0}'.format(host), shell=True, stdout=open('/dev/null', 'w'),
-                        stderr=subprocess.STDOUT)
-    if i == 0:
-        # print('已开始执行: {0}'.format(host))
-        return True
-    if i != 0:
-        print('无法Ping通: {0}'.format(host))
+    try:
+        ip_string = IPAddress(host)
+        i = subprocess.call('ping -c 1 {0}'.format(ip_string.format()), shell=False, stdout=open('/dev/null', 'w'),
+                            stderr=subprocess.STDOUT)
+        if i == 0:
+            # print('已开始执行: {0}'.format(host))
+            return True
+        if i != 0:
+            # print('无法Ping通: {0}'.format(host))
+            return False
+    except Exception as e:
         return False
 
 
