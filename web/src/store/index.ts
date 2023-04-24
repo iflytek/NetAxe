@@ -1,6 +1,7 @@
 import { StoreType, SideTheme, RouteRecordRawWithHidden } from './../types/store'
 import { reactive } from 'vue'
 import { DeviceType, LayoutMode, StateType, ThemeMode } from '../types/store'
+import { ADMIN_WORK_SETTING_INFO, ADMIN_WORK_S_TENANT } from '@/store/keys'
 import { transfromRoutes } from '../utils'
 import CachedViewAction from './modules/cached-view'
 import VisitedViewAction from './modules/visited-view'
@@ -11,7 +12,7 @@ const layoutModes = ['ltr', 'lcr', 'ttb']
 useChangeMenuWidth(Setting.sideWidth)
 
 function presistSettingInfo(setting: any) {
-  localStorage.setItem('setting-info', JSON.stringify(setting))
+  localStorage.setItem(ADMIN_WORK_SETTING_INFO, JSON.stringify(setting))
 }
 
 const primaryColor = Setting.themeColor.split('@')[1]

@@ -87,3 +87,15 @@ class ApiLoggingMiddleware(MiddlewareMixin):
             if self.methods == 'ALL' or request.method in self.methods:
                 self.__handle_response(request, response)
         return response
+
+
+class CorsMiddleWare(MiddlewareMixin):
+    def process_response(self, request, response):
+        if request.META.get("HTTP_REFERER") != None:
+            response["Access-Control-Allow-Methods"] = "*"
+            response["Access-Control-Allow-Credentials"] = True
+            response['Access-Control-Allow-Headers'] = "Authorization"
+            response["Access-Control-Allow-Origin"] = "/".join(request.META.get("HTTP_REFERER").split("/")[0:3])
+            return response
+        else:
+            return response

@@ -41,7 +41,7 @@ function http({ url, data, method, headers, beforeRequest, afterRequest }: HttpO
       return res.data
     }
     if (res.data.code === 401) {
-      router.push('/login')
+      // router.push('/login')
       throw new Error('认证失败请重新登录一下')
       // throw new Error('认证失败请重新登录一下')
 
@@ -65,6 +65,7 @@ function http({ url, data, method, headers, beforeRequest, afterRequest }: HttpO
     throw new Error(res.data.message + '请求失败，未知异常')
     // return res.data
   }
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const failHandler = (error: Response) => {
     afterRequest && afterRequest()
     // console.log(error)
@@ -76,12 +77,12 @@ function http({ url, data, method, headers, beforeRequest, afterRequest }: HttpO
   return method === 'GET'
     ? service.get(url, { params }).then(successHandler, failHandler)
     : method === 'POST'
-    ? service.post(url, params, { headers: headers }).then(successHandler, failHandler)
-    : method === 'PUT'
-    ? service.put(url, params, { headers: headers }).then(successHandler, failHandler)
-    : method === 'PATCH'
-    ? service.patch(url, params, { headers: headers }).then(successHandler, failHandler)
-    : service.delete(url, params).then(successHandler, failHandler)
+      ? service.post(url, params, { headers: headers }).then(successHandler, failHandler)
+      : method === 'PUT'
+        ? service.put(url, params, { headers: headers }).then(successHandler, failHandler)
+        : method === 'PATCH'
+          ? service.patch(url, params, { headers: headers }).then(successHandler, failHandler)
+          : service.delete(url, params).then(successHandler, failHandler)
 }
 
 export function get({
@@ -91,6 +92,7 @@ export function get({
   beforeRequest,
   afterRequest,
 }: HttpOption): Promise<Response> {
+  // @ts-ignore
   return http({
     url,
     method,
@@ -108,6 +110,7 @@ export function post({
   beforeRequest,
   afterRequest,
 }: HttpOption): Promise<Response> {
+  // @ts-ignore
   return http({
     url,
     method,
@@ -126,6 +129,7 @@ export function put({
   beforeRequest,
   afterRequest,
 }: HttpOption): Promise<Response> {
+  // @ts-ignore
   return http({
     url,
     method,
@@ -144,6 +148,7 @@ export function patch({
   beforeRequest,
   afterRequest,
 }: HttpOption): Promise<Response> {
+  // @ts-ignore
   return http({
     url,
     method,
@@ -162,6 +167,7 @@ export function delete_fun({
   beforeRequest,
   afterRequest,
 }: HttpOption): Promise<Response> {
+  // @ts-ignore
   return http({
     url,
     method,

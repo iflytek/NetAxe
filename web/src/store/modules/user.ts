@@ -1,7 +1,7 @@
 import { defineStore } from 'pinia'
 import { UserState } from '../types'
 import layoutStore from '../index'
-import { ADMIN_WORK_USER_INFO_KEY, ADMIN_WORK_TOkEN_KEY, NETOPS_TOKEN } from '../keys'
+import { ADMIN_WORK_USER_INFO_KEY, ADMIN_WORK_TOkEN_KEY, ADMIN_TOKEN } from '../keys'
 
 import Avatar from '@/assets/img_avatar.gif'
 import Cookies from 'js-cookie'
@@ -29,7 +29,7 @@ const useUserStore = defineStore('user', {
         this.userName = userInfo.userName
         this.nickName = userInfo.nickName
         this.image = userInfo.image || defaultAvatar
-        Cookies.set(NETOPS_TOKEN, 'Bearer ' + userInfo.token)
+        Cookies.set(ADMIN_TOKEN, 'Bearer ' + userInfo.token)
         // Cookies.set('csrftoken', userInfo['csrf_token'])
         localStorage.setItem('is_superuser', userInfo.isSuperuser + '')
         res()
@@ -46,7 +46,7 @@ const useUserStore = defineStore('user', {
         this.userName = ''
         this.nickName = ''
         localStorage.clear()
-        Cookies.remove(NETOPS_TOKEN)
+        Cookies.remove(ADMIN_TOKEN)
         layoutStore.reset()
         resolve()
       })

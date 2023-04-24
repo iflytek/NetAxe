@@ -50,15 +50,3 @@ class HostsResponseSerializer(serializers.Serializer):
     # bgbu = serializers.CharField()
     description = serializers.CharField()
     lastOnlineTime = serializers.DateField()
-
-
-class IntervalScheduleSerializer(serializers.ModelSerializer):
-    class Meta:
-        model = IntervalSchedule
-        fields = '__all__'
-
-
-class PeriodicTaskSerializer(serializers.ModelSerializer):
-    class Meta:
-        model = PeriodicTask
-        fields = '__all__'

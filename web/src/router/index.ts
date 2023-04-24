@@ -1,5 +1,5 @@
-import {mapTwoLevelRouter} from '@/utils'
-import {createRouter, createWebHistory} from 'vue-router'
+import { mapTwoLevelRouter } from '@/utils'
+import { createRouter, createWebHistory } from 'vue-router'
 
 const Layout = () => import('@/components/Layout.vue')
 
@@ -51,11 +51,12 @@ export const constantRoutes = [
                     title: '工作台',
                     affix: true,
                     iconPrefix: 'iconfont',
-                    icon: 'infomation',
+                    icon: 'index',
                 },
             },
         ],
     },
+
     {
         path: '/redirect',
         component: Layout,
