@@ -1,16 +1,17 @@
 import Cookies from 'js-cookie'
-import { get } from '@/api/http'
+import {get} from '@/api/http'
 import layoutStore from '@/store'
-import { Layout } from '@/components'
-import { UserState } from '@/store/types'
-import { defineAsyncComponent } from 'vue'
-import { RouteRecordRaw } from 'vue-router'
-import useUserStore from '@/store/modules/user'
-import router, { constantRoutes } from '../router'
-import { isExternal, mapTwoLevelRouter, toHump } from '.'
+import {Layout} from '@/components'
+import {UserState} from '@/store/types'
+import {defineAsyncComponent} from 'vue'
+import {RouteRecordRaw} from 'vue-router'
+import router, {constantRoutes} from '../router'
+import {isExternal, mapTwoLevelRouter, toHump} from '.'
 import LoadingComponent from '../components/loading/index.vue'
-import { baseAddress, WebRouter, WebPermission } from '@/api/url'
-import { ADMIN_WORK_USER_INFO_KEY, ADMIN_WORK_BUTTON_AUTH, ADMIN_WORK_S_TENANT } from '@/store/keys'
+import {baseAddress, WebPermission, WebRouter} from '@/api/url'
+import {ADMIN_WORK_BUTTON_AUTH, ADMIN_WORK_S_TENANT, ADMIN_WORK_USER_INFO_KEY} from '@/store/keys'
+
+const navigateID = localStorage.getItem(ADMIN_WORK_S_TENANT)
 
 interface OriginRoute {
   key: any
@@ -33,26 +34,27 @@ function loadComponents() {
 }
 
 const asynComponents = loadComponents()
-const navigateID = localStorage.getItem(ADMIN_WORK_S_TENANT)
 
-// 获取web权限
+// 获取路由
 function getRoutes() {
-  // console.log(layoutStore.state)
+  console.log(layoutStore.state)
   return get({
     url: baseAddress + WebRouter,
     method: 'GET',
     data: { parent__isnull: true, navigate__id: navigateID }
   }).then((res: any) => {
+    console.log(res)
     return generatorRoutes(res.results)
   })
 }
 
-// 获取menu权限
+// 获取路由
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
 function getPermission() {
   return get({
     url: baseAddress + WebPermission,
     method: 'GET',
-    data: { navigate__id: navigateID }
+    data: { navigate__id: layoutStore.state.navigateID }
   }).then((res: any) => {
     localStorage.setItem(ADMIN_WORK_BUTTON_AUTH, JSON.stringify(res.results))
   })
@@ -68,12 +70,11 @@ function getComponent(it: OriginRoute) {
 function getCharCount(str: string, char: string) {
   const regex = new RegExp(char, 'g')
   const result = str.match(regex)
-  const count = !result ? 0 : result.length
-  return count
+  return !result ? 0 : result.length
 }
 
 function isMenu(path: string) {
-  return getCharCount(path, '\/') === 1
+  return getCharCount(path, '/') === 1
 }
 
 function getNameByUrl(path: string) {
@@ -84,13 +85,13 @@ function getNameByUrl(path: string) {
 function generatorRoutes(res: Array<OriginRoute>) {
   const tempRoutes: Array<RouteRecordRawWithHidden> = []
   res.forEach((it) => {
-    if (!it.key) {
+    if (!it.key){
       const path = it.link_path && isExternal(it.link_path) ? it.link_path : it.web_path
       const route: RouteRecordRawWithHidden = {
         path: path,
         name: getNameByUrl(path),
         hidden: !!it.hidden,
-        component: it.web_path && isMenu(it.web_path) ? Layout : getComponent(it),
+        component: it.web_path && isMenu(it.web_path) ? Layout:getComponent(it),
         meta: {
           title: it.name,
           affix: !!it.affix,
@@ -116,7 +117,6 @@ function isTokenExpired(): boolean {
 }
 
 router.beforeEach(async (to) => {
-  console.log(to.path)
   if (whiteRoutes.includes(to.path)) {
     return true
   } else {
@@ -128,19 +128,21 @@ router.beforeEach(async (to) => {
     } else {
       // 获取租户信息
       const userInfo: UserState = JSON.parse(localStorage.getItem(ADMIN_WORK_USER_INFO_KEY) || '{}')
+      // layoutStore.changeNavigateID(userInfo.tenantUser[0] as any)
 
+      // 配置租户是否显示
+      // layoutStore.changeIsNavigate(false)
+      // if (to.matched[0]?.name === "Permissions"){
+      //   layoutStore.changeIsNavigate(true)
+      // }
 
       const isEmptyRoute = layoutStore.isEmptyPermissionRoute()
-      console.log(isEmptyRoute)
-      if (isEmptyRoute && to.path!='/ssh') {
-        
+      if (isEmptyRoute) {
         // 加载路由和按钮
         const webRoutes = await getRoutes()
-        // console.log(webRoutes)
         // const webPermission = await getPermission()
         const accessRoutes: Array<RouteRecordRaw> = []
         accessRoutes.push(...webRoutes)
-
 
         const mapRoutes = mapTwoLevelRouter(accessRoutes)
         mapRoutes.forEach((it: any) => {
@@ -151,8 +153,6 @@ router.beforeEach(async (to) => {
           redirect: '/404',
           hidden: true,
         } as RouteRecordRaw)
-        // console.log('constantRoutes',JSON.stringify(constantRoutes))
-        // console.log('accessRoutes',JSON.stringify(accessRoutes))
         layoutStore.initPermissionRoute([...constantRoutes, ...accessRoutes])
         return { ...to, replace: true }
       } else {

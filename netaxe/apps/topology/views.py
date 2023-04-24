@@ -14,8 +14,8 @@ from apps.topology.tasks import TopologyTask
 from apps.topology.models import Topology
 from .serializers import TopologySerializer
 from utils.db.mongo_ops import MongoOps, MongoNetOps
-from utils.tools.custom_pagination import LargeResultsSetPagination
-from utils.tools.custom_viewset_base import CustomViewBase
+from apps.api.tools.custom_viewset_base import CustomViewBase
+from apps.api.tools.custom_pagination import LargeResultsSetPagination
 
 # Create your views here.
 # 设备二层接口表
@@ -51,7 +51,9 @@ class TopologyViewSet(CustomViewBase):
 
 # 拓扑显示
 class TopologyShow(APIView):
-    permission_classes = (IsAuthenticated,)
+    # permission_classes = (IsAuthenticated,)
+    permission_classes = ()
+    authentication_classes = ()
 
     def get(self, request):
         get_param = request.GET.dict()
@@ -134,7 +136,7 @@ class TopologyShow(APIView):
         # 删除拓扑图
         if all(k in post_param for k in ("name", "del_graph")):
             _TopologyTask = TopologyTask(post_param['name'])
-            _TopologyTask.del_graph
+            _TopologyTask.del_graph()
             data = {
                 "code": 200,
                 "data": [],
@@ -195,7 +197,8 @@ class TopologyShow(APIView):
 
 # 图标库
 class IconView(APIView):
-    permission_classes = (IsAuthenticated,)
+    permission_classes = ()
+    authentication_classes = ()
 
     def get(self, request):
         get_param = request.GET.dict()

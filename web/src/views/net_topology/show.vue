@@ -566,9 +566,9 @@
   const color = d3
     .scaleOrdinal()
     .range(['red', 'green', 'blue', '#6b486b', '#a05d56', '#d0743c', '#ff8c00'])
-  const svg = ref(null)
+  const svg = ref<SVGGElement | null>(null)
   const zoom = ref(null)
-  const group = ref(null)
+  const group = ref<SVGGElement | null>(null)
   var svg_node = null
   var svg_link = null
   var svg_brush = null
@@ -585,7 +585,6 @@
     interface: [],
   })
   const topology_value = ref(null)
-  // const topology_data = shallowReactive([]) as Array<any>
   const topology_options = shallowReactive([]) as Array<any>
   const showAddNodeButton = ref(false)
   function node_click(node) {
@@ -1010,7 +1009,7 @@
 
     // .force('collision', d3.forceCollide().radius(25))
     svg.value = d3
-      .select('svg#primary-svg')
+      .select(toppolgoy_svg.value)
       //   .attr('viewBox', '0 0 3000 3000')
       .classed('svg-content', true)
     group.value = svg.value.append('g')

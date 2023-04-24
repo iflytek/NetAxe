@@ -79,8 +79,10 @@ MIDDLEWARE = [
     "django.contrib.auth.middleware.AuthenticationMiddleware",
     "django.contrib.messages.middleware.MessageMiddleware",
     "django.middleware.clickjacking.XFrameOptionsMiddleware",
-    # "utils.custom.middleware.ApiLoggingMiddleware",
+    "utils.custom.middleware.CorsMiddleWare",
 ]
+# MIDDLEWARE +=['']
+
 
 ROOT_URLCONF = "netboost.urls"
 
@@ -292,7 +294,7 @@ REST_FRAMEWORK = {
         "django_filters.rest_framework.DjangoFilterBackend",
     ),
     "DEFAULT_PERMISSION_CLASSES": (
-        "rest_framework.permissions.IsAuthenticated",
+        # "rest_framework.permissions.IsAuthenticated",
         # "rest_framework.permissions.DjangoModelPermissions",
         # "rest_framework.permissions.DjangoModelPermissionsOrAnonReadOnly"
     ),
@@ -300,7 +302,7 @@ REST_FRAMEWORK = {
         # "rest_framework.authentication.BasicAuthentication",
         # "rest_framework.authentication.SessionAuthentication",
         # "rest_framework.authentication.TokenAuthentication",
-        "rest_framework_simplejwt.authentication.JWTAuthentication",
+        # "rest_framework_simplejwt.authentication.JWTAuthentication",
         # "apps.api.authentication.ExpiringTokenAuthentication",
     ),
     "EXCEPTION_HANDLER": "utils.custom.exception.CustomExceptionHandler",  # 自定义的异常处理

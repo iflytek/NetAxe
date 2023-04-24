@@ -4,7 +4,7 @@
     <Breadcrumb v-if="state.device !== 'mobile'" />
     <div style="flex: 1"></div>
     <div class="right-wrapper">
-      <ActionItems />
+<!--      <ActionItems />-->
     </div>
     <div class="avatar-wrapper">
       <VAWAvatar />

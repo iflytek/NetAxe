@@ -6,8 +6,7 @@ from rest_framework import viewsets, permissions, filters, pagination
 from apps.route_backend.views import LimitSet
 from apps.automation.models import CollectionPlan
 from apps.automation.serializers import CollectionPlanSerializer
-
-from utils.tools.custom_viewset_base import CustomViewBase
+from apps.api.tools.custom_viewset_base import CustomViewBase
 
 
 class CollectionPlanFilter(django_filters.FilterSet):
@@ -29,10 +28,10 @@ class CollectionPlanViewSet(CustomViewBase):
     queryset = CollectionPlan.objects.all().order_by('-id')
     queryset = CollectionPlanSerializer.setup_eager_loading(queryset)
     serializer_class = CollectionPlanSerializer
-    permission_classes = (permissions.IsAuthenticated,)
+    # permission_classes = (permissions.IsAuthenticated,)
     # 配置搜索功能
     filter_backends = (DjangoFilterBackend, filters.SearchFilter, filters.OrderingFilter,)
-    # filter_fields = ('vendor', 'name',)
-    filterset_class = CollectionPlanFilter
+    filter_fields = ('vendor', 'name',)
+    # filterset_class = CollectionPlanFilter
     search_fields = ('vendor', 'name',)
     pagination_class = LimitSet

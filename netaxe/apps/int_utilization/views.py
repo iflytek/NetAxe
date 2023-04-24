@@ -5,8 +5,8 @@ from rest_framework import viewsets, permissions, filters, pagination
 
 from .models import InterfaceUsedNew
 from .serializers import InterfaceUsedNewSerializer
-from utils.tools.custom_viewset_base import CustomViewBase
-from utils.tools.custom_pagination import LargeResultsSetPagination
+from apps.api.tools.custom_viewset_base import CustomViewBase
+from apps.api.tools.custom_pagination import LargeResultsSetPagination
 
 
 class InterfaceUsedFilter(django_filters.FilterSet):
@@ -26,13 +26,15 @@ class InterfaceUsedNewViewSet(CustomViewBase):
     queryset = InterfaceUsedNew.objects.all().order_by('-log_time')
     # queryset = InterfaceUsedNewSerializer.setup_eager_loading(queryset)
     serializer_class = InterfaceUsedNewSerializer
-    permission_classes = (permissions.IsAuthenticated,)
+    # permission_classes = ()
+    # authentication_classes = ()
     pagination_class = LargeResultsSetPagination
     # 配置搜索功能
     filter_backends = (DjangoFilterBackend, filters.SearchFilter, filters.OrderingFilter)
     # 如果要允许对某些字段进行过滤，可以使用filter_fields属性。
-    filterset_class = InterfaceUsedFilter
+    # filterset_class = InterfaceUsedFilter
     search_fields = ('host_ip', 'host')
+    filter_fields = ('host_ip', 'host')
     ordering_fields = ('log_time', 'id')
 
     def get_queryset(self):

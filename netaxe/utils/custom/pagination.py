@@ -118,21 +118,3 @@ class SubnetAddressPagination(pagination.BasePagination):
         return replace_query_param(
             url, self.start_query_param, self.queryset[offset].address
         )
-# class LargeResultsSetPagination(PageNumberPagination):
-#     """
-#
-#     """
-#     def get_paginated_response(self, data):
-#         code = 200
-#         msg = 'success'
-#         if not data:
-#             code = 404
-#             msg = "Data Not Found"
-#         return Response(OrderedDict([
-#             ('code', code),
-#             ('msg', msg),
-#             ('count', self.page.paginator.count),
-#             ('next', self.get_next_link()),
-#             ('previous', self.get_previous_link()),
-#             ('results', data)
-#         ]))
