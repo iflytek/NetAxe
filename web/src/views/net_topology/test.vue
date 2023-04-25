@@ -37,7 +37,9 @@
   import { ref } from 'vue'
 
   const utilization = ref(70)
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const fillColor = utilization.value >= 80 ? 'red' : 'green'
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars, no-unused-vars
   const rackName = ref('E03')
 </script>
 
