@@ -1,6 +1,6 @@
 <template>
   <n-notification-provider>
-    <n-message-provider>
+    <n-message-provider placement="bottom-right">
       <router-view />
     </n-message-provider>
   </n-notification-provider>
