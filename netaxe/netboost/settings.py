@@ -283,7 +283,7 @@ SIMPLE_JWT = {
     'VERIFYING_KEY': None,
     'AUTH_HEADER_TYPES': ('Bearer',),
 }
-
+APPEND_SLASH = True
 # restful api 配置
 REST_FRAMEWORK = {
     "DATE_FORMAT": "%Y-%m-%d",

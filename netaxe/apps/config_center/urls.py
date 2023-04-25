@@ -27,7 +27,7 @@ router.register(r'ttp_template', views.TTPTemplateViewSet)
 urlpatterns = [
     path(r'api/', include(router.urls)),
     # 配置文件目录树
-    path('git_config/', views.GitConfig.as_view(), name='git_config'),
+    path('git_config', views.GitConfig.as_view(), name='git_config'),
     path('compliance_results', views.ComplianceResults.as_view(), name='compliance_results'),
     path('test_regex', views.RegexTest.as_view(), name='test_regex'),
     path('ttp_parse', views.TTPParse.as_view(), name='ttp_parse'),
