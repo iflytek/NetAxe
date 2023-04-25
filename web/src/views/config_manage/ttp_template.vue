@@ -308,7 +308,7 @@
   function select_config_set() {
     show_config_part_frame.value = false
     get({
-      url: config_center_api + 'ttp_template',
+      url: config_center_api + 'ttp_template/',
       data: () => {
         return {
           vendor: select_config_vendor.value,

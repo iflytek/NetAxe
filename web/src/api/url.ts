@@ -55,16 +55,16 @@ export const device_account_url = '/api/asset/device_account/'
 export const getCmdbIdcModelList = '/api/asset/cmdb_idc_model/'
 export const getNetworkDeviceList = '/api/asset/asset_networkdevice/'
 
-export const get_git_config_tree = '/api/config_center/git_config/'
+export const get_git_config_tree = '/api/config_center/git_config'
 
 export const getCollection_planList = '/api/automation/collection_plan/'
 
 export const getInterfaceUsedList = '/api/int_utilization/interfaceused/'
 
 // 合规性检查结果
-export const get_compliance_results = '/api/config_center/compliance_results/'
+export const get_compliance_results = '/api/config_center/compliance_results'
 export const ttp_parse = '/api/config_center/ttp_parse'
-export const config_compliance = '/api/config_center/api/config_compliance/'
+export const config_compliance = '/api/config_center/api/config_compliance'
 export const config_center_api = '/api/config_center/api/'
 export const config_template = '/api/config_center/api/config_template/'
 export const fsm_parse = '/api/config_center/fsm_parse'
