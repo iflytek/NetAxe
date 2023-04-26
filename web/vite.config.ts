@@ -39,11 +39,11 @@ export default ({ mode }) => {
             hmr: { overlay: false },
             cors: true,
             proxy: {
-                '/base_plateform': {
+                '/base_platform': {
                     target: env.VITE_BASIC_URL,
                     // ws: true, //代理websockets
                     changeOrigin: true, // 虚拟的站点需要更管origin
-                    rewrite: (path: string) => path.replace(/^\/base_plateform/, '/base_plateform'),
+                    rewrite: (path: string) => path.replace(/^\/base_platform/, '/base_platform'),
                 },
                 '/rbac': {
                     target: env.VITE_BASIC_RBAC,
