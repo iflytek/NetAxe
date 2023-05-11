@@ -62,6 +62,5 @@ urlpatterns = [
     path(r'base_platform/automation/', include('apps.automation.urls')),
     path(r'base_platform/config_center/', include('apps.config_center.urls')),
     path(r'base_platform/int_utilization/', include('apps.int_utilization.urls')),
-    path(r'base_platform/open_ipam/', include('apps.open_ipam.urls')),
     path(r'base_platform/topology/', include('apps.topology.urls')),
 ]

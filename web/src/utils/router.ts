@@ -38,13 +38,24 @@ const navigateID = localStorage.getItem(ADMIN_WORK_S_TENANT)
 // 获取web权限
 function getRoutes() {
   // console.log(layoutStore.state)
-  return get({
+  if(navigateID){
+     return get({
     url: baseAddress + WebRouter,
     method: 'GET',
     data: { parent__isnull: true, navigate__id: navigateID }
   }).then((res: any) => {
     return generatorRoutes(res.results)
   })
+  }else{
+     return get({
+    url: baseAddress + WebRouter,
+    method: 'GET',
+    data: { parent__isnull: true, navigate__id: navigateID }
+  }).then((res: any) => {
+    return generatorRoutes(res.results)
+  })
+  }
+
 }
 
 // 获取menu权限
