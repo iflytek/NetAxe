@@ -41,19 +41,6 @@ class UserProfile(AbstractUser):
 
     def jwt_get_secret_key(self):
         return self.jwt_secret
-    # post = models.ManyToManyField(
-    #     to="system.Post", blank=True, verbose_name="关联岗位", db_constraint=False, help_text="关联岗位")
-    # role = models.ManyToManyField(
-    #     to="system.Role", blank=True, verbose_name="关联角色", db_constraint=False, help_text="关联角色")
-    # dept = models.ForeignKey(
-    #     to="system.Dept",
-    #     verbose_name="所属部门",
-    #     on_delete=models.PROTECT,
-    #     db_constraint=False,
-    #     null=True,
-    #     blank=True,
-    #     help_text="关联部门",
-    # )
 
     def get_login_status(self):
         return self.login_status
