@@ -42,7 +42,7 @@ class TopologyViewSet(CustomViewBase):
     queryset = Topology.objects.all().order_by('-id')
     # queryset = TopologySerializer.setup_eager_loading(queryset)
     serializer_class = TopologySerializer
-    permission_classes = (permissions.IsAuthenticated,)
+    # permission_classes = (permissions.IsAuthenticated,)
     # 配置搜索功能
     filter_backends = (DjangoFilterBackend, filters.SearchFilter, filters.OrderingFilter)
     filter_fields = '__all__'

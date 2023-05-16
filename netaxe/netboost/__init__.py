@@ -14,8 +14,11 @@ pymysql.version_info = (1, 4, 2, "final", 0)
 pymysql.install_as_MySQLdb()
 
 __all__ = ['celery_app']
-if sys.argv[1] not in ["makemigrations", "migrate"]:
+if sys.argv[1] not in ["makemigrations", "migrate", "init_asset", "init_collect", "runserver", "createsuperuser",
+                       "init_system_menu"]:
     # 注册服务
-    nacosServer = nacos(ip=settings.SERVERIP, port=8848)
-    nacosServer.registerService(serviceIp=settings.SERVERIP, servicePort=settings.SERVERPORT, serviceName="auth", groupName="default")
+    nacosServer = nacos(ip=settings.NACOSIP, port=settings.NACOSPORT)
+    nacosServer.registerService(serviceIp=settings.SERVERIP, servicePort=settings.SERVERPORT,
+                                serviceName="base_platform",
+                                groupName="default")
     nacosServer.healthyCheck()

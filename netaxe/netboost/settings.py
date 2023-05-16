@@ -67,7 +67,6 @@ INSTALLED_APPS = [
     "apps.int_utilization.apps.IntUtilizationConfig",
     'reversion',
     'import_export',
-    "apps.open_ipam.apps.OpenIpamConfig",
 
 ]
 
@@ -79,10 +78,8 @@ MIDDLEWARE = [
     "django.contrib.auth.middleware.AuthenticationMiddleware",
     "django.contrib.messages.middleware.MessageMiddleware",
     "django.middleware.clickjacking.XFrameOptionsMiddleware",
-    "utils.custom.middleware.CorsMiddleWare",
+    "utils.custom.middleware.CorsMiddleWare",  # 配置跨域访问支持
 ]
-# MIDDLEWARE +=['']
-
 
 ROOT_URLCONF = "netboost.urls"
 
@@ -283,7 +280,7 @@ SIMPLE_JWT = {
     'VERIFYING_KEY': None,
     'AUTH_HEADER_TYPES': ('Bearer',),
 }
-
+APPEND_SLASH = True
 # restful api 配置
 REST_FRAMEWORK = {
     "DATE_FORMAT": "%Y-%m-%d",

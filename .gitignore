@@ -39,7 +39,7 @@ docker/server/conf/apisix_log/error.log
 docker/server/conf/apisix_log/access.log
 netaxe/media/upload/
 netaxe/media/admin_ssh_records/
-netaxe/apps/api/__pycache__/
+netaxe/apps/base_plateform/__pycache__/
 netaxe/apps/asset/__pycache__/
 netaxe/apps/automation/__pycache__/
 netaxe/apps/config_center/__pycache__/
