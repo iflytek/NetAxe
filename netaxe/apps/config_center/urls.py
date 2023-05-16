@@ -20,9 +20,9 @@ from apps.config_center import views
 app_name = 'config_center'
 router = DefaultRouter()
 
-router.register(r'config_compliance', views.ConfigComplianceViewSet)
-router.register(r'config_template', views.ConfigTemplateViewSet)
-router.register(r'ttp_template', views.TTPTemplateViewSet)
+router.register(r'config_compliance/', views.ConfigComplianceViewSet)
+router.register(r'config_template/', views.ConfigTemplateViewSet)
+router.register(r'ttp_template/', views.TTPTemplateViewSet)
 
 urlpatterns = [
     path(r'api/', include(router.urls)),
