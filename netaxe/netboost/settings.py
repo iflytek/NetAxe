@@ -39,7 +39,6 @@ os.environ.setdefault("DJANGO_ALLOW_ASYNC_UNSAFE", "true")
 
 # Application definition
 INSTALLED_APPS = [
-    # "simpleui",
     "captcha",
     "channels",
     "guardian",
@@ -54,9 +53,6 @@ INSTALLED_APPS = [
     "django_celery_results.apps.CeleryResultConfig",
     "rest_framework",
     "simple_history",
-    # "rest_framework_tracking",
-    # "rest_framework.authtoken",
-    # "rest_framework.apps.RestFrameworkConfig",
     "apps.users.apps.UsersConfig",
     "apps.system.apps.SystemConfig",
     "apps.topology.apps.TopologyConfig",
