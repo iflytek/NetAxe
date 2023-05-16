@@ -22,21 +22,35 @@ from .serializers import *
 _ConfigGit = ConfigGit()
 
 
+def is_safe_dict(data: dict) -> bool:
+    # 定义危险字符的正则表达式
+    pattern = re.compile(
+        r'<(script|iframe).*?>|([^\w\s./:%,-])', re.IGNORECASE)
+
+    # 遍历字典中的值，使用正则表达式进行匹配验证
+    for value in data.values():
+        if isinstance(value, str) and pattern.search(value):
+            return False
+
+    return True
+
 def jinja_render(data, template):
     """ Render a jinja template
     """
-    env = Environment(undefined=StrictUndefined, trim_blocks=True, lstrip_blocks=True)
-    try:
-        jinja2_tpl = env.from_string(template)
-    except (exceptions.TemplateSyntaxError, exceptions.TemplateError) as e:
-        return False, "Syntax error in jinja2 template: {0}".format(e)
-    # If ve have empty var array or other errors we need to catch it and show
-    try:
-        rendered_jinja2_tpl = jinja2_tpl.render(data)
-    except (exceptions.TemplateRuntimeError, ValueError, TypeError) as e:
-        return False, "Error in your values input filed: {0}".format(e)
-    # result = env.from_string(template).render(data)
-    return True, rendered_jinja2_tpl
+    if is_safe_dict(data):
+        env = Environment(undefined=StrictUndefined, trim_blocks=True, lstrip_blocks=True)
+
+        try:
+            jinja2_tpl = env.from_string(template)
+            rendered_jinja2_tpl = jinja2_tpl.render(data)
+        except (exceptions.TemplateSyntaxError, exceptions.TemplateError) as e:
+            return False, "Syntax error in jinja2 template: {0}".format(e)
+        except (exceptions.TemplateRuntimeError, ValueError, TypeError) as e:
+            return False, "Error in your values input filed: {0}".format(e)
+
+        return True, rendered_jinja2_tpl
+    return False, "安全校验失败"
+
 
 
 # 配置合规表
