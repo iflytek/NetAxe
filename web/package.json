@@ -1,5 +1,5 @@
 {
-  "name": "netaxe-cmdb-web",
+  "name": "netaxe-base-web",
   "version": "1.0.0",
   "scripts": {
     "dev": "vite",

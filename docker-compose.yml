@@ -2,8 +2,8 @@ version: "3.7"
 
 services:
     # 后端入口
-    netaxe-base:
-      image: registry.cn-hangzhou.aliyuncs.com/netaxe/netaxe-backend:1.0.13
+    base-backend:
+      image: registry.cn-hangzhou.aliyuncs.com/netaxe/base-backend:1.0.13
       build:
           context: .
           dockerfile: ./dockerfiles/backend_dockerfile
@@ -15,8 +15,8 @@ services:
       restart: always
 
     # 前端
-    netaxe-web:
-      image: registry.cn-hangzhou.aliyuncs.com/netaxe/netaxe-web:1.0
+    base-web:
+      image: registry.cn-hangzhou.aliyuncs.com/netaxe/base-web:1.0
       build:
         context: .
         dockerfile: ./dockerfiles/web_dockerfile
