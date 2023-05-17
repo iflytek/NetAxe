@@ -3,7 +3,7 @@ WORKDIR /app
 COPY web/package*.json ./
 RUN npm config set registry https://registry.npm.taobao.org
 RUN npm install --force
-COPY . .
+COPY web/ .
 RUN npm run build
 
 # production stage
