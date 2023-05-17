@@ -1,11 +1,17 @@
 #FROM registry.cn-hangzhou.aliyuncs.com/netaxe/netaxe-backend:1.0.13
 FROM python:3.9-slim
-# 更新pip版本
-RUN pip3 install -i https://pypi.doubanio.com/simple/ uwsgi --upgrade pip
 COPY backend/ /app
 # 再次切换工作目录为Django主目录
 WORKDIR /app
 
+RUN  set -x \
+    && apk add --no-cache --virtual .build-deps build-base g++ gcc libxslt-dev python2-dev linux-headers \
+    && apk add --no-cache pwgen git tzdata zlib-dev freetype-dev jpeg-dev  \
+    && python -m pip install -i https://pypi.doubanio.com/simple/ --upgrade pip \
+    && pip3 --no-cache-dir install -i https://pypi.doubanio.com/simple/ -r requirements.txt \
+    && pip3 --no-cache-dir install -i https://pypi.doubanio.com/simple/uwsgi \
+    && apk del .build-deps \
+    && rm -rf /var/cache/apk/*
 
 # 安装项目所需python第三方库
 # 指定setuptools的版本，必须指定，新版本有兼容问题
