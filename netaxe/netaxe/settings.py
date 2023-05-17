@@ -96,8 +96,8 @@ TEMPLATES = [
 ]
 
 # application
-WSGI_APPLICATION = "netboost.wsgi.application"
-ASGI_APPLICATION = "netboost.routing.application"
+WSGI_APPLICATION = "netaxe.wsgi.application"
+ASGI_APPLICATION = "netaxe.routing.application"
 
 # Password validation
 # https://docs.djangoproject.com/en/4.0/ref/settings/#auth-password-validators

@@ -38,16 +38,9 @@ docker/server/conf/apisix_log/
 docker/server/conf/apisix_log/error.log
 docker/server/conf/apisix_log/access.log
 netaxe/media/upload/
+netaxe/netaxe/conf.py
 netaxe/media/admin_ssh_records/
 netaxe/apps/base_plateform/__pycache__/
-netaxe/apps/asset/__pycache__/
-netaxe/apps/automation/__pycache__/
-netaxe/apps/config_center/__pycache__/
 netaxe/apps/int_utilization/__pycache__/
-netaxe/apps/route_backend/__pycache__/
-netaxe/apps/system/__pycache__/
-netaxe/apps/users/__pycache__/
-docker/server/conf/apisix_log/access.log
-docker/server/conf/apisix_log/error.log
 docker/server/conf/apisix_conf/config.yaml 
 netaxe_alert/
