@@ -1,14 +1,8 @@
-#FROM registry.cn-hangzhou.aliyuncs.com/netaxe/netaxe-backend:1.0.13
-FROM python:3.9-slim-buster
+FROM registry.cn-hangzhou.aliyuncs.com/netaxe/netaxe-backend:1.0.13
 COPY backend/ /app
 # 再次切换工作目录为Django主目录
 WORKDIR /app
 
-RUN apt-get clean && \
-apt-get update && \
-apt-get install -y smbclient default-libmysqlclient-dev \
-gcc python3-cffi libcairo2 libpango-1.0-0 libpangocairo-1.0-0 \
-libgdk-pixbuf2.0-0 libffi-dev shared-mime-info
 
 # 安装项目所需python第三方库
 # 指定setuptools的版本，必须指定，新版本有兼容问题
