@@ -10,7 +10,7 @@ from rest_framework import permissions, filters
 from rest_framework.permissions import IsAuthenticated
 from rest_framework.views import APIView
 from ttp import ttp
-from netboost.settings import BASE_DIR
+from netaxe.settings import BASE_DIR
 from apps.api.tools.custom_pagination import LargeResultsSetPagination
 from apps.api.tools.custom_viewset_base import CustomViewBase
 from utils.connect_layer.auto_main import BatManMain

@@ -10,7 +10,7 @@ import json
 import django
 import pypinyin
 from apps.system.models import Area
-from netboost.settings import BASE_DIR
+from netaxe.settings import BASE_DIR
 from django.core.management import BaseCommand
 
 

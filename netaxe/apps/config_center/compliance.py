@@ -18,7 +18,7 @@ from datetime import datetime, date, timedelta
 
 from django.core.cache import cache
 
-from netboost.settings import BASE_DIR
+from netaxe.settings import BASE_DIR
 from apps.config_center.models import ConfigCompliance
 from utils.db.mongo_ops import MongoOps, MongoNetOps
 from utils.wechat_api import send_msg_netops

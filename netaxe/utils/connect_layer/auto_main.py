@@ -16,7 +16,7 @@ from netmiko._textfsm import _clitable as clitable
 from netmiko._textfsm._clitable import CliTableError
 from textfsm import TextFSM
 from ttp import ttp
-from netboost.settings import BASE_DIR
+from netaxe.settings import BASE_DIR
 from utils.db.mongo_ops import MongoOps
 from utils.connect_layer.my_netmiko import my_netmiko
 

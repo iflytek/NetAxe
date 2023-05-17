@@ -1,4 +1,4 @@
-"""netboost URL Configuration
+"""netaxe URL Configuration
 
 The `urlpatterns` list routes URLs to views. For more information please see:
     https://docs.djangoproject.com/en/4.0/topics/http/urls/
@@ -15,7 +15,7 @@ Including another URLconf
 """
 from django.views.static import serve
 
-from netboost import views, settings
+from netaxe import views, settings
 # from drf_yasg import openapi
 from django.contrib import admin
 from django.urls import include, path, re_path

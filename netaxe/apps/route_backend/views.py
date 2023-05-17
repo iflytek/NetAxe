@@ -17,8 +17,8 @@ from apps.asset.models import NetworkDevice
 from apps.automation.models import CollectionPlan
 from apps.api.tools.custom_viewset_base import CustomViewBase
 from .tasks import get_tasks
-from netboost import settings
-from netboost.celery import app
+from netaxe import settings
+from netaxe.celery import app
 from utils.sftp import SFTP
 from utils.crypt_pwd import CryptPwd
 from utils.connect_layer.NETCONF.h3c_netconf import H3CinfoCollection, H3CSecPath

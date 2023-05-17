@@ -16,7 +16,7 @@ import os
 import traceback
 import requests
 from django.core.cache import cache
-from netboost.settings import BASE_DIR
+from netaxe.settings import BASE_DIR
 
 
 def send_msg_network(msg):

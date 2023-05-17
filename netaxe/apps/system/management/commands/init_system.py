@@ -2,7 +2,7 @@ import logging
 
 from django.core.management.base import BaseCommand
 
-from netboost import settings
+from netaxe import settings
 
 logger = logging.getLogger(__name__)
 

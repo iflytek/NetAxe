@@ -5,7 +5,7 @@ import os
 from django.apps import apps
 from rest_framework import request
 
-from netboost import settings
+from netaxe import settings
 from apps.users.models import UserProfile
 
 

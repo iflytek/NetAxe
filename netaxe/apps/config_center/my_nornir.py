@@ -7,7 +7,7 @@ from nornir_utils.plugins.functions import print_result
 from nornir_utils.plugins.tasks.files import write_file
 from nornir.core.plugins.inventory import InventoryPluginRegister
 
-from netboost.settings import BASE_DIR
+from netaxe.settings import BASE_DIR
 from utils.cmdb_inventory import CMDBInventory
 
 

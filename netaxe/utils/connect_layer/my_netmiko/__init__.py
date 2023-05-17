@@ -6,7 +6,7 @@ import os
 
 from netmiko import ssh_dispatcher
 
-from netboost.settings import BASE_DIR
+from netaxe.settings import BASE_DIR
 from .hillstone import HillstoneTelnet, HillstoneSSH
 
 os.environ["NTC_TEMPLATES_DIR"] = BASE_DIR + '/utils/connect_layer/my_netmiko/templates'

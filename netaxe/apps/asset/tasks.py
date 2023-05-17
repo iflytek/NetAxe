@@ -12,7 +12,7 @@
 """
 from __future__ import absolute_import, unicode_literals
 import json
-from netboost.celery import AxeTask, app
+from netaxe.celery import AxeTask, app
 
 
 @app.task(base=AxeTask, once={'graceful': True})

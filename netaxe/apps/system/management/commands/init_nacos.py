@@ -11,7 +11,7 @@
 -------------------------------------------------
 """
 from utils.custom.nacos import nacos
-from netboost.conf import SERVERIP, SERVERPORT
+from netaxe.conf import SERVERIP, SERVERPORT
 # 注册服务
 nacosServer = nacos(ip=SERVERIP, port=8848)
 nacosServer.registerService(

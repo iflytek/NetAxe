@@ -16,7 +16,7 @@ import django
 from django.core.management import BaseCommand
 os.environ.setdefault('DJANGO_SETTINGS_MODULE', 'netboost.settings')
 django.setup()
-from netboost.settings import BASE_DIR
+from netaxe.settings import BASE_DIR
 from apps.route_backend.models import NavigationProfile, NavigationSubProfile
 
 

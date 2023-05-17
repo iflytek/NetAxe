@@ -11,7 +11,7 @@ from django.apps import apps
 from django.db import models
 from django.db.models import QuerySet
 
-from netboost import settings
+from netaxe import settings
 
 
 class SoftDeleteQuerySet(QuerySet):

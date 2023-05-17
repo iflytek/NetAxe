@@ -9,7 +9,7 @@
 from drf_yasg.generators import OpenAPISchemaGenerator
 from drf_yasg.inspectors import SwaggerAutoSchema
 
-from netboost.settings import SWAGGER_SETTINGS
+from netaxe.settings import SWAGGER_SETTINGS
 
 
 def get_summary(string):

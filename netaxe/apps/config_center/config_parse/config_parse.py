@@ -8,7 +8,7 @@ import os
 import time
 from pathlib import Path
 
-from netboost.settings import BASE_DIR
+from netaxe.settings import BASE_DIR
 from apps.config_center.config_parse.hp_comware.ttp_parse import H3cParse
 
 CONFIG_PATH = BASE_DIR + '/media/device_config/current-configuration/'

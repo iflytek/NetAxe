@@ -19,7 +19,7 @@ import re
 import subprocess
 import time
 from celery import shared_task
-from netboost.celery import AxeTask
+from netaxe.celery import AxeTask
 from collections import OrderedDict
 from django_celery_results.models import TaskResult
 from django.core.cache import cache

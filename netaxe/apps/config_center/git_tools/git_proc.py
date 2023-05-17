@@ -4,7 +4,7 @@ from datetime import datetime
 from git import Actor
 from git import Repo
 from pydriller import Repository
-from netboost.settings import BASE_DIR
+from netaxe.settings import BASE_DIR
 repo_path = os.path.join(BASE_DIR, 'media/device_config')
 
 if not os.path.exists(os.path.join(BASE_DIR, 'media/device_config')):

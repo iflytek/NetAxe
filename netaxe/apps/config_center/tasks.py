@@ -5,8 +5,8 @@ import asyncio
 from datetime import datetime
 from celery import shared_task
 from django.template import loader
-from netboost.celery import AxeTask
-from netboost.settings import DEBUG
+from netaxe.celery import AxeTask
+from netaxe.settings import DEBUG
 from apps.asset.model_api import get_device_info_v2
 from apps.config_center.compliance import config_file_verify
 from apps.config_center.config_parse.config_parse import config_file_parse

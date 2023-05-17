@@ -17,11 +17,11 @@ from datetime import date, datetime, timedelta
 import pymongo
 from bson.objectid import ObjectId
 from netaddr import IPAddress
-from netboost.settings import BASE_DIR
+from netaxe.settings import BASE_DIR
 
 USER_CONF = {}
-if os.path.exists("{}/{}/{}".format(BASE_DIR, "netboost", "conf.py")):
-    from netboost.conf import mongo_db_conf
+if os.path.exists("{}/{}/{}".format(BASE_DIR, "netaxe", "conf.py")):
+    from netaxe.conf import mongo_db_conf
 
     USER_CONF = mongo_db_conf
 else:

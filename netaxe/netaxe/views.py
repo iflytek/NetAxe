@@ -41,5 +41,6 @@ EXPIRE_MINUTES = getattr(settings, 'REST_FRAMEWORK_TOKEN_EXPIRE_MINUTES', 1)
 # 覆盖默认的admin登录方法实现登录限流
 # @ratelimit(key='ip', rate='5/h', block=True)
 def extend_admin_login(request, extra_context=None):
+    print(request)
     return admin.site.login(request, extra_context)
 

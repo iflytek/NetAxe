@@ -4,7 +4,7 @@ import json
 import yaml
 from ttp import ttp
 
-from netboost.settings import BASE_DIR
+from netaxe.settings import BASE_DIR
 
 CONFIG_PATH = BASE_DIR + '/media/device_config/current-configuration/'
 

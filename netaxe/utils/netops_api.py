@@ -14,13 +14,13 @@ import os
 import json
 import logging
 import requests
-from netboost.settings import BASE_DIR
+from netaxe.settings import BASE_DIR
 
 logger = logging.getLogger("celery")
 
 USER_CONF = {}
 if os.path.exists("{}/{}/{}".format(BASE_DIR, "netboost", "conf.py")):
-    from netboost.conf import netops_api
+    from netaxe.conf import netops_api
 
     USER_CONF = netops_api
 

@@ -30,11 +30,11 @@ DEBUG = True
 ALLOWED_HOSTS = ["*"]
 
 # 用户自定义配置
-if os.path.exists("{}/{}/{}".format(BASE_DIR, "netboost", "conf.py")):
+if os.path.exists("{}/{}/{}".format(BASE_DIR, "netaxe", "conf.py")):
     from .conf import *
 else:
     raise RuntimeError("没有找到conf.py的配置信息")
-os.environ.setdefault("DJANGO_SETTINGS_MODULE", "netboost.settings")
+os.environ.setdefault("DJANGO_SETTINGS_MODULE", "netaxe.settings")
 os.environ.setdefault("DJANGO_ALLOW_ASYNC_UNSAFE", "true")
 
 # Application definition
@@ -77,7 +77,7 @@ MIDDLEWARE = [
     "utils.custom.middleware.CorsMiddleWare",  # 配置跨域访问支持
 ]
 
-ROOT_URLCONF = "netboost.urls"
+ROOT_URLCONF = "netaxe.urls"
 
 TEMPLATES = [
     {
@@ -156,9 +156,14 @@ LOGGING = {
             "format": CONSOLE_LOG_FORMAT,
             "datefmt": "%Y-%m-%d %H:%M:%S",
         },
-        "console": {
-            "format": CONSOLE_LOG_FORMAT,
-            "datefmt": "%Y-%m-%d %H:%M:%S",
+        'standard': {
+            'format': '[%(asctime)s][%(threadName)s:%(thread)d][task_id:%(name)s][%(filename)s:%(lineno)d]'
+                      '[%(levelname)s][%(message)s]'
+        },
+    },
+    'filters': {
+        'require_debug_true': {
+            '()': 'django.utils.log.RequireDebugTrue',  # 过滤器，只有当setting的DEBUG = True时生效
         },
     },
     "handlers": {
@@ -168,7 +173,7 @@ LOGGING = {
             "filename": SERVER_LOGS_FILE,
             "maxBytes": 1024 * 1024 * 100,  # 100 MB
             "backupCount": 5,  # 最多备份5个
-            "formatter": "file",
+            "formatter": "standard",
             "encoding": "utf-8",
         },
         "celery": {
@@ -177,17 +182,23 @@ LOGGING = {
             "filename": CELERY_LOGS_FILE,
             "maxBytes": 1024 * 1024 * 100,  # 100 MB
             "backupCount": 3,  # 最多备份3个
-            "formatter": "file",
+            "formatter": "standard",
             "encoding": "utf-8",
         },
-        "console": {
-            "level": "INFO",
-            "class": "logging.StreamHandler",
-            "formatter": "console",
+        'console': {
+            'level': 'DEBUG',
+            'filters': ['require_debug_true'],  # 只有在Django debug为True时才在屏幕打印日志
+            'class': 'logging.StreamHandler',
+            'formatter': 'standard'
         },
     },
     "loggers": {
-        # default日志
+        # 默认的logger应用如下配置# default日志
+        '': {
+            'handlers': ['console'],  # 上线之后可以把'console'移除
+            'level': 'DEBUG',
+            'propagate': True,  # 向不向更高级别的logger传递
+        },
         "server": {
             "handlers": ["file"],
             "level": "INFO",
@@ -202,9 +213,9 @@ LOGGING = {
         },
         # 数据库相关日志
         "django.db.backends": {
-            "handlers": [],
+            "handlers": ['console'],
             "propagate": True,
-            "level": "INFO",
+            "level": "DEBUG",
         },
     },
 }

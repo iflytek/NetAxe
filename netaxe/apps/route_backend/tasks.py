@@ -8,7 +8,7 @@
 import json
 
 from celery import shared_task, current_app
-from netboost.celery import AxeTask
+from netaxe.celery import AxeTask
 
 
 @shared_task(base=AxeTask, once={'graceful': True})

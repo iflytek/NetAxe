@@ -16,7 +16,7 @@ import django
 from django.core.management import BaseCommand
 os.environ.setdefault('DJANGO_SETTINGS_MODULE', 'netboost.settings')
 django.setup()
-from netboost.settings import BASE_DIR
+from netaxe.settings import BASE_DIR
 from django.apps import apps
 from apps.asset.models import Idc
 

@@ -12,7 +12,7 @@
 """
 from pathlib import Path
 
-from netboost.settings import BASE_DIR
+from netaxe.settings import BASE_DIR
 
 ICON_PATH = BASE_DIR + '/media/topology/img/'
 

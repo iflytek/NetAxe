@@ -7,7 +7,7 @@ from django.http import JsonResponse, FileResponse, Http404
 from django_filters.rest_framework import DjangoFilterBackend
 from rest_framework.views import APIView
 from rest_framework import viewsets, filters
-from netboost.settings import MEDIA_ROOT
+from netaxe.settings import MEDIA_ROOT
 from apps.route_backend.views import LimitSet
 from utils.crypt_pwd import CryptPwd
 from apps.api.tools.custom_pagination import LargeResultsSetPagination
