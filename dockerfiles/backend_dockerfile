@@ -1,0 +1,18 @@
+#FROM registry.cn-hangzhou.aliyuncs.com/netaxe/netaxe-backend:1.0.13
+FROM python:3.9-slim
+# 更新pip版本
+RUN pip3 install -i https://pypi.doubanio.com/simple/ uwsgi --upgrade pip
+COPY backend/ /app
+# 再次切换工作目录为Django主目录
+WORKDIR /app
+
+
+# 安装项目所需python第三方库
+# 指定setuptools的版本，必须指定，新版本有兼容问题
+RUN set -ex \
+    && /usr/local/python3/bin/pip3 install setuptools_scm -i https://mirrors.aliyun.com/pypi/simple/ \
+    &&/usr/local/python3/bin/pip3 install  --no-cache-dir -r requirements.txt -i https://mirrors.aliyun.com/pypi/simple/ \
+    && rm -rf /var/cache/yum/*
+EXPOSE 8001
+EXPOSE 5555
+CMD ["sh", "start.sh"]
