@@ -1,0 +1,31 @@
+version: "3.7"
+
+services:
+    # 后端入口
+    netaxe-base:
+      image: registry.cn-hangzhou.aliyuncs.com/netaxe/netaxe-backend:1.0.13
+      build:
+          context: .
+          dockerfile: ./dockerfiles/backend_dockerfile
+      command: sh start.sh web
+      ports:
+          - "8001:8001"
+      networks:
+          - "netaxe-network"
+      restart: always
+
+    # 前端
+    netaxe-web:
+      image: registry.cn-hangzhou.aliyuncs.com/netaxe/netaxe-web:1.0
+      build:
+        context: .
+        dockerfile: ./dockerfiles/web_dockerfile
+      ports:
+        - "9904:80"
+      networks:
+        - "netaxe-network"
+      restart: always
+
+networks:
+  netaxe-network:
+    name: "netaxe-network"
