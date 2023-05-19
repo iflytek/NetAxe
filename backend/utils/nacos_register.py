@@ -21,7 +21,7 @@ def nacos_init():
         metadata = {
             'queue': config.queue,
             'routing_key': config.routing_key,
-            'menu': config.get_default_menu,
+            'menu': config.default_menu,
         }
         config.registerService(serviceIp=config.server_ip,
                                servicePort=config.server_port,
