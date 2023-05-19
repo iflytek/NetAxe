@@ -24,7 +24,7 @@ log = logging.getLogger(__name__)
 DEFAULTS_FILENAME = "../config/defaults.json"
 # 实际运行配置，会覆盖缺省配置
 CONFIG_FILENAME = "../config/config.json"
-MENU_FILENAME = "../../default_menu.json"
+MENU_FILENAME = "/default_menu.json"
 NAMESPACE = "public"
 
 try:
@@ -34,12 +34,12 @@ except AttributeError:
 
 
 # 加载前端默认菜单
-def load_memu_files(menu_filename: str = MENU_FILENAME) -> list:
+def load_memu_files(root_path) -> list:
     try:
-        with open(menu_filename) as infil:
+        with open(root_path + MENU_FILENAME) as infil:
             return json.load(infil)
     except FileNotFoundError:
-        log.warning(f"Couldn't find {menu_filename}")
+        log.warning(f"Couldn't find {root_path + MENU_FILENAME}")
 
     return []
 
@@ -67,7 +67,7 @@ class Config:
     _instance = None
 
     def __init__(self):
-        self.default_menu = load_memu_files()
+        self.default_menu = []
         data = load_config_files()
         self.__registerDict = {}
         self.__configDict = {}
@@ -119,6 +119,11 @@ class Config:
             cls._instance = super().__new__(cls)
         return cls._instance
 
+    @property
+    def get_default_menu(self):
+        self.default_menu = load_memu_files(root_path=self.get_root_path)
+        return self.default_menu
+
     # 获取项目根目录
     @property
     def get_root_path(self):
@@ -126,7 +131,7 @@ class Config:
         root_path = file_path.parent  # 获取当前文件所在目录的路径
         while root_path.name != self.project_name:  # 根据实际情况修改根目录的名称
             root_path = root_path.parent  # 获取上级目录的路径
-        return root_path
+        return str(root_path)
 
     def __healthyCheckThreadRun(self):
         while True:
