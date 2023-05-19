@@ -1,9 +1,0 @@
-Value Name (agg\S+)
-Value Mode (\S+)
-Value Protocol (\S+)
-Value Ports ([\S+\s+]+)
-
-
-Start
-  ^------+ -> Next
-  ^${Name}\s+${Mode}\s+${Protocol}\s+${Ports}$$ -> Continue.Record

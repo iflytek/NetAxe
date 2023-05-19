@@ -1,8 +1,0 @@
-Value Version (\S+)
-Value Product (\S+)
-Value SN (\S+)
-
-
-Start
-  ^.*Version\s${Version}
-  ^Product name:\s${Product}\sS/N:\s${SN} -> Record
