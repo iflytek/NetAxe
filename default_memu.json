@@ -1,0 +1,206 @@
+{
+  "menu": [
+    {
+      "name": "资源管理",
+      "hidden": false,
+      "path": "/cmdb",
+      "web_path": "/cmdb",
+      "meta": {
+            "title": "资源管理",
+            "iconPrefix": "iconfont",
+            "icon": "menu"
+      },
+      "children": [
+            {
+              "name": "网络设备",
+              "path": "/cmdb/network_device",
+              "web_path": "/cmdb/network_device",
+              "meta": {
+                  "title": "网络设备",
+                  "affix": true,
+                  "iconPrefix": "iconfont",
+                  "icon": "index",
+                  "cacheable": false
+              }
+            },{
+              "name": "接口清单",
+              "path": "/cmdb/interfaceused",
+              "web_path": "/cmdb/interfaceused",
+              "meta": {
+                  "title": "接口清单",
+                  "affix": true,
+                  "iconPrefix": "iconfont",
+                  "icon": "index",
+                  "cacheable": false
+              }
+            }
+        ]
+    },
+    {
+      "name": "自动化",
+      "hidden": false,
+      "path": "/automated",
+      "web_path": "/automated",
+      "meta": {
+            "title": "自动化",
+            "iconPrefix": "iconfont",
+            "icon": "menu"
+      },
+      "children": [
+            {
+              "name": "采集方案",
+              "path": "/automated/collect",
+              "web_path": "/automated/collect",
+              "meta": {
+                  "title": "采集方案",
+                  "affix": true,
+                  "iconPrefix": "iconfont",
+                  "icon": "index",
+                  "cacheable": false
+              }
+            }
+        ]
+    },
+    {
+      "name": "配置中心",
+      "hidden": false,
+      "web_path": "/config_manage",
+      "path": "/config_manage",
+      "meta": {
+            "title": "配置中心",
+            "iconPrefix": "iconfont",
+            "icon": "menu"
+      },
+      "children": [
+            {
+              "name": "FSM模板",
+              "path": "/config_manage/fsm_template",
+              "web_path": "/config_manage/fsm_template",
+              "meta": {
+                  "title": "FSM模板",
+                  "affix": true,
+                  "iconPrefix": "iconfont",
+                  "icon": "index",
+                  "cacheable": false
+              }
+            }, {
+              "name": "TTP模板",
+              "path": "/config_manage/ttp_template",
+              "web_path": "/config_manage/ttp_template",
+              "meta": {
+                  "title": "TTP模板",
+                  "affix": true,
+                  "iconPrefix": "iconfont",
+                  "icon": "index",
+                  "cacheable": false
+              }
+            }, {
+              "name": "配置合规",
+              "path": "/config_manage/compliance",
+              "web_path": "/config_manage/compliance",
+              "meta": {
+                  "title": "配置合规",
+                  "affix": true,
+                  "iconPrefix": "iconfont",
+                  "icon": "index",
+                  "cacheable": false
+              }
+            }, {
+              "name": "配置模板",
+              "path": "/config_manage/config_jinja2_template",
+              "web_path": "/config_manage/config_jinja2_template",
+              "meta": {
+                  "title": "配置模板",
+                  "affix": true,
+                  "iconPrefix": "iconfont",
+                  "icon": "index",
+                  "cacheable": false
+              }
+            }, {
+              "name": "配置差异",
+              "path": "/config_manage/gitdiff",
+              "web_path": "/config_manage/gitdiff",
+              "meta": {
+                  "title": "配置差异",
+                  "affix": true,
+                  "iconPrefix": "iconfont",
+                  "icon": "index",
+                  "cacheable": false
+              }
+            }
+      ]
+    },
+    {
+      "name": "作业中心",
+      "hidden": false,
+      "web_path": "/task_center",
+      "path": "/task_center",
+      "meta": {
+            "title": "作业中心",
+            "iconPrefix": "iconfont",
+            "icon": "menu"
+      },
+      "children": [
+            {
+              "name": "调度管理",
+              "path": "/task_center/dispatch_manage",
+              "web_path": "/task_center/dispatch_manage",
+              "meta": {
+                  "title": "调度管理",
+                  "affix": true,
+                  "iconPrefix": "iconfont",
+                  "icon": "index",
+                  "cacheable": false
+              }
+            },{
+              "name": "任务列表",
+              "path": "/task_center/task_list",
+              "web_path": "/task_center/task_list",
+              "meta": {
+                  "title": "任务列表",
+                  "affix": true,
+                  "iconPrefix": "iconfont",
+                  "icon": "index",
+                  "cacheable": false
+              }
+            }
+      ]
+    },
+    {
+      "name": "拓扑管理",
+      "hidden": false,
+      "web_path": "/net_topology",
+      "path": "/net_topology",
+      "meta": {
+            "title": "拓扑管理",
+            "iconPrefix": "iconfont",
+            "icon": "menu"
+      },
+      "children": [
+            {
+              "name": "拓扑展示",
+              "path": "/net_topology/show",
+              "web_path": "/net_topology/show",
+              "meta": {
+                  "title": "拓扑展示",
+                  "affix": true,
+                  "iconPrefix": "iconfont",
+                  "icon": "index",
+                  "cacheable": false
+              }
+            },{
+              "name": "图标库",
+              "path": "/net_topology/topology_icon",
+              "web_path": "/net_topology/topology_icon",
+              "meta": {
+                  "title": "图标库",
+                  "affix": true,
+                  "iconPrefix": "iconfont",
+                  "icon": "index",
+                  "cacheable": false
+              }
+            }
+      ]
+    }
+  ]
+}

@@ -11,7 +11,7 @@ https://docs.djangoproject.com/en/4.0/ref/settings/
 """
 import os
 from datetime import timedelta
-
+from confload.confload import config
 # Build paths inside the project like this: BASE_DIR / "subdir".
 # BASE_DIR = Path(__file__).resolve().parent.parent
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
@@ -29,11 +29,6 @@ DEBUG = True
 
 ALLOWED_HOSTS = ["*"]
 
-# 用户自定义配置
-if os.path.exists("{}/{}/{}".format(BASE_DIR, "netaxe", "conf.py")):
-    from .conf import *
-else:
-    raise RuntimeError("没有找到conf.py的配置信息")
 os.environ.setdefault("DJANGO_SETTINGS_MODULE", "netaxe.settings")
 os.environ.setdefault("DJANGO_ALLOW_ASYNC_UNSAFE", "true")
 
@@ -65,6 +60,30 @@ INSTALLED_APPS = [
     'import_export',
 
 ]
+
+DATABASES = {
+    'default': {
+        'NAME': config.mysql_db,
+        'ENGINE': 'django.db.backends.mysql',
+        'HOST': config.mysql_host,
+        'USER': config.mysql_user,
+        'PASSWORD': config.mysql_password,
+        'PORT': config.mysql_port,
+        # 'CONN_MAX_AGE': 21600,
+        'ATOMIC_REQUESTS': True,
+        'TEST_CHARSET': 'utf8mb4',
+        'TEST_COLLATION': 'utf8mb4_general_ci',
+        'TEST': {'NAME': 'net_axe_test',
+                 'CHARTSET': 'utf8mb4',
+                 'COLLATION': 'utf8mb4_general_ci'},
+        'OPTIONS': {
+            # 'charset': 'utf8mb4',
+            "init_command": "SET default_storage_engine='INNODB'",
+        }
+    },
+}
+
+REDIS_URL = "redis://:{}@{}:{}/".format(config.redis_pwd, config.redis_host, config.redis_port)
 
 MIDDLEWARE = [
     "django.middleware.security.SecurityMiddleware",

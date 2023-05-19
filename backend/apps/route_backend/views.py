@@ -270,6 +270,7 @@ class JobCenterView(APIView):
         # print(task_ids[0],str(task_ids[0]))
         return JsonResponse({'code': 200, 'data': str(task_ids[0])}, safe=False)
 
+
 # 任务列表
 class PeriodicTaskViewSet(CustomViewBase):
     # queryset = PeriodicTask.objects.all().order_by('id')

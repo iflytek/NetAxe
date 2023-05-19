@@ -34,7 +34,7 @@ export default ({ mode }) => {
         },
         server: {
             open: true,
-            port: 8890,
+            port: 5005,
             host: '0.0.0.0',
             hmr: { overlay: false },
             cors: true,
@@ -50,18 +50,6 @@ export default ({ mode }) => {
                     // ws: true, //代理websockets
                     changeOrigin: true, // 虚拟的站点需要更管origin
                     rewrite: (path: string) => path.replace(/^\/rbac/, '/rbac'),
-                },
-                '/ipam': {
-                    target: env.VITE_BASIC_URL,
-                    // ws: true, //代理websockets
-                    changeOrigin: true, // 虚拟的站点需要更管origin
-                    rewrite: (path: string) => path.replace(/^\/ipam/, '/ipam'),
-                },
-                '/media': {
-                    target: env.VITE_BASIC_URL,
-                    // ws: true, //代理websockets
-                    changeOrigin: true, // 虚拟的站点需要更管origin
-                    rewrite: (path: string) => path.replace(/^\/media/, '/media'),
                 },
                 '/ws': {
                     target: env.VITE_BASIC_URL,

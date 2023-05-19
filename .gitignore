@@ -13,6 +13,7 @@ web/.vscode/
 web/node_modules
 Python-3.9.11.tgz
 netaxe/logs
+config/config.json
 netaxe/__pycahe__
 netaxe/netboost/conf.py
 netaxe/netboost/__pycache__/

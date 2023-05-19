@@ -1,11 +1,3 @@
-# -*- coding: utf-8 -*-
-
-"""
-@author: 猿小天
-@contact: QQ:1638245306
-@Created on: 2021/6/1 001 22:38
-@Remark: 菜单模块
-"""
 from rest_framework import serializers
 from rest_framework.decorators import action
 
@@ -13,6 +5,7 @@ from apps.system.models import Menu
 from utils.custom.json_response import SuccessResponse
 from utils.custom.serializers import CustomModelSerializer
 from utils.custom.viewset import CustomModelViewSet
+
 
 class MenuSerializer(CustomModelSerializer):
     """

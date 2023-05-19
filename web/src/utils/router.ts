@@ -10,6 +10,7 @@ import router, { constantRoutes } from '../router'
 import { isExternal, mapTwoLevelRouter, toHump } from '.'
 import LoadingComponent from '../components/loading/index.vue'
 import { baseAddress, WebRouter, WebPermission } from '@/api/url'
+import defaultRouteJson from '../../../default_memu.json'
 import { ADMIN_WORK_USER_INFO_KEY, ADMIN_WORK_BUTTON_AUTH, ADMIN_WORK_S_TENANT } from '@/store/keys'
 
 interface OriginRoute {
@@ -109,6 +110,7 @@ function generatorRoutes(res: Array<OriginRoute>) {
           icon: it.icon || 'menu',
           iconPrefix: it.iconPrefix || 'iconfont',
         },
+        // children: []
       }
       if (it.children) {
         route.children = generatorRoutes(it.children)
@@ -142,17 +144,23 @@ router.beforeEach(async (to) => {
 
 
       const isEmptyRoute = layoutStore.isEmptyPermissionRoute()
-      console.log(isEmptyRoute)
+      console.log('isEmptyRoute', isEmptyRoute)
       if (isEmptyRoute && to.path!='/ssh') {
         
         // 加载路由和按钮
-        const webRoutes = await getRoutes()
+        let webRoutes: any = []
+        if (!import.meta.env.VITE_LOCAL_ROUTER) {
+          webRoutes = await getRoutes()
+        } else {
+          webRoutes = generatorRoutes(defaultRouteJson.menu)
+          console.log('webRoutes', webRoutes)
+        }
         // console.log(webRoutes)
         // const webPermission = await getPermission()
         const accessRoutes: Array<RouteRecordRaw> = []
         accessRoutes.push(...webRoutes)
 
-
+        console.log(accessRoutes)
         const mapRoutes = mapTwoLevelRouter(accessRoutes)
         mapRoutes.forEach((it: any) => {
           router.addRoute(it)
@@ -162,8 +170,6 @@ router.beforeEach(async (to) => {
           redirect: '/404',
           hidden: true,
         } as RouteRecordRaw)
-        // console.log('constantRoutes',JSON.stringify(constantRoutes))
-        // console.log('accessRoutes',JSON.stringify(accessRoutes))
         layoutStore.initPermissionRoute([...constantRoutes, ...accessRoutes])
         return { ...to, replace: true }
       } else {

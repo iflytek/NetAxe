@@ -14,7 +14,7 @@ import json
 import os
 import django
 from django.core.management import BaseCommand
-os.environ.setdefault('DJANGO_SETTINGS_MODULE', 'netboost.settings')
+os.environ.setdefault('DJANGO_SETTINGS_MODULE', 'netaxe.settings')
 django.setup()
 from netaxe.settings import BASE_DIR
 from apps.route_backend.models import NavigationProfile, NavigationSubProfile

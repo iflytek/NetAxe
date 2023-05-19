@@ -2,7 +2,7 @@ import Axios, { AxiosResponse } from 'axios'
 import qs from 'qs'
 import Cookies from 'js-cookie'
 
-export const baseURL = ''
+export const baseURL = '/base_platform'
 // mock 接口
 // export const baseURL = 'http://localhost:8080/'
 

@@ -11,21 +11,12 @@
 -------------------------------------------------
 """
 import json
-import os
 import re
 from datetime import date, datetime, timedelta
 import pymongo
 from bson.objectid import ObjectId
 from netaddr import IPAddress
-from netaxe.settings import BASE_DIR
-
-USER_CONF = {}
-if os.path.exists("{}/{}/{}".format(BASE_DIR, "netaxe", "conf.py")):
-    from netaxe.conf import mongo_db_conf
-
-    USER_CONF = mongo_db_conf
-else:
-    raise RuntimeError("没有捕获到mongodb的配置信息")
+from confload.confload import config
 
 
 class JSONEncoder(json.JSONEncoder):
@@ -54,10 +45,10 @@ def get_mongo_json_res(data):
 
 
 mongo_client = pymongo.MongoClient(
-    host=USER_CONF.get('host') or '10.254.12.1',
-    port=USER_CONF.get('port') or 27017,
-    username=USER_CONF.get('username') or "root",
-    password=USER_CONF.get('password') or "131234swerqwe",
+    host=config.mongodb_host,
+    port=config.mongodb_port,
+    username=config.mongodb_user,
+    password=config.mongodb_password,
     maxPoolSize=1000,
     connect=False)
 
