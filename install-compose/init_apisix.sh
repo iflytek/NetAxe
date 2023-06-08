@@ -37,6 +37,7 @@ curl http://127.0.0.1:9080/apisix/admin/routes \
   "name": "权限中心",
   "plugins": {
     "forward-auth": {
+      "client_headers": [],
       "disable": false,
       "request_headers": [
         "Authorization"
@@ -80,6 +81,7 @@ curl http://127.0.0.1:9080/apisix/admin/routes \
   "name": "cmdb-api",
   "plugins": {
     "forward-auth": {
+      "client_headers": [],
       "disable": false,
       "request_headers": [
         "Authorization"
@@ -105,7 +107,7 @@ curl http://127.0.0.1:9080/apisix/admin/routes \
       "group_name": "default"
     },
     "pass_host": "pass",
-    "service_name": "cmdb",
+    "service_name": "base_platform",
     "keepalive_pool": {
       "idle_timeout": 60,
       "requests": 1000,
@@ -119,9 +121,10 @@ curl http://127.0.0.1:9080/apisix/admin/routes \
 -H 'X-API-KEY: edd1c9f034335f136f87ad84b625c8f1' -X POST -i -d '
 {
   "uri": "/ipam/*",
-  "name": "cmdb-ipam",
+  "name": "ipam",
   "plugins": {
     "forward-auth": {
+      "client_headers": [],
       "disable": false,
       "request_headers": [
         "Authorization"
@@ -147,7 +150,7 @@ curl http://127.0.0.1:9080/apisix/admin/routes \
       "group_name": "default"
     },
     "pass_host": "pass",
-    "service_name": "cmdb",
+    "service_name": "ipam",
     "keepalive_pool": {
       "idle_timeout": 60,
       "requests": 1000,
