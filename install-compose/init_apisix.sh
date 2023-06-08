@@ -77,8 +77,8 @@ curl http://127.0.0.1:9080/apisix/admin/routes \
 curl http://127.0.0.1:9080/apisix/admin/routes \
 -H 'X-API-KEY: edd1c9f034335f136f87ad84b625c8f1' -X POST -i -d '
 {
-  "uri": "/api/*",
-  "name": "cmdb-api",
+  "uri": "/base_platform/*",
+  "name": "base_platform",
   "plugins": {
     "forward-auth": {
       "client_headers": [],
