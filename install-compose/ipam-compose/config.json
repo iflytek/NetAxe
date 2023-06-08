@@ -5,6 +5,7 @@
   "version": "1.0",
   "server_port": 32203,
   "local_dev": false,
+  "exchange": "netaxe",
   "mq_host": "rabbitmq",
   "mq_username": "adminnetaxe",
   "mq_password": "netaxeadmin",
