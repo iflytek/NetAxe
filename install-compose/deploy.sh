@@ -5,7 +5,9 @@ setenforce 0
 systemctl stop firewalld
 current_path=$(pwd)
 
-
+if which docker compose version  >/dev/null; then
+    alias docker-compose='docker compose'
+fi
 
 # 检查docker-compose版本以及命令是否安装
 docker-compose --version
@@ -13,9 +15,7 @@ if [ $? -ne 0 ]; then
     echo "请检查docker-compose命令是否安装"
     exit 1
 fi
-if which docker compose version  >/dev/null; then
-    alias docker-compose='docker compose'
-fi
+
 
 # 创建docker_netaxe网络
 docker network inspect docker_netaxe
