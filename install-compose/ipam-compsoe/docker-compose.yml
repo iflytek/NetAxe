@@ -28,7 +28,7 @@ services:
     ipam-web:
       image: registry.cn-hangzhou.aliyuncs.com/netaxe/ipam-web:1.0
       ports:
-          - "32082:80"
+          - "32203:80"
       networks:
           - docker_netaxe
       restart: always
