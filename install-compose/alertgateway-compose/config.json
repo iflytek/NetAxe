@@ -1,5 +1,9 @@
 {
   "__comment__": "Values given here will override the values given in 'defaults.json'",
+  "backend_ip": "alertgateway-backend",
+  "backend_port": 8000,
+  "web_ip": "tmp_server_ip",
+  "web_port": 32202,
   "api_key": "2a84465a-cf38-46b2-9d86-b84Q7d57f288",
   "api_key_name": "x-api-key",
   "virtual_host": "netaxe",
