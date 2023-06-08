@@ -7,6 +7,7 @@ networks:
 services:
     # 后端入口
     ipam-backend:
+      container_name: ipam-backend
       image: registry.cn-hangzhou.aliyuncs.com/netaxe/ipam-backend:1.0
       command: sh init.sh
       volumes:
@@ -18,6 +19,7 @@ services:
 
     # nginx代理
     ipam-nginx:
+      container_name: ipam-nginx
       image: registry.cn-hangzhou.aliyuncs.com/netaxe/ipam-nginx:1.23.1
       networks:
           - docker_netaxe
@@ -26,6 +28,7 @@ services:
 
     # 前端
     ipam-web:
+      container_name: ipam-web
       image: registry.cn-hangzhou.aliyuncs.com/netaxe/ipam-web:1.0
       ports:
           - "32203:80"
