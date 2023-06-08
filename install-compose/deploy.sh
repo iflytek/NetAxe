@@ -130,5 +130,12 @@ docker-compose  up -d
 echo "------------------告警中心状态------------------"
 docker-compose  ps
 
+# 安装IPAM
+echo "------------------开始IPAM部署--------------"
+cd $current_path
+cd ipam-compose
+docker-compose  up -d
+echo "------------------IPAM状态------------------"
+docker-compose  ps
 
 echo "------------------部署完成------------------------"
