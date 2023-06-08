@@ -25,7 +25,7 @@
   "mysql_user": "root",
   "mysql_password": "root_devnet@2022",
   "mysql_db": "ipam",
-  "project_name": "BasePlatform",
-  "url_prefix": "/base_platform",
+  "project_name": "IPAM",
+  "url_prefix": "/ipam",
   "push_gateway": "pushgateway:9091"
 }

@@ -1,5 +1,7 @@
 #! /bin/bash
 
+alias docker-compose='docker compose'
+
 # 检查docker-compose版本以及命令是否安装
 docker-compose --version
 if [ $? -ne 0 ]; then
