@@ -1,0 +1,53 @@
+{
+  "__comment__": "Values given here will override the values given in 'defaults.json'",
+  "virtual_host": "netaxe",
+  "server_ip": "server_ip",
+  "version": "1.0",
+  "server_port": 32201,
+  "local_dev": false,
+  "mq_host": "rabbitmq",
+  "mq_username": "adminnetaxe",
+  "mq_password": "netaxeadmin",
+  "mq_port": 5672,
+  "nacos": "nacos",
+  "nacos_port": 8848,
+  "allow_origins": ["http://server_ip:9980"],
+  "mongodb_url": "mongodb://root:70uUceCVL1gf@mongo:27017/?authSource=admin&readPreference=primary&directConnection=true&ssl=false",
+  "redis_host": "redis-cache",
+  "redis_port": 6379,
+  "redis_pwd": "dade0f2a65237a56b79277e6dd27351d2854df033e0ad4b4f90abec229cd64df",
+  "mysql_host": "mysql-server",
+  "mysql_port": "3306",
+  "mysql_user": "root",
+  "mysql_password": "root_devnet@2022",
+  "mysql_db": "msggateway",
+  "project_name": "MsgGateway",
+  "url_prefix": "/msg_gateway",
+  "push_gateway": "pushgateway:9091",
+  "email_host": "mail.iflymail.com.cn",
+  "email_port": 465,
+  "email_from_name": "科大讯飞网络自动化系统",
+  "email_host_user": "ccr_netops@iflymail.com.cn",
+  "email_host_pwd": "hgjl3000p",
+  "sms": "24a6",
+  "sms_url": "http",
+  "wechat": {
+    "corpid": "ww",
+    "token_url": "https://qyapi.weixin.qq.com/cgi-bin/gettoken",
+    "base_url": "https://qyapi.weixin.qq.com/cgi-bin/message/send",
+    "default": {
+      "touser": "@all",
+      "toparty": "3",
+      "agentid": "10010",
+      "corpsecret": "_1--",
+      "msgtype": "text"
+    },
+    "snmp_traps": {
+      "touser": "@all",
+      "toparty": "3",
+      "agentid": "1002",
+      "corpsecret": "aRMstBoe4hP7-",
+      "msgtype": "text"
+    }
+  }
+}

@@ -1,0 +1,30 @@
+version: '3'
+services:
+  rabbitmq:
+    image: registry.cn-hangzhou.aliyuncs.com/netaxe/rabbitmq:3.8-management
+    container_name: rabbitmq
+    restart: always
+    hostname: rabbitmq
+    ports:
+      - "32672:15672"
+      - "31672:5672"
+    volumes:
+      - ./rabbitmq.sh:/etc/rabbitmq/rabbitmq.sh
+      - ./data1:/var/lib/rabbitmq
+      - ./enabled_plugins:/etc/rabbitmq/enabled_plugins
+    environment:
+      - RABBITMQ_DEFAULT_USER=adminnetaxe
+      - RABBITMQ_DEFAULT_PASS=netaxeadmin
+      - STOMP_DEFAULT_USER=adminnetaxe
+      - STOMP_DEFAULT_PASS=netaxeadmin
+      - RABBITMQ_DEFAULT_VHOST=/
+    networks:
+      - docker_netaxe
+
+networks:
+  docker_netaxe:
+    external: true
+
+
+# docker network create docker_netaxe
+# rabbitmqctl set_permissions -p /  adminnetaxe ".*" ".*" ".*"

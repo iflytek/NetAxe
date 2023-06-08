@@ -1,0 +1,45 @@
+version: "3.2"
+networks:
+  docker_netaxe:
+    external: true
+
+services:
+  mongo:
+    image: registry.cn-hangzhou.aliyuncs.com/netaxe/mongo:latest
+    container_name: mongo
+    restart: always
+    ports:
+      - "37017:27017"
+    environment:
+      TZ: Asia/Shanghai
+      MONGO_INITDB_DATABASE: netaxe
+      MONGO_INITDB_ROOT_USERNAME: root
+      MONGO_INITDB_ROOT_PASSWORD: 70uUceCVL1gf
+    volumes:
+      - ./data:/data/db
+      - ./mongo.conf:/data/conf
+      - ./init/:/docker-entrypoint-initdb.d/
+    security_opt:
+      - 'seccomp=unconfined'
+    command: mongod
+    networks:
+      - docker_netaxe
+
+  mongo-express:
+    image: registry.cn-hangzhou.aliyuncs.com/netaxe/mongo-express:latest
+    container_name: mongo-express
+    restart: always
+    depends_on:
+      - mongo
+    ports:
+      - "37018:27018"
+    environment:
+      TZ: Asia/Shanghai
+      ME_CONFIG_OPTIONS_EDITORTHEME: 3024-night
+      ME_CONFIG_MONGODB_SERVER: mongo
+      ME_CONFIG_MONGODB_ADMINUSERNAME: root
+      ME_CONFIG_MONGODB_ADMINPASSWORD: 70uUceCVL1gf
+      ME_CONFIG_BASICAUTH_USERNAME: root
+      ME_CONFIG_BASICAUTH_PASSWORD: 70uUceCVL1gf
+    networks:
+      - docker_netaxe

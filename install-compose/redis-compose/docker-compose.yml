@@ -1,0 +1,14 @@
+version: "3.2"
+networks:
+  docker_netaxe:
+    external: true
+services:
+  redis-cache:
+    image: registry.cn-hangzhou.aliyuncs.com/netaxe/redis:latest
+    container_name: redis-cache
+    ports:
+      - "36379:6379"
+    command: "redis-server --requirepass dade0f2a65237a56b79277e6dd27351d2854df033e0ad4b4f90abec229cd64df"
+    networks:
+      - docker_netaxe
+  

@@ -1,0 +1,4 @@
+mysql-compose/data/*
+mongo-compose/data/*
+apisix-compose/apisix_log/*
+apisix-compose/etcd_conf/data/*

@@ -1,0 +1,31 @@
+version: "3.2"
+networks:
+  docker_netaxe:
+    external: true
+services:
+  prometheus:
+    image: prom/prometheus:latest
+    container_name: prometheus
+    restart: always
+    volumes:
+      - /usr/share/zoneinfo/Asia/Shanghai:/etc/localtime
+      - ./prometheus-data/prometheus.yml:/etc/prometheus/prometheus.yml
+      - ./prometheus-data:/prometheus
+    ports:
+      - 39090:9090
+    command: [ '--web.enable-lifecycle','--storage.tsdb.retention.time=30d' ]
+    networks:
+      - docker_netaxe
+
+  pushgateway:
+    container_name: pushgateway
+    image: registry.cn-hangzhou.aliyuncs.com/netaxe/pushgateway:latest
+    restart: always
+    ports:
+      - 39091:9091
+    command:
+      - '--log.level=info'
+      - '--web.enable-admin-api'
+      - '--web.enable-lifecycle'
+    networks:
+      - docker_netaxe

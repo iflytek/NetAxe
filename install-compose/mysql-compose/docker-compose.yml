@@ -1,0 +1,24 @@
+version: "3.2"
+networks:
+  docker_netaxe:
+    external: true
+    
+services:
+  mysql-server:
+    image: registry.cn-hangzhou.aliyuncs.com/netaxe/mysql:5.7
+    restart: always
+    container_name: mysql-server
+    environment:
+      TZ: Asia/Shanghai
+      MYSQL_DATABASE: "rbac"
+      MYSQL_USER: "netaxe"
+      MYSQL_ROOT_PASSWORD: "root_devnet@2022"
+    volumes:
+      - ./my.cnf:/etc/mysql/my.cnf
+      - ./data:/var/lib/mysql
+      - ./init/:/docker-entrypoint-initdb.d/
+    command: ['--character-set-server=utf8mb4', '--collation-server=utf8mb4_bin']
+    ports:
+      - "36306:3306"
+    networks:
+      - docker_netaxe

@@ -1,0 +1,23 @@
+version: "3.2"
+networks:
+  docker_netaxe:
+    external: true
+    
+services:
+  nacos:
+    image: nacos/nacos-server:2.0.3
+    container_name: nacos
+    environment:
+      - PREFER_HOST_MODE=hostname
+#      - SPRING_DATASOURCE_PLATFORM=mysql
+#      - MYSQL_SERVICE_HOST=mysql-server
+#      - MYSQL_SERVICE_PORT=3306
+#      - MYSQL_SERVICE_DB_NAME=nacos
+#      - MYSQL_SERVICE_USER=root
+#      - MYSQL_SERVICE_PASSWORD=root_devnet@2022
+      #模式为单体模式
+      - MODE=standalone
+    ports:
+      - "8848:8848"
+    networks:
+      - docker_netaxe

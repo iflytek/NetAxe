@@ -1,0 +1,34 @@
+version: "3.7"
+
+networks:
+  docker_netaxe:
+    external: true
+
+services:
+    # 后端入口
+    ipam-backend:
+      image: registry.cn-hangzhou.aliyuncs.com/netaxe/ipam-backend:1.0
+      command: sh init.sh
+      volumes:
+        - ./config.json:/config/config.json
+        - ./logs:/app/logs
+      networks:
+          - docker_netaxe
+      restart: always
+
+    # nginx代理
+    ipam-nginx:
+      image: registry.cn-hangzhou.aliyuncs.com/netaxe/ipam-nginx:1.23.1
+      networks:
+          - docker_netaxe
+      ports:
+          - "31103:80"
+
+    # 前端
+    ipam-web:
+      image: registry.cn-hangzhou.aliyuncs.com/netaxe/ipam-web:1.0
+      ports:
+          - "32082:80"
+      networks:
+          - docker_netaxe
+      restart: always

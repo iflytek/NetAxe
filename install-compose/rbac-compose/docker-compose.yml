@@ -1,0 +1,42 @@
+version: "3.2"
+networks:
+  docker_netaxe:
+    external: true
+    
+services:
+  rbac-backend:
+    image: registry.cn-hangzhou.aliyuncs.com/netaxe/rbac-backend:1.0
+    container_name: rbac-backend
+    restart: always
+    volumes:
+      - ./config.json:/config/config.json
+      - ./defaults.json:/config/defaults.json
+      - ./logs:/app/logs
+#    command: sleep 999999
+    command:
+      /bin/bash -c "cd /app && sh init.sh && sh start.sh web"
+    networks:
+      - docker_netaxe
+
+  # nginx代理
+  rbac-nginx:
+    image: registry.cn-hangzhou.aliyuncs.com/netaxe/rbac-nginx:1.23.1
+    container_name: rbac-nginx
+    restart: always
+    networks:
+      - docker_netaxe
+    ports:
+      - "31104:80"
+
+  rbac-web:
+    image: registry.cn-hangzhou.aliyuncs.com/netaxe/rbac-web:1.0
+    container_name: rbac-web
+    restart: always
+    depends_on:
+      - rbac-backend
+    ports:
+      - "32204:80"
+#    volumes:
+#      - ./nginx.conf:/etc/nginx/conf.d/default.conf
+    networks:
+      - docker_netaxe
