@@ -5,9 +5,7 @@ setenforce 0
 systemctl stop firewalld
 current_path=$(pwd)
 
-if which docker compose version  >/dev/null; then
-    alias docker-compose='docker compose'
-fi
+alias docker-compose='docker compose'
 
 # 检查docker-compose版本以及命令是否安装
 docker-compose --version
