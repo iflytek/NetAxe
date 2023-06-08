@@ -13,4 +13,4 @@ echo "Using IP address: $iface_ip"
 
 # 遍历当前目录的所有子目录，查找 config.json 文件并修改其中的 server_ip 字段
 #find . -type f -name "config.json" -exec sed -i "s/\"server_ip\": \"[^\"]*\"/\"server_ip\": \"$iface_ip\"/g" {} \;
-find . -type f -name "config.json" -exec sed -i "s/tmp_server_ip/'$iface_ip'/g" {} \;
+find . -type f -name "config.json" -exec sed -i "s/tmp_server_ip/$iface_ip/g" {} \;
