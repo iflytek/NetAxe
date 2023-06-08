@@ -82,6 +82,7 @@ docker-compose ps
 echo "------------------开始prometheus部署------------------"
 cd $current_path
 cd prometheus-compose
+chmod 777 prometheus-data/
 docker-compose  up -d
 echo "------------------prometheus状态---------------------"
 docker-compose ps
