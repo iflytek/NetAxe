@@ -12,7 +12,6 @@ services:
     command: sh init.sh
     volumes:
       - ./config.json:/config/config.json
-      - ./defaults.json:/config/defaults.json
       - ./logs:/app/logs
     networks:
       - docker_netaxe
@@ -46,7 +45,6 @@ services:
       - base-backend
     volumes:
        - ./config.json:/config/config.json
-       - ./defaults.json:/config/defaults.json
     networks:
       - docker_netaxe
 
@@ -56,7 +54,6 @@ services:
     command: sh start.sh config
     volumes:
       - ./config.json:/config/config.json
-      - ./defaults.json:/config/defaults.json
     depends_on:
       - base-backend
     networks:

@@ -3,7 +3,7 @@
   "virtual_host": "netaxe",
   "server_ip": "tmp_server_ip",
   "version": "1.0",
-  "backend_ip": "ipam-nginx",
+  "backend_ip": "tmp_server_ip",
   "backend_port": 80,
   "web_ip": "tmp_server_ip",
   "web_port": 32203,

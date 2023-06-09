@@ -10,7 +10,6 @@ services:
     restart: always
     volumes:
       - ./config.json:/config/config.json
-      - ./defaults.json:/config/defaults.json
       - ./logs:/app/logs
 #    command: sleep 999999
     command:
