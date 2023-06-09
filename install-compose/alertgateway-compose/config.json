@@ -1,6 +1,6 @@
 {
   "__comment__": "Values given here will override the values given in 'defaults.json'",
-  "backend_ip": "server_ip_tmp",
+  "backend_ip": "tmp_server_ip",
   "backend_port": 31102,
   "web_ip": "tmp_server_ip",
   "web_port": 32202,
