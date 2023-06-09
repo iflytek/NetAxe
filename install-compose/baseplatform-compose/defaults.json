@@ -5,7 +5,7 @@
   "url_prefix": "/base_platform",
   "project_name": "BasePlatform",
   "backend_ip": "base-nginx",
-  "backend_port": 31100,
+  "backend_port": 80,
   "web_ip": "server_ip_tmp",
   "web_port": 32200,
   "local_dev": false,
