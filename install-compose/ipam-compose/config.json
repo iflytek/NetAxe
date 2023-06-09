@@ -4,7 +4,7 @@
   "server_ip": "tmp_server_ip",
   "version": "1.0",
   "backend_ip": "tmp_server_ip",
-  "backend_port": 80,
+  "backend_port": 31103,
   "web_ip": "tmp_server_ip",
   "web_port": 32203,
   "server_port": 32203,
