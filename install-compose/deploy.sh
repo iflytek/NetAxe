@@ -3,6 +3,8 @@
 # 关闭selinux和firewalld
 setenforce 0
 systemctl stop firewalld
+systemctl disable firewalld
+systemctl restart docker
 current_path=$(pwd)
 
 alias docker-compose='docker compose'
