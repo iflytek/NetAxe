@@ -32,7 +32,7 @@ services:
     depends_on:
       - mongo
     ports:
-      - "37018:27018"
+      - "37018:8081"
     environment:
       TZ: Asia/Shanghai
       ME_CONFIG_OPTIONS_EDITORTHEME: 3024-night
