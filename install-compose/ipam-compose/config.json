@@ -1,13 +1,11 @@
 {
   "__comment__": "Values given here will override the values given in 'defaults.json'",
   "virtual_host": "netaxe",
-  "server_ip": "tmp_server_ip",
   "version": "1.0",
   "backend_ip": "tmp_server_ip",
   "backend_port": 31103,
   "web_ip": "tmp_server_ip",
   "web_port": 32203,
-  "server_port": 32203,
   "local_dev": false,
   "exchange": "netaxe",
   "mq_host": "rabbitmq",

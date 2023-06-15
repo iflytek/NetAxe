@@ -70,13 +70,13 @@ docker-compose ps
 
 
 
-# 安装apisix
-echo "------------------开始apisix部署------------------"
+# 安装apisix etcd
+echo "------------------开始apisix etcd部署------------------"
 cd $current_path
 cd apisix-compose
 mkdir -m 777 -p etcd_conf/data
 docker-compose up -d
-echo "------------------apisix状态---------------------"
+echo "------------------apisix etcd状态---------------------"
 docker-compose ps
 
 
