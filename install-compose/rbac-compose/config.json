@@ -29,5 +29,22 @@
   "mysql_db": "rbac",
   "project_name": "RBAC",
   "url_prefix": "/rbac",
-  "push_gateway": "pushgateway:9091"
+  "push_gateway": "pushgateway:9091",
+  "auth_ldap": false,
+  "auth_ldap_server_uri": "ldap://1.1.1.1:389",
+  "auth_ldap_bind_dn": "CN=aaa,CN=Users,DC=dc,DC=local",
+  "auth_ldap_bind_password": "asdfasdf",
+  "auth_ldap_user_search": ["ou=aa,dc=aa,dc=aa", "(sAMAccountName=%(user)s)"],
+  "auth_ldap_group_search": ["ou=aa,dc=aa,dc=aa", "(objectClass=groupOfNames)"],
+  "auth_ldap_user_attr_map": {
+    "first_name": "givenName",
+    "password": "userPassword",
+    "last_name": "sn",
+    "email": "mail"
+  },
+  "auth_ldap_user_flags_by_group": {
+    "is_active": "CN=aa,CN=Users,DC=aa,DC=local",
+    "is_staff": "CN=aa,CN=Users,DC=aa,DC=local",
+    "is_superuser": "CN=aa,CN=Users,DC=aa,DC=local"
+  }
 }
