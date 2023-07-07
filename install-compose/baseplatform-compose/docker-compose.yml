@@ -13,6 +13,7 @@ services:
     volumes:
       - ./config.json:/config/config.json
       - ./logs:/app/logs
+      - ./device_config:/app/media/device_config
     networks:
       - docker_netaxe
 
@@ -45,6 +46,7 @@ services:
       - base-backend
     volumes:
        - ./config.json:/config/config.json
+       - ./device_config:/app/media/device_config
     networks:
       - docker_netaxe
 
@@ -54,6 +56,7 @@ services:
     command: sh start.sh config
     volumes:
       - ./config.json:/config/config.json
+      - ./device_config:/app/media/device_config
     depends_on:
       - base-backend
     networks:
