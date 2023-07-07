@@ -10,7 +10,10 @@ services:
     ports:
       - "5555:5555"
     command: sh init.sh
+    environment:
+      TZ: Asia/Shanghai
     volumes:
+      - /etc/localtime:/etc/localtime
       - ./config.json:/config/config.json
       - ./logs:/app/logs
       - ./device_config:/app/media/device_config
@@ -20,6 +23,10 @@ services:
   base-nginx:
     image: registry.cn-hangzhou.aliyuncs.com/netaxe/base-nginx:1.23.1
     container_name: base-nginx
+    environment:
+      TZ: Asia/Shanghai
+    volumes:
+      - /etc/localtime:/etc/localtime
     ports:
       - "31100:80"
     depends_on:
@@ -30,6 +37,10 @@ services:
   base-web:
     image: registry.cn-hangzhou.aliyuncs.com/netaxe/base-web:1.0
     container_name: base-web
+    environment:
+      TZ: Asia/Shanghai
+    volumes:
+      - /etc/localtime:/etc/localtime
     ports:
       - "32200:80"
     depends_on:
@@ -42,9 +53,12 @@ services:
     image: registry.cn-hangzhou.aliyuncs.com/netaxe/base-backend:1.0
     container_name: celery-default
     command: sh start.sh default
+    environment:
+      TZ: Asia/Shanghai
     depends_on:
       - base-backend
     volumes:
+       - /etc/localtime:/etc/localtime
        - ./config.json:/config/config.json
        - ./device_config:/app/media/device_config
     networks:
@@ -54,7 +68,10 @@ services:
     image: registry.cn-hangzhou.aliyuncs.com/netaxe/base-backend:1.0
     container_name: celery-config
     command: sh start.sh config
+    environment:
+      TZ: Asia/Shanghai
     volumes:
+      - /etc/localtime:/etc/localtime
       - ./config.json:/config/config.json
       - ./device_config:/app/media/device_config
     depends_on:
