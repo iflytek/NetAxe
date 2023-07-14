@@ -10,7 +10,10 @@ services:
       container_name: ipam-backend
       image: registry.cn-hangzhou.aliyuncs.com/netaxe/ipam-backend:1.0
       command: sh init.sh
+      environment:
+        TZ: Asia/Shanghai
       volumes:
+        - /etc/localtime:/etc/localtime
         - ./config.json:/config/config.json
         - ./logs:/app/logs
       networks:
@@ -21,6 +24,10 @@ services:
     ipam-nginx:
       container_name: ipam-nginx
       image: registry.cn-hangzhou.aliyuncs.com/netaxe/ipam-nginx:1.23.1
+      environment:
+        TZ: Asia/Shanghai
+      volumes:
+        - /etc/localtime:/etc/localtime
       networks:
           - docker_netaxe
       ports:
@@ -30,6 +37,10 @@ services:
     ipam-web:
       container_name: ipam-web
       image: registry.cn-hangzhou.aliyuncs.com/netaxe/ipam-web:1.0
+      environment:
+        TZ: Asia/Shanghai
+      volumes:
+        - /etc/localtime:/etc/localtime
       ports:
           - "32203:80"
       networks:
