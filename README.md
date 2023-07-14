@@ -92,6 +92,7 @@
 ## 10. 权限中心
 
 ![权限中心](https://cdn.staticaly.com/gh/xuehaoweng/netaxe-image@master/rbac.6k2qnc2yqxk0.webp)
+
 ## 交流群
 
 > 扫码添加好友，提交入群申请。
