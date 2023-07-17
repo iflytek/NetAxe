@@ -1,12 +1,36 @@
-<a href='https://gitee.com/IFLY-DevNet/net-axe/stargazers'><img src='https://gitee.com/IFLY-DevNet/net-axe/badge/star.svg?theme=dark' alt='star'></img></a>
-<a href='https://gitee.com/IFLY-DevNet/net-axe/members'><img src='https://gitee.com/IFLY-DevNet/net-axe/badge/fork.svg?theme=white' alt='fork'></img></a>
+<p align="center">
+    <img src="https://img.shields.io/badge/Python-brightgreen.svg"/>
+    <img src="https://img.shields.io/badge/Django-orange.svg"/>
+    <img src="https://img.shields.io/badge/FastAPI-brightgreen.svg"/>
+    <img src="https://img.shields.io/badge/Vue3-blue.svg"/>
+    <img src="https://img.shields.io/badge/Vite-orange.svg"/>
+    <img src="https://img.shields.io/badge/NaiveUI-blue.svg"/>
+    <img src="https://img.shields.io/badge/license-Apache-green.svg"/>
+    <a href="https://gitee.com/youlaiorg" target="_blank">
+        <img src="https://img.shields.io/badge/Author-NetAxeClub-orange.svg"/>
+    </a>
+</p>
+<p align="center">
+ <a target="_blank" href="https://netaxe.github.io">Netaxe官方文档</a> |  <a target="_blank" href="http://47.99.86.164:9980">在线预览</a> 
+</p>
+<!-- <a href='https://gitee.com/IFLY-DevNet/net-axe/stargazers'><img src='https://gitee.com/IFLY-DevNet/net-axe/badge/star.svg?theme=dark' alt='star'></img></a>
+<a href='https://gitee.com/IFLY-DevNet/net-axe/members'><img src='https://gitee.com/IFLY-DevNet/net-axe/badge/fork.svg?theme=white' alt='fork'></img></a> -->
 
-[![IFLY-DevNet/NetAxe](https://gitee.com/IFLY-DevNet/net-axe/widgets/widget_card.svg?colors=2877c7,e0e0e0,bddcff,e3e9ed,666666,9b9b9b)](https://gitee.com/IFLY-DevNet/net-axe)
+<!-- [![IFLY-DevNet/NetAxe](https://gitee.com/IFLY-DevNet/net-axe/widgets/widget_card.svg?colors=2877c7,e0e0e0,bddcff,e3e9ed,666666,9b9b9b)](https://gitee.com/IFLY-DevNet/net-axe) -->
 
-专注网络自动化领域的整体架构解决方案
+## 项目介绍
+
+**专注网络自动化领域的整体架构解决方案**
+
+[ NetAxe ]是一个网络自动化领域解决方案框架，通过微服务和微前端的方式构建的应用集合，主要有资源管理、配置管理、自动化、网络拓扑、地址定位、地址管理等等功能集合，同时各个微应用支持插件形式的能力集成，方便用户自行扩展。
+
 ## 组织地址
+
 [NetAxeClub](https://gitee.com/NetAxeClub)
 
+致力于网络自动化工具和平台开发
+
+联系邮箱:netaxe@qun.mail.163.com
 
 ## 文档说明
 
@@ -14,9 +38,12 @@
 
 📚 [NetAxe 文档教程使用说明](https://netaxe.github.io/) : https://netaxe.github.io/
 
-## 体验环境
+👆👆👆👆👆👆👆👆👆👆👆
+## 项目预览
 
-[在线 demo](http://47.99.86.164:9980) 账号密码：admin/123456
+👇👇👇👇👇👇👇👇👇👇👇
+
+[体验环境](http://47.99.86.164:9980) 账号密码：admin/123456
 
 仅在工作时间开启(9:30-18:00)
 
@@ -32,7 +59,7 @@
 
 ## 2.资产管理
 
-![资产管理](https://cdn.staticaly.com/gh/xuehaoweng/netaxe-image@master/netaxe-asset.71legxrjo540.webp)
+![资产管理](https://cdn.staticaly.com/gh/xuehaoweng/netaxe-image@master/golang.63zo8r1zsjs0.webp)
 
 ## 3.配置差异比较
 
@@ -60,9 +87,16 @@
 
 ## 9. 地址管理
 
-![地址管理](https://cdn.staticaly.com/gh/xuehaoweng/netaxe-image@master/image.67ht05xvuvo0.webp)
+![地址管理](https://cdn.staticaly.com/gh/xuehaoweng/netaxe-image@master/ipam.3vspimj3jf20.webp)
 
-## 交流
+## 10. 权限中心
+
+![权限中心](https://cdn.staticaly.com/gh/xuehaoweng/netaxe-image@master/rbac.6k2qnc2yqxk0.webp)
+
+## 交流群
+
+> 扫码添加好友，提交入群申请。
+>
 
 ![NetAxe开源社区](https://cdn.staticaly.com/gh/xuehaoweng/netaxe-image@master/微信图片_20230106172200.240x6tqonx9c.webp)
 
@@ -81,7 +115,7 @@
 维护者是做出杰出贡献且在社区长期活跃的 NetAxe 社区成员。
 
 - [jamlee](https://github.com/M87NET)
-- [xhweng](https://github.com/xhweng)
+- [xuehaoweng](https://github.com/xuehaoweng)
 
 ## ✨ 贡献者
 
