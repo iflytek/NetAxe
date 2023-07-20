@@ -11,7 +11,7 @@
     <img src="https://img.shields.io/badge/Vite-orange.svg"/>
     <img src="https://img.shields.io/badge/NaiveUI-blue.svg"/>
     <img src="https://img.shields.io/badge/license-Apache-green.svg"/>
-    <a href="https://gitee.com/youlaiorg" target="_blank">
+    <a href="https://gitee.com/NetAxeClub" target="_blank">
         <img src="https://img.shields.io/badge/Author-NetAxeClub-orange.svg"/>
     </a>
 </p>
