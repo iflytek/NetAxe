@@ -1,4 +1,9 @@
 <p align="center">
+    <img src="readme/logo.png" alt="netaxe" />
+</p>
+
+
+<p align="center">
     <img src="https://img.shields.io/badge/Python-brightgreen.svg"/>
     <img src="https://img.shields.io/badge/Django-orange.svg"/>
     <img src="https://img.shields.io/badge/FastAPI-brightgreen.svg"/>
