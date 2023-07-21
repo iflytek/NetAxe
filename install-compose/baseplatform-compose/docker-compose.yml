@@ -17,6 +17,7 @@ services:
       - ./config.json:/config/config.json
       - ./logs:/app/logs
       - ./device_config:/app/media/device_config
+      - ./admin_ssh_records:/app/media/admin_ssh_records
     networks:
       - docker_netaxe
 
@@ -61,6 +62,7 @@ services:
        - /etc/localtime:/etc/localtime
        - ./config.json:/config/config.json
        - ./device_config:/app/media/device_config
+       - ./admin_ssh_records:/app/media/admin_ssh_records
     networks:
       - docker_netaxe
 
@@ -74,6 +76,7 @@ services:
       - /etc/localtime:/etc/localtime
       - ./config.json:/config/config.json
       - ./device_config:/app/media/device_config
+      - ./admin_ssh_records:/app/media/admin_ssh_records
     depends_on:
       - base-backend
     networks:
