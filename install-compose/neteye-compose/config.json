@@ -1,6 +1,5 @@
 {
   "__comment__": "Values given here will override the values given in 'defaults.json'",
-  "server_name": "监控中心",
   "virtual_host": "netaxe",
   "version": "1.0",
   "backend_ip": "tmp_server_ip",
