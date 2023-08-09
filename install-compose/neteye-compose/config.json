@@ -1,11 +1,10 @@
 {
   "__comment__": "Values given here will override the values given in 'defaults.json'",
-  "server_name": "监控中心",
   "virtual_host": "netaxe",
   "version": "1.0",
   "backend_ip": "tmp_server_ip",
-  "backend_port": 31100,
-  "web_url": "http://tmp_server_ip:32200",
+  "backend_port": 31106,
+  "web_url": "http://tmp_server_ip:32206",
   "local_dev": false,
   "mq_host": "rabbitmq",
   "mq_username": "adminnetaxe",
@@ -19,6 +18,8 @@
   "mongodb_port": 27017,
   "mongodb_user": "root",
   "mongodb_password": "70uUceCVL1gf",
+  "redis_open": true,
+  "redis_db": 0,
   "redis_host": "redis-cache",
   "redis_port": 6379,
   "redis_pwd": "dade0f2a65237a56b79277e6dd27351d2854df033e0ad4b4f90abec229cd64df",
@@ -26,8 +27,16 @@
   "mysql_port": "3306",
   "mysql_user": "root",
   "mysql_password": "root_devnet@2022",
-  "mysql_db": "netaxe",
+  "mysql_db": "neteye",
   "project_name": "BasePlatform",
-  "url_prefix": "/base_platform",
-  "push_gateway": "pushgateway:9091"
+  "url_prefix": "/neteye",
+  "push_gateway": "pushgateway:9091",
+  "zabbix_info": {
+      "zbx": "http://zabbix.netops.iflytek.com",
+      "api_url": "http://ifly.iflytek.com/zabbix/api_jsonrpc.php",
+      "graph_url": "http://ifly.iflytek.com/zabbix/chart2.php",
+      "login_url": "http://ifly.iflytek.com/zabbix/index.php",
+      "username": "asdf",
+      "password": "adsfasdf"
+  }
 }
