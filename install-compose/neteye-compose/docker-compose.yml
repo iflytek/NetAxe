@@ -7,7 +7,6 @@ services:
   neteye-controller:
     image: registry.cn-hangzhou.aliyuncs.com/netaxe/neteye:1.0
     container_name: neteye-controller
-    command: sh init.sh
     environment:
       - TZ=Asia/Shanghai
       - NETPALM_CONFIG=/app/config/config.json
@@ -41,6 +40,10 @@ services:
       - TZ=Asia/Shanghai
       - NETPALM_CONFIG=/app/config/config.json
       - NETPALM_LOG_CONFIG_FILENAME=/app/config/log-config.yml
+    volumes:
+      - /etc/localtime:/etc/localtime
+      - ./config.json:/app/config/config.json
+      - ./logs:/app/logs
     command: python3 worker.py default
     networks:
       - docker_netaxe
