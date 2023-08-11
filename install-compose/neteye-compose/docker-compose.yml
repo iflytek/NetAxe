@@ -30,9 +30,6 @@ services:
       - /etc/localtime:/etc/localtime
     ports:
       - "32206:80"
-    depends_on:
-      - base-nginx
-      - base-backend
     networks:
       - docker_netaxe
 
@@ -46,5 +43,5 @@ services:
       - NETPALM_LOG_CONFIG_FILENAME=/app/config/log-config.yml
     command: python3 worker.py default
     networks:
-      - "netaxe-network"
+      - docker_netaxe
     restart: always
