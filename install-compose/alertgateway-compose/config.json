@@ -25,6 +25,10 @@
   "routing_key": "alert_gateway",
   "project_name": "AlertGateway",
   "push_gateway": "pushgateway:9091",
-  "mysql_url": "mysql+mysqlconnector://root:root_devnet%402022@mysql-server:3306",
-  "sqlalchemy_mysql_url": "mysql+aiomysql://root:root_devnet%402022@mysql-server:3306/alertgateway"
+  "mysql_host": "mysql-server",
+  "mysql_port": "3306",
+  "mysql_user": "root",
+  "mysql_password": "root_devnet@2022",
+  "mysql_db": "alertgateway"
+
 }
