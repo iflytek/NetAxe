@@ -143,7 +143,113 @@ curl http://127.0.0.1:9080/apisix/admin/routes \
       "group_name": "default"
     },
     "pass_host": "pass",
-    "service_name": "cmdb",
+    "service_name": "ipam",
+    "keepalive_pool": {
+      "idle_timeout": 60,
+      "requests": 1000,
+      "size": 320
+    }
+  },
+  "status": 1
+}'
+
+# 初始化cmdb-base_platform
+curl http://127.0.0.1:9080/apisix/admin/routes \
+-H 'X-API-KEY: edd1c9f034335f136f87ad84b625c8f1' -X POST -i -d '
+{
+  "uri": "/base_platform/*",
+  "name": "cmdb-base_platform",
+  "plugins": {
+    "jwt-auth": {
+      "_meta": {
+        "disable": false
+      }
+    }
+  },
+  "upstream": {
+    "timeout": {
+      "connect": 6,
+      "send": 6,
+      "read": 6
+    },
+    "type": "roundrobin",
+    "scheme": "http",
+    "discovery_type": "nacos",
+    "discovery_args": {
+      "group_name": "default"
+    },
+    "pass_host": "pass",
+    "service_name": "base_platform",
+    "keepalive_pool": {
+      "idle_timeout": 60,
+      "requests": 1000,
+      "size": 320
+    }
+  },
+  "status": 1
+}'
+# 初始化alert-gateway
+curl http://127.0.0.1:9080/apisix/admin/routes \
+-H 'X-API-KEY: edd1c9f034335f136f87ad84b625c8f1' -X POST -i -d '
+{
+  "uri": "/alert_gateway/*",
+  "name": "alert_gateway",
+  "plugins": {
+    "jwt-auth": {
+      "_meta": {
+        "disable": false
+      }
+    }
+  },
+  "upstream": {
+    "timeout": {
+      "connect": 6,
+      "send": 6,
+      "read": 6
+    },
+    "type": "roundrobin",
+    "scheme": "http",
+    "discovery_type": "nacos",
+    "discovery_args": {
+      "group_name": "default"
+    },
+    "pass_host": "pass",
+    "service_name": "alert_gateway",
+    "keepalive_pool": {
+      "idle_timeout": 60,
+      "requests": 1000,
+      "size": 320
+    }
+  },
+  "status": 1
+}'
+# 初始化message-gateway
+curl http://127.0.0.1:9080/apisix/admin/routes \
+-H 'X-API-KEY: edd1c9f034335f136f87ad84b625c8f1' -X POST -i -d '
+{
+  "uri": "/msg_gateway/*",
+  "name": "msg_gateway",
+  "plugins": {
+    "jwt-auth": {
+      "_meta": {
+        "disable": false
+      }
+    }
+  },
+  "upstream": {
+    "timeout": {
+      "connect": 6,
+      "send": 6,
+      "read": 6
+    },
+    "type": "roundrobin",
+    "scheme": "http",
+    "discovery_type": "nacos",
+    "discovery_args": {
+      "group_name": "default"
+    },
+    "pass_host": "pass",
+    "service_name": "msg_gateway",
     "keepalive_pool": {
       "idle_timeout": 60,
       "requests": 1000,
