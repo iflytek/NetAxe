@@ -7,7 +7,6 @@ services:
   neteye-controller:
     image: registry.cn-hangzhou.aliyuncs.com/netaxe/neteye:1.0
     container_name: neteye-controller
-    command: sh init.sh
     environment:
       - TZ=Asia/Shanghai
       - NETPALM_CONFIG=/app/config/config.json
@@ -30,9 +29,6 @@ services:
       - /etc/localtime:/etc/localtime
     ports:
       - "32206:80"
-    depends_on:
-      - base-nginx
-      - base-backend
     networks:
       - docker_netaxe
 
@@ -44,7 +40,11 @@ services:
       - TZ=Asia/Shanghai
       - NETPALM_CONFIG=/app/config/config.json
       - NETPALM_LOG_CONFIG_FILENAME=/app/config/log-config.yml
+    volumes:
+      - /etc/localtime:/etc/localtime
+      - ./config.json:/app/config/config.json
+      - ./logs:/app/logs
     command: python3 worker.py default
     networks:
-      - "netaxe-network"
+      - docker_netaxe
     restart: always
