@@ -7,6 +7,7 @@ services:
   nacos:
     image: nacos/nacos-server:2.0.3
     container_name: nacos
+    restart: always
     environment:
       - PREFER_HOST_MODE=hostname
 #      - SPRING_DATASOURCE_PLATFORM=mysql

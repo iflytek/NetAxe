@@ -9,11 +9,9 @@ services:
     container_name: neteye-controller
     environment:
       - TZ=Asia/Shanghai
-      - NETPALM_CONFIG=/app/config/config.json
-      - NETPALM_LOG_CONFIG_FILENAME=/app/config/log-config.yml
     volumes:
       - /etc/localtime:/etc/localtime
-      - ./config.json:/config/config.json
+      - ./config.json:/app/config/config.json
       - ./logs:/app/logs
     ports:
       - "31106:8000"
@@ -38,8 +36,6 @@ services:
     container_name: neteye-worker
     environment:
       - TZ=Asia/Shanghai
-      - NETPALM_CONFIG=/app/config/config.json
-      - NETPALM_LOG_CONFIG_FILENAME=/app/config/log-config.yml
     volumes:
       - /etc/localtime:/etc/localtime
       - ./config.json:/app/config/config.json
