@@ -8,13 +8,26 @@ services:
     image: registry.cn-hangzhou.aliyuncs.com/netaxe/msggateway:1.0
     container_name: msggateway-backend
     restart: always
-    command: uvicorn controller:app --host 0.0.0.0 --port 8000
+    command: uvicorn controller:app --proxy-headers --timeout-keep-alive 10 --workers 10 --host 0.0.0.0 --port 8000 --log-config config/log-config.yml
     ports:
       - "31101:8000"
     volumes:
       - ./config.json:/app/config/config.json
+      - ./logs:/app/logs
     networks:
       - docker_netaxe
+
+  msggateway-nacos:
+    image: registry.cn-hangzhou.aliyuncs.com/netaxe/msggateway:1.0
+    container_name: msggateway-nacos
+    restart: always
+    command: python3 worker.py nacos
+    volumes:
+      - ./config.json:/app/config/config.json
+      - ./logs:/app/logs
+    networks:
+      - docker_netaxe
+
 
   msggateway-worker:
     image: registry.cn-hangzhou.aliyuncs.com/netaxe/msggateway:1.0
@@ -23,6 +36,7 @@ services:
     command: python3 worker.py default
     volumes:
       - ./config.json:/app/config/config.json
+      - ./logs:/app/logs
     networks:
       - docker_netaxe
 
