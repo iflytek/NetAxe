@@ -56,54 +56,54 @@
 
 ## 平台架构图
 
-![平台架构图](https://cdn.staticaly.com/gh/xuehaoweng/netaxe-image@master/架构图.3vrmin46me00.webp)
+![平台架构图](https://self-bucket-1258377547.cos.ap-shanghai.myqcloud.com/picgo-test/%E6%9E%B6%E6%9E%84%E5%9B%BE.3vrmin46me00.webp)
 
 ## 1.平台登录页
 
-![登录页面](https://cdn.staticaly.com/gh/xuehaoweng/netaxe-image@master/netaxe-login.78afwmigsc00.webp)
+![登录页面](https://self-bucket-1258377547.cos.ap-shanghai.myqcloud.com/picgo-test/%E7%99%BB%E5%BD%95.jpg)
 
 ## 2.资产管理
 
-![资产管理](https://cdn.staticaly.com/gh/xuehaoweng/netaxe-image@master/golang.63zo8r1zsjs0.webp)
+![资产管理](https://self-bucket-1258377547.cos.ap-shanghai.myqcloud.com/picgo-test/%E8%B5%84%E4%BA%A7%E7%AE%A1%E7%90%86.jpg)
 
 ## 3.配置差异比较
 
-![配置差异比较](https://cdn.staticaly.com/gh/xuehaoweng/netaxe-image@master/netaxe-git-diff.60gnker70dk0.webp)
+![配置差异比较](https://self-bucket-1258377547.cos.ap-shanghai.myqcloud.com/picgo-test/%E9%85%8D%E7%BD%AE%E5%B7%AE%E5%BC%82%E6%AF%94%E8%BE%83.jpg)
 
 ## 4.Webssh
 
-![Webssh](https://cdn.staticaly.com/gh/xuehaoweng/netaxe-image@master/netaxe-webssh.3rs5vtioxe80.webp)
+![Webssh](https://self-bucket-1258377547.cos.ap-shanghai.myqcloud.com/picgo-test/webssh.jpg)
 
 ## 5.接口清单
 
-![接口清单](https://cdn.staticaly.com/gh/xuehaoweng/netaxe-image@master/netaxe-interface.5pje0o1za4w0.webp)
+![接口清单](https://self-bucket-1258377547.cos.ap-shanghai.myqcloud.com/picgo-test/%E6%8E%A5%E5%8F%A3%E6%B8%85%E5%8D%95.jpg)
 
 ## 6.采集方案
 
-![采集方案](https://cdn.staticaly.com/gh/xuehaoweng/netaxe-image@master/netzxe-collect.4yf0qcxemhk0.webp)
+![采集方案](https://self-bucket-1258377547.cos.ap-shanghai.myqcloud.com/picgo-test/%E9%87%87%E9%9B%86%E6%96%B9%E6%A1%88.jpg)
 
 ## 7.任务列表
 
-![任务列表](https://cdn.staticaly.com/gh/xuehaoweng/netaxe-image@master/netaxe-task.58uns0zatss0.webp)
+![任务列表](https://self-bucket-1258377547.cos.ap-shanghai.myqcloud.com/picgo-test/%E4%BB%BB%E5%8A%A1%E5%88%97%E8%A1%A8.jpg)
 
 ## 8.任务调度管理
 
-![任务调度管理](https://cdn.staticaly.com/gh/xuehaoweng/netaxe-image@master/netaxe-dispatch.3x68huinuzi0.webp)
+![任务调度管理](https://self-bucket-1258377547.cos.ap-shanghai.myqcloud.com/picgo-test/%E4%BB%BB%E5%8A%A1%E8%B0%83%E5%BA%A6.jpg)
 
 ## 9. 地址管理
 
-![地址管理](https://cdn.staticaly.com/gh/xuehaoweng/netaxe-image@master/ipam.3vspimj3jf20.webp)
+![地址管理](https://self-bucket-1258377547.cos.ap-shanghai.myqcloud.com/picgo-test/%E5%9C%B0%E5%9D%80%E7%AE%A1%E7%90%86.jpg)
 
 ## 10. 权限中心
 
-![权限中心](https://cdn.staticaly.com/gh/xuehaoweng/netaxe-image@master/rbac.6k2qnc2yqxk0.webp)
+![权限中心](https://self-bucket-1258377547.cos.ap-shanghai.myqcloud.com/picgo-test/%E6%9D%83%E9%99%90%E4%B8%AD%E5%BF%83.jpg)
 
 ## 交流群
 
 > 扫码添加好友，提交入群申请。
 >
 
-![NetAxe开源社区](https://cdn.staticaly.com/gh/xuehaoweng/netaxe-image@master/微信图片_20230106172200.240x6tqonx9c.webp)
+![NetAxe开源社区](https://self-bucket-1258377547.cos.ap-shanghai.myqcloud.com/picgo-test/%E5%BE%AE%E4%BF%A1.jpg)
 
 ## 🤝 参与贡献
 
