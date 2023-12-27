@@ -56,7 +56,7 @@
 
 ## 平台架构图
 
-![平台架构图](https://self-bucket-1258377547.cos.ap-shanghai.myqcloud.com/picgo-test/%E6%9E%B6%E6%9E%84%E5%9B%BE.3vrmin46me00.webp)
+![平台架构图](https://self-bucket-1258377547.cos.ap-shanghai.myqcloud.com/picgo-test/%E6%9E%B6%E6%9E%84%E5%9B%BE.jpg)
 
 ## 1.平台登录页
 
