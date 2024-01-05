@@ -18,6 +18,7 @@ services:
       - ./logs:/app/logs
       - ./device_config:/app/media/device_config
       - ./admin_ssh_records:/app/media/admin_ssh_records
+      - ./extensibles:/app/plugins/extensibles
     networks:
       - docker_netaxe
 
@@ -63,6 +64,7 @@ services:
        - ./config.json:/config/config.json
        - ./device_config:/app/media/device_config
        - ./admin_ssh_records:/app/media/admin_ssh_records
+       - ./extensibles:/app/plugins/extensibles
     networks:
       - docker_netaxe
 
@@ -77,6 +79,7 @@ services:
       - ./config.json:/config/config.json
       - ./device_config:/app/media/device_config
       - ./admin_ssh_records:/app/media/admin_ssh_records
+      - ./extensibles:/app/plugins/extensibles
     depends_on:
       - base-backend
     networks:
