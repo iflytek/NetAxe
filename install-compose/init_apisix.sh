@@ -1,5 +1,22 @@
 #! /bin/bash
 
+# 初始化消费者
+curl http://127.0.0.1:9080/apisix/admin/consumers \
+-H 'X-API-KEY: edd1c9f034335f136f87ad84b625c8f1' -X PUT -i -d '
+{
+  "username": "jwt_auth",
+  "plugins": {
+    "jwt-auth": {
+      "_meta": {
+        "disable": false
+      },
+      "exp": 86400,
+      "key": "apisix",
+      "secret": "django-insecure-57w6rkqxn1-)ry+sdc@3fmcd2)opcr^2a)zs^&#&-x)=fp(vb_"
+    }
+  }
+}'
+
 # 初始化认证
 curl http://127.0.0.1:9080/apisix/admin/routes \
 -H 'X-API-KEY: edd1c9f034335f136f87ad84b625c8f1' -X POST -i -d '
@@ -36,18 +53,10 @@ curl http://127.0.0.1:9080/apisix/admin/routes \
   "uri": "/rbac/*",
   "name": "权限中心",
   "plugins": {
-    "forward-auth": {
-      "client_headers": [],
-      "disable": false,
-      "request_headers": [
-        "Authorization"
-      ],
-      "ssl_verify": false,
-      "timeout": 10000,
-      "upstream_headers": [
-        "Authorization"
-      ],
-      "uri": "http://rbac-nginx:80/rbac/status/"
+    "jwt-auth": {
+      "_meta": {
+        "disable": false
+      }
     }
   },
   "upstream": {
@@ -77,21 +86,13 @@ curl http://127.0.0.1:9080/apisix/admin/routes \
 curl http://127.0.0.1:9080/apisix/admin/routes \
 -H 'X-API-KEY: edd1c9f034335f136f87ad84b625c8f1' -X POST -i -d '
 {
-  "uri": "/base_platform/*",
-  "name": "base_platform",
+  "uri": "/api/*",
+  "name": "cmdb-api",
   "plugins": {
-    "forward-auth": {
-      "client_headers": [],
-      "disable": false,
-      "request_headers": [
-        "Authorization"
-      ],
-      "ssl_verify": false,
-      "timeout": 10000,
-      "upstream_headers": [
-        "Authorization"
-      ],
-      "uri": "http://rbac-nginx:80/rbac/status/"
+    "jwt-auth": {
+      "_meta": {
+        "disable": false
+      }
     }
   },
   "upstream": {
@@ -107,7 +108,7 @@ curl http://127.0.0.1:9080/apisix/admin/routes \
       "group_name": "default"
     },
     "pass_host": "pass",
-    "service_name": "base_platform",
+    "service_name": "cmdb",
     "keepalive_pool": {
       "idle_timeout": 60,
       "requests": 1000,
@@ -116,25 +117,17 @@ curl http://127.0.0.1:9080/apisix/admin/routes \
   },
   "status": 1
 }'
-# 初始化基础平台
+# 初始化cmdb-ipam
 curl http://127.0.0.1:9080/apisix/admin/routes \
 -H 'X-API-KEY: edd1c9f034335f136f87ad84b625c8f1' -X POST -i -d '
 {
   "uri": "/ipam/*",
-  "name": "ipam",
+  "name": "cmdb-ipam",
   "plugins": {
-    "forward-auth": {
-      "client_headers": [],
-      "disable": false,
-      "request_headers": [
-        "Authorization"
-      ],
-      "ssl_verify": false,
-      "timeout": 10000,
-      "upstream_headers": [
-        "Authorization"
-      ],
-      "uri": "http://rbac-nginx:80/rbac/status/"
+    "jwt-auth": {
+      "_meta": {
+        "disable": false
+      }
     }
   },
   "upstream": {
@@ -160,25 +153,52 @@ curl http://127.0.0.1:9080/apisix/admin/routes \
   "status": 1
 }'
 
-# 初始化告警平台
+# 初始化cmdb-base_platform
+curl http://127.0.0.1:9080/apisix/admin/routes \
+-H 'X-API-KEY: edd1c9f034335f136f87ad84b625c8f1' -X POST -i -d '
+{
+  "uri": "/base_platform/*",
+  "name": "cmdb-base_platform",
+  "plugins": {
+    "jwt-auth": {
+      "_meta": {
+        "disable": false
+      }
+    }
+  },
+  "upstream": {
+    "timeout": {
+      "connect": 6,
+      "send": 6,
+      "read": 6
+    },
+    "type": "roundrobin",
+    "scheme": "http",
+    "discovery_type": "nacos",
+    "discovery_args": {
+      "group_name": "default"
+    },
+    "pass_host": "pass",
+    "service_name": "base_platform",
+    "keepalive_pool": {
+      "idle_timeout": 60,
+      "requests": 1000,
+      "size": 320
+    }
+  },
+  "status": 1
+}'
+# 初始化alert-gateway
 curl http://127.0.0.1:9080/apisix/admin/routes \
 -H 'X-API-KEY: edd1c9f034335f136f87ad84b625c8f1' -X POST -i -d '
 {
   "uri": "/alert_gateway/*",
   "name": "alert_gateway",
   "plugins": {
-    "forward-auth": {
-      "client_headers": [],
-      "disable": false,
-      "request_headers": [
-        "Authorization"
-      ],
-      "ssl_verify": false,
-      "timeout": 10000,
-      "upstream_headers": [
-        "Authorization"
-      ],
-      "uri": "http://rbac-nginx:80/rbac/status/"
+    "jwt-auth": {
+      "_meta": {
+        "disable": false
+      }
     }
   },
   "upstream": {
@@ -203,26 +223,17 @@ curl http://127.0.0.1:9080/apisix/admin/routes \
   },
   "status": 1
 }'
-
-# 初始化消息网关
+# 初始化message-gateway
 curl http://127.0.0.1:9080/apisix/admin/routes \
 -H 'X-API-KEY: edd1c9f034335f136f87ad84b625c8f1' -X POST -i -d '
 {
   "uri": "/msg_gateway/*",
   "name": "msg_gateway",
   "plugins": {
-    "forward-auth": {
-      "client_headers": [],
-      "disable": false,
-      "request_headers": [
-        "Authorization"
-      ],
-      "ssl_verify": false,
-      "timeout": 10000,
-      "upstream_headers": [
-        "Authorization"
-      ],
-      "uri": "http://rbac-nginx:80/rbac/status/"
+    "jwt-auth": {
+      "_meta": {
+        "disable": false
+      }
     }
   },
   "upstream": {
@@ -239,49 +250,6 @@ curl http://127.0.0.1:9080/apisix/admin/routes \
     },
     "pass_host": "pass",
     "service_name": "msg_gateway",
-    "keepalive_pool": {
-      "idle_timeout": 60,
-      "requests": 1000,
-      "size": 320
-    }
-  },
-  "status": 1
-}'
-# 初始化监控中心
-curl http://127.0.0.1:9080/apisix/admin/routes \
--H 'X-API-KEY: edd1c9f034335f136f87ad84b625c8f1' -X POST -i -d '
-{
-  "uri": "/neteye/*",
-  "name": "neteye",
-  "plugins": {
-    "forward-auth": {
-      "client_headers": [],
-      "disable": false,
-      "request_headers": [
-        "Authorization"
-      ],
-      "ssl_verify": false,
-      "timeout": 10000,
-      "upstream_headers": [
-        "Authorization"
-      ],
-      "uri": "http://rbac-nginx:80/rbac/status/"
-    }
-  },
-  "upstream": {
-    "timeout": {
-      "connect": 6,
-      "send": 6,
-      "read": 6
-    },
-    "type": "roundrobin",
-    "scheme": "http",
-    "discovery_type": "nacos",
-    "discovery_args": {
-      "group_name": "default"
-    },
-    "pass_host": "pass",
-    "service_name": "neteye",
     "keepalive_pool": {
       "idle_timeout": 60,
       "requests": 1000,
