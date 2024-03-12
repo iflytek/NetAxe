@@ -84,4 +84,20 @@ services:
       - base-backend
     networks:
       - docker_netaxe
-  
+
+  celery-xunmi:
+    image: registry.cn-hangzhou.aliyuncs.com/netaxe/base-backend:1.0
+    container_name: celery-xunmi
+    command: sh start.sh xunmi
+    environment:
+      TZ: Asia/Shanghai
+    volumes:
+      - /etc/localtime:/etc/localtime
+      - ./config.json:/config/config.json
+      - ./device_config:/app/media/device_config
+      - ./admin_ssh_records:/app/media/admin_ssh_records
+      - ./extensibles:/app/plugins/extensibles
+    depends_on:
+      - base-backend
+    networks:
+      - docker_netaxe
