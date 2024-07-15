@@ -22,7 +22,7 @@ networks:
 
 services:
   apisix-dashboard:
-    image: apache/apisix-dashboard:2.13-alpine
+    image: registry.cn-hangzhou.aliyuncs.com/netaxe/apisix-dashboard:2.13-alpine
     restart: always
     volumes:
       - ./dashboard_conf/conf.yaml:/usr/local/apisix-dashboard/conf/conf.yaml
@@ -34,7 +34,7 @@ services:
       - docker_netaxe
 
   apisix:
-    image: apache/apisix:2.15.0-alpine
+    image: registry.cn-hangzhou.aliyuncs.com/netaxe/apisix:2.15.0-alpine
     restart: always
     volumes:
       - ./apisix_log:/usr/local/apisix/logs
@@ -50,7 +50,7 @@ services:
       - docker_netaxe
 
   etcd:
-    image: bitnami/etcd:3.4.15
+    image: registry.cn-hangzhou.aliyuncs.com/netaxe/etcd:3.4.15
     restart: always
     volumes:
       - ./etcd_conf/data:/bitnami/etcd

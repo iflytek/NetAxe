@@ -25,6 +25,7 @@
   "routing_key": "alert_gateway",
   "project_name": "AlertGateway",
   "push_gateway": "pushgateway:9091",
+  "prometheus": "prometheus:9090",
   "mysql_url": "mysql+mysqlconnector://root:root_devnet%402022@mysql-server:3306",
   "sqlalchemy_mysql_url": "mysql+aiomysql://root:root_devnet%402022@mysql-server:3306/alertgateway"
 }

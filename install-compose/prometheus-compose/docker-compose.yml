@@ -4,7 +4,7 @@ networks:
     external: true
 services:
   prometheus:
-    image: prom/prometheus:latest
+    image: registry.cn-hangzhou.aliyuncs.com/netaxe/prometheus:latest
     container_name: prometheus
     restart: always
     volumes:

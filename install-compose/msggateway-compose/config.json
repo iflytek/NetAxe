@@ -32,6 +32,21 @@
   "email_host_pwd": "sadf",
   "sms": "24a6",
   "sms_url": "http",
+  "hw_sms": {
+    "url": "https://smsapi.cn-north-4.myhuaweicloud.com:443/sms/batchSendSms/v1",
+    "api_key": "UlA9SV32k8l9I7",
+    "app_secret": "Aglxs5VZauBy",
+    "sender": "88",
+    "template_id": "bc8bbb276",
+    "signature": "数据中心"
+  },
+  "phone": {
+    "key": "3a538c35f11041",
+    "call_url": "http",
+    "callhook_url": "http",
+    "call_result_url": "http",
+    "duty_call_result_url": "http"
+  },
   "wechat": {
     "corpid": "ww",
     "token_url": "https://qyapi.weixin.qq.com/cgi-bin/gettoken",

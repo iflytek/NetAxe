@@ -8,21 +8,56 @@ services:
     image: registry.cn-hangzhou.aliyuncs.com/netaxe/alertgateway-backend:1.0
     container_name: alertgateway-backend
     restart: always
-    command: uvicorn controller:app --host 0.0.0.0 --port 8000
+    command: uvicorn controller:app --proxy-headers --timeout-keep-alive 10 --workers 10 --host 0.0.0.0 --port 8000 --log-config config/log-config.yml
     ports:
       - "31102:8000"
     volumes:
       - ./config.json:/app/config/config.json
+      - ./logs:/app/logs
     networks:
       - docker_netaxe
 
-  alertgateway-worker:
+  alertgateway-webhook:
     image: registry.cn-hangzhou.aliyuncs.com/netaxe/alertgateway-backend:1.0
-    container_name: alertgateway-worker
+    container_name: alertgateway-webhook
     restart: always
     command: python3 worker.py default
     volumes:
       - ./config.json:/app/config/config.json
+      - ./logs:/app/logs
+    networks:
+      - docker_netaxe
+
+  alertgateway-alert:
+    image: registry.cn-hangzhou.aliyuncs.com/netaxe/alertgateway-backend:1.0
+    container_name: alertgateway-worker
+    restart: always
+    command: python3 worker.py alert
+    volumes:
+      - ./config.json:/app/config/config.json
+      - ./logs:/app/logs
+    networks:
+      - docker_netaxe
+
+  alertgateway-rule:
+    image: registry.cn-hangzhou.aliyuncs.com/netaxe/alertgateway-backend:1.0
+    container_name: alertgateway-rule
+    restart: always
+    command: python3 worker.py rule
+    volumes:
+      - ./config.json:/app/config/config.json
+      - ./logs:/app/logs
+    networks:
+      - docker_netaxe
+
+  alertgateway-nacos:
+    image: registry.cn-hangzhou.aliyuncs.com/netaxe/alertgateway-backend:1.0
+    container_name: alertgateway-nacos
+    restart: always
+    command: python3 worker.py nacos
+    volumes:
+      - ./config.json:/app/config/config.json
+      - ./logs:/app/logs
     networks:
       - docker_netaxe
 
