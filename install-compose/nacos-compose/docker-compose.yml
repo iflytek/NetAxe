@@ -9,6 +9,8 @@ services:
     container_name: nacos
     environment:
       - PREFER_HOST_MODE=hostname
+      - NACOS_USER=admin
+      - NACOS_PASSWORD=nacos_netaxe
 #      - SPRING_DATASOURCE_PLATFORM=mysql
 #      - MYSQL_SERVICE_HOST=mysql-server
 #      - MYSQL_SERVICE_PORT=3306

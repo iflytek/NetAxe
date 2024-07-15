@@ -51,7 +51,7 @@ plugin_attr:
 discovery:
   nacos:
     host:
-      - "http://nacos:nacos@nacos:8848"
+      - "http://admin:nacos_netaxe@nacos:8848"
     prefix: "/nacos/v1/"
     fetch_interval: 30    # default 30 sec
     weight: 100           # default 100
