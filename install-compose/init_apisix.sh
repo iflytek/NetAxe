@@ -12,7 +12,7 @@ curl http://127.0.0.1:9080/apisix/admin/consumers \
       },
       "exp": 86400,
       "key": "apisix",
-      "secret": "^*aq_8*5m_k$@n!5$ebrh&uqgu)btjs@ak@8ps35-+&pu8(c%$"
+      "secret": "django-insecure-57w6rkqxn1-)ry+sdc@3fmcd2)opcr^2a)zs^&#&-x)=fp(vb_"
     }
   }
 }'
