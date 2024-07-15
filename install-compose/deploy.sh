@@ -67,7 +67,7 @@ cd nacos-compose
 docker-compose up -d
 echo "------------------nacos状态----------------------"
 docker-compose ps
-
+curl -X PUT 'http://127.0.0.1:8848/nacos/v1/auth/users?username=nacos&newPassword=netaxenacos'
 
 
 # 安装apisix etcd
