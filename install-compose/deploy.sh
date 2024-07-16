@@ -69,7 +69,6 @@ echo "------------------nacos状态----------------------"
 docker-compose ps
 
 
-
 # 安装apisix etcd
 echo "------------------开始apisix etcd部署------------------"
 cd $current_path

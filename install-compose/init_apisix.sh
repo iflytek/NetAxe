@@ -259,3 +259,6 @@ curl http://127.0.0.1:9080/apisix/admin/routes \
   "status": 1
 }'
 echo "------------------初始化apisix完成----------------------"
+
+curl -X PUT 'http://127.0.0.1:8848/nacos/v1/auth/users?username=nacos&newPassword=netaxenacos'
+echo "------------------初始化nacos密码完成----------------------"
