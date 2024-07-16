@@ -59,6 +59,7 @@ cd $current_path
 cd apisix-compose
 mkdir -m 777 -p etcd_conf/data
 docker-compose down -v
+rm -rf etcd_conf/data
 echo "------------------apisix etcd状态---------------------"
 docker-compose ps
 
