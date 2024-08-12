@@ -45,5 +45,6 @@
     "is_active": "CN=aa,CN=Users,DC=aa,DC=local",
     "is_staff": "CN=aa,CN=Users,DC=aa,DC=local",
     "is_superuser": "CN=aa,CN=Users,DC=aa,DC=local"
-  }
+  },
+  "SECRET_KEY": "django-insecure-57w6rkqxn1-)ry+sdc@3fmcd2)opcr^2a)zs^&#&-x)=fp(vb_"
 }
