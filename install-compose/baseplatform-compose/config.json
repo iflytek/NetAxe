@@ -7,7 +7,6 @@
   "backend_port": 31100,
   "web_url": "http://tmp_server_ip:32200",
   "local_dev": false,
-  "mysql_db": "default",
   "mq_host": "rabbitmq",
   "mq_username": "adminnetaxe",
   "mq_password": "netaxeadmin",
