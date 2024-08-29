@@ -13,7 +13,7 @@ services:
       - ./prometheus-data:/prometheus
     ports:
       - 39090:9090
-    command: [ '--web.enable-lifecycle','--storage.tsdb.retention.time=30d' ]
+    command: [ '--web.enable-lifecycle','--storage.tsdb.retention.time=30d', '--web.config.file=/prometheus/web.yml' ]
     networks:
       - docker_netaxe
 
