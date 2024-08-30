@@ -14,9 +14,9 @@ services:
       - ./enabled_plugins:/etc/rabbitmq/enabled_plugins
     environment:
       - RABBITMQ_DEFAULT_USER=adminnetaxe
-      - RABBITMQ_DEFAULT_PASS=netaxeadmin
+      - RABBITMQ_DEFAULT_PASS=RABBITMQ_PASSWORD
       - STOMP_DEFAULT_USER=adminnetaxe
-      - STOMP_DEFAULT_PASS=netaxeadmin
+      - STOMP_DEFAULT_PASS=RABBITMQ_PASSWORD
       - RABBITMQ_DEFAULT_VHOST=/
     networks:
       - docker_netaxe

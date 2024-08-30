@@ -12,7 +12,7 @@ services:
       TZ: Asia/Shanghai
       MYSQL_DATABASE: "rbac"
       MYSQL_USER: "netaxe"
-      MYSQL_ROOT_PASSWORD: "root_devnet@2022"
+      MYSQL_ROOT_PASSWORD: "MYSQL_PASSWORD"
     volumes:
       - ./my.cnf:/etc/mysql/my.cnf
       - ./data:/var/lib/mysql
