@@ -44,6 +44,7 @@ find . -type f -name "config.json" -exec sed -i "s/DJANGO_INSECURE/$default_key/
 find . -type f -name "config.json" -exec sed -i "s/NACOS_PASSWORD/$default_key/g" {} \;
 
 find ./apisix-compose -type f -name "config.yaml" -exec sed -i "s/APISIX_ADMIN_KEY/$default_key/g" {} \;
+find ./apisix-compose -type f -name "config.yaml" -exec sed -i "s/APISIX_ADMIN_PASSWORD/$default_key/g" {} \;
 find ./apisix-compose -type f -name "config.yaml" -exec sed -i "s/NACOS_PASSWORD/$default_key/g" {} \;
 find ./mysql-compose -type f -name "docker-compose.yml" -exec sed -i "s/MYSQL_PASSWORD/$default_key/g" {} \;
 find ./redis-compose -type f -name "docker-compose.yml" -exec sed -i "s/REDIS_PASSWORD/$default_key/g" {} \;
