@@ -49,10 +49,7 @@ find ./mysql-compose -type f -name "docker-compose.yml" -exec sed -i "s/MYSQL_PA
 find ./redis-compose -type f -name "docker-compose.yml" -exec sed -i "s/REDIS_PASSWORD/$default_key/g" {} \;
 find ./mongo-compose -type f -name "docker-compose.yml" -exec sed -i "s/MONGO_PASSWORD/$default_key/g" {} \;
 find ./rabbitmq-compose -type f -name "docker-compose.yml" -exec sed -i "s/RABBITMQ_PASSWORD/$default_key/g" {} \;
-find ./nacos-compose -type f -name "docker-compose.yaml" -exec sed -i "s/NACOS_KEY/$nacos_key/g" {} \;
-# find . -type f -name "init_apisix.sh" -exec sed -i "s/DJANGO_INSECURE/$default_key/g" {} \;
-# find . -type f -name "init_apisix.sh" -exec sed -i "s/APISIX_ADMIN_KEY/$default_key/g" {} \;
-# find . -type f -name "init_apisix.sh" -exec sed -i "s/NACOS_PASSWORD/$default_key/g" {} \;
+find ./nacos-compose -type f -name "docker-compose.yml" -exec sed -i "s/NACOS_KEY/$nacos_key/g" {} \;
 
 find . -type f -name "init.sh" -exec sed -i "s/APISIX_ADMIN_KEY/$default_key/g" {} \;
 find . -type f -name "init.sh" -exec sed -i "s/NACOS_PASSWORD/$default_key/g" {} \;
