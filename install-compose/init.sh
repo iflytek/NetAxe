@@ -13,6 +13,7 @@ find . -type f -name "config.json" -exec sed -i "s/REDIS_PASSWORD/$default_key/g
 find . -type f -name "config.json" -exec sed -i "s/MONGO_PASSWORD/$default_key/g" {} \;
 find . -type f -name "config.json" -exec sed -i "s/RABBITMQ_PASSWORD/$default_key/g" {} \;
 find . -type f -name "config.json" -exec sed -i "s/DJANGO_INSECURE/$default_key/g" {} \;
+find . -type f -name "config.json" -exec sed -i "s/NACOS_PASSWORD/$default_key/g" {} \;
 
 find ./apisix-compose -type f -name "config.yaml" -exec sed -i "s/APISIX_ADMIN_KEY/$default_key/g" {} \;
 find ./apisix-compose -type f -name "config.yaml" -exec sed -i "s/NACOS_PASSWORD/$default_key/g" {} \;
