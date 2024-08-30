@@ -5,7 +5,7 @@ networks:
     
 services:
   rbac-backend:
-    image: registry.cn-hangzhou.aliyuncs.com/netaxe/rbac-backend:1.0
+    image: registry.cn-hangzhou.aliyuncs.com/netaxe/rbac-backend:1.1
     container_name: rbac-backend
     restart: always
     volumes:
@@ -27,7 +27,7 @@ services:
       - "31104:80"
 
   rbac-web:
-    image: registry.cn-hangzhou.aliyuncs.com/netaxe/rbac-web:1.0
+    image: registry.cn-hangzhou.aliyuncs.com/netaxe/rbac-web:1.1
     container_name: rbac-web
     restart: always
     depends_on:
