@@ -132,7 +132,16 @@ sleep 10
 
 # 部署服务得时候需要注册nacos，需要重置后得密码信息
 echo "------------------准备初始化nacos密码完成----------------------"
-curl -X POST 'http://127.0.0.1:8848/nacos/v1/auth/users/admin' -d 'password=${default_key}'
+# curl -X POST 'http://127.0.0.1:8848/nacos/v1/auth/users/admin' -d 'password=${default_key}'
+while true; do
+  response=$(curl -s -o /dev/null -w "%{http_code}" "curl -X POST 'http://127.0.0.1:8848/nacos/v1/auth/users/admin' -d 'password=${default_key}'")
+  if [ "$response" == "000" ]; then
+    echo "$response"
+  else
+    echo "$response"
+    break
+  fi
+done
 echo "------------------初始化nacos密码完成----------------------"
 
 # 安装main和rbac
