@@ -32,6 +32,7 @@ fi
 echo "开始进行初始化操作，本操作将一次性生成各个配置文件的秘钥"
 echo "Using IP address: $iface_ip"
 echo "Using key: $default_key"
+echo "Using key: $nacos_key"
 
 
 # 遍历当前目录的所有子目录，查找 config.json 文件并修改其中的 server_ip 字段
