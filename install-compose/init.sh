@@ -1,6 +1,4 @@
 #! /bin/bash
-curl -X POST 'http://127.0.0.1:8848/nacos/v1/auth/users/admin' -d 'password=NACOS_PASSWORD'
-echo "------------------初始化nacos密码完成----------------------"
 
 # 初始化消费者
 curl http://127.0.0.1:9080/apisix/admin/consumers \

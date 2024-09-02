@@ -54,7 +54,7 @@ find ./rabbitmq-compose -type f -name "docker-compose.yml" -exec sed -i "s/RABBI
 find ./nacos-compose -type f -name "docker-compose.yml" -exec sed -i "s/NACOS_KEY/${nacos_key}/g" {} \;
 
 find . -type f -name "init.sh" -exec sed -i "s/APISIX_ADMIN_KEY/$default_key/g" {} \;
-find . -type f -name "init.sh" -exec sed -i "s/NACOS_PASSWORD/$default_key/g" {} \;
+# find . -type f -name "init.sh" -exec sed -i "s/NACOS_PASSWORD/$default_key/g" {} \;
 
 
 
@@ -130,6 +130,10 @@ echo "------------------prometheus状态---------------------"
 docker-compose ps
 sleep 10
 
+# 部署服务得时候需要注册nacos，需要重置后得密码信息
+curl -X POST 'http://127.0.0.1:8848/nacos/v1/auth/users/admin' -d 'password=${default_key}'
+echo "------------------初始化nacos密码完成----------------------"
+
 # 安装main和rbac
 echo "------------------开始rbac部署--------------"
 cd $current_path
@@ -182,3 +186,6 @@ echo "------------------IPAM状态------------------"
 docker-compose  ps
 
 echo "------------------部署完成------------------------"
+
+curl -X POST 'http://127.0.0.1:8848/nacos/v1/auth/users/admin' -d 'password=NACOS_PASSWORD'
+echo "------------------初始化nacos密码完成----------------------"
