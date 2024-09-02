@@ -28,6 +28,7 @@ services:
       - ./dashboard_conf/conf.yaml:/usr/local/apisix-dashboard/conf/conf.yaml
     depends_on:
       - etcd
+      - nacos
     ports:
       - "39000:9000"
     networks:

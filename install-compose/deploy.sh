@@ -131,6 +131,7 @@ docker-compose ps
 sleep 10
 
 # 部署服务得时候需要注册nacos，需要重置后得密码信息
+echo "------------------准备初始化nacos密码完成----------------------"
 curl -X POST 'http://127.0.0.1:8848/nacos/v1/auth/users/admin' -d 'password=${default_key}'
 echo "------------------初始化nacos密码完成----------------------"
 
@@ -138,6 +139,7 @@ echo "------------------初始化nacos密码完成----------------------"
 echo "------------------开始rbac部署--------------"
 cd $current_path
 cd rbac-compose
+docker-compose pull
 docker-compose  up -d
 echo "------------------rbac状态------------------"
 docker-compose ps
@@ -146,6 +148,7 @@ sleep 10
 echo "------------------开始web main部署--------------"
 cd $current_path
 cd main-compose
+docker-compose pull
 docker-compose  up -d
 echo "------------------web main状态------------------"
 docker-compose ps
@@ -155,6 +158,7 @@ sleep 10
 echo "------------------开始基础平台部署--------------"
 cd $current_path
 cd baseplatform-compose
+docker-compose pull
 docker-compose  up -d
 echo "------------------基础平台状态------------------"
 docker-compose ps
@@ -164,6 +168,7 @@ sleep 10
 echo "------------------开始消息网关部署--------------"
 cd $current_path
 cd msggateway-compose
+docker-compose pull
 docker-compose  up -d
 echo "------------------消息网关状态------------------"
 docker-compose ps
@@ -173,6 +178,7 @@ sleep 10
 echo "------------------开始告警中心部署--------------"
 cd $current_path
 cd alertgateway-compose
+docker-compose pull
 docker-compose  up -d
 echo "------------------告警中心状态------------------"
 docker-compose  ps
@@ -181,11 +187,9 @@ docker-compose  ps
 echo "------------------开始IPAM部署--------------"
 cd $current_path
 cd ipam-compose
+docker-compose pull
 docker-compose  up -d
 echo "------------------IPAM状态------------------"
 docker-compose  ps
 
 echo "------------------部署完成------------------------"
-
-curl -X POST 'http://127.0.0.1:8848/nacos/v1/auth/users/admin' -d 'password=NACOS_PASSWORD'
-echo "------------------初始化nacos密码完成----------------------"
