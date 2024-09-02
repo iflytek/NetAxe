@@ -55,8 +55,8 @@ find ./rabbitmq-compose -type f -name "docker-compose.yml" -exec sed -i "s/RABBI
 
 
 sed -i "s/NACOS_KEY/${nacos_key}/g" ./nacos-compose/docker-compose.yml
-sed -i "s/APISIX_ADMIN_KEY/$default_key/g" {} ./init.sh
-sed -i "s/NACOS_PASSWORD/$default_key/g" {} ./init.sh
+sed -i "s/APISIX_ADMIN_KEY/$default_key/g" ./init.sh
+sed -i "s/NACOS_PASSWORD/$default_key/g" ./init.sh
 
 # find ./nacos-compose -type f -name "docker-compose.yml" -exec sed -i "s/NACOS_KEY/${nacos_key}/g" {} \;
 # find . -type f -name "init.sh" -exec sed -i "s/APISIX_ADMIN_KEY/$default_key/g" {} \;
