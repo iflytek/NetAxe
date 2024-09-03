@@ -10,6 +10,7 @@ curl http://127.0.0.1:9080/apisix/admin/consumers \
       "disable": false
       "exp": 86400,
       "key": "apisix"
+      "secret": "DJANGO_INSECURE"
     }
   }
 }'

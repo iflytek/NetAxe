@@ -54,6 +54,7 @@ find ./rabbitmq-compose -type f -name "docker-compose.yml" -exec sed -i "s|RABBI
 
 sed -i "s|NACOS_KEY|${nacos_key}|g" ./nacos-compose/docker-compose.yml
 sed -i "s|APISIX_ADMIN_KEY|${default_key}|g" ./init.sh
+sed -i "s|DJANGO_INSECURE|${default_key}|g" ./init.sh
 
 
 # 创建docker_netaxe网络
