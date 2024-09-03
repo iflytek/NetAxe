@@ -7,9 +7,9 @@ curl http://127.0.0.1:9080/apisix/admin/consumers \
   "username": "jwt_auth",
   "plugins": {
     "jwt-auth": {
-      "disable": false
+      "disable": false,
       "exp": 86400,
-      "key": "apisix"
+      "key": "apisix",
       "secret": "DJANGO_INSECURE"
     }
   }
