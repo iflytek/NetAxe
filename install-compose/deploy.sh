@@ -68,6 +68,7 @@ cd mysql-compose
 docker-compose up -d
 echo "------------------mysql状态----------------------"
 docker-compose ps
+
 cd $current_path
 cd mongo-compose
 docker-compose up -d
