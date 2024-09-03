@@ -36,24 +36,24 @@ echo "Using nacos_key: $nacos_key"
 
 
 # 遍历当前目录的所有子目录，查找 config.json 文件并修改其中的 server_ip 字段
-find . -type f -name "config.json" -exec sed -i "s/tmp_server_ip/$iface_ip/g" {} \;
-find . -type f -name "config.json" -exec sed -i "s/MYSQL_PASSWORD/$default_key/g" {} \;
-find . -type f -name "config.json" -exec sed -i "s/REDIS_PASSWORD/$default_key/g" {} \;
-find . -type f -name "config.json" -exec sed -i "s/MONGO_PASSWORD/$default_key/g" {} \;
-find . -type f -name "config.json" -exec sed -i "s/RABBITMQ_PASSWORD/$default_key/g" {} \;
-find . -type f -name "config.json" -exec sed -i "s/DJANGO_INSECURE/$default_key/g" {} \;
-find . -type f -name "config.json" -exec sed -i "s/NACOS_PASSWORD/$default_key/g" {} \;
+find . -type f -name "config.json" -exec sed -i "s/tmp_server_ip/${iface_ip}/g" {} \;
+find . -type f -name "config.json" -exec sed -i "s/MYSQL_PASSWORD/${default_key}/g" {} \;
+find . -type f -name "config.json" -exec sed -i "s/REDIS_PASSWORD/${default_key}/g" {} \;
+find . -type f -name "config.json" -exec sed -i "s/MONGO_PASSWORD/${default_key}/g" {} \;
+find . -type f -name "config.json" -exec sed -i "s/RABBITMQ_PASSWORD${default_key}/g" {} \;
+find . -type f -name "config.json" -exec sed -i "s/DJANGO_INSECURE/${default_key}/g" {} \;
+find . -type f -name "config.json" -exec sed -i "s/NACOS_PASSWORD/${default_key}/g" {} \;
 
-find ./apisix-compose -type f -name "config.yaml" -exec sed -i "s/APISIX_ADMIN_KEY/$default_key/g" {} \;
-find ./apisix-compose -type f -name "conf.yaml" -exec sed -i "s/APISIX_ADMIN_PASSWORD/$default_key/g" {} \;
-find ./apisix-compose -type f -name "config.yaml" -exec sed -i "s/NACOS_PASSWORD/$default_key/g" {} \;
-find ./mysql-compose -type f -name "docker-compose.yml" -exec sed -i "s/MYSQL_PASSWORD/$default_key/g" {} \;
-find ./redis-compose -type f -name "docker-compose.yml" -exec sed -i "s/REDIS_PASSWORD/$default_key/g" {} \;
-find ./mongo-compose -type f -name "docker-compose.yml" -exec sed -i "s/MONGO_PASSWORD/$default_key/g" {} \;
-find ./rabbitmq-compose -type f -name "docker-compose.yml" -exec sed -i "s/RABBITMQ_PASSWORD/$default_key/g" {} \;
+find ./apisix-compose -type f -name "config.yaml" -exec sed -i "s/APISIX_ADMIN_KEY/${default_key}/g" {} \;
+find ./apisix-compose -type f -name "conf.yaml" -exec sed -i "s/APISIX_ADMIN_PASSWORD/${default_key}/g" {} \;
+find ./apisix-compose -type f -name "config.yaml" -exec sed -i "s/NACOS_PASSWORD/${default_key}/g" {} \;
+find ./mysql-compose -type f -name "docker-compose.yml" -exec sed -i "s/MYSQL_PASSWORD/${default_key}/g" {} \;
+find ./redis-compose -type f -name "docker-compose.yml" -exec sed -i "s/REDIS_PASSWORD/${default_key}/g" {} \;
+find ./mongo-compose -type f -name "docker-compose.yml" -exec sed -i "s/MONGO_PASSWORD/${default_key}/g" {} \;
+find ./rabbitmq-compose -type f -name "docker-compose.yml" -exec sed -i "s/RABBITMQ_PASSWORD/${default_key}/g" {} \;
 
-sed -i "s/NACOS_KEY/$nacos_key/g" ./nacos-compose/docker-compose.yml
-sed -i "s/APISIX_ADMIN_KEY/$default_key/g" ./init.sh
+sed -i "s/NACOS_KEY/${nacos_key}/g" ./nacos-compose/docker-compose.yml
+sed -i "s/APISIX_ADMIN_KEY/${default_key}/g" ./init.sh
 # sed -i "s/NACOS_PASSWORD/$default_key/g" ./init.sh
 
 
