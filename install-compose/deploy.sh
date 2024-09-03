@@ -187,3 +187,8 @@ echo "------------------IPAM状态------------------"
 docker-compose  ps
 
 echo "------------------部署完成------------------------"
+
+
+echo "请记住初始化密码"
+echo "IP: $iface_ip"
+echo "密码: $default_key"
