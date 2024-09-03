@@ -17,7 +17,7 @@ if [ $? -ne 0 ]; then
 fi
 
 # 默认key设置
-default_key=$(openssl rand -hex 16)
+default_key=$(openssl rand -hex 8)
 nacos_key=$(openssl rand -base64 32) 
 
 if [ $# -eq 0 ]; then
