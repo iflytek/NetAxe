@@ -10,7 +10,7 @@ current_path=$(pwd)
 alias docker-compose='docker compose'
 
 # 检查docker-compose版本以及命令是否安装
-docker-compose --version
+docker-compose version
 if [ $? -ne 0 ]; then
     echo "请检查docker-compose命令是否安装"
     exit 1
@@ -30,7 +30,7 @@ else
 fi
 
 echo "开始进行初始化操作，本操作将一次性生成各个配置文件的秘钥"
-echo "Using IP address: $iface_ip"
+echo "Using IP: $iface_ip"
 echo "Using key: $default_key"
 echo "Using nacos_key: $nacos_key"
 
@@ -52,26 +52,14 @@ find ./redis-compose -type f -name "docker-compose.yml" -exec sed -i "s/REDIS_PA
 find ./mongo-compose -type f -name "docker-compose.yml" -exec sed -i "s/MONGO_PASSWORD/$default_key/g" {} \;
 find ./rabbitmq-compose -type f -name "docker-compose.yml" -exec sed -i "s/RABBITMQ_PASSWORD/$default_key/g" {} \;
 
-
-
 sed -i "s/NACOS_KEY/$nacos_key/g" ./nacos-compose/docker-compose.yml
 sed -i "s/APISIX_ADMIN_KEY/$default_key/g" ./init.sh
-sed -i "s/NACOS_PASSWORD/$default_key/g" ./init.sh
-
-# find ./nacos-compose -type f -name "docker-compose.yml" -exec sed -i "s/NACOS_KEY/${nacos_key}/g" {} \;
-# find . -type f -name "init.sh" -exec sed -i "s/APISIX_ADMIN_KEY/$default_key/g" {} \;
-# find . -type f -name "init.sh" -exec sed -i "s/NACOS_PASSWORD/$default_key/g" {} \;
-
+# sed -i "s/NACOS_PASSWORD/$default_key/g" ./init.sh
 
 
 # 创建docker_netaxe网络
-docker network inspect docker_netaxe
-if [ $? -ne 0 ]; then
-    docker network create  --subnet=1.1.38.0/24 \
-    --ip-range=1.1.38.0/24 \
-    --gateway=1.1.38.254 \
-    docker_netaxe
-fi
+docker network create  --subnet=1.1.38.0/24 --ip-range=1.1.38.0/24 --gateway=1.1.38.254 docker_netaxe
+
 
 # 安装mysql和mongo
 echo "------------------开始mysql和mongo部署------------"
@@ -134,7 +122,7 @@ chmod 777 prometheus-data/
 docker-compose  up -d
 echo "------------------prometheus状态---------------------"
 docker-compose ps
-sleep 10
+sleep 20
 
 # 部署服务得时候需要注册nacos，需要重置后得密码信息
 echo "------------------准备初始化nacos密码完成----------------------"
