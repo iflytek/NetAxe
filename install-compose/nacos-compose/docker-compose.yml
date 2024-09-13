@@ -5,8 +5,8 @@ networks:
     
 services:
   nacos:
-    # image: registry.cn-hangzhou.aliyuncs.com/netaxe/nacos-server:2.0.3
-    image: dockerpull.com/nacos/nacos-server
+    image: registry.cn-hangzhou.aliyuncs.com/netaxe/nacos-server:2.4.0
+    # image: dockerpull.com/nacos/nacos-server
     container_name: nacos
     restart: always
     environment:
