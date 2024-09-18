@@ -9,7 +9,7 @@
   "local_dev": false,
   "mq_host": "rabbitmq",
   "mq_username": "adminnetaxe",
-  "mq_password": "netaxeadmin",
+  "mq_password": "RABBITMQ_PASSWORD",
   "mq_port": 5672,
   "nacos": "nacos",
   "nacos_port": 8848,
