@@ -50,6 +50,7 @@ find ./apisix-compose -type f -name "config.yaml" -exec sed -i "s|NACOS_PASSWORD
 find ./redis-compose -type f -name "docker-compose.yml" -exec sed -i "s|REDIS_PASSWORD|${default_key}|g" {} \;
 find ./mongo-compose -type f -name "docker-compose.yml" -exec sed -i "s|MONGO_PASSWORD|${default_key}|g" {} \;
 find ./rabbitmq-compose -type f -name "docker-compose.yml" -exec sed -i "s|RABBITMQ_PASSWORD|${default_key}|g" {} \;
+find ./alertgateway-compose -type f -name "docker-compose.yml" -exec sed -i "s|PROMETHEUS_PASSWORD|${default_key}|g" {} \;
 
 
 sed -i "s|MYSQL_PASSWORD|${default_key}|g" ./mysql-compose/init/netaxe.sql

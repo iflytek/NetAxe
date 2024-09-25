@@ -34,4 +34,4 @@ scrape_configs:
       - targets: ['127.0.0.1:9090']
     basic_auth:
       username: admin
-      password: Advvaewf^^%CC
+      password: PROMETHEUS_PASSWORD

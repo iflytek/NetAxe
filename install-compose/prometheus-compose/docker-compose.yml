@@ -21,8 +21,8 @@ services:
     container_name: pushgateway
     image: registry.cn-hangzhou.aliyuncs.com/netaxe/pushgateway:latest
     restart: always
-    ports:
-      - 39091:9091
+    #ports:
+      #- 39091:9091
     command:
       - '--log.level=info'
       - '--web.enable-admin-api'

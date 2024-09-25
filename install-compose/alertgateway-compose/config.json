@@ -28,5 +28,5 @@
   "push_gateway": "pushgateway:9091",
   "prometheus": "prometheus:9090",
   "prometheus_username": "admin",
-  "prometheus_password": "Advvaewf^^%CC"
+  "prometheus_password": "PROMETHEUS_PASSWORD"
 }
