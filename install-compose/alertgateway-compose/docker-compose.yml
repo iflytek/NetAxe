@@ -50,17 +50,6 @@ services:
     networks:
       - docker_netaxe
 
-  alertgateway-nacos:
-    image: registry.cn-hangzhou.aliyuncs.com/netaxe/alertgateway-backend:1.0
-    container_name: alertgateway-nacos
-    restart: always
-    command: python3 worker.py nacos
-    volumes:
-      - ./config.json:/app/config/config.json
-      - ./logs:/app/logs
-    networks:
-      - docker_netaxe
-
   alertgateway-web:
     container_name: alertgateway-web
     image: registry.cn-hangzhou.aliyuncs.com/netaxe/alertgateway-web:1.0
