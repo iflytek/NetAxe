@@ -11,8 +11,7 @@ services:
     volumes:
       - ./config.json:/config/config.json
       - ./logs:/app/logs
-    command:
-      /bin/bash -c 'cd /app && sh init.sh && sh start.sh web'
+    command: sh start.sh web
     networks:
       - docker_netaxe
 

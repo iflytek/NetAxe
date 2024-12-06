@@ -75,11 +75,11 @@ docker-compose ps
 sleep 10
 
 # 卸载main和rbac
-echo "------------------开始rbac卸载--------------"
+echo "------------------开始权限中心卸载--------------"
 cd $current_path
-cd rbac-compose
+cd abac-compose
 docker-compose  down -v
-echo "------------------rbac状态------------------"
+echo "------------------权限中心状态------------------"
 docker-compose ps
 sleep 10
 
@@ -92,11 +92,11 @@ docker-compose ps
 sleep 10
 
 # 卸载基础平台
-echo "------------------开始基础平台卸载--------------"
+echo "------------------开始管控平台卸载--------------"
 cd $current_path
 cd baseplatform-compose
 docker-compose  down -v
-echo "------------------基础平台状态------------------"
+echo "------------------管控平台状态------------------"
 docker-compose ps
 sleep 10
 
