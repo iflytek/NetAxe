@@ -118,37 +118,47 @@ echo "------------------apisix etcd状态---------------------"
 docker-compose ps
 
 
+# 安装prometheus
+echo "------------------开始prometheus部署------------------"
+cd $current_path
+cd prometheus-compose
+chmod 777 prometheus-data/
+docker-compose  up -d
+echo "------------------prometheus状态---------------------"
+docker-compose ps
+sleep 20
+
 # 部署服务得时候需要注册nacos，需要重置后得密码信息
 echo "------------------准备初始化nacos密码完成----------------------"
 curl -X POST 'http://127.0.0.1:8848/nacos/v1/auth/users/admin' -d "password=${default_key}"
 echo "------------------初始化nacos密码完成----------------------"
 
 # 安装main和rbac
-echo "------------------开始权限中心部署--------------"
+echo "------------------开始rbac部署--------------"
 cd $current_path
-cd abac-compose
+cd rbac-compose
 docker-compose pull
 docker-compose  up -d
-echo "------------------权限中心状态------------------"
+echo "------------------rbac状态------------------"
 docker-compose ps
 sleep 10
 
-echo "------------------开始前端服务部署--------------"
+echo "------------------开始web main部署--------------"
 cd $current_path
 cd main-compose
 docker-compose pull
 docker-compose  up -d
-echo "------------------前端服务状态------------------"
+echo "------------------web main状态------------------"
 docker-compose ps
 sleep 10
 
 # 安装基础平台
-echo "------------------开始管控平台部署--------------"
+echo "------------------开始基础平台部署--------------"
 cd $current_path
 cd baseplatform-compose
 docker-compose pull
 docker-compose  up -d
-echo "------------------管控平台状态------------------"
+echo "------------------基础平台状态------------------"
 docker-compose ps
 sleep 10
 
@@ -169,6 +179,15 @@ cd alertgateway-compose
 docker-compose pull
 docker-compose  up -d
 echo "------------------告警中心状态------------------"
+docker-compose  ps
+
+# 安装IPAM
+echo "------------------开始IPAM部署--------------"
+cd $current_path
+cd ipam-compose
+docker-compose pull
+docker-compose  up -d
+echo "------------------IPAM状态------------------"
 docker-compose  ps
 
 echo "------------------部署完成------------------------"

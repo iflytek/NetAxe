@@ -3,29 +3,64 @@ networks:
   docker_netaxe:
     external: true
 services:
+#  prometheus:
+#    image: registry.cn-hangzhou.aliyuncs.com/netaxe/prometheus:v1
+#    container_name: prometheus
+#    restart: always
+#    volumes:
+#      - /usr/share/zoneinfo/Asia/Shanghai:/etc/localtime
+#      - ./prometheus-data/prometheus.yml:/etc/prometheus/prometheus.yml
+#      - ./prometheus-data:/prometheus
+#    ports:
+#      - 39090:9090
+#    command: [ '--web.enable-lifecycle','--storage.tsdb.retention.time=30d', '--web.config.file=/prometheus/web.yml' ]
+#    networks:
+#      - docker_netaxe
+#  pushgateway:
+#    container_name: pushgateway
+#    image: registry.cn-hangzhou.aliyuncs.com/netaxe/pushgateway:latest
+#    restart: always
+#    #ports:
+#      #- 39091:9091
+#    command:
+#      - '--log.level=info'
+#      - '--web.enable-admin-api'
+#      - '--web.enable-lifecycle'
+#    networks:
+#      - docker_netaxe
+  regis:
+    image: artifacts.iflytek.com/docker-private/netops/regiscenter:2.0
+    container_name: regis
+    privileged: true
+    volumes:
+      - ./config.yaml:/app/config.yaml
+    ports:
+      - 31468:4168
+    networks:
+      - compose_network
+
   prometheus:
-    image: registry.cn-hangzhou.aliyuncs.com/netaxe/prometheus:latest
+    image: artifacts.iflytek.com/docker-private/netops/prometheus:v1
     container_name: prometheus
     restart: always
     volumes:
-      - /usr/share/zoneinfo/Asia/Shanghai:/etc/localtime
-      - ./prometheus-data/prometheus.yml:/etc/prometheus/prometheus.yml
+      - ./prometheus.yml:/etc/prometheus/prometheus.yml
+      - ./prometheus_web.yml:/prometheus/web.yml
       - ./prometheus-data:/prometheus
+      - net=host
+    command: ['--web.enable-lifecycle','--web.config.file=/prometheus/web.yml','--storage.tsdb.retention.time=30d', '--config.file=/etc/prometheus/prometheus.yml']
     ports:
       - 39090:9090
-    command: [ '--web.enable-lifecycle','--storage.tsdb.retention.time=30d', '--web.config.file=/prometheus/web.yml' ]
     networks:
-      - docker_netaxe
+      - compose_network
 
-  pushgateway:
-    container_name: pushgateway
-    image: registry.cn-hangzhou.aliyuncs.com/netaxe/pushgateway:latest
-    restart: always
-    #ports:
-      #- 39091:9091
-    command:
-      - '--log.level=info'
-      - '--web.enable-admin-api'
-      - '--web.enable-lifecycle'
+  blackbox_exporter:
+    image: artifacts.iflytek.com/docker-private/netops/blackbox-exporter:master
+    container_name: blackbox_exporter
+    volumes:
+      - /usr/share/zoneinfo/Asia/Shanghai:/etc/localtime
+      - ./blackbox.yml:/config/blackbox.yml
+    ports:
+      - 9115:9115
     networks:
-      - docker_netaxe
+      - compose_network

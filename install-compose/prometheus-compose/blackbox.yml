@@ -1,0 +1,91 @@
+modules:
+    http_2xx:
+        prober: http
+        http:
+            ip_protocol_fallback: true
+        tcp:
+            ip_protocol_fallback: true
+        icmp:
+            ip_protocol_fallback: true
+        dns:
+            ip_protocol_fallback: true
+    http_post_2xx:
+        prober: http
+        http:
+            ip_protocol_fallback: true
+            method: POST
+        tcp:
+            ip_protocol_fallback: true
+        icmp:
+            ip_protocol_fallback: true
+        dns:
+            ip_protocol_fallback: true
+    icmp:
+        timeout: 2s
+        prober: icmp
+        http:
+            ip_protocol_fallback: true
+        tcp:
+            ip_protocol_fallback: true
+        icmp:
+            ip_protocol_fallback: true
+        dns:
+            ip_protocol_fallback: true
+    irc_banner:
+        prober: tcp
+        http:
+            ip_protocol_fallback: true
+        tcp:
+            ip_protocol_fallback: true
+            query_response:
+              - send: NICK prober
+              - send: USER prober prober prober :prober
+              - expect: PING :([^ ]+)
+                send: PONG ${1}
+              - expect: ^:[^ ]+ 001
+        icmp:
+            ip_protocol_fallback: true
+        dns:
+            ip_protocol_fallback: true
+    pop3s_banner:
+        prober: tcp
+        http:
+            ip_protocol_fallback: true
+        tcp:
+            ip_protocol_fallback: true
+            query_response:
+              - expect: ^+OK
+            tls: true
+        icmp:
+            ip_protocol_fallback: true
+        dns:
+            ip_protocol_fallback: true
+    ssh_banner:
+        prober: tcp
+        http:
+            ip_protocol_fallback: true
+        tcp:
+            ip_protocol_fallback: true
+            query_response:
+              - expect: ^SSH-2.0-
+        icmp:
+            ip_protocol_fallback: true
+        dns:
+            ip_protocol_fallback: true
+    tcp_connect:
+        prober: tcp
+        http:
+            ip_protocol_fallback: true
+        tcp:
+            ip_protocol_fallback: true
+        icmp:
+            ip_protocol_fallback: true
+        dns:
+            ip_protocol_fallback: true
+    dns_ipv4:
+        prober: udp
+        timeout: 3s
+        dns:
+           ip_protocol_fallback: true
+           preferred_ip_protocol: ip4
+           transport_protocol: udp

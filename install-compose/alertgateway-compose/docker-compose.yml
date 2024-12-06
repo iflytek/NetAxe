@@ -5,10 +5,11 @@ networks:
 
 services:
   alertgateway-backend:
-    image: registry.cn-hangzhou.aliyuncs.com/netaxe/alertgateway-backend:1.0
+    image: registry.cn-hangzhou.aliyuncs.com/netaxe/alertgateway-backend:2.0
     container_name: alertgateway-backend
     restart: always
-    command: uvicorn controller:app --proxy-headers --timeout-keep-alive 10 --workers 10 --host 0.0.0.0 --port 8000 --log-config config/log-config.yml
+#    command: uvicorn controller:app --proxy-headers --timeout-keep-alive 10 --workers 10 --host 0.0.0.0 --port 8000 --log-config config/log-config.yml
+    command: gunicorn -c gunicorn.conf.py controller:app
     ports:
       - "31102:8000"
     volumes:
@@ -18,7 +19,7 @@ services:
       - docker_netaxe
 
   alertgateway-webhook:
-    image: registry.cn-hangzhou.aliyuncs.com/netaxe/alertgateway-backend:1.0
+    image: registry.cn-hangzhou.aliyuncs.com/netaxe/alertgateway-backend:2.0
     container_name: alertgateway-webhook
     restart: always
     command: python3 worker.py default
@@ -29,7 +30,7 @@ services:
       - docker_netaxe
 
   alertgateway-alert:
-    image: registry.cn-hangzhou.aliyuncs.com/netaxe/alertgateway-backend:1.0
+    image: registry.cn-hangzhou.aliyuncs.com/netaxe/alertgateway-backend:2.0
     container_name: alertgateway-worker
     restart: always
     command: python3 worker.py alert
@@ -40,21 +41,21 @@ services:
       - docker_netaxe
 
   alertgateway-rule:
-    image: registry.cn-hangzhou.aliyuncs.com/netaxe/alertgateway-backend:1.0
+    image: registry.cn-hangzhou.aliyuncs.com/netaxe/alertgateway-backend:2.0
     container_name: alertgateway-rule
     restart: always
-    command: python3 worker.py rule
+    command: python3 worker.py notify_rule
     volumes:
       - ./config.json:/app/config/config.json
       - ./logs:/app/logs
     networks:
       - docker_netaxe
 
-  alertgateway-web:
-    container_name: alertgateway-web
-    image: registry.cn-hangzhou.aliyuncs.com/netaxe/alertgateway-web:1.0
-    ports:
-      - "32202:80"
-    restart: always
-    networks:
-      - docker_netaxe
+#  alertgateway-web:
+#    container_name: alertgateway-web
+#    image: registry.cn-hangzhou.aliyuncs.com/netaxe/alertgateway-web:1.0
+#    ports:
+#      - "32202:80"
+#    restart: always
+#    networks:
+#      - docker_netaxe
