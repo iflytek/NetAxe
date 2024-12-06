@@ -34,7 +34,7 @@ curl http://127.0.0.1:9080/apisix/admin/routes \
       "group_name": "default"
     },
     "pass_host": "pass",
-    "service_name": "rbac",
+    "service_name": "abac",
     "keepalive_pool": {
       "idle_timeout": 60,
       "requests": 1000,
@@ -50,13 +50,6 @@ curl http://127.0.0.1:9080/apisix/admin/routes \
 {
   "uri": "/abac-api/*",
   "name": "权限中心",
-  "plugins": {
-    "jwt-auth": {
-      "_meta": {
-        "disable": false
-      }
-    }
-  },
   "upstream": {
     "timeout": {
       "connect": 6,
@@ -156,7 +149,7 @@ curl http://127.0.0.1:9080/apisix/admin/routes \
 -H 'X-API-KEY: APISIX_ADMIN_KEY' -X POST -i -d '
 {
   "uri": "/base_platform/*",
-  "name": "cmdb-base_platform",
+  "name": "base_platform",
   "upstream": {
     "timeout": {
       "connect": 6,
