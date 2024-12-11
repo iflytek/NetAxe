@@ -5,7 +5,7 @@ networks:
     
 services:
   mysql-server:
-    image: artifacts.iflytek.com/docker-private/netops/mysql:8.0
+    image: registry.cn-hangzhou.aliyuncs.com/netaxe/mysql:8.0
     restart: always
     container_name: mysql-server
     environment:
