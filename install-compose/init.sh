@@ -63,7 +63,7 @@ curl http://127.0.0.1:9080/apisix/admin/routes \
       "group_name": "default"
     },
     "pass_host": "pass",
-    "service_name": "rbac",
+    "service_name": "abac",
     "keepalive_pool": {
       "idle_timeout": 60,
       "requests": 1000,
