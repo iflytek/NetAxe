@@ -31,7 +31,7 @@ services:
 
   alertgateway-alert:
     image: registry.cn-hangzhou.aliyuncs.com/netaxe/alertgateway-backend:2.0
-    container_name: alertgateway-worker
+    container_name: alertgateway-alert
     restart: always
     command: python3 worker.py alert
     volumes:
