@@ -119,6 +119,7 @@
 
 维护者是做出杰出贡献且在社区长期活跃的 NetAxe 社区成员。
 
+- [weijunjie1995](https://github.com/weijunjie1995)
 - [jamlee](https://github.com/M87NET)
 - [xuehaoweng](https://github.com/xuehaoweng)
 
