@@ -173,7 +173,7 @@ docker-compose  ps
 
 echo "------------------部署完成------------------------"
 
-sh init.sh
+sh ./init.sh
 
 echo "请记住初始化密码"
 echo "IP: $iface_ip"

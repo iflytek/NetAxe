@@ -33,6 +33,7 @@
   "email_host_pwd": "sadf",
   "sms": "24a6",
   "sms_url": "http",
+  "max_sms_count": 20000,
   "hw_sms": {
     "url": "https://smsapi.cn-north-4.myhuaweicloud.com:443/sms/batchSendSms/v1",
     "api_key": "UlA9SV32k8l9I7",
