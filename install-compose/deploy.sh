@@ -43,6 +43,8 @@ find . -type f -name "config.json" -exec sed -i "s|MONGO_PASSWORD|${default_key}
 find . -type f -name "config.json" -exec sed -i "s|RABBITMQ_PASSWORD|${default_key}|g" {} \;
 find . -type f -name "config.json" -exec sed -i "s|DJANGO_INSECURE|${default_key}|g" {} \;
 find . -type f -name "config.json" -exec sed -i "s|NACOS_PASSWORD|${default_key}|g" {} \;
+find . -type f -name "config.yaml" -exec sed -i "s|REGIS_PASSWORD|${default_key}|g" {} \;
+find . -type f -name "prometheus.yml" -exec sed -i "s|REGIS_PASSWORD|${default_key}|g" {} \;
 
 find ./apisix-compose -type f -name "config.yaml" -exec sed -i "s|APISIX_ADMIN_KEY|${default_key}|g" {} \;
 find ./apisix-compose -type f -name "conf.yaml" -exec sed -i "s|APISIX_ADMIN_PASSWORD|${default_key}|g" {} \;
@@ -172,8 +174,6 @@ echo "------------------告警中心状态------------------"
 docker-compose  ps
 
 echo "------------------部署完成------------------------"
-
-sh ./init.sh
 
 echo "请记住初始化密码"
 echo "IP: $iface_ip"
