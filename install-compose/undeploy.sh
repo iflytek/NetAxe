@@ -57,7 +57,6 @@ docker-compose ps
 echo "------------------开始apisix etcd卸载------------------"
 cd $current_path
 cd apisix-compose
-mkdir -m 777 -p etcd_conf/data
 docker-compose down -v
 rm -rf etcd_conf/data
 echo "------------------apisix etcd状态---------------------"
@@ -68,7 +67,6 @@ docker-compose ps
 echo "------------------开始prometheus卸载------------------"
 cd $current_path
 cd prometheus-compose
-chmod 777 prometheus-vata/
 docker-compose  down -v
 echo "------------------prometheus状态---------------------"
 docker-compose ps
