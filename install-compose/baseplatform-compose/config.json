@@ -33,6 +33,6 @@
   "push_gateway": "pushgateway:9091",
   "iam": {
         "url": "http://SERVER_IP:31104/abac-api",
-        "urn_prefix": "infr:base_platform"
+        "urn_prefix": "netaxe:base_platform"
     }
 }
