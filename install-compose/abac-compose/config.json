@@ -54,7 +54,7 @@
         "authority": {
             "NAME": "abac",
             "ENGINE": "django.db.backends.mysql",
-            "HOST": "SERVER_IP",
+            "HOST": "mysql-server",
             "USER": "root",
             "PASSWORD": "MYSQL_PASSWORD",
             "PORT": 3306
