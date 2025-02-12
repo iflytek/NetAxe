@@ -29,6 +29,7 @@
   "mysql_password": "MYSQL_PASSWORD",
   "mysql_db": "abac",
   "project_name": "abac",
+  "queue": "abac",
   "url_prefix": "/abac-api",
   "auth_ldap": false,
   "auth_ldap_server_uri": "ldap://1.1.1.1:389",
