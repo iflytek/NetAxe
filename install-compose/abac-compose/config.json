@@ -47,5 +47,16 @@
     "is_staff": "CN=aa,CN=Users,DC=aa,DC=local",
     "is_superuser": "CN=aa,CN=Users,DC=aa,DC=local"
   },
-  "SECRET_KEY": "DJANGO_INSECURE"
+  "SECRET_KEY": "DJANGO_INSECURE",
+  "reload_url": "http://SERVER_IP:31104/abac-api/authority/auth_policy/?reload=1",
+  "authority_database": {
+        "authority": {
+            "NAME": "abac",
+            "ENGINE": "django.db.backends.mysql",
+            "HOST": "SERVER_IP",
+            "USER": "root",
+            "PASSWORD": "MYSQL_PASSWORD",
+            "PORT": 3306
+        }
+    }
 }
