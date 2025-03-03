@@ -102,12 +102,22 @@ docker-compose ps
 
 
 # 安装nacos
+# 安装nacos
 echo "------------------开始nacos部署-------------------"
 cd $current_path
 cd nacos-compose
 docker-compose up -d
 echo "------------------nacos状态----------------------"
 docker-compose ps
+
+# 增加延迟，等待 Nacos 启动完成
+echo "等待 Nacos 启动完成..."
+sleep 30  # 等待 30 秒，可以根据实际情况调整时间
+
+# 部署服务得时候需要注册nacos，需要重置后得密码信息
+echo "------------------准备初始化nacos密码完成----------------------"
+curl -X POST 'http://127.0.0.1:8848/nacos/v1/auth/users/admin' -d "password=${default_key}"
+echo "------------------初始化nacos密码完成----------------------"
 
 
 # 安装apisix etcd
@@ -119,11 +129,6 @@ docker-compose up -d
 echo "------------------apisix etcd状态---------------------"
 docker-compose ps
 
-
-# 部署服务得时候需要注册nacos，需要重置后得密码信息
-echo "------------------准备初始化nacos密码完成----------------------"
-curl -X POST 'http://127.0.0.1:8848/nacos/v1/auth/users/admin' -d "password=${default_key}"
-echo "------------------初始化nacos密码完成----------------------"
 
 # 安装main和rbac
 echo "------------------开始权限中心部署--------------"
