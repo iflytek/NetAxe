@@ -25,5 +25,9 @@
   "project_name": "AlertGateway",
   "prometheus": "prometheus:9090",
   "prometheus_username": "admin",
-  "prometheus_password": "PROMETHEUS_PASSWORD"
+  "prometheus_password": "PROMETHEUS_PASSWORD",
+  "iam": {
+    "url": "http://SERVER_IP:31104/abac-api/",
+    "urn_prefix": "netaxe:alert_gateway"
+  }
 }

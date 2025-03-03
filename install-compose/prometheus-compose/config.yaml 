@@ -1,5 +1,7 @@
 server:
   Address: :4168
+  #ServerRoot: public
+  #LogPath: ./logs
 
 gToken:
   # 是否支持多端登录

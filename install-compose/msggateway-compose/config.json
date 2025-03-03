@@ -67,5 +67,9 @@
       "corpsecret": "aRMstBoe4hP7-",
       "msgtype": "text"
     }
+  },
+    "iam": {
+    "url": "http://SERVER_IP:31104/abac-api/",
+    "urn_prefix": "netaxe:msggateway"
   }
 }

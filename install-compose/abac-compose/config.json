@@ -29,6 +29,7 @@
   "mysql_password": "MYSQL_PASSWORD",
   "mysql_db": "abac",
   "project_name": "abac",
+  "queue": "abac",
   "url_prefix": "/abac-api",
   "auth_ldap": false,
   "auth_ldap_server_uri": "ldap://1.1.1.1:389",
@@ -47,5 +48,16 @@
     "is_staff": "CN=aa,CN=Users,DC=aa,DC=local",
     "is_superuser": "CN=aa,CN=Users,DC=aa,DC=local"
   },
-  "SECRET_KEY": "DJANGO_INSECURE"
+  "SECRET_KEY": "DJANGO_INSECURE",
+  "reload_url": "http://SERVER_IP:31104/abac-api/authority/auth_policy/?reload=1",
+  "authority_database": {
+        "authority": {
+            "NAME": "abac",
+            "ENGINE": "django.db.backends.mysql",
+            "HOST": "mysql-server",
+            "USER": "root",
+            "PASSWORD": "MYSQL_PASSWORD",
+            "PORT": 3306
+        }
+    }
 }
