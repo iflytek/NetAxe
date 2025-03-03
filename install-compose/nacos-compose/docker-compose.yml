@@ -12,8 +12,8 @@ services:
     environment:
       - PREFER_HOST_MODE=hostname
       - NACOS_AUTH_ENABLE=true  # 启用认证
-      - NACOS_AUTH_USERNAME=admin  # 设置强用户名
-      - NACOS_AUTH_PASSWORD=NACOS_KEY  # 设置强密码
+      - NACOS_AUTH_USERNAME=nacos  # 设置强用户名
+      - NACOS_AUTH_PASSWORD=NACOS_PASSWORD  # 设置强密码
       - NACOS_AUTH_IDENTITY_KEY=NACOS_KEY
       - NACOS_AUTH_IDENTITY_VALUE=NACOS_KEY
       - NACOS_AUTH_TOKEN=NACOS_KEY
