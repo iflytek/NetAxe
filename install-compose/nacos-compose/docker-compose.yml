@@ -17,6 +17,7 @@ services:
       - NACOS_AUTH_IDENTITY_KEY=NACOS_KEY
       - NACOS_AUTH_IDENTITY_VALUE=NACOS_KEY
       - NACOS_AUTH_TOKEN=NACOS_KEY
+      # - NACOS_AUTH_USER_AGENT_AUTH_WHITE_ENABLE
       #模式为单体模式
       - MODE=standalone
     ports:
