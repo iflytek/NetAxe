@@ -72,7 +72,7 @@ echo "------------------prometheus状态---------------------"
 docker-compose ps
 sleep 10
 
-# 卸载main和rbac
+# 卸载main和abac
 echo "------------------开始权限中心卸载--------------"
 cd $current_path
 cd abac-compose

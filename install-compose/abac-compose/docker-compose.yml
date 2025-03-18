@@ -26,14 +26,3 @@ services:
       - docker_netaxe
     ports:
       - "31104:80"
-
-#  rbac-web:
-#    image: registry.cn-hangzhou.aliyuncs.com/netaxe/rbac-web:1.0
-#    container_name: rbac-web
-#    restart: always
-#    depends_on:
-#      - rbac-backend
-#    ports:
-#      - "32204:80"
-#    networks:
-#      - docker_netaxe
