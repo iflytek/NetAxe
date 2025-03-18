@@ -228,4 +228,32 @@ curl http://127.0.0.1:9080/apisix/admin/routes \
   },
   "status": 1
 }'
+# 初始化ipam路由
+curl http://127.0.0.1:9080/apisix/admin/routes \
+-H 'X-API-KEY: APISIX_ADMIN_KEY' -X POST -i -d '
+{
+  "uri": "/ipam/*",
+  "name": "ipam",
+  "upstream": {
+    "timeout": {
+      "connect": 6,
+      "send": 6,
+      "read": 6
+    },
+    "type": "roundrobin",
+    "scheme": "http",
+    "discovery_type": "nacos",
+    "discovery_args": {
+      "group_name": "default"
+    },
+    "pass_host": "pass",
+    "service_name": "ipam",
+    "keepalive_pool": {
+      "idle_timeout": 60,
+      "requests": 1000,
+      "size": 320
+    }
+  },
+  "status": 1
+}'
 echo "------------------初始化apisix完成----------------------"
