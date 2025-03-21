@@ -1,0 +1,520 @@
+{
+  "results": [
+    {
+      "menu_name": "ALERTGATEWAY_MENU",
+      "zh_name": "告警中心",
+      "key": "alert-gateway",
+      "web_url_port": "",
+      "icon": "告警中心.png",
+      "menus": [
+        {
+          "name": "概览",
+          "path": "/alert-gateway/dashboard",
+          "sort": 0,
+          "icon": "board",
+          "key": "alert-gateway_dashboard",
+          "parent": null,
+          "type": "menu_type"
+        },
+        {
+          "name": "告警",
+          "path": "/alert-gateway/alert",
+          "sort": 1,
+          "icon": "dqgj",
+          "key": "alert-gateway_warn",
+          "parent": null,
+          "type": "group_type"
+        },
+        {
+          "name": "事件",
+          "path": "/alert-gateway/event",
+          "sort": 1,
+          "icon": "lssj",
+          "key": "alert-gateway-event",
+          "parent": null,
+          "type": "group_type"
+        },
+        {
+          "name": "配置",
+          "path": "/alert-gateway/config",
+          "sort": 1,
+          "icon": "pz",
+          "parent": null,
+          "key": "alert-gateway_config",
+          "type": "group_type"
+        },
+        {
+          "name": "当前告警",
+          "path": "/alert-gateway/current-warn",
+          "sort": 1,
+          "icon": "dqgj",
+          "key": "alert-gateway_current-warn",
+          "type": "menu_type",
+          "parent": {
+            "key": "alert-gateway_warn"
+          }
+        },
+        {
+          "name": "历史告警",
+          "path": "/alert-gateway/history-warn",
+          "sort": 1,
+          "icon": "lsgj",
+          "key": "alert-gateway_history-warn",
+          "type": "menu_type",
+          "parent": {
+            "key": "alert-gateway_warn"
+          }
+        },
+        {
+          "name": "事件中心",
+          "path": "/alert-gateway/event-center",
+          "sort": 1,
+          "icon": "lssj",
+          "key": "alert-gateway_event-center",
+          "type": "menu_type",
+          "parent": {
+            "key": "alert-gateway-event"
+          }
+        },
+        {
+          "name": "事件集成",
+          "path": "/alert-gateway/event-config",
+          "sort": 1,
+          "icon": "sjcll",
+          "key": "alert-gateway_event-config",
+          "type": "menu_type",
+          "parent": {
+            "key": "alert-gateway-event"
+          }
+        },
+        {
+          "name": "告警规则",
+          "path": "/alert-gateway/warn-rule",
+          "sort": 1,
+          "icon": "sjcll",
+          "key": "alert-gateway_warn-rule",
+          "type": "menu_type",
+          "parent": {
+            "key": "alert-gateway_config"
+          }
+        },
+        {
+          "name": "屏蔽规则",
+          "path": "/alert-gateway/mask-rule",
+          "sort": 1,
+          "icon": "sjcll",
+          "type": "menu_type",
+          "key": "alert-gateway_mask-rule",
+          "parent": {
+            "key": "alert-gateway_config"
+          }
+        },
+        {
+          "name": "升级策略",
+          "path": "/alert-gateway/update-rule",
+          "sort": 1,
+          "icon": "sjcll",
+          "key": "alert-gateway_update-rule",
+          "type": "menu_type",
+          "parent": {
+            "key": "alert-gateway_config"
+          }
+        },
+        {
+          "name": "通知对象",
+          "path": "/alert-gateway/notice",
+          "sort": 1,
+          "icon": "sjcll",
+          "key": "alert-gateway_notice",
+          "type": "menu_type",
+          "parent": {
+            "key": "alert-gateway_config"
+          }
+        }
+      ]
+    },
+    {
+      "menu_name": "ABAC_MENU",
+      "zh_name": "权限中心",
+      "key": "abac",
+      "web_url_port": "",
+      "icon": "权限中心.png",
+      "menus": [
+        {
+          "name": "概览",
+          "path": "/abac/dashboard",
+          "sort": 0,
+          "icon": "board",
+          "key": "abac_dashboard",
+          "parent": null,
+          "type": "menu_type"
+        },
+        {
+          "name": "权限管控",
+          "path": "/abac_authority",
+          "sort": 1,
+          "icon": "qx",
+          "key": "abac_authority",
+          "type": "group_type",
+          "parent": null
+        },
+        {
+          "name": "组织管理",
+          "path": "/abac_organization",
+          "sort": 1,
+          "icon": "11111",
+          "key": "abac_organization",
+          "parent": null,
+          "type": "group_type"
+        },
+        {
+          "name": "菜单管理",
+          "path": "/abac/menu-authority",
+          "sort": 1,
+          "icon": "lssj",
+          "key": "abac_menu-authority",
+          "parent": {
+            "key": "abac_authority"
+          },
+          "type": "menu_type"
+        },
+        {
+          "name": "权限管理",
+          "path": "/abac/permission-authority",
+          "sort": 1,
+          "icon": "sjcll",
+          "key": "abac_permission-authority",
+          "parent": {
+            "key": "abac_authority"
+          },
+          "type": "menu_type"
+        },
+        {
+          "name": "用户管理",
+          "path": "/abac/user-organize",
+          "sort": 1,
+          "icon": "user",
+          "key": "abac_user-organize",
+          "type": "menu_type",
+          "parent": {
+            "key": "abac_organization"
+          }
+        },
+        {
+          "name": "用户组",
+          "path": "/abac/users-organize",
+          "sort": 1,
+          "icon": "user-group",
+          "key": "abac_users-organize",
+          "type": "menu_type",
+          "parent": {
+            "key": "abac_organization"
+          }
+        }
+      ]
+    },
+    {
+      "menu_name": "BASE_MENU",
+      "zh_name": "管控平台",
+      "key": "base-platform",
+      "web_url_port": "",
+      "icon": "管控平台.png",
+      "menus": [
+        {
+          "name": "首页",
+          "path": "/base-platform/dashboard",
+          "sort": 0,
+          "icon": "board",
+          "key": "base-platform_dashboard",
+          "parent": null,
+          "type": "menu_type"
+        },
+        {
+          "name": "地址定位管理",
+          "path": "/address",
+          "sort": 0,
+          "icon": "board",
+          "key": "address",
+          "parent": null,
+          "type": "group_type"
+        },
+        {
+          "name": "地址寻觅",
+          "path": "/base-platform/address-location",
+          "sort": 1,
+          "icon": "sjcll",
+          "key": "base-platform_address-location",
+          "parent": {
+            "key": "address"
+          },
+          "type": "menu_type"
+        },
+        {
+          "name": "配置管理",
+          "path": "/config_manage",
+          "sort": 0,
+          "icon": "board",
+          "key": "config_manage",
+          "parent": null,
+          "type": "group_type"
+        },
+        {
+          "name": "配置备份",
+          "path": "/base-platform/config-settings",
+          "sort": 1,
+          "icon": "sjcll",
+          "key": "base-platform_config-settings",
+          "parent": {
+            "key": "config_manage"
+          },
+          "type": "menu_type"
+        },
+        {
+          "name": "配置查询",
+          "path": "/base-platform/config-query",
+          "sort": 1,
+          "icon": "sjcll",
+          "key": "base-platform_config-query",
+          "parent": {
+            "key": "config_manage"
+          },
+          "type": "menu_type"
+        },
+        {
+          "name": "配置比对",
+          "path": "/base-platform/config-diff",
+          "sort": 1,
+          "icon": "sjcll",
+          "key": "base-platform_config-diff",
+          "parent": {
+            "key": "config_manage"
+          },
+          "type": "menu_type"
+        },
+        {
+          "name": "配置合规",
+          "path": "/base-platform/compliance",
+          "sort": 1,
+          "icon": "sjcll",
+          "key": "base-platform_compliance",
+          "parent": {
+            "key": "config_manage"
+          },
+          "type": "menu_type"
+        },
+        {
+          "name": "运维支撑",
+          "path": "/support",
+          "sort": 0,
+          "icon": "board",
+          "key": "support",
+          "parent": null,
+          "type": "group_type"
+        },
+        {
+          "name": "值班排班",
+          "path": "/base-platform/noc-ticket",
+          "sort": 1,
+          "icon": "sjcll",
+          "key": "base-platform_noc-ticket",
+          "parent": {
+            "key": "support"
+          },
+          "type": "menu_type"
+        },
+        {
+          "name": "资源管理",
+          "path": "/resource",
+          "sort": 0,
+          "icon": "",
+          "key": "resource",
+          "parent": null,
+          "type": "group_type"
+        },
+        {
+          "name": "网络设备",
+          "path": "/base-platform/network",
+          "sort": 1,
+          "icon": "sjcll",
+          "key": "base-platform_network",
+          "parent": {
+            "key": "resource"
+          },
+          "type": "menu_type"
+        },
+        {
+          "name": "服务器管理",
+          "path": "/base-platform/server",
+          "sort": 1,
+          "icon": "sjcll",
+          "key": "base-platform_server",
+          "parent": {
+            "key": "resource"
+          },
+          "type": "menu_type"
+        },
+        {
+          "name": "登录日志",
+          "path": "/base-platform/login-log",
+          "sort": 1,
+          "icon": "sjcll",
+          "key": "base-platform_login-log",
+          "parent": {
+            "key": "resource"
+          },
+          "type": "menu_type"
+        },{
+          "name": "资源维护",
+          "path": "/base-platform/maintenance",
+          "sort": 1,
+          "icon": "sjcll",
+          "key": "base-platform_maintenance",
+          "parent": {
+            "key": "resource"
+          },
+          "type": "menu_type"
+        }
+      ]
+    },
+    {
+      "menu_name": "DCS_MENU",
+      "zh_name": "DCS控制器",
+      "key": "dcs-control",
+      "web_url_port": "",
+      "icon": "DCS调度.png",
+      "menus": [
+        {
+          "name": "概览",
+          "path": "/dashboard",
+          "sort": 0,
+          "icon": "board",
+          "key": "dashboard",
+          "parent": null,
+          "type": "group_type"
+        },
+        {
+          "name": "一键切换",
+          "path": "/dcs-control",
+          "sort": 0,
+          "icon": "board",
+          "key": "dcs-control",
+          "parent": null,
+          "type": "group_type"
+        },
+        {
+          "name": "安全策略",
+          "path": "/sec_policy_index",
+          "sort": 0,
+          "icon": "board",
+          "key": "sec_policy_index",
+          "parent": null,
+          "type": "group_type"
+        },
+        {
+          "name": "一键封堵",
+          "path": "/sec_policy_deny",
+          "sort": 0,
+          "icon": "board",
+          "key": "sec_policy_deny",
+          "parent": null,
+          "type": "group_type"
+        },
+        {
+          "name": "场景信息",
+          "path": "/dcs-control/base",
+          "sort": 1,
+          "icon": "sjcll",
+          "key": "dcs-control_base",
+          "parent": {
+            "key": "dcs-control"
+          },
+          "type": "menu_type"
+        },
+        {
+          "name": "切换回切",
+          "path": "/dcs-control/switch_failback",
+          "sort": 1,
+          "icon": "sjcll",
+          "key": "dcs-control_switch_failback",
+          "parent": {
+            "key": "dcs-control"
+          },
+          "type": "menu_type"
+        },
+        {
+          "name": "策略查询",
+          "path": "/dcs-control/sec_policy_index",
+          "sort": 1,
+          "icon": "sjcll",
+          "key": "dcs-control_sec_policy_index",
+          "parent": {
+            "key": "sec_policy_index"
+          },
+          "type": "menu_type"
+        },
+        {
+          "name": "下发记录",
+          "path": "/dcs-control/config-record",
+          "sort": 1,
+          "icon": "sjcll",
+          "key": "dcs-control_config-record",
+          "parent": {
+            "key": "dashboard"
+          },
+          "type": "menu_type"
+        },
+        {
+          "name": "地址对象",
+          "path": "/dcs-control/address-set",
+          "sort": 1,
+          "icon": "sjcll",
+          "key": "dcs-control_address-set",
+          "parent": {
+            "key": "sec_policy_deny"
+          },
+          "type": "menu_type"
+        },
+        {
+          "name": "一键封堵",
+          "path": "/dcs-control/auto-deny",
+          "sort": 1,
+          "icon": "sjcll",
+          "key": "dcs-control_auto-deny",
+          "parent": {
+            "key": "sec_policy_deny"
+          },
+          "type": "menu_type"
+        }
+      ]
+    },
+    {
+      "menu_name": "IPAM_MENU",
+      "zh_name": "地址管理",
+      "key": "ipam",
+      "web_url_port": "",
+      "icon": "",
+      "menus": [
+        {
+          "name": "网络地址",
+          "path": "/ipam-group",
+          "sort": 0,
+          "icon": "board",
+          "key": "ipam-group",
+          "parent": null,
+          "type": "group_type"
+        },
+        {
+          "name": "网络地址管理",
+          "path": "/ipam/address",
+          "sort": 1,
+          "icon": "dzgl",
+          "key": "ipam_address",
+          "parent": {
+            "key": "ipam-group"
+          },
+          "type": "menu_type"
+        }
+      ]
+    }
+  ]
+}
