@@ -28,14 +28,6 @@ services:
     networks:
       - docker_netaxe
 
-#  msggateway-web:
-#    image: registry.cn-hangzhou.aliyuncs.com/netaxe/msggateway-web:1.0
-#    container_name: msggateway-web
-#    ports:
-#      - "32201:80"
-#    networks:
-#      - docker_netaxe
-#    restart: always
 
   msggateway-worker2:
     image: registry.cn-hangzhou.aliyuncs.com/netaxe/msggateway:1.0
@@ -48,46 +40,46 @@ services:
     networks:
       - docker_netaxe
 
-  msggateway-worker3:
-    image: registry.cn-hangzhou.aliyuncs.com/netaxe/msggateway:1.0
-    container_name: msggateway-worker3
-    restart: always
-    command: python3 worker.py default
-    volumes:
-      - ./config.json:/app/config/config.json
-      - ./logs:/app/logs
-    networks:
-      - docker_netaxe
-
-  msggateway-worker4:
-    image: registry.cn-hangzhou.aliyuncs.com/netaxe/msggateway:1.0
-    container_name: msggateway-worker4
-    restart: always
-    command: python3 worker.py default
-    volumes:
-      - ./config.json:/app/config/config.json
-      - ./logs:/app/logs
-    networks:
-      - docker_netaxe
-
-  msggateway-worker5:
-    image: registry.cn-hangzhou.aliyuncs.com/netaxe/msggateway:1.0
-    container_name: msggateway-worker5
-    restart: always
-    command: python3 worker.py default
-    volumes:
-      - ./config.json:/app/config/config.json
-      - ./logs:/app/logs
-    networks:
-      - docker_netaxe
-
-  msggateway-worker6:
-    image: registry.cn-hangzhou.aliyuncs.com/netaxe/msggateway:1.0
-    container_name: msggateway-worker6
-    restart: always
-    command: python3 worker.py default
-    volumes:
-      - ./config.json:/app/config/config.json
-      - ./logs:/app/logs
-    networks:
-      - docker_netaxe
+#  msggateway-worker3:
+#    image: registry.cn-hangzhou.aliyuncs.com/netaxe/msggateway:1.0
+#    container_name: msggateway-worker3
+#    restart: always
+#    command: python3 worker.py default
+#    volumes:
+#      - ./config.json:/app/config/config.json
+#      - ./logs:/app/logs
+#    networks:
+#      - docker_netaxe
+#
+#  msggateway-worker4:
+#    image: registry.cn-hangzhou.aliyuncs.com/netaxe/msggateway:1.0
+#    container_name: msggateway-worker4
+#    restart: always
+#    command: python3 worker.py default
+#    volumes:
+#      - ./config.json:/app/config/config.json
+#      - ./logs:/app/logs
+#    networks:
+#      - docker_netaxe
+#
+#  msggateway-worker5:
+#    image: registry.cn-hangzhou.aliyuncs.com/netaxe/msggateway:1.0
+#    container_name: msggateway-worker5
+#    restart: always
+#    command: python3 worker.py default
+#    volumes:
+#      - ./config.json:/app/config/config.json
+#      - ./logs:/app/logs
+#    networks:
+#      - docker_netaxe
+#
+#  msggateway-worker6:
+#    image: registry.cn-hangzhou.aliyuncs.com/netaxe/msggateway:1.0
+#    container_name: msggateway-worker6
+#    restart: always
+#    command: python3 worker.py default
+#    volumes:
+#      - ./config.json:/app/config/config.json
+#      - ./logs:/app/logs
+#    networks:
+#      - docker_netaxe
