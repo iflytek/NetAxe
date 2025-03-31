@@ -180,6 +180,24 @@ docker-compose  ps
 
 echo "------------------部署完成------------------------"
 
+# 安装工作台
+echo "------------------开始工作台部署--------------"
+cd $current_path
+cd workbench-compose
+docker-compose pull
+docker-compose  up -d
+echo "------------------工作台状态------------------"
+docker-compose  ps
+
+echo "------------------部署完成------------------------"
+
+
+echo "------------------刷新权限------------------"
+curl "http://127.0.0.1:31104/abac-api/authority/auth_policy/?reload=1"
+echo "------------------刷新权限成功------------------"
+
+
+
 echo "请记住初始化密码"
 echo "IP: $iface_ip"
 echo "密码: $default_key"
