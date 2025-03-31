@@ -134,12 +134,12 @@ curl -X POST 'http://127.0.0.1:8848/nacos/v1/auth/users/admin' -d "password=${de
 echo "------------------初始化nacos密码完成----------------------"
 
 # 安装main和rbac
-echo "------------------开始rbac部署--------------"
+echo "------------------开始abac部署--------------"
 cd $current_path
-cd rbac-compose
+cd abac-compose
 docker-compose pull
 docker-compose  up -d
-echo "------------------rbac状态------------------"
+echo "------------------abac状态------------------"
 docker-compose ps
 sleep 10
 

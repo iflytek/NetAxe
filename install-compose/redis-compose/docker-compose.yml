@@ -8,7 +8,9 @@ services:
     container_name: redis-cache
     ports:
       - "36379:6379"
-    command: "redis-server --requirepass REDIS_PASSWORD"
+    command: "redis-server --requirepass REDIS_PASSWORD --appendonly yes --maxmemory 10gb --maxmemory-policy allkeys-lru"
+    volumes:
+      - ./data:/data
     networks:
       - docker_netaxe
   

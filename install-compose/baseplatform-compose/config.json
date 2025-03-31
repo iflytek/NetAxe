@@ -19,7 +19,7 @@
   "mongodb_host": "mongo",
   "mongodb_port": 27017,
   "mongodb_user": "root",
-  "mongodb_password": "70uUceCVL1gf",
+  "mongodb_password": "MONGO_PASSWORD",
   "redis_host": "redis-cache",
   "redis_port": 6379,
   "redis_pwd": "REDIS_PASSWORD",

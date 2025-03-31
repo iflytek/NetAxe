@@ -120,14 +120,14 @@ curl -X POST 'http://127.0.0.1:8848/nacos/v1/auth/users/admin' -d "password=${de
 echo "------------------初始化nacos密码完成----------------------"
 
 
-# 安装apisix etcd
-echo "------------------开始apisix etcd部署------------------"
-cd $current_path
-cd apisix-compose
-mkdir -m 777 -p etcd_conf/data
-docker-compose up -d
-echo "------------------apisix etcd状态---------------------"
-docker-compose ps
+## 安装apisix etcd
+#echo "------------------开始apisix etcd部署------------------"
+#cd $current_path
+#cd apisix-compose
+#mkdir -m 777 -p etcd_conf/data
+#docker-compose up -d
+#echo "------------------apisix etcd状态---------------------"
+#docker-compose ps
 
 
 # 安装main和rbac
@@ -137,15 +137,6 @@ cd abac-compose
 docker-compose pull
 docker-compose  up -d
 echo "------------------权限中心状态------------------"
-docker-compose ps
-sleep 10
-
-echo "------------------开始前端服务部署--------------"
-cd $current_path
-cd main-compose
-docker-compose pull
-docker-compose  up -d
-echo "------------------前端服务状态------------------"
 docker-compose ps
 sleep 10
 
@@ -177,6 +168,17 @@ docker-compose pull
 docker-compose  up -d
 echo "------------------告警中心状态------------------"
 docker-compose  ps
+sleep 10
+
+echo "------------------开始前端服务部署--------------"
+cd $current_path
+cd main-compose
+docker-compose pull
+docker-compose  up -d
+echo "------------------前端服务状态------------------"
+docker-compose ps
+sleep 10
+
 
 echo "------------------部署完成------------------------"
 
