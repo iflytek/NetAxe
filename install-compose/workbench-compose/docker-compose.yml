@@ -13,6 +13,8 @@ services:
       - ./menu.json:/config/menu.json
       - ./logs:/app/logs
     command: supervisord -n -c /app/supervisord_backend.conf
+    ports:
+      - "31105:8000"
     networks:
       - docker_netaxe
 
