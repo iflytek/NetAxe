@@ -9,7 +9,7 @@ services:
     container_name: workbench-backend
     restart: always
     volumes:
-      - ./config.json:/config/config.json
+      - ./config.json:/app/config/config.json
       - ./menu.json:/config/menu.json
       - ./logs:/app/logs
     command: supervisord -n -c /app/supervisord_backend.conf
