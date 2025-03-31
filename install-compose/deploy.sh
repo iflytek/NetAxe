@@ -170,16 +170,6 @@ echo "------------------告警中心状态------------------"
 docker-compose  ps
 sleep 10
 
-echo "------------------开始前端服务部署--------------"
-cd $current_path
-cd main-compose
-docker-compose pull
-docker-compose  up -d
-echo "------------------前端服务状态------------------"
-docker-compose ps
-sleep 10
-
-
 echo "------------------部署完成------------------------"
 
 # 安装工作台
@@ -190,6 +180,27 @@ docker-compose pull
 docker-compose  up -d
 echo "------------------工作台状态------------------"
 docker-compose  ps
+sleep 10
+
+# 安装地址管理IPAM
+echo "------------------开始地址管理IPAM部署--------------"
+cd $current_path
+cd ipam-compose
+docker-compose pull
+docker-compose  up -d
+echo "------------------地址管理IPAM状态------------------"
+docker-compose  ps
+sleep 10
+
+# 安装前端服务
+echo "------------------开始前端服务部署--------------"
+cd $current_path
+cd main-compose
+docker-compose pull
+docker-compose  up -d
+echo "------------------前端服务状态------------------"
+docker-compose ps
+sleep 10
 
 echo "------------------部署完成------------------------"
 
