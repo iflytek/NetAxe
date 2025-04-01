@@ -33,16 +33,16 @@ services:
       ports:
           - "31103:80"
 
-    # 前端
-    ipam-web:
-      container_name: ipam-web
-      image: registry.cn-hangzhou.aliyuncs.com/netaxe/ipam-web:1.0
-      environment:
-        TZ: Asia/Shanghai
-      volumes:
-        - /etc/localtime:/etc/localtime
-      ports:
-          - "32203:80"
-      networks:
-          - docker_netaxe
-      restart: always
+#    # 前端
+#    ipam-web:
+#      container_name: ipam-web
+#      image: registry.cn-hangzhou.aliyuncs.com/netaxe/ipam-web:1.0
+#      environment:
+#        TZ: Asia/Shanghai
+#      volumes:
+#        - /etc/localtime:/etc/localtime
+#      ports:
+#          - "32203:80"
+#      networks:
+#          - docker_netaxe
+#      restart: always
