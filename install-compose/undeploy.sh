@@ -123,6 +123,22 @@ docker-compose  down -v
 echo "------------------IPAM状态------------------"
 docker-compose  ps
 
+# 卸载Grafana
+echo "------------------开始Grafana卸载--------------"
+cd $current_path
+cd grafana-compose
+docker-compose  down -v
+echo "------------------Grafana状态------------------"
+docker-compose  ps
+
+# 卸载workbench
+echo "------------------开始workbench卸载--------------"
+cd $current_path
+cd workbench-compose
+docker-compose  down -v
+echo "------------------workbench状态------------------"
+docker-compose  ps
+
 echo "------------------卸载完成------------------------"
 # stop停止所有容器
 #docker stop $(docker ps -a -q)

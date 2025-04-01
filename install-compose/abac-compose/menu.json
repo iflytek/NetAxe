@@ -259,11 +259,11 @@
           "type": "group_type"
         },
         {
-          "name": "配置备份",
-          "path": "/base-platform/config-settings",
+          "name": "备份策略",
+          "path": "/base-platform/config-policy",
           "sort": 1,
           "icon": "sjcll",
-          "key": "base-platform_config-settings",
+          "key": "base-platform_config-policy",
           "parent": {
             "key": "config_manage"
           },
