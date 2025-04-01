@@ -10,6 +10,7 @@ services:
     #ports:
     #  - "5555:5555"
     command: sh init.sh
+    restart: always
     environment:
       TZ: Asia/Shanghai
     volumes:
@@ -25,6 +26,7 @@ services:
   base-nginx:
     image: registry.cn-hangzhou.aliyuncs.com/netaxe/base-nginx:1.23.1
     container_name: base-nginx
+    restart: always
     environment:
       TZ: Asia/Shanghai
     volumes:
@@ -55,6 +57,7 @@ services:
     image: registry.cn-hangzhou.aliyuncs.com/netaxe/base-backend:1.0
     container_name: celery-default
     command: sh start.sh default
+    restart: always
     environment:
       TZ: Asia/Shanghai
     depends_on:
@@ -72,6 +75,7 @@ services:
     image: registry.cn-hangzhou.aliyuncs.com/netaxe/base-backend:1.0
     container_name: celery-config
     command: sh start.sh config
+    restart: always
     environment:
       TZ: Asia/Shanghai
     volumes:
@@ -89,6 +93,7 @@ services:
     image: registry.cn-hangzhou.aliyuncs.com/netaxe/base-backend:1.0
     container_name: celery-xunmi
     command: sh start.sh xunmi
+    restart: always
     environment:
       TZ: Asia/Shanghai
     volumes:

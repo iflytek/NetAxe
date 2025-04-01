@@ -27,7 +27,7 @@
   "prometheus_username": "admin",
   "prometheus_password": "PROMETHEUS_PASSWORD",
   "iam": {
-    "url": "http://SERVER_IP:31104/abac-api/",
+    "url": "http://abac-nginx:80/abac-api",
     "urn_prefix": "netaxe:alert_gateway"
   }
 }

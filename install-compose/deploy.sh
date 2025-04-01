@@ -38,6 +38,7 @@ echo "Using nacos_key: $nacos_key"
 # 遍历当前目录的所有子目录，查找 config.json 文件并修改其中的 server_ip 字段
 find . -type f -name "config.json" -exec sed -i "s|SERVER_IP|${iface_ip}|g" {} \;
 find . -type f -name "config.json" -exec sed -i "s|MYSQL_PASSWORD|${default_key}|g" {} \;
+find . -type f -name "config.yaml" -exec sed -i "s|MYSQL_PASSWORD|${default_key}|g" {} \;
 find . -type f -name "config.json" -exec sed -i "s|REDIS_PASSWORD|${default_key}|g" {} \;
 find . -type f -name "config.json" -exec sed -i "s|MONGO_PASSWORD|${default_key}|g" {} \;
 find . -type f -name "config.json" -exec sed -i "s|RABBITMQ_PASSWORD|${default_key}|g" {} \;

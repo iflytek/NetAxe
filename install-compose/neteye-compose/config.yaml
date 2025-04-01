@@ -1,0 +1,12 @@
+# -*- coding: utf-8 -*-
+backendport: 8000
+
+
+mysqlconf:
+  server: mysql-server
+  port: 3306
+  database: neteye
+  username: root
+  password: MYSQL_PASSWORD
+
+dbsource:

@@ -4,15 +4,15 @@ networks:
     external: true
     
 services:
-  neteye-controller:
+  neteye-backend:
     image: registry.cn-hangzhou.aliyuncs.com/netaxe/neteye:1.0
-    container_name: neteye-controller
+    container_name: neteye-backend
+    restart: always
     environment:
       - TZ=Asia/Shanghai
     volumes:
       - /etc/localtime:/etc/localtime
-      - ./config.json:/app/config/config.json
-      - ./logs:/app/logs
+      - ./config.yaml:/build/etc/config.yaml
     ports:
       - "31106:8000"
     networks:
