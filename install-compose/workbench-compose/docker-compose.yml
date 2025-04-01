@@ -1,0 +1,20 @@
+version: "3.2"
+networks:
+  docker_netaxe:
+    external: true
+    
+services:
+  workbench-backend:
+    image: registry.cn-hangzhou.aliyuncs.com/netaxe/workbench-backend:1.0
+    container_name: workbench-backend
+    restart: always
+    volumes:
+      - ./config.json:/app/config/config.json
+      - ./menu.json:/config/menu.json
+      - ./logs:/app/logs
+    command: supervisord -n -c /app/supervisord_backend.conf
+    ports:
+      - "31105:8000"
+    networks:
+      - docker_netaxe
+

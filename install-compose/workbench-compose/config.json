@@ -1,0 +1,15 @@
+{
+  "url_prefix": "/workbench",
+  "mysql_host": "mysql-server",
+  "mysql_port": "3306",
+  "mysql_user": "root",
+  "mysql_password": "MYSQL_PASSWORD",
+  "database": "workbench",
+  "user_info_url": "http://SERVER_IP:31104/abac-api/userInfo/",
+  "grafana_alive_url": "",
+  "grafana_alive_token": "",
+  "grafana_flow_url": "",
+  "grafana_flow_token": "",
+  "grafana_dashboard_url": "",
+  "grafana_dashboard_token": ""
+}

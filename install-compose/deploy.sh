@@ -120,14 +120,14 @@ curl -X POST 'http://127.0.0.1:8848/nacos/v1/auth/users/admin' -d "password=${de
 echo "------------------初始化nacos密码完成----------------------"
 
 
-# 安装apisix etcd
-echo "------------------开始apisix etcd部署------------------"
-cd $current_path
-cd apisix-compose
-mkdir -m 777 -p etcd_conf/data
-docker-compose up -d
-echo "------------------apisix etcd状态---------------------"
-docker-compose ps
+## 安装apisix etcd
+#echo "------------------开始apisix etcd部署------------------"
+#cd $current_path
+#cd apisix-compose
+#mkdir -m 777 -p etcd_conf/data
+#docker-compose up -d
+#echo "------------------apisix etcd状态---------------------"
+#docker-compose ps
 
 
 # 安装main和rbac
@@ -137,15 +137,6 @@ cd abac-compose
 docker-compose pull
 docker-compose  up -d
 echo "------------------权限中心状态------------------"
-docker-compose ps
-sleep 10
-
-echo "------------------开始前端服务部署--------------"
-cd $current_path
-cd main-compose
-docker-compose pull
-docker-compose  up -d
-echo "------------------前端服务状态------------------"
 docker-compose ps
 sleep 10
 
@@ -177,9 +168,64 @@ docker-compose pull
 docker-compose  up -d
 echo "------------------告警中心状态------------------"
 docker-compose  ps
+sleep 10
 
 echo "------------------部署完成------------------------"
 
+# 安装工作台
+echo "------------------开始工作台部署--------------"
+cd $current_path
+cd workbench-compose
+docker-compose pull
+docker-compose  up -d
+echo "------------------工作台状态------------------"
+docker-compose  ps
+sleep 10
+
+# 安装地址管理IPAM
+echo "------------------开始地址管理IPAM部署--------------"
+cd $current_path
+cd ipam-compose
+docker-compose pull
+docker-compose  up -d
+echo "------------------地址管理IPAM状态------------------"
+docker-compose  ps
+sleep 10
+
+# 安装grafana
+echo "------------------开始grafana部署--------------"
+cd $current_path
+cd grafana-compose
+docker volume create grafana-data
+docker-compose pull
+ssh-keygen -t rsa -b 4096 -m PEM -f grafana.key -N ""
+openssl rsa -in grafana.key -pubout -outform PEM -out public-key.pem
+docker-compose  up -d
+echo "------------------地址管理grafana状态------------------"
+docker-compose  ps
+sleep 10
+
+
+# 安装前端服务
+echo "------------------开始前端服务部署--------------"
+cd $current_path
+cd main-compose
+docker-compose pull
+docker-compose  up -d
+echo "------------------前端服务状态------------------"
+docker-compose ps
+sleep 10
+
+
+
+
+echo "------------------刷新权限------------------"
+curl "http://127.0.0.1:31104/abac-api/authority/auth_policy/?reload=1"
+echo "------------------刷新权限成功------------------"
+sleep 10
+
+
+echo "------------------所有服务部署完成------------------------"
 echo "请记住初始化密码"
 echo "IP: $iface_ip"
 echo "密码: $default_key"

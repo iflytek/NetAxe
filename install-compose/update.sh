@@ -9,12 +9,12 @@ if [ $? -ne 0 ]; then
 fi
 
 
-# 更新main和rbac
-echo "------------------开始rbac更新--------------"
+# 更新main和abac
+echo "------------------开始abac更新--------------"
 cd $current_path
-cd rbac-compose
+cd abac-compose
 docker-compose down -v && docker-compose pull && docker-compose up -d
-echo "------------------rbac状态------------------"
+echo "------------------abac状态------------------"
 docker-compose ps
 sleep 10
 
