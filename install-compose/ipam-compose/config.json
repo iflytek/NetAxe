@@ -23,6 +23,7 @@
   "redis_host": "redis-cache",
   "redis_port": 6379,
   "redis_pwd": "REDIS_PASSWORD",
+  "redis_num": 12,
   "mysql_host": "mysql-server",
   "mysql_port": "3306",
   "mysql_user": "root",
