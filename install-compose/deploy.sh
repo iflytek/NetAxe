@@ -192,6 +192,20 @@ echo "------------------地址管理IPAM状态------------------"
 docker-compose  ps
 sleep 10
 
+# 安装grafana
+echo "------------------开始grafana部署--------------"
+cd $current_path
+cd grafana-compose
+docker volume create grafana-data
+docker-compose pull
+ssh-keygen -t rsa -b 4096 -m PEM -f grafana.key -N ""
+openssl rsa -in grafana.key -pubout -outform PEM -out public-key.pem
+docker-compose  up -d
+echo "------------------地址管理grafana状态------------------"
+docker-compose  ps
+sleep 10
+
+
 # 安装前端服务
 echo "------------------开始前端服务部署--------------"
 cd $current_path
