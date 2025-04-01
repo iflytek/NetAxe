@@ -4,7 +4,7 @@ networks:
     external: true
 services:
   regis:
-    image: artifacts.iflytek.com/docker-private/netops/regiscenter:2.0
+    image: registry.cn-hangzhou.aliyuncs.com/netaxe/regiscenter:2.0
     container_name: regis
     privileged: true
     volumes:
