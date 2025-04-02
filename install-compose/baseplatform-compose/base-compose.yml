@@ -1,0 +1,100 @@
+version: "3.2"
+networks:
+  docker_netaxe:
+    external: true
+
+services:
+  base-backend:
+    image: registry.cn-hangzhou.aliyuncs.com/netaxe/base-backend:1.0
+    container_name: base-backend
+    restart: always
+    ports:
+      - "5555:5555"
+    command: sh init.sh
+    environment:
+      TZ: Asia/Shanghai
+    volumes:
+      - /etc/localtime:/etc/localtime
+      - ./base-platform/backend:/app
+      - ./base-platform/config:/config
+    networks:
+      - docker_netaxe
+
+  base-nginx:
+    image: registry.cn-hangzhou.aliyuncs.com/netaxe/base-nginx:1.23.1
+    container_name: base-nginx
+    restart: always
+    environment:
+      TZ: Asia/Shanghai
+    volumes:
+      - /etc/localtime:/etc/localtime
+    ports:
+      - "31100:80"
+    depends_on:
+      - base-backend
+    networks:
+      - docker_netaxe
+
+  base-web:
+    image: registry.cn-hangzhou.aliyuncs.com/netaxe/base-web:1.0
+    container_name: base-web
+    restart: always
+    environment:
+      TZ: Asia/Shanghai
+    volumes:
+      - /etc/localtime:/etc/localtime
+    ports:
+      - "32200:80"
+    depends_on:
+      - base-nginx
+      - base-backend
+    networks:
+      - docker_netaxe
+
+  celery-default:
+    image: registry.cn-hangzhou.aliyuncs.com/netaxe/base-backend:1.0
+    container_name: celery-default
+    command: sh start.sh default
+    restart: always
+    environment:
+      TZ: Asia/Shanghai
+    depends_on:
+      - base-backend
+    volumes:
+       - /etc/localtime:/etc/localtime
+       - ./base-platform/backend:/app
+       - ./base-platform/config:/config
+    networks:
+      - docker_netaxe
+
+  celery-config:
+    image: registry.cn-hangzhou.aliyuncs.com/netaxe/base-backend:1.0
+    container_name: celery-config
+    command: sh start.sh config
+    restart: always
+    environment:
+      TZ: Asia/Shanghai
+    volumes:
+      - /etc/localtime:/etc/localtime
+      - ./base-platform/backend:/app
+      - ./base-platform/config:/config
+    depends_on:
+      - base-backend
+    networks:
+      - docker_netaxe
+
+  celery-xunmi:
+    image: registry.cn-hangzhou.aliyuncs.com/netaxe/base-backend:1.0
+    container_name: celery-xunmi
+    command: sh start.sh xunmi
+    restart: always
+    environment:
+      TZ: Asia/Shanghai
+    volumes:
+      - /etc/localtime:/etc/localtime
+      - ./base-platform/backend:/app
+      - ./base-platform/config:/config
+    depends_on:
+      - base-backend
+    networks:
+      - docker_netaxe
