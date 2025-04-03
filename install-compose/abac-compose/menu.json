@@ -221,20 +221,63 @@
       "icon": "管控平台.png",
       "menus": [
         {
-          "name": "首页",
-          "path": "/base-platform/dashboard",
+          "name": "资源管理",
+          "path": "/resource",
           "sort": 0,
-          "icon": "board",
-          "key": "base-platform_dashboard",
+          "icon": "",
+          "key": "resource",
           "parent": null,
+          "type": "group_type"
+        },
+        {
+          "name": "网络设备",
+          "path": "/base-platform/network",
+          "sort": 1,
+          "icon": "sjcll",
+          "key": "base-platform_network",
+          "parent": {
+            "key": "resource"
+          },
           "type": "menu_type"
         },
         {
-          "name": "地址定位管理",
-          "path": "/address",
+          "name": "服务器管理",
+          "path": "/base-platform/server",
+          "sort": 1,
+          "icon": "sjcll",
+          "key": "base-platform_server",
+          "parent": {
+            "key": "resource"
+          },
+          "type": "menu_type"
+        },
+        {
+          "name": "登录日志",
+          "path": "/base-platform/login-log",
+          "sort": 1,
+          "icon": "sjcll",
+          "key": "base-platform_login-log",
+          "parent": {
+            "key": "resource"
+          },
+          "type": "menu_type"
+        },{
+          "name": "资源维护",
+          "path": "/base-platform/maintenance",
+          "sort": 1,
+          "icon": "sjcll",
+          "key": "base-platform_maintenance",
+          "parent": {
+            "key": "resource"
+          },
+          "type": "menu_type"
+        },
+        {
+          "name": "自动化",
+          "path": "/automation",
           "sort": 0,
           "icon": "board",
-          "key": "address",
+          "key": "automation",
           "parent": null,
           "type": "group_type"
         },
@@ -245,7 +288,18 @@
           "icon": "sjcll",
           "key": "base-platform_address-location",
           "parent": {
-            "key": "address"
+            "key": "automation"
+          },
+          "type": "menu_type"
+        },
+        {
+          "name": "诊断中心",
+          "path": "/base-platform/automation-diagnose",
+          "sort": 1,
+          "icon": "sjcll",
+          "key": "base-platform_automation-diagnose",
+          "parent": {
+            "key": "automation"
           },
           "type": "menu_type"
         },
@@ -303,185 +357,93 @@
           "type": "menu_type"
         },
         {
+          "name": "作业中心",
+          "path": "/task",
+          "sort": 0,
+          "icon": "",
+          "key": "task_center",
+          "parent": null,
+          "type": "group_type"
+        },
+        {
+          "name": "任务列表",
+          "path": "/base-platform/task-list",
+          "sort": 1,
+          "icon": "sjcll",
+          "key": "base-platform_task-list",
+          "parent": {
+            "key": "task_center"
+          },
+          "type": "menu_type"
+        },
+        {
+          "name": "任务结果",
+          "path": "/base-platform/task-result",
+          "sort": 1,
+          "icon": "sjcll",
+          "key": "base-platform_task-result",
+          "parent": {
+            "key": "task_center"
+          },
+          "type": "menu_type"
+        },
+        {
           "name": "运维支撑",
           "path": "/support",
           "sort": 0,
-          "icon": "board",
+          "icon": "",
           "key": "support",
           "parent": null,
           "type": "group_type"
         },
         {
-          "name": "值班排班",
+          "name": "值班维护",
           "path": "/base-platform/noc-ticket",
           "sort": 1,
           "icon": "sjcll",
           "key": "base-platform_noc-ticket",
           "parent": {
-            "key": "support"
-          },
-          "type": "menu_type"
-        },
-        {
-          "name": "资源管理",
-          "path": "/resource",
-          "sort": 0,
-          "icon": "",
-          "key": "resource",
-          "parent": null,
-          "type": "group_type"
-        },
-        {
-          "name": "网络设备",
-          "path": "/base-platform/network",
-          "sort": 1,
-          "icon": "sjcll",
-          "key": "base-platform_network",
-          "parent": {
-            "key": "resource"
-          },
-          "type": "menu_type"
-        },
-        {
-          "name": "服务器管理",
-          "path": "/base-platform/server",
-          "sort": 1,
-          "icon": "sjcll",
-          "key": "base-platform_server",
-          "parent": {
-            "key": "resource"
-          },
-          "type": "menu_type"
-        },
-        {
-          "name": "登录日志",
-          "path": "/base-platform/login-log",
-          "sort": 1,
-          "icon": "sjcll",
-          "key": "base-platform_login-log",
-          "parent": {
-            "key": "resource"
-          },
-          "type": "menu_type"
-        },{
-          "name": "资源维护",
-          "path": "/base-platform/maintenance",
-          "sort": 1,
-          "icon": "sjcll",
-          "key": "base-platform_maintenance",
-          "parent": {
-            "key": "resource"
+            "key": "task_center"
           },
           "type": "menu_type"
         }
       ]
     },
     {
-      "menu_name": "DCS_MENU",
-      "zh_name": "DCS控制器",
-      "key": "dcs-control",
+      "menu_name": "NETEYE_MENU",
+      "zh_name": "监控中心",
+      "key": "neteye",
       "web_url_port": "",
-      "icon": "DCS调度.png",
+      "icon": "",
       "menus": [
         {
-          "name": "概览",
-          "path": "/dashboard",
+          "name": "服务监控",
+          "path": "/neteye-services",
           "sort": 0,
           "icon": "board",
-          "key": "dashboard",
+          "key": "neteye-services",
           "parent": null,
           "type": "group_type"
         },
         {
-          "name": "一键切换",
-          "path": "/dcs-control",
-          "sort": 0,
-          "icon": "board",
-          "key": "dcs-control",
-          "parent": null,
-          "type": "group_type"
-        },
-        {
-          "name": "安全策略",
-          "path": "/sec_policy_index",
-          "sort": 0,
-          "icon": "board",
-          "key": "sec_policy_index",
-          "parent": null,
-          "type": "group_type"
-        },
-        {
-          "name": "一键封堵",
-          "path": "/sec_policy_deny",
-          "sort": 0,
-          "icon": "board",
-          "key": "sec_policy_deny",
-          "parent": null,
-          "type": "group_type"
-        },
-        {
-          "name": "场景信息",
-          "path": "/dcs-control/base",
+          "name": "数据来源",
+          "path": "/neteye/public-resource",
           "sort": 1,
-          "icon": "sjcll",
-          "key": "dcs-control_base",
+          "icon": "dzgl",
+          "key": "neteye_public-resource",
           "parent": {
-            "key": "dcs-control"
+            "key": "neteye-services"
           },
           "type": "menu_type"
         },
         {
-          "name": "切换回切",
-          "path": "/dcs-control/switch_failback",
+          "name": "服务监控",
+          "path": "/neteye/service-monitor",
           "sort": 1,
-          "icon": "sjcll",
-          "key": "dcs-control_switch_failback",
+          "icon": "dzgl",
+          "key": "neteye_service-monitor",
           "parent": {
-            "key": "dcs-control"
-          },
-          "type": "menu_type"
-        },
-        {
-          "name": "策略查询",
-          "path": "/dcs-control/sec_policy_index",
-          "sort": 1,
-          "icon": "sjcll",
-          "key": "dcs-control_sec_policy_index",
-          "parent": {
-            "key": "sec_policy_index"
-          },
-          "type": "menu_type"
-        },
-        {
-          "name": "下发记录",
-          "path": "/dcs-control/config-record",
-          "sort": 1,
-          "icon": "sjcll",
-          "key": "dcs-control_config-record",
-          "parent": {
-            "key": "dashboard"
-          },
-          "type": "menu_type"
-        },
-        {
-          "name": "地址对象",
-          "path": "/dcs-control/address-set",
-          "sort": 1,
-          "icon": "sjcll",
-          "key": "dcs-control_address-set",
-          "parent": {
-            "key": "sec_policy_deny"
-          },
-          "type": "menu_type"
-        },
-        {
-          "name": "一键封堵",
-          "path": "/dcs-control/auto-deny",
-          "sort": 1,
-          "icon": "sjcll",
-          "key": "dcs-control_auto-deny",
-          "parent": {
-            "key": "sec_policy_deny"
+            "key": "neteye-services"
           },
           "type": "menu_type"
         }
@@ -495,7 +457,7 @@
       "icon": "",
       "menus": [
         {
-          "name": "网络地址",
+          "name": "IPAM",
           "path": "/ipam-group",
           "sort": 0,
           "icon": "board",
@@ -504,7 +466,7 @@
           "type": "group_type"
         },
         {
-          "name": "网络地址管理",
+          "name": "地址管理",
           "path": "/ipam/address",
           "sort": 1,
           "icon": "dzgl",
