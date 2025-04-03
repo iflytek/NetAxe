@@ -59,5 +59,6 @@
             "PASSWORD": "MYSQL_PASSWORD",
             "PORT": 3306
         }
-    }
+    },
+  "reload_menu": true
 }
