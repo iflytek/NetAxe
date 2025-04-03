@@ -212,7 +212,7 @@ docker-compose pull
 ssh-keygen -t rsa -b 4096 -m PEM -f grafana.key -N ""
 openssl rsa -in grafana.key -pubout -outform PEM -out public-key.pem
 docker-compose  up -d
-echo "------------------地址管理grafana状态------------------"
+echo "------------------grafana状态------------------"
 docker-compose  ps
 sleep 10
 
