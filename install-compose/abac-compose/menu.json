@@ -403,7 +403,7 @@
           "icon": "sjcll",
           "key": "base-platform_noc-ticket",
           "parent": {
-            "key": "task_center"
+            "key": "support"
           },
           "type": "menu_type"
         }
