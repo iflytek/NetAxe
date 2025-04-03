@@ -304,6 +304,17 @@
           "type": "menu_type"
         },
         {
+          "name": "接口列表",
+          "path": "/base-platform/interfaceused",
+          "sort": 1,
+          "icon": "sjcll",
+          "key": "base-platform_interfaceused",
+          "parent": {
+            "key": "automation"
+          },
+          "type": "menu_type"
+        },
+        {
           "name": "配置管理",
           "path": "/config_manage",
           "sort": 0,
