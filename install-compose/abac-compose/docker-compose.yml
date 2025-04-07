@@ -12,6 +12,7 @@ services:
       - ./config.json:/config/config.json
       - ./menu.json:/config/menu.json
       - ./logs:/app/logs
+      - ./uwsgi.ini:/app/uwsgi.ini
     command: sh start.sh
     networks:
       - docker_netaxe
