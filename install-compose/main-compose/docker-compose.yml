@@ -12,5 +12,6 @@ services:
       - "9980:80"
     volumes:
       - ./nginx.conf:/etc/nginx/conf.d/default.conf
+#      - ./config.js:/home/static/config.js
     networks:
       - docker_netaxe
