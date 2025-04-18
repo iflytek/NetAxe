@@ -5,7 +5,7 @@
   "mysql_user": "root",
   "mysql_password": "MYSQL_PASSWORD",
   "database": "workbench",
-  "mongodb_url":"mongodb://root:MONGO_PASSWORD@SERVER_IP:27017/?authSource=admin&readPreference=primary&directConnection=true&ssl=false",
+  "mongodb_url":"mongodb://root:MONGO_PASSWORD@SERVER_IP:37017/?authSource=admin&readPreference=primary&directConnection=true&ssl=false",
   "user_info_url": "http://SERVER_IP:31104/abac-api/userInfo/",
   "grafana_alive_url": "",
   "grafana_alive_token": "",
