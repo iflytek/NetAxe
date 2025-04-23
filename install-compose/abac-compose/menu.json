@@ -425,7 +425,7 @@
       "zh_name": "监控中心",
       "key": "neteye",
       "web_url_port": "",
-      "icon": "",
+      "icon": "监控中心.png",
       "menus": [
         {
           "name": "服务监控",
@@ -465,7 +465,7 @@
       "zh_name": "地址管理",
       "key": "ipam",
       "web_url_port": "",
-      "icon": "",
+      "icon": "地址管理.png",
       "menus": [
         {
           "name": "IPAM",
