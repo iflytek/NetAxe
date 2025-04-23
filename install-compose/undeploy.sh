@@ -52,17 +52,6 @@ echo "------------------nacos状态----------------------"
 docker-compose ps
 
 
-
-# 卸载apisix etcd
-echo "------------------开始apisix etcd卸载------------------"
-cd $current_path
-cd apisix-compose
-docker-compose down -v
-rm -rf etcd_conf/data
-echo "------------------apisix etcd状态---------------------"
-docker-compose ps
-
-
 # 卸载prometheus
 echo "------------------开始prometheus卸载------------------"
 cd $current_path
