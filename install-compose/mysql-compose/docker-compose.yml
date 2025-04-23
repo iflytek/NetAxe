@@ -12,11 +12,12 @@ services:
       TZ: Asia/Shanghai
       MYSQL_DATABASE: "abac"
       MYSQL_USER: "netaxe"
-      MYSQL_ROOT_PASSWORD: "MYSQL_PASSWORD"
-      MYSQL_PASSWORD: "MYSQL_PASSWORD"
+      MYSQL_ROOT_PASSWORD: "MYSQL_PASSWD"
+      MYSQL_PASSWORD: "MYSQL_PASSWD"
     volumes:
       - ./my.cnf:/etc/mysql/my.cnf
       - ./data:/var/lib/mysql
+      - ./mysqlfiles:/var/lib/mysql-files
       - ./init/:/docker-entrypoint-initdb.d/
     command: [ '--default-authentication-plugin=mysql_native_password',
       '--character-set-server=utf8mb4',

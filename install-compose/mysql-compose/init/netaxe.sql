@@ -18,9 +18,9 @@ CREATE DATABASE IF NOT EXISTS workbench
 DEFAULT CHARACTER SET utf8mb4
 DEFAULT COLLATE utf8mb4_general_ci;
 
-create user netaxe@localhost identified by 'netaxe_pwd';
-grant all on *.* to netaxe@'%' identified by 'netaxe_pwd';
-grant all on *.* to netaxe@localhost identified by 'netaxe_pwd';
-grant all on *.* to netaxe@'%' identified by 'netaxe_pwd' with grant option;
-grant all privileges on *.* to root@'%' identified by 'MYSQL_PASSWORD';
+create user netaxe@localhost identified by 'MYSQL_PASSWD';
+grant all on *.* to netaxe@'%' identified by 'MYSQL_PASSWD';
+grant all on *.* to netaxe@localhost identified by 'MYSQL_PASSWD';
+grant all on *.* to netaxe@'%' identified by 'MYSQL_PASSWD' with grant option;
+grant all privileges on *.* to root@'%' identified by 'MYSQL_PASSWD';
 flush privileges;
