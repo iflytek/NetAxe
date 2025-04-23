@@ -38,21 +38,7 @@ services:
     networks:
       - docker_netaxe
 
-#  base-web:
-#    image: registry.cn-hangzhou.aliyuncs.com/netaxe/base-web:1.0
-#    container_name: base-web
-#    environment:
-#      TZ: Asia/Shanghai
-#    volumes:
-#      - /etc/localtime:/etc/localtime
-#    ports:
-#      - "32200:80"
-#    depends_on:
-#      - base-nginx
-#      - base-backend
-#    networks:
-#      - docker_netaxe
-      
+
   celery-default:
     image: registry.cn-hangzhou.aliyuncs.com/netaxe/base-backend:1.0
     container_name: celery-default

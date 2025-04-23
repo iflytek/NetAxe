@@ -13,6 +13,7 @@ services:
       MYSQL_DATABASE: "abac"
       MYSQL_USER: "netaxe"
       MYSQL_ROOT_PASSWORD: "MYSQL_PASSWORD"
+      MYSQL_PASSWORD: "MYSQL_PASSWORD"
     volumes:
       - ./my.cnf:/etc/mysql/my.cnf
       - ./data:/var/lib/mysql
