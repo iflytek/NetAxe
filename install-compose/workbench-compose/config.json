@@ -7,6 +7,8 @@
   "database": "workbench",
   "mongodb_url":"mongodb://root:MONGO_PASSWORD@SERVER_IP:27017/?authSource=admin&readPreference=primary&directConnection=true&ssl=false",
   "user_info_url": "http://SERVER_IP:31104/abac-api/userInfo/",
+  "grafana_base_url": "",
+  "grafana_base_token": "",
   "grafana_alive_url": "",
   "grafana_alive_token": "",
   "grafana_flow_url": "",
