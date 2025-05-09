@@ -4,7 +4,7 @@ networks:
     external: true
 services:
   regis:
-    image: registry.cn-hangzhou.aliyuncs.com/netaxe/regiscenter:2.0
+    image: registry.cn-hangzhou.aliyuncs.com/netaxe/regiscenter:2.3
     container_name: regis
     privileged: true
     volumes:
