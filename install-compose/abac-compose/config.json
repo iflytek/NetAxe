@@ -60,5 +60,6 @@
             "PORT": 3306
         }
     },
-  "reload_menu": true
+  "reload_menu": true,
+  "env_ip": "SERVER_IP"
 }
