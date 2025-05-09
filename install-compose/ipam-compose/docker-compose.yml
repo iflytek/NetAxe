@@ -24,6 +24,7 @@ services:
     ipam-nginx:
       container_name: ipam-nginx
       image: registry.cn-hangzhou.aliyuncs.com/netaxe/ipam-nginx:1.23.1
+      restart: always
       environment:
         TZ: Asia/Shanghai
       volumes:
