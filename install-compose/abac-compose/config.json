@@ -69,6 +69,7 @@
     }
   },
   "reload_menu": true,
+  "deploy_type": "outer",
   "env_ip": "SERVER_IP",
   "email_open": false,
   "email_backend": "django.core.mail.backends.smtp.EmailBackend",
