@@ -14,7 +14,9 @@
   "nacos_port": 8848,
   "nacos_username": "nacos",
   "nacos_password": "NACOS_PASSWORD",
-  "allow_origins": ["http://SERVER_IP:9980"],
+  "allow_origins": [
+    "http://SERVER_IP:9980"
+  ],
   "mongodb_url": "mongodb://root:MONGO_PASSWORD@mongo:27017/?authSource=admin&readPreference=primary&directConnection=true&ssl=false",
   "mongodb_host": "mongo",
   "mongodb_port": 27017,
@@ -35,8 +37,14 @@
   "auth_ldap_server_uri": "ldap://1.1.1.1:389",
   "auth_ldap_bind_dn": "CN=aaa,CN=Users,DC=dc,DC=local",
   "auth_ldap_bind_password": "asdfasdf",
-  "auth_ldap_user_search": ["ou=aa,dc=aa,dc=aa", "(sAMAccountName=%(user)s)"],
-  "auth_ldap_group_search": ["ou=aa,dc=aa,dc=aa", "(objectClass=groupOfNames)"],
+  "auth_ldap_user_search": [
+    "ou=aa,dc=aa,dc=aa",
+    "(sAMAccountName=%(user)s)"
+  ],
+  "auth_ldap_group_search": [
+    "ou=aa,dc=aa,dc=aa",
+    "(objectClass=groupOfNames)"
+  ],
   "auth_ldap_user_attr_map": {
     "first_name": "givenName",
     "password": "userPassword",
@@ -51,15 +59,25 @@
   "SECRET_KEY": "DJANGO_INSECURE",
   "reload_url": "http://SERVER_IP:31104/abac-api/authority/auth_policy/?reload=1",
   "authority_database": {
-        "authority": {
-            "NAME": "abac",
-            "ENGINE": "django.db.backends.mysql",
-            "HOST": "mysql-server",
-            "USER": "root",
-            "PASSWORD": "MYSQL_PASSWORD",
-            "PORT": 3306
-        }
-    },
+    "authority": {
+      "NAME": "abac",
+      "ENGINE": "django.db.backends.mysql",
+      "HOST": "mysql-server",
+      "USER": "root",
+      "PASSWORD": "MYSQL_PASSWORD",
+      "PORT": 3306
+    }
+  },
   "reload_menu": true,
-  "env_ip": "SERVER_IP"
+  "env_ip": "SERVER_IP",
+  "email_open": false,
+  "email_backend": "django.core.mail.backends.smtp.EmailBackend",
+  "email_use_tls": false,
+  "email_use_ssl": true,
+  "email_host": "*****",
+  "email_port": 465,
+  "email_host_user": "*****",
+  "email_host_password": "*****",
+  "email_from_name": "NetAxe",
+  "default_from_email": "*****"
 }
