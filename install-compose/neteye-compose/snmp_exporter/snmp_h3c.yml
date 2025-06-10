@@ -1,0 +1,1250 @@
+modules:
+  h3c_common:
+    walk:
+    - 1.3.6.1.4.1.25506.2.72.1.3.1.12
+    - 1.3.6.1.4.1.25506.2.72.1.3.1.2
+    - 1.3.6.1.4.1.25506.2.72.1.3.1.8
+    - 1.3.6.1.4.1.25506.2.72.1.3.1.9
+    - 1.3.6.1.2.1.47.1.1.1.1.5
+    - 1.3.6.1.2.1.47.1.1.1.1.7
+    - 1.3.6.1.4.1.25506.2.6.1.1.1.1.12
+    - 1.3.6.1.4.1.25506.2.6.1.1.1.1.6
+    - 1.3.6.1.4.1.25506.2.6.1.1.1.1.8
+    - 1.3.6.1.4.1.25506.8.35.9.1.1.1.2
+    - 1.3.6.1.4.1.25506.8.35.9.1.2.1.2
+    - 1.0.8802.1.1.2.1.4.1.1.6 # lldpRemPortIdSubtype
+    - 1.0.8802.1.1.2.1.4.1.1.7 # lldpRemPortId
+    - 1.0.8802.1.1.2.1.4.1.1.8 # lldpRemPortIdSubtype
+    - 1.0.8802.1.1.2.1.4.1.1.9 # lldpRemPortId
+    - 1.0.8802.1.1.2.1.3.7.1.2
+    - 1.0.8802.1.1.2.1.3.7.1.3
+    - 1.0.8802.1.1.2.1.3.7.1.4
+    - 1.0.8802.1.1.2.1.3.3.0  # lldpLocSysName
+    - 1.3.6.1.4.1.25506.8.35.14.19.1.4
+    get:
+    - 1.3.6.1.2.1.1.1.0
+    - 1.3.6.1.2.1.1.5.0
+    - 1.3.6.1.6.3.10.2.1.3.0
+    - 1.3.6.1.4.1.25506.2.91.1.2.0
+    - 1.3.6.1.4.1.25506.2.176.1.2.7.0
+    - 1.3.6.1.4.1.25506.2.176.1.3.9.0
+    - 1.3.6.1.4.1.25506.8.22.1.1.18.0
+    metrics:
+    - name: hh3cNTPSysClockSec
+      oid: 1.3.6.1.4.1.25506.8.22.1.1.18
+      type: gauge
+      help: This is the current local time, in integer format - 1.3.6.1.4.1.25506.8.22.1.1.18
+    - name: hh3cBfdSessState
+      oid: 1.3.6.1.4.1.25506.2.72.1.3.1.12
+      type: gauge
+      help: The state of the running BFD session - 1.3.6.1.4.1.25506.2.72.1.3.1.12
+      indexes:
+      - labelname: hh3cBfdSessIndex
+        type: gauge
+      lookups:
+      - labels:
+        - hh3cBfdSessIndex
+        labelname: hh3cBfdSessLocalAddr
+        oid: 1.3.6.1.4.1.25506.2.72.1.3.1.9
+        type: InetAddress
+      enum_values:
+        0: adminDown
+        1: down
+        2: init
+        3: up
+    - name: hh3cBfdSessIfIndex
+      oid: 1.3.6.1.4.1.25506.2.72.1.3.1.2
+      type: gauge
+      help: This variable contains an interface's index under which the BFD session
+        runs - 1.3.6.1.4.1.25506.2.72.1.3.1.2
+      indexes:
+      - labelname: hh3cBfdSessIndex
+        type: gauge
+      lookups:
+      - labels:
+        - hh3cBfdSessIndex
+        labelname: hh3cBfdSessLocalAddr
+        oid: 1.3.6.1.4.1.25506.2.72.1.3.1.9
+        type: InetAddress
+    - name: hh3cBfdSessLocalAddr
+      oid: 1.3.6.1.4.1.25506.2.72.1.3.1.9
+      type: InetAddress
+      help: This variable defines IP address of the local interface from which the
+        BFD packets is transmitted - 1.3.6.1.4.1.25506.2.72.1.3.1.9
+      indexes:
+      - labelname: hh3cBfdSessIndex
+        type: gauge
+      lookups:
+      - labels:
+        - hh3cBfdSessIndex
+        labelname: hh3cBfdSessLocalAddr
+        oid: 1.3.6.1.4.1.25506.2.72.1.3.1.9
+        type: InetAddress
+
+    - name: hh3cMLagRoleLocalEffectiveRole
+      oid: 1.3.6.1.4.1.25506.2.176.1.2.7
+      type: gauge
+      help: Current role of the local M-LAG member device. - 1.3.6.1.4.1.25506.2.176.1.2.7
+      enum_values:
+        0: none
+        1: primary
+        2: secondary
+    - name: hh3cMLagKeepaliveLinkStatus
+      oid: 1.3.6.1.4.1.25506.2.176.1.3.9
+      type: gauge
+      help: Keepalive link status. - 1.3.6.1.4.1.25506.2.176.1.3.9
+      enum_values:
+        1: unknown
+        2: up
+        3: down
+
+    - name: hh3cStackMemberNum
+      oid: 1.3.6.1.4.1.25506.2.91.1.2
+      type: gauge
+      help: The number of members currently in a stack. - 1.3.6.1.4.1.25506.2.91.1.2
+      
+    - name: hh3cdot1sMstiDesignedRoot
+      oid: 1.3.6.1.4.1.25506.8.35.14.19.1.4
+      type: OctetString
+      help: The Bridge Identifier of the Root Bridge for the spanning tree instance
+        identified by MSTID - 1.3.6.1.4.1.25506.8.35.14.19.1.4
+      indexes:
+      - labelname: hh3cdot1sInstanceID
+        type: gauge
+    - name: lldpRemPortIdSubtype
+      oid: 1.0.8802.1.1.2.1.4.1.1.6
+      type: gauge
+      help: The type of port identifier encoding used in the associated 'lldpRemPortId'
+        object. - 1.0.8802.1.1.2.1.4.1.1.6
+      indexes:
+      - labelname: lldpRemIndex1
+        type: gauge
+      - labelname: lldpLocIndex
+        type: gauge
+      - labelname: lldpRemIndex3
+        type: gauge
+      lookups:
+      - labels:
+        - lldpRemIndex1
+        - lldpLocIndex
+        - lldpRemIndex3
+        labelname: lldpRemPortId
+        oid: 1.0.8802.1.1.2.1.4.1.1.7
+        type: DisplayString
+      - labels:
+        - lldpRemIndex1
+        - lldpLocIndex
+        - lldpRemIndex3
+        labelname: lldpRemPortDesc
+        oid: 1.0.8802.1.1.2.1.4.1.1.8
+        type: DisplayString
+      - labels:
+        - lldpRemIndex1
+        - lldpLocIndex
+        - lldpRemIndex3
+        labelname: lldpRemSysName
+        oid: 1.0.8802.1.1.2.1.4.1.1.9
+        type: DisplayString
+    - name: lldpLocPortIdSubtype
+      oid: 1.0.8802.1.1.2.1.3.7.1.2
+      type: gauge
+      help: The type of port identifier encoding used in the associated 'lldpLocPortId'
+        object. - 1.0.8802.1.1.2.1.3.7.1.2
+      indexes:
+      - labelname: lldpLocIndex
+        type: gauge  
+      lookups:
+      - labels:
+        - lldpLocIndex
+        labelname: lldpLocPortId
+        oid: 1.0.8802.1.1.2.1.3.7.1.3
+        type: DisplayString
+      - labels:
+        - lldpLocIndex
+        labelname: lldpLocPortDesc
+        oid: 1.0.8802.1.1.2.1.3.7.1.4
+        type: DisplayString
+    - name: lldpLocSysName
+      oid: 1.0.8802.1.1.2.1.3.3.0
+      type: DisplayString
+    - name: sysDescr
+      oid: 1.3.6.1.2.1.1.1
+      type: DisplayString
+      help: A textual description of the entity - 1.3.6.1.2.1.1.1
+    - name: sysName
+      oid: 1.3.6.1.2.1.1.5
+      type: DisplayString
+      help: An administratively-assigned name for this managed node - 1.3.6.1.2.1.1.5
+    - name: entPhysicalName
+      oid: 1.3.6.1.2.1.47.1.1.1.1.7
+      type: DisplayString
+      help: The textual name of the physical entity - 1.3.6.1.2.1.47.1.1.1.1.7
+      indexes:
+      - labelname: entPhysicalIndex
+        type: gauge
+    - name: hh3cEntityExtTemperature
+      oid: 1.3.6.1.4.1.25506.2.6.1.1.1.1.12
+      type: gauge
+      help: The temperature for the entity. - 1.3.6.1.4.1.25506.2.6.1.1.1.1.12
+      indexes:
+      - labelname: hh3cEntityExtPhysicalIndex
+        type: gauge
+      lookups:
+      - labels:
+        - hh3cEntityExtPhysicalIndex
+        labelname: entPhysicalClass
+        oid: 1.3.6.1.2.1.47.1.1.1.1.5
+        type: gauge
+      - labels:
+        - hh3cEntityExtPhysicalIndex
+        labelname: entPhysicalName
+        oid: 1.3.6.1.2.1.47.1.1.1.1.7
+        type: DisplayString
+    - name: hh3cEntityExtCpuUsage
+      oid: 1.3.6.1.4.1.25506.2.6.1.1.1.1.6
+      type: gauge
+      help: The CPU usage for this entity - 1.3.6.1.4.1.25506.2.6.1.1.1.1.6
+      indexes:
+      - labelname: hh3cEntityExtPhysicalIndex
+        type: gauge
+      lookups:
+      - labels:
+        - hh3cEntityExtPhysicalIndex
+        labelname: entPhysicalClass
+        oid: 1.3.6.1.2.1.47.1.1.1.1.5
+        type: gauge
+      - labels:
+        - hh3cEntityExtPhysicalIndex
+        labelname: entPhysicalName
+        oid: 1.3.6.1.2.1.47.1.1.1.1.7
+        type: DisplayString
+    - name: hh3cEntityExtMemUsage
+      oid: 1.3.6.1.4.1.25506.2.6.1.1.1.1.8
+      type: gauge
+      help: The memory usage for the entity - 1.3.6.1.4.1.25506.2.6.1.1.1.1.8
+      indexes:
+      - labelname: hh3cEntityExtPhysicalIndex
+        type: gauge
+      lookups:
+      - labels:
+        - hh3cEntityExtPhysicalIndex
+        labelname: entPhysicalClass
+        oid: 1.3.6.1.2.1.47.1.1.1.1.5
+        type: gauge
+      - labels:
+        - hh3cEntityExtPhysicalIndex
+        labelname: entPhysicalName
+        oid: 1.3.6.1.2.1.47.1.1.1.1.7
+        type: DisplayString
+    - name: hh3cDevMFanStatus
+      oid: 1.3.6.1.4.1.25506.8.35.9.1.1.1.2
+      type: gauge
+      help: 'Fan status: active (1), deactive (2) not installed (3) and unsupported
+        (4) - 1.3.6.1.4.1.25506.8.35.9.1.1.1.2'
+      indexes:
+      - labelname: hh3cDevMFanNum
+        type: gauge
+      enum_values:
+        1: active
+        2: deactive
+        3: not-install
+        4: unsupport
+    - name: hh3cDevMPowerStatus
+      oid: 1.3.6.1.4.1.25506.8.35.9.1.2.1.2
+      type: gauge
+      help: 'Power status: active (1), deactive (2) not installed (3) and unsupported
+        - 1.3.6.1.4.1.25506.8.35.9.1.2.1.2'
+      indexes:
+      - labelname: hh3cDevMPowerNum
+        type: gauge
+      enum_values:
+        1: active
+        2: deactive
+        3: not-install
+        4: unsupport
+    - name: snmpEngineTime
+      oid: 1.3.6.1.6.3.10.2.1.3
+      type: gauge
+      help: The number of seconds since the value of the snmpEngineBoots object last
+        changed - 1.3.6.1.6.3.10.2.1.3
+    max_repetitions: 20
+    retries: 3
+    timeout: 5s
+    filters:
+    - oid: 1.3.6.1.4.1.25506.2.6.1.1.1.1.6
+      targets:
+      - 1.3.6.1.4.1.25506.2.6.1.1.1.1.12
+      - 1.3.6.1.4.1.25506.2.6.1.1.1.1.8
+      - 1.3.6.1.2.1.47.1.1.1.1.7
+      values:
+      - ^[1-9][0-9]?$
+
+  h3c_firewall:
+    walk:
+    - 1.3.6.1.2.1.47.1.1.1.1.5
+    - 1.3.6.1.2.1.47.1.1.1.1.7
+    - 1.3.6.1.4.1.25506.2.149.1.1.1.4
+    - 1.3.6.1.4.1.25506.2.149.1.1.1.5
+    - 1.3.6.1.4.1.25506.2.6.1.1.1.1.12
+    - 1.3.6.1.4.1.25506.2.6.1.1.1.1.6
+    - 1.3.6.1.4.1.25506.2.6.1.1.1.1.8
+    - 1.3.6.1.4.1.25506.8.35.9.1.1.1.2
+    - 1.3.6.1.4.1.25506.8.35.9.1.2.1.2
+    get:
+    - 1.3.6.1.2.1.1.1.0
+    - 1.3.6.1.2.1.1.5.0
+    - 1.3.6.1.6.3.10.2.1.3.0
+    metrics:
+    - name: sysDescr
+      oid: 1.3.6.1.2.1.1.1
+      type: DisplayString
+      help: A textual description of the entity - 1.3.6.1.2.1.1.1
+    - name: sysName
+      oid: 1.3.6.1.2.1.1.5
+      type: DisplayString
+      help: An administratively-assigned name for this managed node - 1.3.6.1.2.1.1.5
+    - name: entPhysicalName
+      oid: 1.3.6.1.2.1.47.1.1.1.1.7
+      type: DisplayString
+      help: The textual name of the physical entity - 1.3.6.1.2.1.47.1.1.1.1.7
+      indexes:
+      - labelname: entPhysicalIndex
+        type: gauge
+    - name: hh3cSessionStatCount
+      oid: 1.3.6.1.4.1.25506.2.149.1.1.1.4
+      type: gauge
+      help: The number of current sessions. - 1.3.6.1.4.1.25506.2.149.1.1.1.4
+      indexes:
+      - labelname: hh3cSessionStatChassis
+        type: gauge
+      - labelname: hh3cSessionStatSlot
+        type: gauge
+      - labelname: hh3cSessionStatCPUID
+        type: gauge
+    - name: hh3cSessionStatCreateRate
+      oid: 1.3.6.1.4.1.25506.2.149.1.1.1.5
+      type: gauge
+      help: The number of sessions per second. - 1.3.6.1.4.1.25506.2.149.1.1.1.5
+      indexes:
+      - labelname: hh3cSessionStatChassis
+        type: gauge
+      - labelname: hh3cSessionStatSlot
+        type: gauge
+      - labelname: hh3cSessionStatCPUID
+        type: gauge
+    - name: hh3cEntityExtTemperature
+      oid: 1.3.6.1.4.1.25506.2.6.1.1.1.1.12
+      type: gauge
+      help: The temperature for the entity. - 1.3.6.1.4.1.25506.2.6.1.1.1.1.12
+      indexes:
+      - labelname: hh3cEntityExtPhysicalIndex
+        type: gauge
+      lookups:
+      - labels:
+        - hh3cEntityExtPhysicalIndex
+        labelname: entPhysicalClass
+        oid: 1.3.6.1.2.1.47.1.1.1.1.5
+        type: gauge
+      - labels:
+        - hh3cEntityExtPhysicalIndex
+        labelname: entPhysicalName
+        oid: 1.3.6.1.2.1.47.1.1.1.1.7
+        type: DisplayString
+    - name: hh3cEntityExtCpuUsage
+      oid: 1.3.6.1.4.1.25506.2.6.1.1.1.1.6
+      type: gauge
+      help: The CPU usage for this entity - 1.3.6.1.4.1.25506.2.6.1.1.1.1.6
+      indexes:
+      - labelname: hh3cEntityExtPhysicalIndex
+        type: gauge
+      lookups:
+      - labels:
+        - hh3cEntityExtPhysicalIndex
+        labelname: entPhysicalClass
+        oid: 1.3.6.1.2.1.47.1.1.1.1.5
+        type: gauge
+      - labels:
+        - hh3cEntityExtPhysicalIndex
+        labelname: entPhysicalName
+        oid: 1.3.6.1.2.1.47.1.1.1.1.7
+        type: DisplayString
+    - name: hh3cEntityExtMemUsage
+      oid: 1.3.6.1.4.1.25506.2.6.1.1.1.1.8
+      type: gauge
+      help: The memory usage for the entity - 1.3.6.1.4.1.25506.2.6.1.1.1.1.8
+      indexes:
+      - labelname: hh3cEntityExtPhysicalIndex
+        type: gauge
+      lookups:
+      - labels:
+        - hh3cEntityExtPhysicalIndex
+        labelname: entPhysicalClass
+        oid: 1.3.6.1.2.1.47.1.1.1.1.5
+        type: gauge
+      - labels:
+        - hh3cEntityExtPhysicalIndex
+        labelname: entPhysicalName
+        oid: 1.3.6.1.2.1.47.1.1.1.1.7
+        type: DisplayString
+    - name: hh3cDevMFanStatus
+      oid: 1.3.6.1.4.1.25506.8.35.9.1.1.1.2
+      type: gauge
+      help: 'Fan status: active (1), deactive (2) not installed (3) and unsupported
+        (4) - 1.3.6.1.4.1.25506.8.35.9.1.1.1.2'
+      indexes:
+      - labelname: hh3cDevMFanNum
+        type: gauge
+      enum_values:
+        1: active
+        2: deactive
+        3: not-install
+        4: unsupport
+    - name: hh3cDevMPowerStatus
+      oid: 1.3.6.1.4.1.25506.8.35.9.1.2.1.2
+      type: gauge
+      help: 'Power status: active (1), deactive (2) not installed (3) and unsupported
+        - 1.3.6.1.4.1.25506.8.35.9.1.2.1.2'
+      indexes:
+      - labelname: hh3cDevMPowerNum
+        type: gauge
+      enum_values:
+        1: active
+        2: deactive
+        3: not-install
+        4: unsupport
+    - name: snmpEngineTime
+      oid: 1.3.6.1.6.3.10.2.1.3
+      type: gauge
+      help: The number of seconds since the value of the snmpEngineBoots object last
+        changed - 1.3.6.1.6.3.10.2.1.3
+    max_repetitions: 20
+    retries: 3
+    timeout: 5s
+
+  h3c_gmk:
+    walk:
+    - 1.3.6.1.2.1.31.1.1.1.1
+    - 1.3.6.1.2.1.31.1.1.1.15
+    - 1.3.6.1.2.1.31.1.1.1.18
+    - 1.3.6.1.4.1.25506.2.70.1.1.1.15
+    - 1.3.6.1.4.1.25506.2.70.1.1.1.32
+    - 1.3.6.1.4.1.25506.2.70.1.1.1.33
+    - 1.3.6.1.4.1.25506.2.70.1.1.1.36
+    - 1.3.6.1.4.1.25506.2.70.1.1.1.37
+    - 1.3.6.1.4.1.25506.2.70.1.2.1.2
+    - 1.3.6.1.4.1.25506.2.70.1.2.1.3
+    - 1.3.6.1.4.1.25506.2.70.1.1.1.5
+    metrics:
+
+    - name: hh3cTransceiverSerialNumber
+      oid: 1.3.6.1.4.1.25506.2.70.1.1.1.5
+      type: DisplayString
+      help: Serial number of the interface. - 1.3.6.1.4.1.25506.2.70.1.1.1.5
+      indexes:
+      - labelname: ifIndex
+        type: gauge
+      lookups:
+      - labels:
+        - ifIndex
+        labelname: ifAlias
+        oid: 1.3.6.1.2.1.31.1.1.1.18
+        type: DisplayString
+      - labels:
+        - ifIndex
+        labelname: ifName
+        oid: 1.3.6.1.2.1.31.1.1.1.1
+        type: DisplayString
+      - labels:
+        - ifIndex
+        labelname: ifHighSpeed
+        oid: 1.3.6.1.2.1.31.1.1.1.15
+        type: gauge
+
+
+    - name: hh3cTransceiverTemperature
+      oid: 1.3.6.1.4.1.25506.2.70.1.1.1.15
+      type: gauge
+      help: Indicating the current temperature - 1.3.6.1.4.1.25506.2.70.1.1.1.15
+      indexes:
+      - labelname: ifIndex
+        type: gauge
+      lookups:
+      - labels:
+        - ifIndex
+        labelname: ifAlias
+        oid: 1.3.6.1.2.1.31.1.1.1.18
+        type: DisplayString
+      - labels:
+        - ifIndex
+        labelname: ifName
+        oid: 1.3.6.1.2.1.31.1.1.1.1
+        type: DisplayString
+      - labels:
+        - ifIndex
+        labelname: ifHighSpeed
+        oid: 1.3.6.1.2.1.31.1.1.1.15
+        type: gauge
+    - name: hh3cTransceiverPwrOutHiWarn
+      oid: 1.3.6.1.4.1.25506.2.70.1.1.1.32
+      type: gauge
+      help: 'Transceiver transmit power high warning threshold in tenths of microwatts
+        As an example: 10000 is 1 milliwatt. - 1.3.6.1.4.1.25506.2.70.1.1.1.32'
+      indexes:
+      - labelname: ifIndex
+        type: gauge
+      lookups:
+      - labels:
+        - ifIndex
+        labelname: ifAlias
+        oid: 1.3.6.1.2.1.31.1.1.1.18
+        type: DisplayString
+      - labels:
+        - ifIndex
+        labelname: ifName
+        oid: 1.3.6.1.2.1.31.1.1.1.1
+        type: DisplayString
+      - labels:
+        - ifIndex
+        labelname: ifHighSpeed
+        oid: 1.3.6.1.2.1.31.1.1.1.15
+        type: gauge
+    - name: hh3cTransceiverPwrOutLoWarn
+      oid: 1.3.6.1.4.1.25506.2.70.1.1.1.33
+      type: gauge
+      help: Transceiver transmit power low warning threshold in tenths of microwatts
+        - 1.3.6.1.4.1.25506.2.70.1.1.1.33
+      indexes:
+      - labelname: ifIndex
+        type: gauge
+      lookups:
+      - labels:
+        - ifIndex
+        labelname: ifAlias
+        oid: 1.3.6.1.2.1.31.1.1.1.18
+        type: DisplayString
+      - labels:
+        - ifIndex
+        labelname: ifName
+        oid: 1.3.6.1.2.1.31.1.1.1.1
+        type: DisplayString
+      - labels:
+        - ifIndex
+        labelname: ifHighSpeed
+        oid: 1.3.6.1.2.1.31.1.1.1.15
+        type: gauge
+    - name: hh3cTransceiverRcvPwrHiWarn
+      oid: 1.3.6.1.4.1.25506.2.70.1.1.1.36
+      type: gauge
+      help: Transceiver receive power high warning threshold in tenths of microwatts
+        - 1.3.6.1.4.1.25506.2.70.1.1.1.36
+      indexes:
+      - labelname: ifIndex
+        type: gauge
+      lookups:
+      - labels:
+        - ifIndex
+        labelname: ifAlias
+        oid: 1.3.6.1.2.1.31.1.1.1.18
+        type: DisplayString
+      - labels:
+        - ifIndex
+        labelname: ifName
+        oid: 1.3.6.1.2.1.31.1.1.1.1
+        type: DisplayString
+      - labels:
+        - ifIndex
+        labelname: ifHighSpeed
+        oid: 1.3.6.1.2.1.31.1.1.1.15
+        type: gauge
+    - name: hh3cTransceiverRcvPwrLoWarn
+      oid: 1.3.6.1.4.1.25506.2.70.1.1.1.37
+      type: gauge
+      help: Transceiver receive power low warning threshold in tenths of microwatts
+        - 1.3.6.1.4.1.25506.2.70.1.1.1.37
+      indexes:
+      - labelname: ifIndex
+        type: gauge
+      lookups:
+      - labels:
+        - ifIndex
+        labelname: ifAlias
+        oid: 1.3.6.1.2.1.31.1.1.1.18
+        type: DisplayString
+      - labels:
+        - ifIndex
+        labelname: ifName
+        oid: 1.3.6.1.2.1.31.1.1.1.1
+        type: DisplayString
+      - labels:
+        - ifIndex
+        labelname: ifHighSpeed
+        oid: 1.3.6.1.2.1.31.1.1.1.15
+        type: gauge
+    - name: hh3cTransceiverChannelCurTXPower
+      oid: 1.3.6.1.4.1.25506.2.70.1.2.1.2
+      type: gauge
+      help: Indicating the current transmission power - 1.3.6.1.4.1.25506.2.70.1.2.1.2
+      indexes:
+      - labelname: ifIndex
+        type: gauge
+      - labelname: hh3cTransceiverChannelIndex
+        type: gauge
+      lookups:
+      - labels:
+        - ifIndex
+        labelname: ifAlias
+        oid: 1.3.6.1.2.1.31.1.1.1.18
+        type: DisplayString
+      - labels:
+        - ifIndex
+        labelname: ifName
+        oid: 1.3.6.1.2.1.31.1.1.1.1
+        type: DisplayString
+      - labels:
+        - ifIndex
+        labelname: ifHighSpeed
+        oid: 1.3.6.1.2.1.31.1.1.1.15
+        type: gauge
+    - name: hh3cTransceiverChannelCurRXPower
+      oid: 1.3.6.1.4.1.25506.2.70.1.2.1.3
+      type: gauge
+      help: Indicating the current received power - 1.3.6.1.4.1.25506.2.70.1.2.1.3
+      indexes:
+      - labelname: ifIndex
+        type: gauge
+      - labelname: hh3cTransceiverChannelIndex
+        type: gauge
+      lookups:
+      - labels:
+        - ifIndex
+        labelname: ifAlias
+        oid: 1.3.6.1.2.1.31.1.1.1.18
+        type: DisplayString
+      - labels:
+        - ifIndex
+        labelname: ifName
+        oid: 1.3.6.1.2.1.31.1.1.1.1
+        type: DisplayString
+      - labels:
+        - ifIndex
+        labelname: ifHighSpeed
+        oid: 1.3.6.1.2.1.31.1.1.1.15
+        type: gauge
+    max_repetitions: 25
+    retries: 3
+    timeout: 5s
+
+  h3c_interface:
+    walk:
+    - 1.3.6.1.2.1.2.2.1.13
+    - 1.3.6.1.2.1.2.2.1.14
+    - 1.3.6.1.2.1.2.2.1.19
+    - 1.3.6.1.2.1.2.2.1.2
+    - 1.3.6.1.2.1.2.2.1.20
+    - 1.3.6.1.2.1.2.2.1.7
+    - 1.3.6.1.2.1.2.2.1.8
+    - 1.3.6.1.2.1.31.1.1.1.1
+    - 1.3.6.1.2.1.31.1.1.1.10
+    - 1.3.6.1.2.1.31.1.1.1.15
+    - 1.3.6.1.2.1.31.1.1.1.18
+    - 1.3.6.1.2.1.31.1.1.1.6
+    - 1.3.6.1.4.1.25506.8.35.1.5.1.5 # hh3cifPktBufInDrop
+    - 1.3.6.1.4.1.25506.8.35.1.5.1.6 # hh3cifPktBufEgDrop
+
+    metrics:
+    - name: ifHighSpeed
+      oid: 1.3.6.1.2.1.31.1.1.1.15
+      type: gauge
+      help: The current operational state of the interface - 1.3.6.1.2.1.2.2.1.8
+      indexes:
+      - labelname: ifIndex
+        type: gauge
+      lookups:
+      - labels:
+        - ifIndex
+        labelname: ifDescr
+        oid: 1.3.6.1.2.1.2.2.1.2
+        type: DisplayString
+      - labels:
+        - ifIndex
+        labelname: ifAlias
+        oid: 1.3.6.1.2.1.31.1.1.1.18
+        type: DisplayString
+      - labels:
+        - ifIndex
+        labelname: ifName
+        oid: 1.3.6.1.2.1.31.1.1.1.1
+        type: DisplayString
+      - labels:
+        - ifIndex
+        labelname: ifHighSpeed
+        oid: 1.3.6.1.2.1.31.1.1.1.15
+        type: gauge
+      - labels:
+        - ifIndex
+        labelname: ifAdminStatus
+        oid: 1.3.6.1.2.1.2.2.1.7
+        type: gauge
+      - labels:
+        - ifIndex
+        labelname: ifOperStatus
+        oid: 1.3.6.1.2.1.2.2.1.8
+        type: gauge
+
+    - name: hh3cifPktBufInDrop
+      oid: 1.3.6.1.4.1.25506.8.35.1.5.1.5
+      type: counter
+      help: The number of inbound packets which were chosen to be discarded even though
+        no errors had been detected to prevent their being deliverable to a higher-layer
+        protocol - 1.3.6.1.2.1.2.2.1.13
+      indexes:
+      - labelname: ifIndex
+        type: gauge
+      lookups:
+      - labels:
+        - ifIndex
+        labelname: ifDescr
+        oid: 1.3.6.1.2.1.2.2.1.2
+        type: DisplayString
+      - labels:
+        - ifIndex
+        labelname: ifAlias
+        oid: 1.3.6.1.2.1.31.1.1.1.18
+        type: DisplayString
+      - labels:
+        - ifIndex
+        labelname: ifName
+        oid: 1.3.6.1.2.1.31.1.1.1.1
+        type: DisplayString
+      - labels:
+        - ifIndex
+        labelname: ifHighSpeed
+        oid: 1.3.6.1.2.1.31.1.1.1.15
+        type: gauge
+      - labels:
+        - ifIndex
+        labelname: ifAdminStatus
+        oid: 1.3.6.1.2.1.2.2.1.7
+        type: gauge
+      - labels:
+        - ifIndex
+        labelname: ifOperStatus
+        oid: 1.3.6.1.2.1.2.2.1.8
+        type: gauge
+
+    - name: hh3cifPktBufEgDrop
+      oid: 1.3.6.1.4.1.25506.8.35.1.5.1.6
+      type: counter
+      help: The number of inbound packets which were chosen to be discarded even though
+        no errors had been detected to prevent their being deliverable to a higher-layer
+        protocol - 1.3.6.1.4.1.25506.8.35.1.5.1.5
+      indexes:
+      - labelname: ifIndex
+        type: gauge
+      lookups:
+      - labels:
+        - ifIndex
+        labelname: ifDescr
+        oid: 1.3.6.1.2.1.2.2.1.2
+        type: DisplayString
+      - labels:
+        - ifIndex
+        labelname: ifAlias
+        oid: 1.3.6.1.2.1.31.1.1.1.18
+        type: DisplayString
+      - labels:
+        - ifIndex
+        labelname: ifName
+        oid: 1.3.6.1.2.1.31.1.1.1.1
+        type: DisplayString
+      - labels:
+        - ifIndex
+        labelname: ifHighSpeed
+        oid: 1.3.6.1.2.1.31.1.1.1.15
+        type: gauge
+      - labels:
+        - ifIndex
+        labelname: ifAdminStatus
+        oid: 1.3.6.1.2.1.2.2.1.7
+        type: gauge
+      - labels:
+        - ifIndex
+        labelname: ifOperStatus
+        oid: 1.3.6.1.2.1.2.2.1.8
+        type: gauge
+    - name: ifInErrors
+      oid: 1.3.6.1.2.1.2.2.1.14
+      type: counter
+      help: For packet-oriented interfaces, the number of inbound packets that contained
+        errors preventing them from being deliverable to a higher-layer protocol -
+        1.3.6.1.2.1.2.2.1.14
+      indexes:
+      - labelname: ifIndex
+        type: gauge
+      lookups:
+      - labels:
+        - ifIndex
+        labelname: ifDescr
+        oid: 1.3.6.1.2.1.2.2.1.2
+        type: DisplayString
+      - labels:
+        - ifIndex
+        labelname: ifAlias
+        oid: 1.3.6.1.2.1.31.1.1.1.18
+        type: DisplayString
+      - labels:
+        - ifIndex
+        labelname: ifName
+        oid: 1.3.6.1.2.1.31.1.1.1.1
+        type: DisplayString
+      - labels:
+        - ifIndex
+        labelname: ifHighSpeed
+        oid: 1.3.6.1.2.1.31.1.1.1.15
+        type: gauge
+      - labels:
+        - ifIndex
+        labelname: ifAdminStatus
+        oid: 1.3.6.1.2.1.2.2.1.7
+        type: gauge
+      - labels:
+        - ifIndex
+        labelname: ifOperStatus
+        oid: 1.3.6.1.2.1.2.2.1.8
+        type: gauge
+    - name: ifOutErrors
+      oid: 1.3.6.1.2.1.2.2.1.20
+      type: counter
+      help: For packet-oriented interfaces, the number of outbound packets that could
+        not be transmitted because of errors - 1.3.6.1.2.1.2.2.1.20
+      indexes:
+      - labelname: ifIndex
+        type: gauge
+      lookups:
+      - labels:
+        - ifIndex
+        labelname: ifDescr
+        oid: 1.3.6.1.2.1.2.2.1.2
+        type: DisplayString
+      - labels:
+        - ifIndex
+        labelname: ifAlias
+        oid: 1.3.6.1.2.1.31.1.1.1.18
+        type: DisplayString
+      - labels:
+        - ifIndex
+        labelname: ifName
+        oid: 1.3.6.1.2.1.31.1.1.1.1
+        type: DisplayString
+      - labels:
+        - ifIndex
+        labelname: ifHighSpeed
+        oid: 1.3.6.1.2.1.31.1.1.1.15
+        type: gauge
+      - labels:
+        - ifIndex
+        labelname: ifAdminStatus
+        oid: 1.3.6.1.2.1.2.2.1.7
+        type: gauge
+      - labels:
+        - ifIndex
+        labelname: ifOperStatus
+        oid: 1.3.6.1.2.1.2.2.1.8
+        type: gauge
+    - name: ifOperStatus
+      oid: 1.3.6.1.2.1.2.2.1.8
+      type: gauge
+      help: The current operational state of the interface - 1.3.6.1.2.1.2.2.1.8
+      indexes:
+      - labelname: ifIndex
+        type: gauge
+      lookups:
+      - labels:
+        - ifIndex
+        labelname: ifDescr
+        oid: 1.3.6.1.2.1.2.2.1.2
+        type: DisplayString
+      - labels:
+        - ifIndex
+        labelname: ifAlias
+        oid: 1.3.6.1.2.1.31.1.1.1.18
+        type: DisplayString
+      - labels:
+        - ifIndex
+        labelname: ifName
+        oid: 1.3.6.1.2.1.31.1.1.1.1
+        type: DisplayString
+      enum_values:
+        1: up
+        2: down
+        3: testing
+        4: unknown
+        5: dormant
+        6: notPresent
+        7: lowerLayerDown
+    - name: ifHCOutOctets
+      oid: 1.3.6.1.2.1.31.1.1.1.10
+      type: counter
+      help: The total number of octets transmitted out of the interface, including
+        framing characters - 1.3.6.1.2.1.31.1.1.1.10
+      indexes:
+      - labelname: ifIndex
+        type: gauge
+      lookups:
+      - labels:
+        - ifIndex
+        labelname: ifDescr
+        oid: 1.3.6.1.2.1.2.2.1.2
+        type: DisplayString
+      - labels:
+        - ifIndex
+        labelname: ifAlias
+        oid: 1.3.6.1.2.1.31.1.1.1.18
+        type: DisplayString
+      - labels:
+        - ifIndex
+        labelname: ifName
+        oid: 1.3.6.1.2.1.31.1.1.1.1
+        type: DisplayString
+      - labels:
+        - ifIndex
+        labelname: ifHighSpeed
+        oid: 1.3.6.1.2.1.31.1.1.1.15
+        type: gauge
+      - labels:
+        - ifIndex
+        labelname: ifAdminStatus
+        oid: 1.3.6.1.2.1.2.2.1.7
+        type: gauge
+      - labels:
+        - ifIndex
+        labelname: ifOperStatus
+        oid: 1.3.6.1.2.1.2.2.1.8
+        type: gauge
+    - name: ifHCInOctets
+      oid: 1.3.6.1.2.1.31.1.1.1.6
+      type: counter
+      help: The total number of octets received on the interface, including framing
+        characters - 1.3.6.1.2.1.31.1.1.1.6
+      indexes:
+      - labelname: ifIndex
+        type: gauge
+      lookups:
+      - labels:
+        - ifIndex
+        labelname: ifDescr
+        oid: 1.3.6.1.2.1.2.2.1.2
+        type: DisplayString
+      - labels:
+        - ifIndex
+        labelname: ifAlias
+        oid: 1.3.6.1.2.1.31.1.1.1.18
+        type: DisplayString
+      - labels:
+        - ifIndex
+        labelname: ifName
+        oid: 1.3.6.1.2.1.31.1.1.1.1
+        type: DisplayString
+      - labels:
+        - ifIndex
+        labelname: ifHighSpeed
+        oid: 1.3.6.1.2.1.31.1.1.1.15
+        type: gauge
+      - labels:
+        - ifIndex
+        labelname: ifAdminStatus
+        oid: 1.3.6.1.2.1.2.2.1.7
+        type: gauge
+      - labels:
+        - ifIndex
+        labelname: ifOperStatus
+        oid: 1.3.6.1.2.1.2.2.1.8
+        type: gauge
+    max_repetitions: 25
+    retries: 3
+    timeout: 5s
+
+  h3c_nqa:
+    walk:
+    - 1.3.6.1.4.1.25506.8.3.1.3.1.12
+    - 1.3.6.1.4.1.25506.8.3.1.3.1.10
+    metrics:
+    - name: hh3cNqaResultsLostPacketRatio
+      oid: 1.3.6.1.4.1.25506.8.3.1.3.1.10
+      type: gauge
+      help: The value of this object reflects the drop rate of NQA test - 1.3.6.1.4.1.25506.8.3.1.3.1.10
+      indexes:
+      - labelname: pingCtlOwnerIndex
+        type: DisplayString
+      - labelname: pingCtlTestName
+        type: DisplayString
+    - name: hh3cNqaResultsRttSum
+      oid: 1.3.6.1.4.1.25506.8.3.1.3.1.12
+      type: gauge
+      help: The sum of round trip time. - 1.3.6.1.4.1.25506.8.3.1.3.1.12
+      indexes:
+      - labelname: pingCtlOwnerIndex
+        type: DisplayString
+      - labelname: pingCtlTestName
+        type: DisplayString
+    max_repetitions: 25
+    retries: 3
+    timeout: 5s
+
+  h3c_qos:
+    walk:
+    - 1.3.6.1.2.1.31.1.1.1.1
+    - 1.3.6.1.2.1.31.1.1.1.18
+    - 1.3.6.1.4.1.25506.2.65.1.1.2.1.1.3
+    - 1.3.6.1.4.1.25506.2.65.1.1.2.1.1.6
+    metrics:
+    - name: hh3cIfQoSPassBytes
+      oid: 1.3.6.1.4.1.25506.2.65.1.1.2.1.1.3
+      type: counter
+      help: The number of forwarded packets. - 1.3.6.1.4.1.25506.2.65.1.1.2.1.1.1
+      indexes:
+      - labelname: ifIndex
+        type: gauge
+      - labelname: hh3cIfQoSQueueID
+        type: gauge
+      lookups:
+      - labels:
+        - ifIndex
+        labelname: ifAlias
+        oid: 1.3.6.1.2.1.31.1.1.1.18
+        type: DisplayString
+      - labels:
+        - ifIndex
+        labelname: ifName
+        oid: 1.3.6.1.2.1.31.1.1.1.1
+        type: DisplayString
+    - name: hh3cIfQoSDropByte
+      oid: 1.3.6.1.4.1.25506.2.65.1.1.2.1.1.6
+      type: counter
+      help: The number of dropped packets. - 1.3.6.1.4.1.25506.2.65.1.1.2.1.1.2
+      indexes:
+      - labelname: ifIndex
+        type: gauge
+      - labelname: hh3cIfQoSQueueID
+        type: gauge
+      lookups:
+      - labels:
+        - ifIndex
+        labelname: ifAlias
+        oid: 1.3.6.1.2.1.31.1.1.1.18
+        type: DisplayString
+      - labels:
+        - ifIndex
+        labelname: ifName
+        oid: 1.3.6.1.2.1.31.1.1.1.1
+        type: DisplayString
+    max_repetitions: 25
+    retries: 3
+    timeout: 5s
+
+  h3c_qos_policy_SR66:
+    walk:
+    - 1.3.6.1.2.1.31.1.1.1.1
+    - 1.3.6.1.2.1.31.1.1.1.18
+    - 1.3.6.1.4.1.25506.2.65.2.1.3.2.1.2
+    - 1.3.6.1.4.1.25506.2.65.2.1.3.3.1.3
+    - 1.3.6.1.4.1.25506.2.65.2.1.3.3.1.5
+    - 1.3.6.1.4.1.25506.2.65.2.1.4.1.1.3
+    - 1.3.6.1.4.1.25506.2.65.2.1.5.5.1.1.4
+    - 1.3.6.1.4.1.25506.2.65.2.1.5.5.2.1.2
+    - 1.3.6.1.4.1.25506.2.65.2.1.5.6.2.1.2
+    - 1.3.6.1.4.1.25506.2.65.2.1.5.6.6.1.6
+    metrics:
+    - name: ifName
+      oid: 1.3.6.1.2.1.31.1.1.1.1
+      type: DisplayString
+      help: The textual name of the interface - 1.3.6.1.2.1.31.1.1.1.1
+      indexes:
+      - labelname: ifIndex
+        type: gauge
+    - name: ifAlias
+      oid: 1.3.6.1.2.1.31.1.1.1.18
+      type: DisplayString
+      help: This object is an 'alias' name for the interface as specified by a network
+        manager, and provides a non-volatile 'handle' for the interface - 1.3.6.1.2.1.31.1.1.1.18
+      indexes:
+      - labelname: ifIndex
+        type: gauge
+    - name: hh3cCBQoSPolicyName
+      oid: 1.3.6.1.4.1.25506.2.65.2.1.3.2.1.2
+      type: DisplayString
+      help: Name of Traffic Policy. - 1.3.6.1.4.1.25506.2.65.2.1.3.2.1.2
+      indexes:
+      - labelname: hh3cCBQoSPolicyIndex
+        type: gauge
+    - name: hh3cCBQoSPolicyClassClassifierName
+      oid: 1.3.6.1.4.1.25506.2.65.2.1.3.3.1.3
+      type: DisplayString
+      help: Name of classifier applied by a policy - 1.3.6.1.4.1.25506.2.65.2.1.3.3.1.3
+      indexes:
+      - labelname: hh3cCBQoSPolicyIndex
+        type: gauge
+      - labelname: hh3cCBQoSPolicyClassIndex
+        type: gauge
+    - name: hh3cCBQoSPolicyClassBehaviorName
+      oid: 1.3.6.1.4.1.25506.2.65.2.1.3.3.1.5
+      type: DisplayString
+      help: Name of Behavior applied by a policy - 1.3.6.1.4.1.25506.2.65.2.1.3.3.1.5
+      indexes:
+      - labelname: hh3cCBQoSPolicyIndex
+        type: gauge
+      - labelname: hh3cCBQoSPolicyClassIndex
+        type: gauge
+    - name: hh3cCBQoSIfApplyPolicyName
+      oid: 1.3.6.1.4.1.25506.2.65.2.1.4.1.1.3
+      type: DisplayString
+      help: Name of Traffic Policy. - 1.3.6.1.4.1.25506.2.65.2.1.4.1.1.3
+      indexes:
+      - labelname: hh3cCBQoSIfApplyPolicyIfIndex
+        type: gauge
+      - labelname: hh3cCBQoSIfApplyPolicyDirection
+        type: gauge
+        enum_values:
+          1: inbound
+          2: outbound
+    - name: hh3cCBQoSApplyObjectMainSite
+      oid: 1.3.6.1.4.1.25506.2.65.2.1.5.5.1.1.4
+      type: DisplayString
+      help: Its value depends on hh3cCBQoSApplyObjectType - 1.3.6.1.4.1.25506.2.65.2.1.5.5.1.1.4
+      indexes:
+      - labelname: hh3cCBQoSApplyObjectIndex
+        type: gauge
+    - name: hh3cCBQoSIntApplyObjectIndex
+      oid: 1.3.6.1.4.1.25506.2.65.2.1.5.5.2.1.2
+      type: gauge
+      help: QoS apply object index. - 1.3.6.1.4.1.25506.2.65.2.1.5.5.2.1.2
+      indexes:
+      - labelname: hh3cCBQoSIntApplyObjectIfIndex
+        type: gauge
+      - labelname: hh3cCBQoSApplyObjectDirection
+        type: gauge
+        enum_values:
+          1: inbound
+          2: outbound
+    - name: hh3cCBQoSQueueMatchedBytes
+      oid: 1.3.6.1.4.1.25506.2.65.2.1.5.6.2.1.2
+      type: counter
+      help: Number of bytes matched to queue. - 1.3.6.1.4.1.25506.2.65.2.1.5.6.6.1.2
+      indexes:
+      - labelname: hh3cCBQoSApplyObjectIndex
+        type: gauge
+      - labelname: hh3cCBQoSPolicyClassIndex
+        type: gauge
+    - name: hh3cCBQoSQueueDiscardedBytes
+      oid: 1.3.6.1.4.1.25506.2.65.2.1.5.6.6.1.6
+      type: counter
+      help: Number of bytes discarded when queued by discard method. - 1.3.6.1.4.1.25506.2.65.2.1.5.6.6.1.6
+      indexes:
+      - labelname: hh3cCBQoSApplyObjectIndex
+        type: gauge
+      - labelname: hh3cCBQoSPolicyClassIndex
+        type: gauge
+
+  h3c_qos_policy_SR88:
+    walk:
+    - 1.3.6.1.2.1.31.1.1.1.1
+    - 1.3.6.1.2.1.31.1.1.1.18
+    - 1.3.6.1.4.1.25506.2.65.2.1.3.2.1.2
+    - 1.3.6.1.4.1.25506.2.65.2.1.3.3.1.3
+    - 1.3.6.1.4.1.25506.2.65.2.1.3.3.1.5
+    - 1.3.6.1.4.1.25506.2.65.2.1.4.1.1.3
+    - 1.3.6.1.4.1.25506.2.65.2.1.5.5.1.1.4
+    - 1.3.6.1.4.1.25506.2.65.2.1.5.5.2.1.2
+    - 1.3.6.1.4.1.25506.2.65.2.1.5.6.6.1.2
+    - 1.3.6.1.4.1.25506.2.65.2.1.5.6.6.1.6
+    metrics:
+    - name: ifName
+      oid: 1.3.6.1.2.1.31.1.1.1.1
+      type: DisplayString
+      help: The textual name of the interface - 1.3.6.1.2.1.31.1.1.1.1
+      indexes:
+      - labelname: ifIndex
+        type: gauge
+    - name: ifAlias
+      oid: 1.3.6.1.2.1.31.1.1.1.18
+      type: DisplayString
+      help: This object is an 'alias' name for the interface as specified by a network
+        manager, and provides a non-volatile 'handle' for the interface - 1.3.6.1.2.1.31.1.1.1.18
+      indexes:
+      - labelname: ifIndex
+        type: gauge
+    - name: hh3cCBQoSPolicyName
+      oid: 1.3.6.1.4.1.25506.2.65.2.1.3.2.1.2
+      type: DisplayString
+      help: Name of Traffic Policy. - 1.3.6.1.4.1.25506.2.65.2.1.3.2.1.2
+      indexes:
+      - labelname: hh3cCBQoSPolicyIndex
+        type: gauge
+    - name: hh3cCBQoSPolicyClassClassifierName
+      oid: 1.3.6.1.4.1.25506.2.65.2.1.3.3.1.3
+      type: DisplayString
+      help: Name of classifier applied by a policy - 1.3.6.1.4.1.25506.2.65.2.1.3.3.1.3
+      indexes:
+      - labelname: hh3cCBQoSPolicyIndex
+        type: gauge
+      - labelname: hh3cCBQoSPolicyClassIndex
+        type: gauge
+    - name: hh3cCBQoSPolicyClassBehaviorName
+      oid: 1.3.6.1.4.1.25506.2.65.2.1.3.3.1.5
+      type: DisplayString
+      help: Name of Behavior applied by a policy - 1.3.6.1.4.1.25506.2.65.2.1.3.3.1.5
+      indexes:
+      - labelname: hh3cCBQoSPolicyIndex
+        type: gauge
+      - labelname: hh3cCBQoSPolicyClassIndex
+        type: gauge
+    - name: hh3cCBQoSIfApplyPolicyName
+      oid: 1.3.6.1.4.1.25506.2.65.2.1.4.1.1.3
+      type: DisplayString
+      help: Name of Traffic Policy. - 1.3.6.1.4.1.25506.2.65.2.1.4.1.1.3
+      indexes:
+      - labelname: hh3cCBQoSIfApplyPolicyIfIndex
+        type: gauge
+      - labelname: hh3cCBQoSIfApplyPolicyDirection
+        type: gauge
+        enum_values:
+          1: inbound
+          2: outbound
+    - name: hh3cCBQoSApplyObjectMainSite
+      oid: 1.3.6.1.4.1.25506.2.65.2.1.5.5.1.1.4
+      type: DisplayString
+      help: Its value depends on hh3cCBQoSApplyObjectType - 1.3.6.1.4.1.25506.2.65.2.1.5.5.1.1.4
+      indexes:
+      - labelname: hh3cCBQoSApplyObjectIndex
+        type: gauge
+    - name: hh3cCBQoSIntApplyObjectIndex
+      oid: 1.3.6.1.4.1.25506.2.65.2.1.5.5.2.1.2
+      type: gauge
+      help: QoS apply object index. - 1.3.6.1.4.1.25506.2.65.2.1.5.5.2.1.2
+      indexes:
+      - labelname: hh3cCBQoSIntApplyObjectIfIndex
+        type: gauge
+      - labelname: hh3cCBQoSApplyObjectDirection
+        type: gauge
+        enum_values:
+          1: inbound
+          2: outbound
+    - name: hh3cCBQoSQueueMatchedBytes
+      oid: 1.3.6.1.4.1.25506.2.65.2.1.5.6.6.1.2
+      type: counter
+      help: Number of bytes matched to queue. - 1.3.6.1.4.1.25506.2.65.2.1.5.6.6.1.2
+      indexes:
+      - labelname: hh3cCBQoSApplyObjectIndex
+        type: gauge
+      - labelname: hh3cCBQoSPolicyClassIndex
+        type: gauge
+    - name: hh3cCBQoSQueueDiscardedBytes
+      oid: 1.3.6.1.4.1.25506.2.65.2.1.5.6.6.1.6
+      type: counter
+      help: Number of bytes discarded when queued by discard method. - 1.3.6.1.4.1.25506.2.65.2.1.5.6.6.1.6
+      indexes:
+      - labelname: hh3cCBQoSApplyObjectIndex
+        type: gauge
+      - labelname: hh3cCBQoSPolicyClassIndex
+        type: gauge
+

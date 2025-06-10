@@ -16,15 +16,17 @@ services:
       GF_AUTH_JWT_KEY_FILE: /etc/grafana/public-key.pem
       GF_AUTH_JWT_EMAIL_CLAIM: sub
       GF_AUTH_JWT_USERNAME_CLAIM: user
+      GF_AUTH_JWT_AUTO_SIGN_UP: true
+      GF_AUTH_JWT_ALLOW_ASSIGN_GRAFANA_ADMIN: true
 
     volumes:
       - ./public-key.pem:/etc/grafana/public-key.pem
-      - grafana-data:/var/lib/grafana
+      - ./grafana-data:/var/lib/grafana
       # - ./grafana.ini:/usr/share/grafana/conf/defaults.ini
     ports:
       - 3000:3000
     networks:
       - docker_netaxe
-volumes:
-  grafana-data:
-    external: true
+#volumes:
+#  grafana-data:
+#    external: true

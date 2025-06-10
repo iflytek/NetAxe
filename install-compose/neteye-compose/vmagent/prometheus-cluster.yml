@@ -1,0 +1,53 @@
+global:
+  scrape_interval: 30s
+  scrape_timeout: 10s
+
+scrape_configs:
+  - job_name: 'vmagent'
+    static_configs:
+      - targets: ['vmagent:8429']
+  - job_name: 'vmalert'
+    static_configs:
+      - targets: ['vmalert:8880']
+  - job_name: 'vmauth'
+    static_configs:
+      - targets: ['vmauth:8427']
+  - job_name: 'vminsert'
+    static_configs:
+      - targets: ['vminsert-1:8480', 'vminsert-2:8480', 'vminsert-3:8480']
+  - job_name: 'vmselect'
+    static_configs:
+      - targets: ['vmselect-1:8481', 'vmselect-2:8481', 'vmselect-3:8481']
+  - job_name: 'vmstorage'
+    static_configs:
+      - targets: ['vmstorage-1:8482', 'vmstorage-2:8482', 'vmstorage-3:8482']
+
+  - job_name: "h3c_devices"
+    scrape_interval: 60s
+    scrape_timeout: 50s
+    file_sd_configs:
+      - files:
+        - /etc/prometheus/targets/device.yml
+        refresh_interval: 2m
+    metrics_path: /snmp
+    relabel_configs:
+    - source_labels: ["__address__"]
+      target_label: __param_target
+    - source_labels: ["__param_target"]
+      target_label: instance
+    - target_label: __address__
+      replacement: snmp-exporter:9116
+    - source_labels: ["module"]
+      target_label: __param_module
+    - source_labels: ["auth"]
+      target_label: __param_auth
+    metric_relabel_configs:
+    - source_labels: [ip1, ip2, ip3, ip4]  # 提取ip地址的四个部分
+      separator: '.'
+      target_label: 'index'
+
+    - source_labels: [ifName, ifAlias]
+      separator: '【'
+      regex: '(.*)'
+      target_label: 'interface'
+      replacement: '${1}】'

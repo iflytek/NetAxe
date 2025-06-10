@@ -42,6 +42,11 @@
     "template_id": "bc8bbb276",
     "signature": "数据中心"
   },
+  "ali_sms": {
+    "sign_name": "签名名称",
+    "access_key_id": "keyid",
+    "access_key_secret": "secret"
+  },
   "phone": {
     "key": "3a538c35f11041",
     "call_url": "http",

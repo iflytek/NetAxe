@@ -1,9 +1,5 @@
-version: "3.2"
-networks:
-  docker_netaxe:
-    external: true
-    
 services:
+
   neteye-backend:
     image: registry.cn-hangzhou.aliyuncs.com/netaxe/neteye:1.0
     container_name: neteye-backend
@@ -13,7 +9,308 @@ services:
     volumes:
       - /etc/localtime:/etc/localtime
       - ./config.yaml:/build/etc/config.yaml
+      - ./snmp_exporter:/adf
     ports:
       - "31106:8000"
     networks:
       - docker_netaxe
+
+  # 指标收集器
+  vmagent:
+    container_name: vmagent
+    image: registry.cn-hangzhou.aliyuncs.com/netaxe/vmagent:v1.102.0
+    ports:
+      - "8429:8429"
+    volumes:
+      - vmagentdata:/vmagentdata
+      - ./vmagent/prometheus-cluster.yml:/etc/prometheus/prometheus.yml
+      - ./vmagent/targets:/etc/prometheus/targets
+    command:
+      - '-promscrape.config=/etc/prometheus/prometheus.yml'
+      - '-promscrape.config.strictParse=false'
+      - '-remoteWrite.url=http://vmauth:8427/insert/0/prometheus/api/v1/write'
+    networks:
+      - docker_netaxe
+    restart: always
+
+  # 配置了 VictoriaMetrics 作为数据源的 Grafana 实例
+  grafana:
+    container_name: grafana
+    image: registry.cn-hangzhou.aliyuncs.com/netaxe/grafana:11.1.2
+    ports:
+      - "3000:3000"
+    volumes:
+      - grafanadata:/var/lib/grafana
+      - ./provisioning/datasources/prometheus-datasource:/etc/grafana/provisioning/datasources
+      - ./provisioning/dashboards:/etc/grafana/provisioning/dashboards
+      - ./dashboards/victoriametrics-cluster.json:/var/lib/grafana/dashboards/vm.json
+      - ./dashboards/vmagent.json:/var/lib/grafana/dashboards/vmagent.json
+      - ./dashboards/vmalert.json:/var/lib/grafana/dashboards/vmalert.json
+      - ./dashboards/network.json:/var/lib/grafana/dashboards/network.json
+    networks:
+      - docker_netaxe
+    restart: always
+
+  # vmstorage 五台节点，数据分片存储， 每台接收到由 vminsert 发送的总指标数据的 1/N 部分 这里是五台就是 1/5
+  vmstorage-1:
+    container_name: vmstorage-1
+    image: registry.cn-hangzhou.aliyuncs.com/netaxe/vmstorage:v1.102.0
+    ports:
+      - "8482:8482"
+      - "8400:8400"
+      - "8401:8401"
+    volumes:
+      - strgdata-1:/storage
+    command:
+      - '-retentionPeriod=30d'
+      - '-storageDataPath=/storage'
+    networks:
+      - docker_netaxe
+    restart: always
+  vmstorage-2:
+    container_name: vmstorage-2
+    image: registry.cn-hangzhou.aliyuncs.com/netaxe/vmstorage:v1.102.0
+    ports:
+      - 8482
+      - 8400
+      - 8401
+    volumes:
+      - strgdata-2:/storage
+    command:
+      - '-retentionPeriod=30d'
+      - '-storageDataPath=/storage'
+    networks:
+      - docker_netaxe
+    restart: always
+  vmstorage-3:
+    container_name: vmstorage-3
+    image: registry.cn-hangzhou.aliyuncs.com/netaxe/vmstorage:v1.102.0
+    ports:
+      - 8482
+      - 8400
+      - 8401
+    volumes:
+      - strgdata-3:/storage
+    command:
+      - '-retentionPeriod=30d'
+      - '-storageDataPath=/storage'
+    networks:
+      - docker_netaxe
+    restart: always
+
+  # vminsert 五个节点，数据采集前端，接收由 vmagent 推送的指标数据
+  vminsert-1:
+    container_name: vminsert-1
+    image: registry.cn-hangzhou.aliyuncs.com/netaxe/vminsert:v1.102.0
+    depends_on:
+      - "vmstorage-1"
+      - "vmstorage-2"
+      - "vmstorage-3"
+    command:
+      - '-storageNode=vmstorage-1:8400'
+      - '-storageNode=vmstorage-2:8400'
+      - '-storageNode=vmstorage-3:8400'
+      - '-replicationFactor=2'
+    ports:
+      - 8480
+    networks:
+      - docker_netaxe
+    restart: always
+  vminsert-2:
+    container_name: vminsert-2
+    image: registry.cn-hangzhou.aliyuncs.com/netaxe/vminsert:v1.102.0
+    depends_on:
+      - "vmstorage-1"
+      - "vmstorage-2"
+      - "vmstorage-3"
+    command:
+      - '-storageNode=vmstorage-1:8400'
+      - '-storageNode=vmstorage-2:8400'
+      - '-storageNode=vmstorage-3:8400'
+      - '-replicationFactor=2'
+    ports:
+      - 8480
+    networks:
+      - docker_netaxe
+    restart: always
+  vminsert-3:
+    container_name: vminsert-3
+    image: registry.cn-hangzhou.aliyuncs.com/netaxe/vminsert:v1.102.0
+    depends_on:
+      - "vmstorage-1"
+      - "vmstorage-2"
+      - "vmstorage-3"
+    command:
+      - '-storageNode=vmstorage-1:8400'
+      - '-storageNode=vmstorage-2:8400'
+      - '-storageNode=vmstorage-3:8400'
+      - '-replicationFactor=2'
+    ports:
+      - 8480
+    networks:
+      - docker_netaxe
+    restart: always
+
+  # vmselect 五个节点，查询前端，处理 MetricsQL 或 PromQL 的读取查询
+  vmselect-1:
+    container_name: vmselect-1
+    image: registry.cn-hangzhou.aliyuncs.com/netaxe/vmselect:v1.102.0
+    depends_on:
+      - "vmstorage-1"
+      - "vmstorage-2"
+      - "vmstorage-3"
+    command:
+      - '-storageNode=vmstorage-1:8401'
+      - '-storageNode=vmstorage-2:8401'
+      - '-storageNode=vmstorage-3:8401'
+      - '-vmalert.proxyURL=http://vmalert:8880'
+      - '-dedup.minScrapeInterval=1ms'
+      - "-memory.allowedPercent=80"
+      - "-search.maxMemoryPerQuery=0"
+      - "-search.maxQueryLen=50KiB"
+      - "-search.maxSeries=90000000"
+      - "-search.maxUniqueTimeseries=9000000"
+      - "-search.maxQueryDuration=60s"
+      - "-search.maxConcurrentRequests=128"
+    ports:
+      - 8481
+    networks:
+      - docker_netaxe
+    restart: always
+  vmselect-2:
+    container_name: vmselect-2
+    image: registry.cn-hangzhou.aliyuncs.com/netaxe/vmselect:v1.102.0
+    depends_on:
+      - "vmstorage-1"
+      - "vmstorage-2"
+      - "vmstorage-3"
+    command:
+      - '-storageNode=vmstorage-1:8401'
+      - '-storageNode=vmstorage-2:8401'
+      - '-storageNode=vmstorage-3:8401'
+      - '-vmalert.proxyURL=http://vmalert:8880'
+      - '-dedup.minScrapeInterval=1ms'
+      - "-memory.allowedPercent=80"
+      - "-search.maxMemoryPerQuery=0"
+      - "-search.maxQueryLen=50KiB"
+      - "-search.maxSeries=90000000"
+      - "-search.maxUniqueTimeseries=9000000"
+      - "-search.maxQueryDuration=60s"
+      - "-search.maxConcurrentRequests=128"
+    ports:
+      - 8481
+    networks:
+      - docker_netaxe
+    restart: always
+  vmselect-3:
+    container_name: vmselect-3
+    image: registry.cn-hangzhou.aliyuncs.com/netaxe/vmselect:v1.102.0
+    depends_on:
+      - "vmstorage-1"
+      - "vmstorage-2"
+      - "vmstorage-3"
+    command:
+      - '-storageNode=vmstorage-1:8401'
+      - '-storageNode=vmstorage-2:8401'
+      - '-storageNode=vmstorage-3:8401'
+      - '-vmalert.proxyURL=http://vmalert:8880'
+      - '-dedup.minScrapeInterval=1ms'
+      - "-memory.allowedPercent=80"
+      - "-search.maxMemoryPerQuery=0"
+      - "-search.maxQueryLen=50KiB"
+      - "-search.maxSeries=90000000"
+      - "-search.maxUniqueTimeseries=9000000"
+      - "-search.maxQueryDuration=60s"
+      - "-search.maxConcurrentRequests=128"
+    ports:
+      - 8481
+    networks:
+      - docker_netaxe
+    restart: always
+
+  # vmauth 是一个用于处理 HTTP 请求的路由器和负载均衡器
+  vmauth:
+    container_name: vmauth
+    image: registry.cn-hangzhou.aliyuncs.com/netaxe/vmauth:v1.102.0
+    depends_on:
+      - "vminsert-1"
+      - "vminsert-2"
+      - "vminsert-3"
+      - "vmselect-1"
+      - "vmselect-2"
+      - "vmselect-3"
+    volumes:
+      - ./vmauth/auth-cluster.yml:/etc/auth.yml
+    command:
+      - '-auth.config=/etc/auth.yml'
+    ports:
+      - 8427:8427
+    networks:
+      - docker_netaxe
+    restart: always
+
+  # vmalert 评估告警并记录规则
+  vmalert:
+    container_name: vmalert
+    image: registry.cn-hangzhou.aliyuncs.com/netaxe/vmalert:v1.102.0
+    depends_on:
+      - "vmauth"
+    ports:
+      - 8880:8880
+    volumes:
+      - ./vmalert/alerts-cluster.yml:/etc/alerts/alerts.yml
+      - ./vmalert/alerts-health.yml:/etc/alerts/alerts-health.yml
+      - ./vmalert/alerts-vmagent.yml:/etc/alerts/alerts-vmagent.yml
+      - ./vmalert/alerts-vmalert.yml:/etc/alerts/alerts-vmalert.yml
+    command:
+      - '-datasource.url=http://vmauth:8427/select/0/prometheus'
+      - '-remoteRead.url=http://vmauth:8427/select/0/prometheus'
+      - '-remoteWrite.url=http://vmagent:8429/api/v1/write'
+      - '-notifier.url=http://alertmanager:9093/'
+      - '-rule=/etc/alerts/*.yml'
+      # display source of alerts in grafana
+      - '-external.url=http://127.0.0.1:3000' #grafana outside container
+      # when copypaste the line below be aware of '$$' for escaping in '$expr'
+      - '-external.alert.source=explore?orgId=1&left={"datasource":"VictoriaMetrics","queries":[{"expr":{{$$expr|jsonEscape|queryEscape}},"refId":"A"}],"range":{"from":"now-1h","to":"now"}}'
+    networks:
+      - docker_netaxe
+    restart: always
+
+  # alertmanager 接收来自 vmalert 的告警通知，并根据 --config.file 中的配置进行通知路由分发
+  alertmanager:
+    container_name: alertmanager
+    image: registry.cn-hangzhou.aliyuncs.com/netaxe/alertmanager:v0.27.0
+    volumes:
+      - ./alertmanager/alertmanager.yml:/config/alertmanager.yml
+    command:
+      - '--config.file=/config/alertmanager.yml'
+    ports:
+      - 9093:9093
+    networks:
+      - docker_netaxe
+    restart: always
+  # 监控模板  监控规则
+  snmp-exporter:
+    container_name: snmp-exporter
+    image: registry.cn-hangzhou.aliyuncs.com/netaxe/snmp-exporter:v0.26.0
+    ports:
+      - 9116:9116
+    volumes:
+      - ./snmp_exporter:/etc/snmp_exporter
+    command:
+      - '--config.file=/etc/snmp_exporter/snmp_*.yml'
+    networks:
+      - docker_netaxe
+    restart: always
+
+volumes:
+  vmagentdata: {}
+  strgdata-1: {}
+  strgdata-2: {}
+  strgdata-3: {}
+  grafanadata: {}
+
+networks:
+  docker_netaxe:
+    external: true
+#    driver: bridge
