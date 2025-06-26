@@ -259,13 +259,12 @@ services:
     depends_on:
       - "vmauth"
     ports:
-      - 8890:8880
+      - 8880:8880
     volumes:
-      #- ./vmalert/alerts-cluster.yml:/etc/alerts/alerts.yml
-      #- ./vmalert/alerts-health.yml:/etc/alerts/alerts-health.yml
-      #- ./vmalert/alerts-vmagent.yml:/etc/alerts/alerts-vmagent.yml
-      #- ./vmalert/alerts-vmalert.yml:/etc/alerts/alerts-vmalert.yml
-      - ./vmalert:/etc/alerts
+      - ./vmalert/alerts-cluster.yml:/etc/alerts/alerts.yml
+      - ./vmalert/alerts-health.yml:/etc/alerts/alerts-health.yml
+      - ./vmalert/alerts-vmagent.yml:/etc/alerts/alerts-vmagent.yml
+      - ./vmalert/alerts-vmalert.yml:/etc/alerts/alerts-vmalert.yml
     command:
       - '-datasource.url=http://vmauth:8427/select/0/prometheus'
       - '-remoteRead.url=http://vmauth:8427/select/0/prometheus'

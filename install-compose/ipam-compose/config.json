@@ -31,5 +31,6 @@
   "mysql_db": "ipam",
   "project_name": "IPAM",
   "url_prefix": "/ipam",
-  "push_gateway": "pushgateway:9091"
+  "push_gateway": "pushgateway:9091",
+  "user_info_url": "http://SERVER_IP:31104/abac-api/userInfo/"
 }

@@ -38,6 +38,7 @@ echo "Using nacos_key: $nacos_key"
 # 遍历当前目录的所有子目录，查找 config.json 文件并修改其中的 server_ip 字段
 find . -type f -name "config.json" -exec sed -i "s|SERVER_IP|${iface_ip}|g" {} \;
 find . -type f -name "config.json" -exec sed -i "s|MYSQL_PASSWD|${default_key}|g" {} \;
+find . -type f -name "config.json" -exec sed -i "s|MYSQL_PASSWORD|${default_key}|g" {} \;
 find . -type f -name "config.yaml" -exec sed -i "s|MYSQL_PASSWD|${default_key}|g" {} \;
 find . -type f -name "config.json" -exec sed -i "s|REDIS_PASSWORD|${default_key}|g" {} \;
 find . -type f -name "config.json" -exec sed -i "s|MONGO_PASSWORD|${default_key}|g" {} \;
@@ -236,7 +237,8 @@ echo "------------------刷新权限------------------"
 curl "http://127.0.0.1:31104/abac-api/authority/auth_policy/?reload=1"
 echo "------------------刷新权限成功------------------"
 sleep 10
-
+curl "http://127.0.0.1:31104/abac-api/authority/auth_policy/?reload=1"
+echo "------------------刷新权限成功------------------"
 
 echo "------------------所有服务部署完成------------------------"
 echo "请记住初始化密码"

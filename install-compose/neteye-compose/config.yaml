@@ -1,4 +1,5 @@
 # -*- coding: utf-8 -*-
+<<<<<<< HEAD
 server:
   mode: debug   # 可选值: debug, test, release
   port: 8000      # 可选端口号配置
@@ -17,6 +18,11 @@ server:
       target_server: network_monitor
 
 
+=======
+backendport: 8000
+
+
+>>>>>>> 5b5f6dfea877db7c7b3d708eb19299df880ec505
 mysqlconf:
   server: mysql-server
   port: 3306
