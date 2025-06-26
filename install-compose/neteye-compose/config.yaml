@@ -1,12 +1,12 @@
 # -*- coding: utf-8 -*-
 server:
   mode: debug   # 可选值: debug, test, release
-  port: 8000     # 可选端口号配置
+  port: 8000      # 可选端口号配置
   log_directory: /var/log
 
   # 网络设备监控配置
   network_device:
-    url: "http://10.254.12.232:31100/base_platform/asset/asset_networkdevice"
+    url: "http://10.254.12.169:31100/base_platform/asset/asset_networkdevice"
     api_secret: "2a84465a-cf38-46b2-9d86-b84Q7d57f233"
     limit: 6000
     polling_interval: 30m
@@ -15,7 +15,8 @@ server:
       username: admin
       password: zuVc0FUdd1sB
       target_server: network_monitor
-      
+
+
 mysqlconf:
   server: mysql-server
   port: 3306

@@ -1,7 +1,7 @@
 services:
 
   neteye-backend:
-    image: registry.cn-hangzhou.aliyuncs.com/netaxe/neteye:1.0
+    image: registry.cn-hangzhou.aliyuncs.com/netaxe/neteye:3.0
     container_name: neteye-backend
     restart: always
     environment:
@@ -10,6 +10,7 @@ services:
       - /etc/localtime:/etc/localtime
       - ./config.yaml:/build/etc/config.yaml
       - ./snmp_exporter:/build/rules/monitor
+      - ./snmp_exporter:/build/snmp_exporter
       - ./vmalert:/build/rules/alarm
       - ./public_net_resource.xlsx:/build/etc/public_net_resource.xlsx
     ports:
@@ -287,21 +288,25 @@ services:
       - ./alertmanager/alertmanager.yml:/config/alertmanager.yml
     command:
       - '--config.file=/config/alertmanager.yml'
+      - '--cluster.advertise-address=127.0.0.1:9094'
     ports:
       - 9093:9093
     networks:
       - docker_netaxe
     restart: always
+
   # 监控模板  监控规则
   snmp-exporter:
     container_name: snmp-exporter
-    image: registry.cn-hangzhou.aliyuncs.com/netaxe/snmp-exporter:v0.26.0
+    image: registry.cn-hangzhou.aliyuncs.com/netaxe/snmp-exporter:v0.27.0
     ports:
       - 9116:9116
     volumes:
       - ./snmp_exporter:/etc/snmp_exporter
-    command:
-      - '--config.file=/etc/snmp_exporter/*.yml'
+    environment:
+      - CONFIG_API=http://neteye-backend:8000/config
+    depends_on:
+      - "neteye-backend"
     networks:
       - docker_netaxe
     restart: always
@@ -317,3 +322,5 @@ networks:
   docker_netaxe:
     external: true
 #    driver: bridge
+
+
