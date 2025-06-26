@@ -19,6 +19,7 @@ fi
 # 默认key设置
 default_key=$(openssl rand -hex 8)
 nacos_key=$(openssl rand -base64 32) 
+x_api_key=$(openssl rand -base64 32)
 
 if [ $# -eq 0 ]; then
   # 如果没有传入参数，则使用默认网卡的IP地址
@@ -37,6 +38,8 @@ echo "Using nacos_key: $nacos_key"
 
 # 遍历当前目录的所有子目录，查找 config.json 文件并修改其中的 server_ip 字段
 find . -type f -name "config.json" -exec sed -i "s|SERVER_IP|${iface_ip}|g" {} \;
+find . -type f -name "config.json" -exec sed -i "s|X-API-KEY|${x_api_key}|g" {} \;
+find . -type f -name "config.yaml" -exec sed -i "s|X-API-KEY|${x_api_key}|g" {} \;
 find . -type f -name "config.json" -exec sed -i "s|MYSQL_PASSWD|${default_key}|g" {} \;
 find . -type f -name "config.json" -exec sed -i "s|MYSQL_PASSWORD|${default_key}|g" {} \;
 find . -type f -name "config.yaml" -exec sed -i "s|MYSQL_PASSWD|${default_key}|g" {} \;
