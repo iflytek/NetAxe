@@ -5,7 +5,7 @@ server:
   log_directory: /var/log
 
   network_device:
-    url: "http://base-nginx:31100/base_platform/asset/asset_networkdevice"
+    url: "http://base-nginx:80/base_platform/asset/asset_networkdevice"
     api_secret: "X-API-KEY"
     limit: 6000
     polling_interval: 30m
