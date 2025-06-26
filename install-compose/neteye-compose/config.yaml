@@ -22,6 +22,6 @@ mysqlconf:
   port: 3306
   database: neteye
   username: root
-  password: MYSQL_PASSWORD
+  password: MYSQL_PASSWD
 
 dbsource:
