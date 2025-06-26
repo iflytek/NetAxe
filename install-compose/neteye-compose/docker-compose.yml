@@ -9,9 +9,7 @@ services:
     volumes:
       - /etc/localtime:/etc/localtime
       - ./config.yaml:/build/etc/config.yaml
-      - ./snmp_exporter:/build/rules/monitor
-      - ./vmalert:/build/rules/alarm
-      - ./public_net_resource.xlsx:/build/etc/public_net_resource.xlsx
+      - ./snmp_exporter:/adf
     ports:
       - "31106:8000"
     networks:
@@ -258,13 +256,12 @@ services:
     depends_on:
       - "vmauth"
     ports:
-      - 8890:8880
+      - 8880:8880
     volumes:
-      #- ./vmalert/alerts-cluster.yml:/etc/alerts/alerts.yml
-      #- ./vmalert/alerts-health.yml:/etc/alerts/alerts-health.yml
-      #- ./vmalert/alerts-vmagent.yml:/etc/alerts/alerts-vmagent.yml
-      #- ./vmalert/alerts-vmalert.yml:/etc/alerts/alerts-vmalert.yml
-      - ./vmalert:/etc/alerts
+      - ./vmalert/alerts-cluster.yml:/etc/alerts/alerts.yml
+      - ./vmalert/alerts-health.yml:/etc/alerts/alerts-health.yml
+      - ./vmalert/alerts-vmagent.yml:/etc/alerts/alerts-vmagent.yml
+      - ./vmalert/alerts-vmalert.yml:/etc/alerts/alerts-vmalert.yml
     command:
       - '-datasource.url=http://vmauth:8427/select/0/prometheus'
       - '-remoteRead.url=http://vmauth:8427/select/0/prometheus'
@@ -301,7 +298,7 @@ services:
     volumes:
       - ./snmp_exporter:/etc/snmp_exporter
     command:
-      - '--config.file=/etc/snmp_exporter/*.yml'
+      - '--config.file=/etc/snmp_exporter/snmp_*.yml'
     networks:
       - docker_netaxe
     restart: always
