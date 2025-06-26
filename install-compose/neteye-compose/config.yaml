@@ -1,5 +1,4 @@
 # -*- coding: utf-8 -*-
-<<<<<<< HEAD
 server:
   mode: debug   # 可选值: debug, test, release
   port: 8000      # 可选端口号配置
@@ -7,22 +6,17 @@ server:
 
   # 网络设备监控配置
   network_device:
-    url: "http://10.254.12.169:31100/base_platform/asset/asset_networkdevice"
+    url: "http://base-nginx:31100/base_platform/asset/asset_networkdevice"
     api_secret: "2a84465a-cf38-46b2-9d86-b84Q7d57f233"
     limit: 6000
     polling_interval: 30m
     registration:
-      addr: http://10.254.12.237:4168/regis/servers/
+      addr: http://base-nginx:4168/regis/servers/
       username: admin
       password: zuVc0FUdd1sB
       target_server: network_monitor
 
 
-=======
-backendport: 8000
-
-
->>>>>>> 5b5f6dfea877db7c7b3d708eb19299df880ec505
 mysqlconf:
   server: mysql-server
   port: 3306
