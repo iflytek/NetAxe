@@ -77,12 +77,14 @@ echo "------------------开始mysql和mongo部署------------"
 cd $current_path
 cd mysql-compose
 docker-compose up -d
+sleep 10
 echo "------------------mysql状态----------------------"
 docker-compose ps
 
 cd $current_path
 cd mongo-compose
 docker-compose up -d
+sleep 10
 echo "------------------mongo状态----------------------"
 docker-compose ps
 
