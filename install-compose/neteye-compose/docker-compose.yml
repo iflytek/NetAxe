@@ -37,22 +37,22 @@ services:
     restart: always
 
   # 配置了 VictoriaMetrics 作为数据源的 Grafana 实例
-  grafana:
-    container_name: grafana
-    image: registry.cn-hangzhou.aliyuncs.com/netaxe/grafana:11.1.2
-    ports:
-      - "3000:3000"
-    volumes:
-      - grafanadata:/var/lib/grafana
-      - ./provisioning/datasources/prometheus-datasource:/etc/grafana/provisioning/datasources
-      - ./provisioning/dashboards:/etc/grafana/provisioning/dashboards
-      - ./dashboards/victoriametrics-cluster.json:/var/lib/grafana/dashboards/vm.json
-      - ./dashboards/vmagent.json:/var/lib/grafana/dashboards/vmagent.json
-      - ./dashboards/vmalert.json:/var/lib/grafana/dashboards/vmalert.json
-      - ./dashboards/network.json:/var/lib/grafana/dashboards/network.json
-    networks:
-      - docker_netaxe
-    restart: always
+  # grafana:
+  #   container_name: grafana
+  #   image: registry.cn-hangzhou.aliyuncs.com/netaxe/grafana:11.1.2
+  #   ports:
+  #     - "3000:3000"
+  #   volumes:
+  #     - grafanadata:/var/lib/grafana
+  #     - ./provisioning/datasources/prometheus-datasource:/etc/grafana/provisioning/datasources
+  #     - ./provisioning/dashboards:/etc/grafana/provisioning/dashboards
+  #     - ./dashboards/victoriametrics-cluster.json:/var/lib/grafana/dashboards/vm.json
+  #     - ./dashboards/vmagent.json:/var/lib/grafana/dashboards/vmagent.json
+  #     - ./dashboards/vmalert.json:/var/lib/grafana/dashboards/vmalert.json
+  #     - ./dashboards/network.json:/var/lib/grafana/dashboards/network.json
+  #   networks:
+  #     - docker_netaxe
+  #   restart: always
 
   # vmstorage 五台节点，数据分片存储， 每台接收到由 vminsert 发送的总指标数据的 1/N 部分 这里是五台就是 1/5
   vmstorage-1:
@@ -315,7 +315,7 @@ volumes:
   strgdata-1: {}
   strgdata-2: {}
   strgdata-3: {}
-  grafanadata: {}
+  # grafanadata: {}
 
 networks:
   docker_netaxe:

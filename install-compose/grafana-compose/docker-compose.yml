@@ -23,6 +23,12 @@ services:
       - ./public-key.pem:/etc/grafana/public-key.pem
       - ./grafana-data:/var/lib/grafana
       # - ./grafana.ini:/usr/share/grafana/conf/defaults.ini
+      - ../neteye-compose/provisioning/datasources/prometheus-datasource:/etc/grafana/provisioning/datasources
+      - ../neteye-compose/provisioning/dashboards:/etc/grafana/provisioning/dashboards
+      - ../neteye-compose/dashboards/victoriametrics-cluster.json:/var/lib/grafana/dashboards/vm.json
+      - ../neteye-compose/dashboards/vmagent.json:/var/lib/grafana/dashboards/vmagent.json
+      - ../neteye-compose/dashboards/vmalert.json:/var/lib/grafana/dashboards/vmalert.json
+      - ../neteye-compose/dashboards/network.json:/var/lib/grafana/dashboards/network.json
     ports:
       - 3000:3000
     networks:
