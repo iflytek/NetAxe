@@ -7,6 +7,9 @@ gToken:
   # 是否支持多端登录
   MultiLogin: true
 
+upload:
+  path: upload
+  
 login:
   User: admin
   Password: REGIS_PASSWORD

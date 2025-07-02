@@ -10,9 +10,9 @@ server:
     limit: 6000
     polling_interval: 30m
     registration:
-      addr: http://base-nginx:4168/regis/servers/
+      addr: http://regis:4168/regis/servers/
       username: admin
-      password: zuVc0FUdd1sB
+      password: MYSQL_PASSWD
       target_server: network_monitor
 
 
