@@ -3,6 +3,7 @@
   "server_name": "基础平台",
   "virtual_host": "netaxe",
   "version": "1.0",
+  "api_key": "X-API-KEY",
   "backend_ip": "SERVER_IP",
   "backend_port": 31100,
   "web_url": "http://SERVER_IP:32200",

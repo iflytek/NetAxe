@@ -6,7 +6,7 @@ server:
 
   network_device:
     url: "http://base-nginx:80/base_platform/asset/asset_networkdevice"
-    api_secret: "3a84465a-df38-46b2-9d86-b84Q7d57f244"
+    api_secret: "X-API-KEY"
     limit: 6000
     polling_interval: 30m
     registration:
