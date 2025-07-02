@@ -198,6 +198,10 @@ echo "------------------地址管理IPAM状态------------------"
 docker-compose  ps
 sleep 10
 
+# 增加延迟，等待 base-backend启动完成，因为监控中心需要调研管控平台接口
+echo "等待 base-backend 启动完成..."
+sleep 30  # 等待 30 秒
+
 # 安装监控中心
 echo "------------------开始监控中心部署--------------"
 cd $current_path
