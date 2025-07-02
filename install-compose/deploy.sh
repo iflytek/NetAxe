@@ -176,18 +176,6 @@ echo "------------------告警中心状态------------------"
 docker-compose  ps
 sleep 10
 
-
-# 安装监控中心
-echo "------------------开始监控中心部署--------------"
-cd $current_path
-cd neteye-compose
-docker-compose pull
-docker-compose  up -d
-echo "------------------监控中心状态------------------"
-docker-compose  ps
-sleep 10
-
-
 # 安装工作台
 echo "------------------开始工作台部署--------------"
 cd $current_path
@@ -205,6 +193,16 @@ cd ipam-compose
 docker-compose pull
 docker-compose  up -d
 echo "------------------地址管理IPAM状态------------------"
+docker-compose  ps
+sleep 10
+
+# 安装监控中心
+echo "------------------开始监控中心部署--------------"
+cd $current_path
+cd neteye-compose
+docker-compose pull
+docker-compose  up -d
+echo "------------------监控中心状态------------------"
 docker-compose  ps
 sleep 10
 

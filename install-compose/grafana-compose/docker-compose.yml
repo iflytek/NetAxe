@@ -1,7 +1,13 @@
 version: "3.2"
+
 networks:
   docker_netaxe:
     external: true
+
+volumes:
+  grafana-data:
+    external: true
+
 services:
   grafana:
     image: registry.cn-hangzhou.aliyuncs.com/netaxe/grafana:11.1.2
@@ -21,7 +27,7 @@ services:
 
     volumes:
       - ./public-key.pem:/etc/grafana/public-key.pem
-      - ./grafana-data:/var/lib/grafana
+      - grafana-data:/var/lib/grafana
       # - ./grafana.ini:/usr/share/grafana/conf/defaults.ini
       - ../neteye-compose/provisioning/datasources/prometheus-datasource:/etc/grafana/provisioning/datasources
       - ../neteye-compose/provisioning/dashboards:/etc/grafana/provisioning/dashboards
@@ -33,6 +39,4 @@ services:
       - 3000:3000
     networks:
       - docker_netaxe
-#volumes:
-#  grafana-data:
-#    external: true
+

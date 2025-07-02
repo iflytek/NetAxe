@@ -1,7 +1,7 @@
 services:
 
   neteye-backend:
-    image: registry.cn-hangzhou.aliyuncs.com/netaxe/neteye:3.0
+    image: registry.cn-hangzhou.aliyuncs.com/netaxe/neteye:3.1
     container_name: neteye-backend
     restart: always
     environment:

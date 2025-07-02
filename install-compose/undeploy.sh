@@ -128,6 +128,14 @@ docker-compose  down -v
 echo "------------------workbench状态------------------"
 docker-compose  ps
 
+# 卸载neteye
+echo "------------------开始neteye卸载--------------"
+cd $current_path
+cd neteye-compose
+docker-compose  down -v
+echo "------------------neteye状态------------------"
+docker-compose  ps
+
 echo "------------------卸载完成------------------------"
 # stop停止所有容器
 #docker stop $(docker ps -a -q)
