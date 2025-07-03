@@ -198,9 +198,30 @@ echo "------------------地址管理IPAM状态------------------"
 docker-compose  ps
 sleep 10
 
-# 增加延迟，等待 base-backend启动完成，因为监控中心需要调研管控平台接口
-echo "等待 base-backend 启动完成..."
-sleep 30  # 等待 30 秒
+# 检查 base-nginx 接口是否可用，因为 neteye-backend 依赖这个接口
+echo "检查 base-nginx 接口可用性..."
+max_attempts=30
+attempt=0
+while [ $attempt -lt $max_attempts ]; do
+    # 检查 base-nginx 是否运行
+    if docker ps | grep -q "base-nginx"; then
+        # 测试 base-nginx 接口是否可访问，包括301重定向
+        response=$(curl -s -o /dev/null -w "%{http_code}" http://127.0.0.1:31100/base_platform/asset/asset_networkdevice 2>/dev/null || echo "000")
+        if [ "$response" = "200" ] || [ "$response" = "301" ] || [ "$response" = "302" ]; then
+            echo "base-nginx 接口已可用 (HTTP状态码: $response)"
+            break
+        elif [ "$response" = "502" ]; then
+            echo "base-backend 还在初始化, 等待15秒后重试"
+        fi
+    fi
+    echo "等待 base-nginx 接口启动... (尝试 $((attempt + 1))/$max_attempts)"
+    sleep 15
+    attempt=$((attempt + 1))
+done
+
+if [ $attempt -eq $max_attempts ]; then
+    echo "警告: base-nginx 接口启动超时，但继续部署监控中心"
+fi
 
 # 安装监控中心
 echo "------------------开始监控中心部署--------------"
