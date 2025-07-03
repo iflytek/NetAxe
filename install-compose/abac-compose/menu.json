@@ -1,5 +1,5 @@
 {
-  "results": [
+  "results":   [
         {
             "menu_name": "告警中心_MENU",
             "zh_name": "告警中心",
@@ -132,9 +132,20 @@
                     }
                 },
                 {
+                    "name": "协作空间",
+                    "path": "/alert-gateway/channel",
+                    "sort": 1,
+                    "icon": "wlsb",
+                    "key": "alert-gateway_channel",
+                    "type": "menu_type",
+                    "parent": {
+                        "key": "alert-gateway_config"
+                    }
+                },
+                {
                     "name": "静默策略",
                     "path": "/alert-gateway/silent-policy",
-                    "sort": 1,
+                    "sort": 96,
                     "icon": "pbgz",
                     "key": "alert-gateway_silent-policy",
                     "type": "menu_type",
@@ -241,12 +252,12 @@
                     "parent": null
                 },
                 {
-                    "name": "首页",
-                    "path": "/base-platform/dashboard",
+                    "name": "作业中心",
+                    "path": "/base-platform-task-center",
                     "sort": 0,
                     "icon": "board",
-                    "key": "base-platform_dashboard",
-                    "type": "menu_type",
+                    "key": "base-platform-task-center",
+                    "type": "group_type",
                     "parent": null
                 },
                 {
@@ -255,15 +266,6 @@
                     "sort": 0,
                     "icon": "board",
                     "key": "base-platform-config",
-                    "type": "group_type",
-                    "parent": null
-                },
-                {
-                    "name": "作业中心",
-                    "path": "/base-platform-task-center",
-                    "sort": 0,
-                    "icon": "board",
-                    "key": "base-platform-task-center",
                     "type": "group_type",
                     "parent": null
                 },
@@ -277,6 +279,15 @@
                     "parent": null
                 },
                 {
+                    "name": "首页",
+                    "path": "/base-platform/dashboard",
+                    "sort": 0,
+                    "icon": "board",
+                    "key": "base-platform_dashboard",
+                    "type": "menu_type",
+                    "parent": null
+                },
+                {
                     "name": "资源管理",
                     "path": "/resource",
                     "sort": 0,
@@ -286,25 +297,14 @@
                     "parent": null
                 },
                 {
-                    "name": "任务结果",
-                    "path": "/base-platform/task-result",
+                    "name": "值班排班",
+                    "path": "/base-platform/noc-ticket",
                     "sort": 1,
-                    "icon": "lssj",
-                    "key": "base-platform_task-result",
+                    "icon": "sjcll",
+                    "key": "base-platform_noc-ticket",
                     "type": "menu_type",
                     "parent": {
-                        "key": "base-platform-task-center"
-                    }
-                },
-                {
-                    "name": "任务列表",
-                    "path": "/base-platform/task-list",
-                    "sort": 1,
-                    "icon": "board",
-                    "key": "base-platform_task-list",
-                    "type": "menu_type",
-                    "parent": {
-                        "key": "base-platform-task-center"
+                        "key": "support"
                     }
                 },
                 {
@@ -349,17 +349,6 @@
                     "type": "menu_type",
                     "parent": {
                         "key": "resource"
-                    }
-                },
-                {
-                    "name": "值班排班",
-                    "path": "/base-platform/noc-ticket",
-                    "sort": 1,
-                    "icon": "sjcll",
-                    "key": "base-platform_noc-ticket",
-                    "type": "menu_type",
-                    "parent": {
-                        "key": "support"
                     }
                 },
                 {
@@ -415,6 +404,28 @@
                     "type": "menu_type",
                     "parent": {
                         "key": "base-platform-automation"
+                    }
+                },
+                {
+                    "name": "任务列表",
+                    "path": "/base-platform/task-list",
+                    "sort": 92,
+                    "icon": "board",
+                    "key": "base-platform_task-list",
+                    "type": "menu_type",
+                    "parent": {
+                        "key": "base-platform-task-center"
+                    }
+                },
+                {
+                    "name": "任务结果",
+                    "path": "/base-platform/task-result",
+                    "sort": 93,
+                    "icon": "lssj",
+                    "key": "base-platform_task-result",
+                    "type": "menu_type",
+                    "parent": {
+                        "key": "base-platform-task-center"
                     }
                 }
             ]
@@ -540,7 +551,7 @@
                 {
                     "name": "地址管理",
                     "path": "/ipam-group",
-                    "sort": 0,
+                    "sort": 45,
                     "icon": "board",
                     "key": "ipam-group",
                     "type": "group_type",
@@ -549,7 +560,7 @@
                 {
                     "name": "地址分配",
                     "path": "/ipam/address",
-                    "sort": 1,
+                    "sort": 46,
                     "icon": "dzgl",
                     "key": "ipam_address",
                     "type": "menu_type",
@@ -558,9 +569,9 @@
                     }
                 },
                 {
-                    "name": "网段管理",
+                    "name": "网段组",
                     "path": "/subnet_manage",
-                    "sort": 1,
+                    "sort": 103,
                     "icon": "",
                     "key": "subnet_manage",
                     "type": "group_type",
@@ -568,13 +579,177 @@
                 },
                 {
                     "name": "网段管理",
-                    "path": "subnet_manage_page",
-                    "sort": 1,
+                    "path": "/ipam/subnet",
+                    "sort": 114,
                     "icon": "board",
-                    "key": "subnet_manage_page",
+                    "key": "ipam_subnet",
                     "type": "menu_type",
                     "parent": {
                         "key": "subnet_manage"
+                    }
+                },
+                {
+                    "name": "规则配置",
+                    "path": "/ipam/subnet_rule",
+                    "sort": 115,
+                    "icon": "board",
+                    "key": "ipam_subnet_rule",
+                    "type": "menu_type",
+                    "parent": {
+                        "key": "subnet_manage"
+                    }
+                },
+                {
+                    "name": "同步策略",
+                    "path": "/ipam/subnet_sync",
+                    "sort": 116,
+                    "icon": "board",
+                    "key": "ipam_subnet_sync",
+                    "type": "menu_type",
+                    "parent": {
+                        "key": "subnet_manage"
+                    }
+                }
+            ]
+        },
+        {
+            "menu_name": "监控中心_MENU",
+            "zh_name": "监控中心",
+            "key": "neteye",
+            "web_url_port": "",
+            "icon": "监控中心.png",
+            "menus": [
+                {
+                    "name": "概览",
+                    "path": "/neteye/dashboard",
+                    "sort": 0,
+                    "icon": "board",
+                    "key": "neteye_dashboard",
+                    "type": "menu_type",
+                    "parent": null
+                },
+                {
+                    "name": "监控管理",
+                    "path": "/neteye/monitor",
+                    "sort": 0,
+                    "icon": "board",
+                    "key": "neteye-monitor",
+                    "type": "group_type",
+                    "parent": null
+                },
+                {
+                    "name": "数据维护",
+                    "path": "/neteye/data",
+                    "sort": 0,
+                    "icon": "board",
+                    "key": "neteye-data",
+                    "type": "group_type",
+                    "parent": null
+                },
+                {
+                    "name": "系统设置",
+                    "path": "/neteye/config",
+                    "sort": 0,
+                    "icon": "board",
+                    "key": "neteye-config",
+                    "type": "group_type",
+                    "parent": null
+                },
+                {
+                    "name": "硬件监控",
+                    "path": "/neteye/hardware-monitor",
+                    "sort": 1,
+                    "icon": "dqgj",
+                    "key": "neteye_hardware-monitor",
+                    "type": "menu_type",
+                    "parent": {
+                        "key": "neteye-monitor"
+                    }
+                },
+                {
+                    "name": "服务监控",
+                    "path": "/neteye/service-monitor",
+                    "sort": 1,
+                    "icon": "dqgj",
+                    "key": "neteye_service-monitor",
+                    "type": "menu_type",
+                    "parent": {
+                        "key": "neteye-monitor"
+                    }
+                },
+                {
+                    "name": "公网数据源",
+                    "path": "/neteye/public-resource",
+                    "sort": 1,
+                    "icon": "dqgj",
+                    "key": "neteye_public-resource",
+                    "type": "menu_type",
+                    "parent": {
+                        "key": "neteye-data"
+                    }
+                },
+                {
+                    "name": "扫描记录",
+                    "path": "/neteye/scan-record",
+                    "sort": 1,
+                    "icon": "dqgj",
+                    "key": "neteye_scan-record",
+                    "type": "menu_type",
+                    "parent": {
+                        "key": "neteye-data"
+                    }
+                },
+                {
+                    "name": "注册中心",
+                    "path": "/neteye/register-centor",
+                    "sort": 1,
+                    "icon": "dqgj",
+                    "key": "neteye_register-centor",
+                    "type": "menu_type",
+                    "parent": {
+                        "key": "neteye-config"
+                    }
+                },
+                {
+                    "name": "扫描器",
+                    "path": "/neteye/scaner",
+                    "sort": 1,
+                    "icon": "dqgj",
+                    "key": "neteye_scaner",
+                    "type": "menu_type",
+                    "parent": {
+                        "key": "neteye-config"
+                    }
+                },
+                {
+                    "name": "硬件配置",
+                    "path": "neteye_device-config",
+                    "sort": 100,
+                    "icon": "",
+                    "key": "neteye_device-config",
+                    "type": "group_type",
+                    "parent": null
+                },
+                {
+                    "name": "监控规则",
+                    "path": "/neteye/monitor-rule",
+                    "sort": 101,
+                    "icon": "board",
+                    "key": "neteye_monitor-rule",
+                    "type": "menu_type",
+                    "parent": {
+                        "key": "neteye_device-config"
+                    }
+                },
+                {
+                    "name": "告警规则",
+                    "path": "/neteye/alert-rule",
+                    "sort": 102,
+                    "icon": "chart",
+                    "key": "neteye_alert-rule",
+                    "type": "menu_type",
+                    "parent": {
+                        "key": "neteye_device-config"
                     }
                 }
             ]
@@ -589,18 +764,18 @@
                 {
                     "name": "网络巡检结果组",
                     "path": "/patorl-group",
-                    "sort": 1,
+                    "sort": 104,
                     "icon": "",
                     "key": "patorl-group",
                     "type": "group_type",
                     "parent": null
                 },
                 {
-                    "name": "网络设备聚合",
-                    "path": "/patorl/servermode4",
-                    "sort": 1,
-                    "icon": "board",
-                    "key": "patorl_servermode4",
+                    "name": "防火墙规则",
+                    "path": "/patorl/fwcheck",
+                    "sort": 105,
+                    "icon": "lsgj",
+                    "key": "patorl_fwcheck",
                     "type": "menu_type",
                     "parent": {
                         "key": "patorl-group"
@@ -609,7 +784,7 @@
                 {
                     "name": "网络设备互联",
                     "path": "/patorl/intdetection",
-                    "sort": 1,
+                    "sort": 106,
                     "icon": "chart",
                     "key": "patorl_intdetection",
                     "type": "menu_type",
@@ -620,7 +795,7 @@
                 {
                     "name": "网络设备MAD",
                     "path": "/patorl/madcheck",
-                    "sort": 1,
+                    "sort": 107,
                     "icon": "gjgz",
                     "key": "patorl_madcheck",
                     "type": "menu_type",
@@ -629,11 +804,11 @@
                     }
                 },
                 {
-                    "name": "防火墙规则",
-                    "path": "/patorl/fwcheck",
-                    "sort": 1,
-                    "icon": "lsgj",
-                    "key": "patorl_fwcheck",
+                    "name": "网络设备聚合",
+                    "path": "/patorl/servermode4",
+                    "sort": 109,
+                    "icon": "board",
+                    "key": "patorl_servermode4",
                     "type": "menu_type",
                     "parent": {
                         "key": "patorl-group"
@@ -642,7 +817,7 @@
                 {
                     "name": "网络设备状态",
                     "path": "/patorl/patorl_find",
-                    "sort": 1,
+                    "sort": 109,
                     "icon": "fwgl",
                     "key": "patorl_patorl_find",
                     "type": "menu_type",
@@ -653,7 +828,7 @@
                 {
                     "name": "巡检配置组",
                     "path": "/patorl-config-group",
-                    "sort": 1,
+                    "sort": 110,
                     "icon": "",
                     "key": "patorl-config-group",
                     "type": "group_type",
@@ -662,7 +837,7 @@
                 {
                     "name": "巡检规则",
                     "path": "/patorl/patorl-rule",
-                    "sort": 1,
+                    "sort": 111,
                     "icon": "fwgl",
                     "key": "patorl_patorl-rule",
                     "type": "menu_type",
@@ -673,7 +848,7 @@
                 {
                     "name": "DC巡检组",
                     "path": "dc_patorl",
-                    "sort": 1,
+                    "sort": 112,
                     "icon": "",
                     "key": "dc_patorl",
                     "type": "group_type",
@@ -682,7 +857,7 @@
                 {
                     "name": "服务器Bond",
                     "path": "/patorl/server_bond",
-                    "sort": 1,
+                    "sort": 113,
                     "icon": "lsgj",
                     "key": "patorl_server_bond",
                     "type": "menu_type",
