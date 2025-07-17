@@ -1,0 +1,13 @@
+server:
+  Address: :4168
+
+gToken:
+  # 是否支持多端登录
+  MultiLogin: true
+
+upload:
+  path: upload
+
+login:
+  User: reg
+  Password: MYSQL_PASSWD
