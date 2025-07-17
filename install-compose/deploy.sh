@@ -61,6 +61,7 @@ find ./alertgateway-compose -type f -name "docker-compose.yml" -exec sed -i "s|P
 
 
 sed -i "s|MYSQL_PASSWD|${default_key}|g" ./mysql-compose/init/netaxe.sql
+sed -i "s|MYSQL_PASSWD|${default_key}|g" ./neteye-compose/regiscenter/config.yaml
 sed -i "s|MYSQL_PASSWD|${default_key}|g" ./mysql-compose/docker-compose.yml
 sed -i "s|NACOS_PASSWORD|${default_key}|g" ./nacos-compose/docker-compose.yml
 sed -i "s|NACOS_KEY|${nacos_key}|g" ./nacos-compose/docker-compose.yml
