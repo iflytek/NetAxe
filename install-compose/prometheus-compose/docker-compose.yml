@@ -3,16 +3,16 @@ networks:
   docker_netaxe:
     external: true
 services:
-  regis:
+  regiscenter:
     image: registry.cn-hangzhou.aliyuncs.com/netaxe/regiscenter:2.3
-    container_name: regis
-    privileged: true
+    container_name: regiscenter
     volumes:
       - ./config.yaml:/app/config.yaml
     ports:
       - 31468:4168
     networks:
       - docker_netaxe
+    restart: always
 
   prometheus:
     image: registry.cn-hangzhou.aliyuncs.com/netaxe/prometheus:v1

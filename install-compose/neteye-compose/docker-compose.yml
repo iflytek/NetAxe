@@ -310,17 +310,6 @@ services:
       - docker_netaxe
     restart: always
 
-  regiscenter:
-    container_name: regiscenter
-    image: registry.cn-hangzhou.aliyuncs.com/netaxe/regiscenter:2.3
-    ports:
-      - 4168:4168
-    volumes:
-      - ./regiscenter/config.yaml:/app/config.yaml
-    networks:
-      - docker_netaxe
-    restart: always
-
 volumes:
   vmagentdata: {}
   strgdata-1: {}

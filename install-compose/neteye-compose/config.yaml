@@ -10,7 +10,7 @@ server:
     limit: 6000
     polling_interval: 30m
     registration:
-      addr: http://regis:4168/regis/servers/
+      addr: http://SERVER_IP:31468/regis/servers/
       username: admin
       password: MYSQL_PASSWD
       target_server: network_monitor

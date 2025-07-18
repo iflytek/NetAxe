@@ -38,6 +38,7 @@ echo "Using nacos_key: $nacos_key"
 
 # 遍历当前目录的所有子目录，查找 config.json 文件并修改其中的 server_ip 字段
 find . -type f -name "config.json" -exec sed -i "s|SERVER_IP|${iface_ip}|g" {} \;
+find . -type f -name "config.yaml" -exec sed -i "s|SERVER_IP|${iface_ip}|g" {} \;
 find . -type f -name "config.json" -exec sed -i "s|X-API-KEY|${x_api_key}|g" {} \;
 find . -type f -name "config.yaml" -exec sed -i "s|X-API-KEY|${x_api_key}|g" {} \;
 find . -type f -name "config.json" -exec sed -i "s|MYSQL_PASSWD|${default_key}|g" {} \;
@@ -49,7 +50,6 @@ find . -type f -name "config.json" -exec sed -i "s|RABBITMQ_PASSWORD|${default_k
 find . -type f -name "config.json" -exec sed -i "s|DJANGO_INSECURE|${default_key}|g" {} \;
 find . -type f -name "config.json" -exec sed -i "s|NACOS_PASSWORD|${default_key}|g" {} \;
 find . -type f -name "config.yaml" -exec sed -i "s|REGIS_PASSWORD|${default_key}|g" {} \;
-find . -type f -name "prometheus.yml" -exec sed -i "s|REGIS_PASSWORD|${default_key}|g" {} \;
 
 #find ./apisix-compose -type f -name "config.yaml" -exec sed -i "s|APISIX_ADMIN_KEY|${default_key}|g" {} \;
 #find ./apisix-compose -type f -name "conf.yaml" -exec sed -i "s|APISIX_ADMIN_PASSWORD|${default_key}|g" {} \;
@@ -61,13 +61,14 @@ find ./alertgateway-compose -type f -name "docker-compose.yml" -exec sed -i "s|P
 
 
 sed -i "s|MYSQL_PASSWD|${default_key}|g" ./mysql-compose/init/netaxe.sql
-sed -i "s|MYSQL_PASSWD|${default_key}|g" ./neteye-compose/regiscenter/config.yaml
+sed -i "s|MYSQL_PASSWD|${default_key}|g" ./neteye-compose/config.yaml
 sed -i "s|MYSQL_PASSWD|${default_key}|g" ./mysql-compose/docker-compose.yml
 sed -i "s|NACOS_PASSWORD|${default_key}|g" ./nacos-compose/docker-compose.yml
 sed -i "s|NACOS_KEY|${nacos_key}|g" ./nacos-compose/docker-compose.yml
 sed -i "s|APISIX_ADMIN_KEY|${default_key}|g" ./init.sh
 sed -i "s|DJANGO_INSECURE|${default_key}|g" ./init.sh
-
+sed -i "s|REGIS_PASSWORD|${default_key}|g" ./prometheus-compose/prometheus.yml
+sed -i "s|SERVER_IP|${iface_ip}|g" ./prometheus-compose/prometheus.yml
 
 # 创建docker_netaxe网络
 docker network create  --subnet=1.1.38.0/24 --ip-range=1.1.38.0/24 --gateway=1.1.38.254 docker_netaxe
@@ -244,6 +245,16 @@ ssh-keygen -t rsa -b 4096 -m PEM -f grafana.key -N ""
 openssl rsa -in grafana.key -pubout -outform PEM -out public-key.pem
 docker-compose  up -d
 echo "------------------grafana状态------------------"
+docker-compose  ps
+sleep 10
+
+# 安装prometheus
+echo "------------------开始prometheus部署--------------"
+cd $current_path
+cd prometheus-compose
+docker-compose pull
+docker-compose  up -d
+echo "------------------prometheus状态------------------"
 docker-compose  ps
 sleep 10
 
