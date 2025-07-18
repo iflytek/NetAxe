@@ -20,6 +20,8 @@ fi
 default_key=$(openssl rand -hex 8)
 nacos_key=$(openssl rand -base64 32) 
 x_api_key=$(openssl rand -base64 32)
+# 生成 Prometheus Web 认证密码
+prometheus_password_hash=$(htpasswd -nbB admin ${default_key} | cut -d: -f2)
 
 if [ $# -eq 0 ]; then
   # 如果没有传入参数，则使用默认网卡的IP地址
@@ -67,9 +69,9 @@ sed -i "s|NACOS_PASSWORD|${default_key}|g" ./nacos-compose/docker-compose.yml
 sed -i "s|NACOS_KEY|${nacos_key}|g" ./nacos-compose/docker-compose.yml
 sed -i "s|APISIX_ADMIN_KEY|${default_key}|g" ./init.sh
 sed -i "s|DJANGO_INSECURE|${default_key}|g" ./init.sh
-sed -i "s|REGIS_PASSWORD|${default_key}|g" ./prometheus-compose/prometheus_web.yml
 sed -i "s|REGIS_PASSWORD|${default_key}|g" ./prometheus-compose/prometheus.yml
 sed -i "s|SERVER_IP|${iface_ip}|g" ./prometheus-compose/prometheus.yml
+sed -i "s|REGIS_PASSWORD|${prometheus_password_hash}|g" ./prometheus-compose/prometheus_web.yml
 
 # 创建docker_netaxe网络
 docker network create  --subnet=1.1.38.0/24 --ip-range=1.1.38.0/24 --gateway=1.1.38.254 docker_netaxe

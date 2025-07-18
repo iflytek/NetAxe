@@ -5,7 +5,7 @@ global:
     monitor: '默认节点'
 
 scrape_configs:
-  - job_name: 'icmp_15s'
+  - job_name: 'icmp_connect_15s'
     scrape_interval: 1m
     metrics_path: /probe
     params:
