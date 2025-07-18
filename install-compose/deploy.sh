@@ -67,6 +67,7 @@ sed -i "s|NACOS_PASSWORD|${default_key}|g" ./nacos-compose/docker-compose.yml
 sed -i "s|NACOS_KEY|${nacos_key}|g" ./nacos-compose/docker-compose.yml
 sed -i "s|APISIX_ADMIN_KEY|${default_key}|g" ./init.sh
 sed -i "s|DJANGO_INSECURE|${default_key}|g" ./init.sh
+sed -i "s|REGIS_PASSWORD|${default_key}|g" ./prometheus-compose/prometheus_web.yml
 sed -i "s|REGIS_PASSWORD|${default_key}|g" ./prometheus-compose/prometheus.yml
 sed -i "s|SERVER_IP|${iface_ip}|g" ./prometheus-compose/prometheus.yml
 

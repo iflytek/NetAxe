@@ -9,7 +9,7 @@ scrape_configs:
     scrape_interval: 1m
     metrics_path: /probe
     params:
-      module: [ icmp_connect ]
+      module: [ icmp ]
     http_sd_configs:
       - url: http://SERVER_IP:31468/regis/services
         basic_auth:
@@ -21,11 +21,11 @@ scrape_configs:
       - source_labels: [ '__address__' ]
         target_label: instance
       - target_label: __address__
-        replacement: blackbox.monitor.svc:9115
+        replacement: SERVER_IP:9115
       - source_labels: [ env ]
         regex: .*icmp_15s.*
         action: keep
-  - job_name: 'tcp_15s'
+  - job_name: 'tcp_connect_15s'
     scrape_interval: 1m
     metrics_path: /probe
     params:
@@ -49,12 +49,38 @@ scrape_configs:
       - target_label: __address__
         replacement: SERVER_IP:9115
       - source_labels: [env]
-        regex: .*tcp_15s.*
+        regex: .*tcp_connect_15s.*
+        action: keep
+  - job_name: 'tcp_connect_all'
+    scrape_interval: 1m
+    metrics_path: /probe
+    params:
+      module: [tcp_connect]
+    http_sd_configs:
+      - url: http://SERVER_IP:31468/regis/services
+        basic_auth:
+          username: admin
+          password: REGIS_PASSWORD
+    relabel_configs:
+      - source_labels: ['__address__','port']
+        target_label: __param_target
+        regex: "(.*);(.*)"
+        replacement: "$1:$2"
+        action: replace
+      - source_labels: ['__address__','port']
+        target_label: instance
+        regex: "(.*);(.*)"
+        replacement: "$1:$2"
+        action: replace
+      - target_label: __address__
+        replacement: SERVER_IP:9115
+      - source_labels: [env]
+        regex: .*tcp_connect_all.*
         action: keep
   - job_name: 'prometheus'
     scrape_interval: 20s
     static_configs:
-      - targets: ['127.0.0.1:9090']
+      - targets: ['SERVER_IP:39090']
     basic_auth:
       username: admin
       password: REGIS_PASSWORD
