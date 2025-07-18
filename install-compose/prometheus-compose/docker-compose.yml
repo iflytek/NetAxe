@@ -1,4 +1,3 @@
-version: "3.2"
 networks:
   docker_netaxe:
     external: true
@@ -21,8 +20,7 @@ services:
     volumes:
       - ./prometheus.yml:/etc/prometheus/prometheus.yml
       - ./prometheus_web.yml:/prometheus/web.yml
-      - ./prometheus-data:/prometheus
-      - net=host
+      - prometheus-data:/prometheus
     command: ['--web.enable-lifecycle','--web.config.file=/prometheus/web.yml','--storage.tsdb.retention.time=30d', '--config.file=/etc/prometheus/prometheus.yml']
     ports:
       - 39090:9090
@@ -39,4 +37,10 @@ services:
       - 9115:9115
     networks:
       - docker_netaxe
+    restart: always
+
+volumes:
+  prometheus-data:
+
+
 

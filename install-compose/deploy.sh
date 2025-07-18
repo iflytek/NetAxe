@@ -252,6 +252,7 @@ sleep 10
 echo "------------------开始prometheus部署--------------"
 cd $current_path
 cd prometheus-compose
+docker volume create prometheus-data
 docker-compose pull
 docker-compose  up -d
 echo "------------------prometheus状态------------------"
