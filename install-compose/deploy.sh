@@ -271,7 +271,7 @@ echo "------------------前端服务状态------------------"
 docker-compose ps
 sleep 10
 
-# 初始化监控中心
+# 初始化监控中心 icmp_15s、tcp_connect_15s、tcp_connect_all
 echo "-----------监控中心初始化创建空服务--------------"
 curl -X PUT http://127.0.0.1:31468/regis/servers  -H "Content-Type: application/json"  -u admin:${default_key}  -d  '{"name":"icmp_15s"}'
 curl -X PUT http://127.0.0.1:31468/regis/servers  -H "Content-Type: application/json"  -u admin:${default_key}  -d  '{"name":"tcp_connect_15s"}'
