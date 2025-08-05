@@ -2,21 +2,24 @@ version: "3.2"
 networks:
   docker_netaxe:
     external: true
-
+    
 services:
   base-backend:
     image: registry.cn-hangzhou.aliyuncs.com/netaxe/base-backend:1.0
     container_name: base-backend
-    restart: always
-    ports:
-      - "5555:5555"
+    #ports:
+    #  - "5555:5555"
     command: sh init.sh
+    restart: always
     environment:
       TZ: Asia/Shanghai
     volumes:
       - /etc/localtime:/etc/localtime
-      - ./base-platform/backend:/app
-      - ./base-platform/config:/config
+      - ./config.json:/config/config.json
+      - ./logs:/app/logs
+      - ./device_config:/app/media/device_config
+      - ./admin_ssh_records:/app/media/admin_ssh_records
+      - ./extensibles:/app/plugins/extensibles
     networks:
       - docker_netaxe
 
@@ -35,6 +38,7 @@ services:
     networks:
       - docker_netaxe
 
+
   celery-default:
     image: registry.cn-hangzhou.aliyuncs.com/netaxe/base-backend:1.0
     container_name: celery-default
@@ -46,8 +50,10 @@ services:
       - base-backend
     volumes:
        - /etc/localtime:/etc/localtime
-       - ./base-platform/backend:/app
-       - ./base-platform/config:/config
+       - ./config.json:/config/config.json
+       - ./device_config:/app/media/device_config
+       - ./admin_ssh_records:/app/media/admin_ssh_records
+       - ./extensibles:/app/plugins/extensibles
     networks:
       - docker_netaxe
 
@@ -60,8 +66,10 @@ services:
       TZ: Asia/Shanghai
     volumes:
       - /etc/localtime:/etc/localtime
-      - ./base-platform/backend:/app
-      - ./base-platform/config:/config
+      - ./config.json:/config/config.json
+      - ./device_config:/app/media/device_config
+      - ./admin_ssh_records:/app/media/admin_ssh_records
+      - ./extensibles:/app/plugins/extensibles
     depends_on:
       - base-backend
     networks:
@@ -76,8 +84,10 @@ services:
       TZ: Asia/Shanghai
     volumes:
       - /etc/localtime:/etc/localtime
-      - ./base-platform/backend:/app
-      - ./base-platform/config:/config
+      - ./config.json:/config/config.json
+      - ./device_config:/app/media/device_config
+      - ./admin_ssh_records:/app/media/admin_ssh_records
+      - ./extensibles:/app/plugins/extensibles
     depends_on:
       - base-backend
     networks:

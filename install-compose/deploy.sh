@@ -157,6 +157,8 @@ sleep 10
 echo "------------------开始管控平台部署--------------"
 cd $current_path
 cd baseplatform-compose
+git clone -b dev https://gitee.com/NetAxeClub/base-platform.git
+mv config.json base-platform/config/
 docker-compose pull
 docker-compose  up -d
 echo "------------------管控平台状态------------------"
