@@ -17,6 +17,15 @@
                     "parent": null
                 },
                 {
+                    "name": "协作空间",
+                    "path": "/alert-gateway/collaborative",
+                    "sort": 0,
+                    "icon": "board",
+                    "key": "alert-gateway_collaborative",
+                    "type": "menu_type",
+                    "parent": null
+                },
+                {
                     "name": "告警",
                     "path": "/alert-gateway/alert",
                     "sort": 1,
@@ -126,17 +135,6 @@
                     "sort": 1,
                     "icon": "sjcll",
                     "key": "alert-gateway_notice",
-                    "type": "menu_type",
-                    "parent": {
-                        "key": "alert-gateway_config"
-                    }
-                },
-                {
-                    "name": "协作空间",
-                    "path": "/alert-gateway/channel",
-                    "sort": 1,
-                    "icon": "wlsb",
-                    "key": "alert-gateway_channel",
                     "type": "menu_type",
                     "parent": {
                         "key": "alert-gateway_config"
