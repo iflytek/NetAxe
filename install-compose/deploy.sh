@@ -159,6 +159,8 @@ cd $current_path
 cd baseplatform-compose
 git clone -b dev https://gitee.com/NetAxeClub/base-platform.git
 mv config.json base-platform/config/
+mkdir base-platform/backend/media/device_config/current-configuration
+mkdir base-platform/backend/media/device_config/startup-configuration
 docker-compose pull
 docker-compose  up -d
 echo "------------------管控平台状态------------------"
