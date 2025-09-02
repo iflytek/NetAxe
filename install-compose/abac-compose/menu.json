@@ -268,24 +268,6 @@
                     "parent": null
                 },
                 {
-                    "name": "运维支撑",
-                    "path": "/support",
-                    "sort": 0,
-                    "icon": "board",
-                    "key": "support",
-                    "type": "group_type",
-                    "parent": null
-                },
-                {
-                    "name": "首页",
-                    "path": "/base-platform/dashboard",
-                    "sort": 0,
-                    "icon": "board",
-                    "key": "base-platform_dashboard",
-                    "type": "menu_type",
-                    "parent": null
-                },
-                {
                     "name": "资源管理",
                     "path": "/resource",
                     "sort": 0,
@@ -293,17 +275,6 @@
                     "key": "resource",
                     "type": "group_type",
                     "parent": null
-                },
-                {
-                    "name": "值班排班",
-                    "path": "/base-platform/noc-ticket",
-                    "sort": 1,
-                    "icon": "sjcll",
-                    "key": "base-platform_noc-ticket",
-                    "type": "menu_type",
-                    "parent": {
-                        "key": "support"
-                    }
                 },
                 {
                     "name": "登录日志",
