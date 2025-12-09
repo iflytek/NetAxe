@@ -20,6 +20,7 @@ services:
     volumes:
       - ./prometheus.yml:/etc/prometheus/prometheus.yml
       - ./prometheus_web.yml:/prometheus/web.yml
+      - ./first_rules.rules:/etc/prometheus/config/rules/first_rules.rules
       - prometheus-data:/prometheus
     command: ['--web.enable-lifecycle','--web.config.file=/prometheus/web.yml','--storage.tsdb.retention.time=30d', '--config.file=/etc/prometheus/prometheus.yml']
     ports:

@@ -1,0 +1,23 @@
+groups:
+- name: node
+  rules:
+
+  - alert: TcpInstanceDown
+    expr: probe_success{job=~"tcp_.*"} == 0 and probe_success{job=~"tcp_.*"} offset 2m == 1
+    for: 30s
+    labels:
+      severity: page
+    annotations:
+      summary: "tcp detect {{ $labels.instance }} detection down"
+      recovery_summary: "tcp detect {{ $labels.instance }} up"
+      description: "{{ $labels.instance }} of job {{ $labels.job }} has been down for more than 50s ."
+
+  - alert: IcmpInstanceDown
+    expr: probe_success{job=~"icmp_.*"} == 0 and probe_success{job=~"icmp_.*"} offset 2m == 1
+    for: 30s
+    labels:
+      severity: page
+    annotations:
+      summary: "icmp detect {{ $labels.instance }} down"
+      description: "{{ $labels.instance }} of job {{ $labels.job }} has been down for more than 1 minutes."
+

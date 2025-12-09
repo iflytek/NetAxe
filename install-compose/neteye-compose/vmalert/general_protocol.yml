@@ -1,0 +1,99 @@
+groups:
+  - name: 设备协议告警
+    rules:
+      - alert: IRF状态变化
+        expr:  (hh3cStackMemberNum != 100 and changes_prometheus(hh3cStackMemberNum[5m])>0 )   * on(instance) group_left(sysName) sysName
+        for: 0s
+        labels:
+          severity: 紧急
+          time_stamp: current_time_seconds
+        annotations:
+          summary: '{{ $labels.sysName}}【{{ $labels.instance}}】主机IRF成员变化，当前成员数为{{$value}}'
+          description: 'IRF状态变化'
+
+
+      - alert: MLAG状态变化
+        expr:  (hh3cMLagRoleLocalEffectiveRole != 100 and changes_prometheus(hh3cMLagRoleLocalEffectiveRole[5m]) > 0 )   * on(instance) group_left(sysName) sysName
+        for: 0s
+        labels:
+          severity: 紧急
+          time_stamp: current_time_seconds
+        annotations:
+          summary: '{{ $labels.sysName }}【{{ $labels.instance }}】主机MLAG状态变化，当前状态{{ if eq (printf "%v" $value) "1" }}Master{{ else }}Standby{{ end }}'
+          description: 'MLAG状态变化'
+
+      - alert: BGP状态变化
+        expr:  (  sum without (protoversion, fsmtransitions, remoteport, localport, localaddr, peerident) (bgppeerstate) != 100  and changes_prometheus(sum without (protoversion, fsmtransitions, remoteport, localport, localaddr, peerident) (bgppeerstate)[5m]) > 0 ) * on(instance) group_left(sysName) sysName
+        for: 0s
+        labels:
+          severity: 紧急
+          time_stamp: current_time_seconds
+        annotations:
+          summary: '{{ $labels.sysName }}【{{ $labels.instance }}】主机BGP Peer【{{ $labels.index }}】邻居状态变化，当前状态: {{ if eq (printf "%v" $value) "1" }}idle{{ else if eq (printf "%v" $value) "2" }}connect{{ else if eq (printf "%v" $value) "3" }}active{{ else if eq (printf "%v" $value) "4" }}opensent{{ else if eq (printf "%v" $value) "5" }}openconfirm{{ else if eq (printf "%v" $value) "6" }}established{{ else }}未知{{ end }}'
+          description: 'BGP状态变化'
+
+      - alert: BFD状态变化
+        expr:  (hh3cBfdSessState != 100 and changes_prometheus(hh3cBfdSessState[5m]) > 0 ) * on(instance) group_left(sysName) sysName
+        for: 0s
+        labels:
+          severity: 紧急
+          time_stamp: current_time_seconds
+        annotations:
+          summary: '{{ $labels.sysName}}【{{ $labels.instance}}】主机BFD【{{ $labels.hh3cBfdSessLocalAddr}}】邻居状态变化，当前状态：{{ if eq (printf "%v" $value) "0" }}adminDown{{ else if eq (printf "%v" $value) "1" }}down{{ else if eq (printf "%v" $value) "2" }}init{{ else if eq (printf "%v" $value) "3" }}up{{ else }}未知{{ end }}'
+          description: 'BFD状态变化'
+
+
+
+      - alert: NQA状态变化
+        expr:  (hh3cNqaResultsLostPacketRatio == 100 and changes_prometheus(hh3cNqaResultsLostPacketRatio[5m]) > 0 ) * on(instance) group_left(sysName) sysName
+        for: 0s
+        labels:
+          severity: 紧急
+          time_stamp: current_time_seconds
+        annotations:
+          summary: '{{ $labels.sysName}}【{{ $labels.instance}}】主机NQA状态变化，任务组{{ $labels.pingCtlOwnerIndex}}，任务名称{{ $labels.pingCtlTestName}}，当前丢包率{{$value}}%'
+          description: '{{ template "nqa_description" . }}'
+
+
+      - alert: NQA延时过大
+        expr: (min_over_time(hh3cNqaResultsRttSum[5m]) - max_over_time(hh3cNqaResultsRttSum[5m] offset 5m) > 5) * on(instance) group_left(sysName) sysName
+        for: 0s
+        labels:
+          severity: 紧急
+          time_stamp: current_time_seconds
+        annotations:
+          summary: '{{ $labels.sysName}}【{{ $labels.instance}}】主机NQA时延最近5分钟增长超过5ms，任务组{{ $labels.pingCtlOwnerIndex}}，任务名称{{ $labels.pingCtlTestName}}，当前时延为{{ $value }}  ms'
+          description: '{{ template "nqa_description" . }}'
+
+
+
+      - alert: STP状态变化
+        expr:  (stp_root != 100 and changes_prometheus(stp_root[5m]) > 0 ) * on(instance) group_left(sysName) sysName
+        for: 0s
+        labels:
+          severity: 紧急
+          time_stamp: current_time_seconds
+        annotations:
+          summary: '{{ $labels.sysName}}【{{ $labels.instance}}】STP状态变化，当前STP实例为：{{ $labels.instance_id}}，STP根桥为：{{ $labels.stp_root_mac}}'
+          description: 'STP状态变化'
+
+
+      - alert: 设备NTP时间偏移（H3C）
+        expr: abs(hh3cNTPSysClockSec - time()) > 600
+        for: 2m
+        labels:
+          severity: 紧急
+          time_stamp: current_time_seconds
+        annotations:
+          summary: '{{ $labels.sysName }}【{{ $labels.instance }}】系统时间与标准UTC时间偏差超过10分钟，当前偏差为 {{$value}} 秒'
+          description: 'NTP时间偏移'
+
+      - alert: 设备NTP时间偏移（HW）
+        expr: abs((hwSysLocalClock-28800)-time()) > 600
+        for: 2m
+        labels:
+          severity: 紧急
+          time_stamp: current_time_seconds
+        annotations:
+          summary: '{{ $labels.sysName }}【{{ $labels.instance }}】系统时间与标准UTC时间偏差超过10分钟，当前偏差为 {{$value}} 秒'
+          description: 'NTP时间偏移'

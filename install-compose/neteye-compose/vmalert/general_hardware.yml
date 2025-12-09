@@ -1,0 +1,110 @@
+groups:
+  - name: 设备硬件告警
+    rules:
+      - alert: 设备不可达
+        expr: (up{env="network_monitor_snmp"} == 0 and on(instance) (up{env=~'network_monitor|network_monitor_slow'} == 0)) * on(instance) group_left(sysName) last_over_time(sysName[30m])
+        for: 1m
+        labels:
+          severity: 紧急
+          time_stamp: current_time_seconds
+        annotations:
+          summary: '{{ $labels.sysName}}【{{ $labels.instance}}】设备SNMP不可达'
+          description: '设备SNMP不可达'
+
+
+
+      - alert: 启动时间异常
+        expr: (snmpEngineTime < 600   or sysUpTime < 600 )* on(instance) group_left(sysName) sysName
+        for: 0s
+        labels:
+          severity: 紧急
+          time_stamp: current_time_seconds
+        annotations:
+          summary: '{{ $labels.sysName}}【{{ $labels.instance}}】主机启动时间异常'
+          description: '启动时间异常'
+
+      - alert: CPU利用率高
+        expr: ((avg_over_time(hh3cEntityExtCpuUsage{entPhysicalName!=""}[5m]) > 80) or (avg_over_time(hwEntityCpuUsage[5m]) > 80) or (avg_over_time(sysCPU[5m]) > 80) or (avg_over_time(CPU1[5m]) > 80) or (avg_over_time(CPU2[5m]) > 80)) * on(instance) group_left(sysName) sysName
+        for: 1m
+        labels:
+          severity: 紧急
+          time_stamp: current_time_seconds
+        annotations:
+          summary: '{{ $labels.sysName}}【{{ $labels.instance}}】 CPU 利用率已经超过 80%。当前值: {{ printf "%.2f" $value }}% '
+          description: 'CPU利用率高'
+
+
+      - alert: 内存利用率高
+        expr: ((avg_over_time(hh3cEntityExtMemUsage[5m]) > 85) or (avg_over_time(hwEntityMemUsage[5m]) > 85) or (avg_over_time(sysMemRatio[5m]) > 85) or ((avg_over_time(memused[5m]) / avg_over_time(memtotal[5m])) * 100 > 85) or ((avg_over_time(skmemused[5m]) / avg_over_time(skmemtotal[5m])) * 100 > 85)) * on(instance) group_left(sysName) sysName
+        for: 1m
+        labels:
+          severity: 紧急
+          time_stamp: current_time_seconds
+        annotations:
+          summary: '{{ $labels.sysName}}【{{ $labels.instance}}】 内存利用率已经超过 85%。当前值: {{ printf "%.2f" $value }}%'
+          description: '内存利用率高'
+
+
+      - alert: 设备电源异常
+        expr: ((hh3cDevMPowerStatus!=1 and changes_prometheus(hh3cDevMPowerStatus[5m])>0 or hwEntityPwrState!=1 and changes_prometheus(hwEntityPwrState[5m])>0 or otherPower!=1 and changes_prometheus(otherPower[5m])>0  or hillstonePowerState!=0 and changes_prometheus(hillstonePowerState[5m])>0)) * on(instance) group_left(sysName) sysName
+        for: 0s
+        labels:
+          severity: 紧急
+          time_stamp: current_time_seconds
+        annotations:
+          summary: '{{ $labels.sysName}}【{{ $labels.instance}}】 设备电源异常'
+          description: '设备电源异常'
+
+
+      - alert: 设备风扇异常
+        expr: ((hh3cDevMFanStatus!=1 and changes_prometheus(hh3cDevMFanStatus[5m])>0 or hwEntityFanState!=1 and changes_prometheus(hwEntityFanState[5m])>0 or otherFan!=1 and changes_prometheus(otherFan[5m])>0 or hillstoneFanState!=0 and changes_prometheus(hillstoneFanState[5m])>0)) * on(instance) group_left(sysName) sysName
+        for: 0s
+        labels:
+          severity: 紧急
+          time_stamp: current_time_seconds
+        annotations:
+          summary: '{{ $labels.sysName}}【{{ $labels.instance}}】 设备风扇异常'
+          description: '设备风扇异常'
+
+      - alert: 设备温度异常
+        expr: (hh3cEntityExtTemperature > 95 and max_over_time(hh3cEntityExtTemperature[5m]) < 200 or hwEntityTemperature > 95 and max_over_time(hwEntityTemperature[5m]) < 200 or hillstoneTemperatureValue > 95 or ruijieTemperature > 95 or sk1temp1 > 95 or sk1temp2 > 95 or sk2temp1 > 95 or sk2temp2 > 95 or (mellanoxtemp{mellanoxlName="Temperature Sensor"}/10) > 95 and max_over_time((mellanoxtemp{mellanoxlName="Temperature Sensor"}/10)[5m]) < 100) * on(instance) group_left(sysName) sysName
+        for: 5m
+        labels:
+          severity: 紧急
+          time_stamp: current_time_seconds
+        annotations:
+          summary: '{{ $labels.sysName}}【{{ $labels.instance}}】 设备温度超过95°C，当前温度为{{$value}}°C'
+          description: '设备温度异常'
+
+
+  - name: 防火墙告警
+    rules:
+      - alert: HA状态变化
+        expr:  (sysHAStatus != 100 and changes_prometheus(sysHAStatus[5m]) > 0 ) * on(instance) group_left(sysName) sysName
+        for: 0s
+        labels:
+          severity: 紧急
+          time_stamp: current_time_seconds
+        annotations:
+          summary: '{{ $labels.sysName }}【{{ $labels.instance }}】防火墙HA状态变化，当前状态为{{ if eq (printf "%v" $value) "0" }}独立设备{{ else if eq (printf "%v" $value) "3" }}Slave设备{{ else if eq (printf "%v" $value) "4" }}Master设备{{ else }}unknown{{ end }}'
+          description: 'HA状态变化'
+
+      - alert: 防火墙会话告警【并发】
+        expr: (100*sysCurSession/sysTotalSession > 80 ) * on(instance) group_left(sysName) sysName
+        for: 1m
+        labels:
+          severity: 紧急
+          time_stamp: current_time_seconds
+        annotations:
+          summary: '{{ $labels.sysName}}【{{ $labels.instance}}】 防火墙会话【并发】利用率达到阈值80%，当前利用率{{ printf "%.2f" $value }}%'
+          description: '防火墙会话告警【并发】'
+
+      - alert: 防火墙会话告警【新建】
+        expr: ( sysRampupRate > (avg_over_time(sysRampupRate[5m])*2) and  avg_over_time(sysRampupRate[5m]) > 100000 ) * on(instance) group_left(sysName) sysName
+        for: 1m
+        labels:
+          severity: 紧急
+          time_stamp: current_time_seconds
+        annotations:
+          summary: '{{ $labels.sysName}}【{{ $labels.instance}}】 最近5分钟会话【新建】有突发，当前值为{{ $value }}'
+          description: '防火墙会话告警【新建】'

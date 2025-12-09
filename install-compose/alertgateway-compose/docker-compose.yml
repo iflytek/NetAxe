@@ -51,21 +51,13 @@ services:
     networks:
       - docker_netaxe
 
-  alertgateway-compress:
-    image: registry.cn-hangzhou.aliyuncs.com/netaxe/alertgateway-backend:2.0
-    container_name: alertgateway-compress
-    restart: always
-    command: python3 worker.py compress
-    volumes:
-      - ./config.json:/app/config/config.json
-      - ./logs:/app/logs
-    networks:
-      - docker_netaxe
-#  alertgateway-web:
-#    container_name: alertgateway-web
-#    image: registry.cn-hangzhou.aliyuncs.com/netaxe/alertgateway-web:1.0
-#    ports:
-#      - "32202:80"
+#  alertgateway-compress:
+#    image: registry.cn-hangzhou.aliyuncs.com/netaxe/alertgateway-backend:2.0
+#    container_name: alertgateway-compress
 #    restart: always
+#    command: python3 worker.py compress
+#    volumes:
+#      - ./config.json:/app/config/config.json
+#      - ./logs:/app/logs
 #    networks:
 #      - docker_netaxe

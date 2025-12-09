@@ -35,5 +35,9 @@
   "iam": {
         "url": "http://abac-nginx:80/abac-api",
         "urn_prefix": "netaxe:base_platform"
-    }
+  },
+  "south_api_key": "2a84465a-cf38---",
+  "south_http_port": 39001,
+  "grafana_net_device_resource_api": "http://grafana.com/api//resources/api/v1/query",
+  "grafana_net_device_resource_api_token": ""
 }

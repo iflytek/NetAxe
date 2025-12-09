@@ -1,5 +1,20 @@
-route:
-  receiver: blackhole
-
 receivers:
-  - name: blackhole
+  - name: 'default_webhook'
+    webhook_configs:
+      - url: 'http://10.165.7.247:31122/alert_gateway/prometheus/KJaXUESUpRqPertdZSoL'
+        send_resolved: true
+
+route:
+  group_by:
+    - alertname
+    - cluster
+    - service
+  group_interval: 5m
+  repeat_interval: 1h
+  group_wait: 10s
+  receiver: default_webhook  # 默认接收器
+
+  routes:
+    # 其他告警会被发送到默认接收器
+    - receiver: default_webhook
+

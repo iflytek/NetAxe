@@ -3,13 +3,20 @@ global:
   evaluation_interval: 15s
   external_labels:
     monitor: '默认节点'
-
+rule_files:
+  - /etc/prometheus/config/rules/*.rules
+alerting:
+  alertmanagers:
+  - scheme: http
+    static_configs:
+    - targets:
+      - "alertmanager:9093"
 scrape_configs:
   - job_name: 'icmp_connect_15s'
     scrape_interval: 1m
     metrics_path: /probe
     params:
-      module: [ icmp ]
+      module: [icmp]
     http_sd_configs:
       - url: http://SERVER_IP:31468/regis/services
         basic_auth:
