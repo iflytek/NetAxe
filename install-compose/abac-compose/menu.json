@@ -208,7 +208,7 @@
                     "path": "/base-platform/topology-index",
                     "sort": 1,
                     "icon": "sjcll",
-                    "key": "base-platform-topology-index",
+                    "key": "base-platform_topology-index",
                     "type": "menu_type",
                     "parent": {
                         "key": "base-platform-topology"
