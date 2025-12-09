@@ -195,6 +195,26 @@
                     "parent": null
                 },
                 {
+                    "name": "拓扑管理",
+                    "path": "/base-platform-topology",
+                    "sort": 0,
+                    "icon": "board",
+                    "key": "base-platform-topology",
+                    "type": "group_type",
+                    "parent": null
+                },
+                {
+                    "name": "网络拓扑",
+                    "path": "/base-platform/topology-index",
+                    "sort": 1,
+                    "icon": "sjcll",
+                    "key": "base-platform/topology-index",
+                    "type": "menu_type",
+                    "parent": {
+                        "key": "base-platform-topology"
+                    }
+                },
+                {
                     "name": "作业中心",
                     "path": "/base-platform-task-center",
                     "sort": 0,
