@@ -48,7 +48,7 @@
 
 👇👇👇👇👇👇👇👇👇👇👇
 
-[体验环境](http://47.99.86.164:9980) 账号密码：admin/bf8f91f24eaa70cd
+[体验环境](http://47.99.86.164:9980) 账号密码：admin/5d5aefb203bcdbcf
 
 仅在工作时间开启(9:30-18:00)
 
@@ -56,47 +56,27 @@
 
 ## 平台架构图
 
-![平台架构图](https://self-bucket-1258377547.cos.ap-shanghai.myqcloud.com/picgo-test/%E6%9E%B6%E6%9E%84%E5%9B%BE.jpg)
+![平台架构图](https://ft.wzznft.com/i/2025/12/10/nupgjy.png)
 
 ## 1.平台登录页
 
-![登录页面](https://self-bucket-1258377547.cos.ap-shanghai.myqcloud.com/picgo-test/%E7%99%BB%E5%BD%95.jpg)
+![登录页面](https://ft.wzznft.com/i/2025/12/10/nvz0am.jpg)
 
 ## 2.资产管理
 
-![资产管理](https://self-bucket-1258377547.cos.ap-shanghai.myqcloud.com/picgo-test/%E8%B5%84%E4%BA%A7%E7%AE%A1%E7%90%86.jpg)
+![资产管理](https://ft.wzznft.com/i/2025/12/10/nwjjzf.jpg)
 
-## 3.配置差异比较
+## 3.告警中心
 
-![配置差异比较](https://self-bucket-1258377547.cos.ap-shanghai.myqcloud.com/picgo-test/%E9%85%8D%E7%BD%AE%E5%B7%AE%E5%BC%82%E6%AF%94%E8%BE%83.jpg)
+![告警中心](https://ft.wzznft.com/i/2025/12/10/nx5jza.jpg)
 
-## 4.Webssh
+## 4.权限中心
 
-![Webssh](https://self-bucket-1258377547.cos.ap-shanghai.myqcloud.com/picgo-test/webssh.jpg)
+![权限中心](https://ft.wzznft.com/i/2025/12/10/nxtgj4.jpg)
 
-## 5.接口清单
+## 5.监控中心
 
-![接口清单](https://self-bucket-1258377547.cos.ap-shanghai.myqcloud.com/picgo-test/%E6%8E%A5%E5%8F%A3%E6%B8%85%E5%8D%95.jpg)
-
-## 6.采集方案
-
-![采集方案](https://self-bucket-1258377547.cos.ap-shanghai.myqcloud.com/picgo-test/%E9%87%87%E9%9B%86%E6%96%B9%E6%A1%88.jpg)
-
-## 7.任务列表
-
-![任务列表](https://self-bucket-1258377547.cos.ap-shanghai.myqcloud.com/picgo-test/%E4%BB%BB%E5%8A%A1%E5%88%97%E8%A1%A8.jpg)
-
-## 8.任务调度管理
-
-![任务调度管理](https://self-bucket-1258377547.cos.ap-shanghai.myqcloud.com/picgo-test/%E4%BB%BB%E5%8A%A1%E8%B0%83%E5%BA%A6.jpg)
-
-## 9. 地址管理
-
-![地址管理](https://self-bucket-1258377547.cos.ap-shanghai.myqcloud.com/picgo-test/%E5%9C%B0%E5%9D%80%E7%AE%A1%E7%90%86.jpg)
-
-## 10. 权限中心
-
-![权限中心](https://self-bucket-1258377547.cos.ap-shanghai.myqcloud.com/picgo-test/%E6%9D%83%E9%99%90%E4%B8%AD%E5%BF%83.jpg)
+![监控中心](https://ft.wzznft.com/i/2025/12/10/nxtn2k.jpg)
 
 ## 交流群
 
@@ -119,7 +99,6 @@
 
 维护者是做出杰出贡献且在社区长期活跃的 NetAxe 社区成员。
 
-- [weijunjie1995](https://github.com/weijunjie1995)
 - [jamlee](https://github.com/M87NET)
 - [xuehaoweng](https://github.com/xuehaoweng)
 
