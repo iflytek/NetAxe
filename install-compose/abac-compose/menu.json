@@ -44,6 +44,26 @@
                     "parent": null
                 },
                 {
+                    "name": "值班",
+                    "path": "/alert-gateway/schedule",
+                    "sort": 1,
+                    "icon": "pz",
+                    "key": "alert-gateway_schedule",
+                    "type": "group_type",
+                    "parent": null
+                },
+                {
+                    "name": "值班管理",
+                    "path": "/alert-gateway/duty",
+                    "sort": 1,
+                    "icon": "lsgj",
+                    "key": "alert-gateway_duty",
+                    "type": "menu_type",
+                    "parent": {
+                        "key": "alert-gateway_gateway_schedule"
+                    }
+                },
+                {
                     "name": "配置",
                     "path": "/alert-gateway/config",
                     "sort": 1,
@@ -195,6 +215,37 @@
                     "parent": null
                 },
                 {
+                    "name": "数据采集",
+                    "path": "/base-platform-plan",
+                    "sort": 0,
+                    "icon": "board",
+                    "key": "base-platform-plan",
+                    "type": "group_type",
+                    "parent": null
+                },
+                {
+                    "name": "采集方案",
+                    "path": "/base-platform/plan-summary",
+                    "sort": 1,
+                    "icon": "sjcll",
+                    "key": "base-platform_plan-summary",
+                    "type": "menu_type",
+                    "parent": {
+                        "key": "base-platform-plan"
+                    }
+                },
+                {
+                    "name": "采集结果",
+                    "path": "/base-platform/plan-result",
+                    "sort": 2,
+                    "icon": "sjcll",
+                    "key": "base-platform_plan-result",
+                    "type": "menu_type",
+                    "parent": {
+                        "key": "base-platform-plan"
+                    }
+                },
+                {
                     "name": "拓扑管理",
                     "path": "/base-platform-topology",
                     "sort": 0,
@@ -209,6 +260,17 @@
                     "sort": 1,
                     "icon": "sjcll",
                     "key": "base-platform_topology-index",
+                    "type": "menu_type",
+                    "parent": {
+                        "key": "base-platform-topology"
+                    }
+                },
+                {
+                    "name": "图标管理",
+                    "path": "/base-platform/topology-icon",
+                    "sort": 2,
+                    "icon": "sjcll",
+                    "key": "base-platform_topology-icon",
                     "type": "menu_type",
                     "parent": {
                         "key": "base-platform-topology"
