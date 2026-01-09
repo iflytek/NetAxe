@@ -28,6 +28,14 @@
   "prometheus_password": "PROMETHEUS_PASSWORD",
   "iam": {
     "url": "http://abac-nginx:80/abac-api",
-    "urn_prefix": "netaxe:alert_gateway"
-  }
+    "urn_prefix": "netaxe:alert_gateway",
+    "advanc~ed": false
+
+  },
+  "wechat_bot": "",
+  "ali_sms": {
+      "template_code": ""
+  },
+  "base_platform_api_key": "2a84465a-cf38-46b2-9d86-",
+  "msg_gateway_sms_method": "content"
 }

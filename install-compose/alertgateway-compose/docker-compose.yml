@@ -40,17 +40,6 @@ services:
     networks:
       - docker_netaxe
 
-#  alertgateway-notify:
-#    image: registry.cn-hangzhou.aliyuncs.com/netaxe/alertgateway-backend:2.0
-#    container_name: alertgateway-notify
-#    restart: always
-#    command: python3 worker.py notify_rule
-#    volumes:
-#      - ./config.json:/app/config/config.json
-#      - ./logs:/app/logs
-#    networks:
-#      - docker_netaxe
-
   alertgateway-incident:
     image: registry.cn-hangzhou.aliyuncs.com/netaxe/alertgateway-backend:2.0
     container_name: alertgateway-incident
@@ -66,6 +55,17 @@ services:
 #    container_name: alertgateway-compress
 #    restart: always
 #    command: python3 worker.py compress
+#    volumes:
+#      - ./config.json:/app/config/config.json
+#      - ./logs:/app/logs
+#    networks:
+#      - docker_netaxe
+
+#  alertgateway-notify:
+#    image: registry.cn-hangzhou.aliyuncs.com/netaxe/alertgateway-backend:2.0
+#    container_name: alertgateway-notify
+#    restart: always
+#    command: python3 worker.py notify_rule
 #    volumes:
 #      - ./config.json:/app/config/config.json
 #      - ./logs:/app/logs

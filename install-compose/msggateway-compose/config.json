@@ -31,7 +31,11 @@
   "email_from_name": "网络自动化系统",
   "email_host_user": "ccr_nets@iflymail.com.cn",
   "email_host_pwd": "sadf",
-  "sms": "24a6",
+  "sms": {
+    "url": "http:/",
+    "senderSystem": "",
+    "authCode": ""
+  },
   "sms_url": "http",
   "max_sms_count": 20000,
   "hw_sms": {
