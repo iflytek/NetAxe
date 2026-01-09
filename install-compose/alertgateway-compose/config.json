@@ -29,7 +29,7 @@
   "iam": {
     "url": "http://abac-nginx:80/abac-api",
     "urn_prefix": "netaxe:alert_gateway",
-    "advanc~ed": false
+    "advanced": false
 
   },
   "wechat_bot": "",
