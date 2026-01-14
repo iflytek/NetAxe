@@ -18,11 +18,33 @@ services:
     networks:
       - docker_netaxe
 
-  alertgateway-webhook:
+  alertgateway-flapping:
     image: registry.cn-hangzhou.aliyuncs.com/netaxe/alertgateway-backend:2.0
     container_name: alertgateway-webhook
     restart: always
-    command: python3 worker.py default
+    command: python3 worker.py flapping
+    volumes:
+      - ./config.json:/app/config/config.json
+      - ./logs:/app/logs
+    networks:
+      - docker_netaxe
+
+  alertgateway-duty_notify:
+    image: registry.cn-hangzhou.aliyuncs.com/netaxe/alertgateway-backend:2.0
+    container_name: alertgateway-duty_notify
+    restart: always
+    command: python3 worker.py duty_notify
+    volumes:
+      - ./config.json:/app/config/config.json
+      - ./logs:/app/logs
+    networks:
+      - docker_netaxe
+
+  alertgateway-duty_statistics:
+    image: registry.cn-hangzhou.aliyuncs.com/netaxe/alertgateway-backend:2.0
+    container_name: alertgateway-duty_statistics
+    restart: always
+    command: python3 worker.py duty_statistics
     volumes:
       - ./config.json:/app/config/config.json
       - ./logs:/app/logs
