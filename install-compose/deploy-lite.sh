@@ -52,18 +52,26 @@ find . -type f -name "config.yaml" -exec sed -i "s|MYSQL_PASSWD|${default_key}|g
 find . -type f -name "config.json" -exec sed -i "s|REDIS_PASSWORD|${default_key}|g" {} \;
 find . -type f -name "config.json" -exec sed -i "s|MONGO_PASSWORD|${default_key}|g" {} \;
 find . -type f -name "config.json" -exec sed -i "s|RABBITMQ_PASSWORD|${default_key}|g" {} \;
+find . -type f -name "config.json" -exec sed -i "s|DJANGO_INSECURE|${default_key}|g" {} \;
 find . -type f -name "config.json" -exec sed -i "s|NACOS_PASSWORD|${default_key}|g" {} \;
+find . -type f -name "config.yaml" -exec sed -i "s|REGIS_PASSWORD|${default_key}|g" {} \;
 
 # 更新docker-compose文件中的密码
 find ./redis-compose -type f -name "docker-compose.yml" -exec sed -i "s|REDIS_PASSWORD|${default_key}|g" {} \;
 find ./mongo-compose -type f -name "docker-compose.yml" -exec sed -i "s|MONGO_PASSWORD|${default_key}|g" {} \;
 find ./rabbitmq-compose -type f -name "docker-compose.yml" -exec sed -i "s|RABBITMQ_PASSWORD|${default_key}|g" {} \;
-
+find ./alertgateway-compose -type f -name "docker-compose.yml" -exec sed -i "s|PROMETHEUS_PASSWORD|${default_key}|g" {} \;
 # 更新mysql相关配置
 sed -i "s|MYSQL_PASSWD|${default_key}|g" ./mysql-compose/init/netaxe.sql
+sed -i "s|MYSQL_PASSWD|${default_key}|g" ./neteye-compose/config.yaml
 sed -i "s|MYSQL_PASSWD|${default_key}|g" ./mysql-compose/docker-compose.yml
 sed -i "s|NACOS_PASSWORD|${default_key}|g" ./nacos-compose/docker-compose.yml
 sed -i "s|NACOS_KEY|${nacos_key}|g" ./nacos-compose/docker-compose.yml
+sed -i "s|APISIX_ADMIN_KEY|${default_key}|g" ./init.sh
+sed -i "s|DJANGO_INSECURE|${default_key}|g" ./init.sh
+sed -i "s|REGIS_PASSWORD|${default_key}|g" ./prometheus-compose/prometheus.yml
+sed -i "s|SERVER_IP|${iface_ip}|g" ./prometheus-compose/prometheus.yml
+sed -i "s|REGIS_PASSWORD|${prometheus_password_hash}|g" ./prometheus-compose/prometheus_web.yml
 
 # 创建docker_netaxe网络
 echo "------------------创建docker网络------------------"
@@ -177,17 +185,17 @@ docker-compose up -d
 echo "------------------前端服务状态------------------"
 docker-compose ps
 sleep 10
-
+echo "------------------刷新权限------------------"
+curl "http://127.0.0.1:31104/abac-api/authority/auth_policy/?reload=1"
+echo "------------------刷新权限成功------------------"
+sleep 10
+curl "http://127.0.0.1:31104/abac-api/authority/auth_policy/?reload=1"
+echo "------------------刷新权限成功------------------"
 echo "=========================================="
 echo "精简版部署完成"
 echo "=========================================="
 echo "请记住初始化密码"
 echo "IP: $iface_ip"
 echo "密码: $default_key"
-echo ""
-echo "访问地址: http://$iface_ip:9980"
-echo "基础平台API: http://$iface_ip:31100"
-echo "工作台API: http://$iface_ip:31105"
-echo ""
 echo "注意：此精简版包含基础平台、工作台和前端服务"
 echo "如需完整功能，请使用 deploy.sh 进行全量部署"
