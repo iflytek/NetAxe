@@ -19,6 +19,9 @@ fi
 # 默认key设置
 default_key=$(openssl rand -hex 8)
 nacos_key=$(openssl rand -base64 32) 
+x_api_key=$(openssl rand -base64 32)
+# 生成 Prometheus Web 认证密码
+prometheus_password_hash=$(htpasswd -nbB admin ${default_key} | cut -d: -f2)
 
 if [ $# -eq 0 ]; then
   # 如果没有传入参数，则使用默认网卡的IP地址
@@ -37,28 +40,38 @@ echo "Using nacos_key: $nacos_key"
 
 # 遍历当前目录的所有子目录，查找 config.json 文件并修改其中的 server_ip 字段
 find . -type f -name "config.json" -exec sed -i "s|SERVER_IP|${iface_ip}|g" {} \;
+find . -type f -name "config.yaml" -exec sed -i "s|SERVER_IP|${iface_ip}|g" {} \;
+find . -type f -name "config.json" -exec sed -i "s|X-API-KEY|${x_api_key}|g" {} \;
+find . -type f -name "config.yaml" -exec sed -i "s|X-API-KEY|${x_api_key}|g" {} \;
+find . -type f -name "config.json" -exec sed -i "s|MYSQL_PASSWD|${default_key}|g" {} \;
 find . -type f -name "config.json" -exec sed -i "s|MYSQL_PASSWORD|${default_key}|g" {} \;
+find . -type f -name "config.yaml" -exec sed -i "s|MYSQL_PASSWD|${default_key}|g" {} \;
 find . -type f -name "config.json" -exec sed -i "s|REDIS_PASSWORD|${default_key}|g" {} \;
 find . -type f -name "config.json" -exec sed -i "s|MONGO_PASSWORD|${default_key}|g" {} \;
 find . -type f -name "config.json" -exec sed -i "s|RABBITMQ_PASSWORD|${default_key}|g" {} \;
 find . -type f -name "config.json" -exec sed -i "s|DJANGO_INSECURE|${default_key}|g" {} \;
 find . -type f -name "config.json" -exec sed -i "s|NACOS_PASSWORD|${default_key}|g" {} \;
+find . -type f -name "config.yaml" -exec sed -i "s|REGIS_PASSWORD|${default_key}|g" {} \;
 
-find ./apisix-compose -type f -name "config.yaml" -exec sed -i "s|APISIX_ADMIN_KEY|${default_key}|g" {} \;
-find ./apisix-compose -type f -name "conf.yaml" -exec sed -i "s|APISIX_ADMIN_PASSWORD|${default_key}|g" {} \;
-find ./apisix-compose -type f -name "config.yaml" -exec sed -i "s|NACOS_PASSWORD|${default_key}|g" {} \;
+#find ./apisix-compose -type f -name "config.yaml" -exec sed -i "s|APISIX_ADMIN_KEY|${default_key}|g" {} \;
+#find ./apisix-compose -type f -name "conf.yaml" -exec sed -i "s|APISIX_ADMIN_PASSWORD|${default_key}|g" {} \;
+#find ./apisix-compose -type f -name "config.yaml" -exec sed -i "s|NACOS_PASSWORD|${default_key}|g" {} \;
 find ./redis-compose -type f -name "docker-compose.yml" -exec sed -i "s|REDIS_PASSWORD|${default_key}|g" {} \;
 find ./mongo-compose -type f -name "docker-compose.yml" -exec sed -i "s|MONGO_PASSWORD|${default_key}|g" {} \;
 find ./rabbitmq-compose -type f -name "docker-compose.yml" -exec sed -i "s|RABBITMQ_PASSWORD|${default_key}|g" {} \;
 find ./alertgateway-compose -type f -name "docker-compose.yml" -exec sed -i "s|PROMETHEUS_PASSWORD|${default_key}|g" {} \;
 
 
-sed -i "s|MYSQL_PASSWORD|${default_key}|g" ./mysql-compose/init/netaxe.sql
-sed -i "s|MYSQL_PASSWORD|${default_key}|g" ./mysql-compose/docker-compose.yml
+sed -i "s|MYSQL_PASSWD|${default_key}|g" ./mysql-compose/init/netaxe.sql
+sed -i "s|MYSQL_PASSWD|${default_key}|g" ./neteye-compose/config.yaml
+sed -i "s|MYSQL_PASSWD|${default_key}|g" ./mysql-compose/docker-compose.yml
+sed -i "s|NACOS_PASSWORD|${default_key}|g" ./nacos-compose/docker-compose.yml
 sed -i "s|NACOS_KEY|${nacos_key}|g" ./nacos-compose/docker-compose.yml
 sed -i "s|APISIX_ADMIN_KEY|${default_key}|g" ./init.sh
 sed -i "s|DJANGO_INSECURE|${default_key}|g" ./init.sh
-
+sed -i "s|REGIS_PASSWORD|${default_key}|g" ./prometheus-compose/prometheus.yml
+sed -i "s|SERVER_IP|${iface_ip}|g" ./prometheus-compose/prometheus.yml
+sed -i "s|REGIS_PASSWORD|${prometheus_password_hash}|g" ./prometheus-compose/prometheus_web.yml
 
 # 创建docker_netaxe网络
 docker network create  --subnet=1.1.38.0/24 --ip-range=1.1.38.0/24 --gateway=1.1.38.254 docker_netaxe
@@ -69,12 +82,14 @@ echo "------------------开始mysql和mongo部署------------"
 cd $current_path
 cd mysql-compose
 docker-compose up -d
+sleep 10
 echo "------------------mysql状态----------------------"
 docker-compose ps
 
 cd $current_path
 cd mongo-compose
 docker-compose up -d
+sleep 10
 echo "------------------mongo状态----------------------"
 docker-compose ps
 
@@ -100,6 +115,7 @@ docker-compose ps
 
 
 # 安装nacos
+# 安装nacos
 echo "------------------开始nacos部署-------------------"
 cd $current_path
 cd nacos-compose
@@ -107,58 +123,48 @@ docker-compose up -d
 echo "------------------nacos状态----------------------"
 docker-compose ps
 
-
-# 安装apisix etcd
-echo "------------------开始apisix etcd部署------------------"
-cd $current_path
-cd apisix-compose
-mkdir -m 777 -p etcd_conf/data
-docker-compose up -d
-echo "------------------apisix etcd状态---------------------"
-docker-compose ps
-
-
-# 安装prometheus
-echo "------------------开始prometheus部署------------------"
-cd $current_path
-cd prometheus-compose
-chmod 777 prometheus-data/
-docker-compose  up -d
-echo "------------------prometheus状态---------------------"
-docker-compose ps
-sleep 20
+# 增加延迟，等待 Nacos 启动完成
+echo "等待 Nacos 启动完成..."
+sleep 30  # 等待 30 秒，可以根据实际情况调整时间
 
 # 部署服务得时候需要注册nacos，需要重置后得密码信息
 echo "------------------准备初始化nacos密码完成----------------------"
 curl -X POST 'http://127.0.0.1:8848/nacos/v1/auth/users/admin' -d "password=${default_key}"
 echo "------------------初始化nacos密码完成----------------------"
 
+
+## 安装apisix etcd
+#echo "------------------开始apisix etcd部署------------------"
+#cd $current_path
+#cd apisix-compose
+#mkdir -m 777 -p etcd_conf/data
+#docker-compose up -d
+#echo "------------------apisix etcd状态---------------------"
+#docker-compose ps
+
+
 # 安装main和rbac
-echo "------------------开始abac部署--------------"
+echo "------------------开始权限中心部署--------------"
 cd $current_path
 cd abac-compose
 docker-compose pull
 docker-compose  up -d
-echo "------------------abac状态------------------"
-docker-compose ps
-sleep 10
-
-echo "------------------开始web main部署--------------"
-cd $current_path
-cd main-compose
-docker-compose pull
-docker-compose  up -d
-echo "------------------web main状态------------------"
+echo "------------------权限中心状态------------------"
 docker-compose ps
 sleep 10
 
 # 安装基础平台
-echo "------------------开始基础平台部署--------------"
+echo "------------------开始管控平台部署--------------"
 cd $current_path
 cd baseplatform-compose
+git clone -b dev https://gitee.com/NetAxeClub/base-platform.git
+mv config.json base-platform/config/
+mkdir base-platform/backend/media/device_config/current-configuration
+mkdir base-platform/backend/media/device_config/startup-configuration
+mkdir base-platform/backend/plugins/extensibles
 docker-compose pull
 docker-compose  up -d
-echo "------------------基础平台状态------------------"
+echo "------------------管控平台状态------------------"
 docker-compose ps
 sleep 10
 
@@ -180,19 +186,91 @@ docker-compose pull
 docker-compose  up -d
 echo "------------------告警中心状态------------------"
 docker-compose  ps
+sleep 10
 
-# 安装IPAM
-echo "------------------开始IPAM部署--------------"
+# 安装工作台
+echo "------------------开始工作台部署--------------"
+cd $current_path
+cd workbench-compose
+docker-compose pull
+docker-compose  up -d
+echo "------------------工作台状态------------------"
+docker-compose  ps
+sleep 10
+
+# 安装地址管理IPAM
+echo "------------------开始地址管理IPAM部署--------------"
 cd $current_path
 cd ipam-compose
 docker-compose pull
 docker-compose  up -d
-echo "------------------IPAM状态------------------"
+echo "------------------地址管理IPAM状态------------------"
 docker-compose  ps
+sleep 10
+
+
+# 安装监控中心
+echo "------------------开始监控中心部署--------------"
+cd $current_path
+cd neteye-compose
+docker-compose pull
+docker-compose  up -d
+echo "------------------监控中心状态------------------"
+docker-compose  ps
+sleep 10
+
+# 安装grafana
+echo "------------------开始grafana部署--------------"
+cd $current_path
+cd grafana-compose
+docker volume create grafana-data
+docker-compose pull
+ssh-keygen -t rsa -b 4096 -m PEM -f grafana.key -N ""
+openssl rsa -in grafana.key -pubout -outform PEM -out public-key.pem
+docker-compose  up -d
+echo "------------------grafana状态------------------"
+docker-compose  ps
+sleep 10
+
+# 安装prometheus
+echo "------------------开始prometheus部署--------------"
+cd $current_path
+cd prometheus-compose
+docker volume create prometheus-data
+docker-compose pull
+docker-compose  up -d
+echo "------------------prometheus状态------------------"
+docker-compose  ps
+sleep 10
 
 echo "------------------部署完成------------------------"
 
+# 安装前端服务
+echo "------------------开始前端服务部署--------------"
+cd $current_path
+cd main-compose
+docker-compose pull
+docker-compose  up -d
+echo "------------------前端服务状态------------------"
+docker-compose ps
+sleep 10
 
+# 初始化监控中心 icmp_15s、tcp_connect_15s、tcp_connect_all
+echo "-----------监控中心初始化创建空服务--------------"
+curl -X PUT http://127.0.0.1:31468/regis/servers  -H "Content-Type: application/json"  -u admin:${default_key}  -d  '{"name":"icmp_15s"}'
+curl -X PUT http://127.0.0.1:31468/regis/servers  -H "Content-Type: application/json"  -u admin:${default_key}  -d  '{"name":"tcp_connect_15s"}'
+curl -X PUT http://127.0.0.1:31468/regis/servers  -H "Content-Type: application/json"  -u admin:${default_key}  -d  '{"name":"tcp_connect_all"}'
+echo "----------监控中心初始化创建空服务成功------------"
+
+
+echo "------------------刷新权限------------------"
+curl "http://127.0.0.1:31104/abac-api/authority/auth_policy/?reload=1"
+echo "------------------刷新权限成功------------------"
+sleep 10
+curl "http://127.0.0.1:31104/abac-api/authority/auth_policy/?reload=1"
+echo "------------------刷新权限成功------------------"
+
+echo "------------------所有服务部署完成------------------------"
 echo "请记住初始化密码"
 echo "IP: $iface_ip"
 echo "密码: $default_key"

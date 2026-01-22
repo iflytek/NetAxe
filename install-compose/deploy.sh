@@ -133,16 +133,6 @@ curl -X POST 'http://127.0.0.1:8848/nacos/v1/auth/users/admin' -d "password=${de
 echo "------------------初始化nacos密码完成----------------------"
 
 
-## 安装apisix etcd
-#echo "------------------开始apisix etcd部署------------------"
-#cd $current_path
-#cd apisix-compose
-#mkdir -m 777 -p etcd_conf/data
-#docker-compose up -d
-#echo "------------------apisix etcd状态---------------------"
-#docker-compose ps
-
-
 # 安装main和rbac
 echo "------------------开始权限中心部署--------------"
 cd $current_path
@@ -210,14 +200,14 @@ sleep 10
 
 
 # 安装监控中心
-echo "------------------开始监控中心部署--------------"
-cd $current_path
-cd neteye-compose
-docker-compose pull
-docker-compose  up -d
-echo "------------------监控中心状态------------------"
-docker-compose  ps
-sleep 10
+#echo "------------------开始监控中心部署--------------"
+#cd $current_path
+#cd neteye-compose
+#docker-compose pull
+#docker-compose  up -d
+#echo "------------------监控中心状态------------------"
+#docker-compose  ps
+#sleep 10
 
 # 安装grafana
 echo "------------------开始grafana部署--------------"
