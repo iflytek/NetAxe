@@ -53,7 +53,6 @@ find . -type f -name "config.json" -exec sed -i "s|REDIS_PASSWORD|${default_key}
 find . -type f -name "config.json" -exec sed -i "s|MONGO_PASSWORD|${default_key}|g" {} \;
 find . -type f -name "config.json" -exec sed -i "s|RABBITMQ_PASSWORD|${default_key}|g" {} \;
 find . -type f -name "config.json" -exec sed -i "s|NACOS_PASSWORD|${default_key}|g" {} \;
-find . -type f -name "config.json" -exec sed -i "s|DJANGO_INSECURE|${default_key}|g" {} \;
 
 # 更新docker-compose文件中的密码
 find ./redis-compose -type f -name "docker-compose.yml" -exec sed -i "s|REDIS_PASSWORD|${default_key}|g" {} \;
@@ -96,6 +95,33 @@ docker-compose up -d
 echo "------------------redis状态------------------"
 docker-compose ps
 
+# 安装rabbitmq
+echo "------------------开始rabbitmq部署-----------------"
+cd $current_path
+cd rabbitmq-compose
+docker-compose up -d
+sleep 10
+docker exec rabbitmq /bin/bash /etc/rabbitmq/rabbitmq.sh
+echo "------------------rabbitmq状态------------------"
+docker-compose ps
+
+# 安装nacos
+echo "------------------开始nacos部署-------------------"
+cd $current_path
+cd nacos-compose
+docker-compose up -d
+echo "------------------nacos状态----------------------"
+docker-compose ps
+
+# 增加延迟，等待 Nacos 启动完成
+echo "等待 Nacos 启动完成..."
+sleep 30
+
+# 初始化nacos密码
+echo "------------------准备初始化nacos密码完成----------------------"
+curl -X POST 'http://127.0.0.1:8848/nacos/v1/auth/users/admin' -d "password=${default_key}"
+echo "------------------初始化nacos密码完成----------------------"
+
 # 安装权限中心（abac）
 echo "------------------开始权限中心部署--------------"
 cd $current_path
@@ -124,6 +150,16 @@ echo "------------------管控平台状态------------------"
 docker-compose ps
 sleep 10
 
+# 安装工作台
+echo "------------------开始工作台部署--------------"
+cd $current_path
+cd workbench-compose
+docker-compose pull
+docker-compose up -d
+echo "------------------工作台状态------------------"
+docker-compose ps
+sleep 10
+
 # 安装前端服务（使用精简版nginx配置）
 echo "------------------开始前端服务部署--------------"
 cd $current_path
@@ -142,14 +178,6 @@ echo "------------------前端服务状态------------------"
 docker-compose ps
 sleep 10
 
-# 刷新权限
-echo "------------------刷新权限------------------"
-curl "http://127.0.0.1:31104/abac-api/authority/auth_policy/?reload=1"
-echo "------------------刷新权限成功------------------"
-sleep 10
-curl "http://127.0.0.1:31104/abac-api/authority/auth_policy/?reload=1"
-echo "------------------刷新权限成功------------------"
-
 echo "=========================================="
 echo "精简版部署完成"
 echo "=========================================="
@@ -158,6 +186,8 @@ echo "IP: $iface_ip"
 echo "密码: $default_key"
 echo ""
 echo "访问地址: http://$iface_ip:9980"
+echo "基础平台API: http://$iface_ip:31100"
+echo "工作台API: http://$iface_ip:31105"
 echo ""
-echo "注意：此精简版包含基础平台、权限中心和前端服务"
+echo "注意：此精简版包含基础平台、工作台和前端服务"
 echo "如需完整功能，请使用 deploy.sh 进行全量部署"
