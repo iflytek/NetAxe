@@ -39,7 +39,7 @@ services:
   celery-default:
     image: registry.cn-hangzhou.aliyuncs.com/netaxe/base-backend:1.0
     container_name: celery-default
-    command: sh start.sh default
+    command: sh start.sh default 5
     restart: always
     environment:
       TZ: Asia/Shanghai
@@ -55,7 +55,7 @@ services:
   celery-config:
     image: registry.cn-hangzhou.aliyuncs.com/netaxe/base-backend:1.0
     container_name: celery-config
-    command: sh start.sh config
+    command: sh start.sh config 5
     restart: always
     environment:
       TZ: Asia/Shanghai
@@ -71,7 +71,7 @@ services:
   celery-xunmi:
     image: registry.cn-hangzhou.aliyuncs.com/netaxe/base-backend:1.0
     container_name: celery-xunmi
-    command: sh start.sh xunmi
+    command: sh start.sh xunmi 5
     restart: always
     environment:
       TZ: Asia/Shanghai
