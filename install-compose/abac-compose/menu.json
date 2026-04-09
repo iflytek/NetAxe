@@ -355,15 +355,6 @@
                     "parent": null
                 },
                 {
-                    "name": "值班排班",
-                    "path": "/base-platform/noc-ticket",
-                    "sort": 7,
-                    "icon": "sjcll",
-                    "key": "base-platform_noc-ticket",
-                    "type": "menu_type",
-                    "parent": null
-                },
-                {
                     "name": "拓扑管理",
                     "path": "/base-platform-topology",
                     "sort": 8,
