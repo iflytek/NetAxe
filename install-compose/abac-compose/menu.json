@@ -224,22 +224,33 @@
                     "parent": null
                 },
                 {
-                    "name": "采集方案",
-                    "path": "/base-platform/plan-summary",
+                    "name": "执行总览",
+                    "path": "/base-platform/execution-overview",
                     "sort": 1,
                     "icon": "sjcll",
-                    "key": "base-platform_plan-summary",
+                    "key": "base-platform_execution-overview",
                     "type": "menu_type",
                     "parent": {
                         "key": "base-platform-plan"
                     }
                 },
                 {
-                    "name": "采集结果",
-                    "path": "/base-platform/plan-result",
+                    "name": "采集方案",
+                    "path": "/base-platform/collection-plan",
                     "sort": 2,
                     "icon": "sjcll",
-                    "key": "base-platform_plan-result",
+                    "key": "base-platform_collection-plan",
+                    "type": "menu_type",
+                    "parent": {
+                        "key": "base-platform-plan"
+                    }
+                },
+                {
+                    "name": "设备画像",
+                    "path": "/base-platform/device-profile",
+                    "sort": 3,
+                    "icon": "sjcll",
+                    "key": "base-platform_device-profile",
                     "type": "menu_type",
                     "parent": {
                         "key": "base-platform-plan"
