@@ -15,6 +15,7 @@ services:
     volumes:
       - ./config.json:/app/config/config.json
       - ./logs:/app/logs
+      - ./extensibles:/app/backend/plugins/extensibles
     networks:
       - docker_netaxe
 
@@ -26,6 +27,7 @@ services:
     volumes:
       - ./config.json:/app/config/config.json
       - ./logs:/app/logs
+      - ./extensibles:/app/backend/plugins/extensibles
     networks:
       - docker_netaxe
 
@@ -37,6 +39,7 @@ services:
     volumes:
       - ./config.json:/app/config/config.json
       - ./logs:/app/logs
+      - ./extensibles:/app/backend/plugins/extensibles
     networks:
       - docker_netaxe
 
@@ -48,6 +51,7 @@ services:
     volumes:
       - ./config.json:/app/config/config.json
       - ./logs:/app/logs
+      - ./extensibles:/app/backend/plugins/extensibles
     networks:
       - docker_netaxe
 
@@ -59,6 +63,7 @@ services:
     volumes:
       - ./config.json:/app/config/config.json
       - ./logs:/app/logs
+      - ./extensibles:/app/backend/plugins/extensibles
     networks:
       - docker_netaxe
 
@@ -70,5 +75,6 @@ services:
     volumes:
       - ./config.json:/app/config/config.json
       - ./logs:/app/logs
+      - ./extensibles:/app/backend/plugins/extensibles
     networks:
       - docker_netaxe
