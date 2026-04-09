@@ -1,1 +1,1 @@
-[rabbitmq_management,rabbitmq_prometheus,rabbitmq_stomp].
+[rabbitmq_management,rabbitmq_prometheus,rabbitmq_stomp,rabbitmq_delayed_message_exchange].

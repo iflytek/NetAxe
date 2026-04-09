@@ -5,7 +5,7 @@ networks:
     
 services:
   workbench-backend:
-    image: registry.cn-hangzhou.aliyuncs.com/netaxe/workbench-backend:1.0
+    image: registry.cn-hangzhou.aliyuncs.com/netaxe/workflow-backend:1.0
     container_name: workbench-backend
     restart: always
     volumes:
