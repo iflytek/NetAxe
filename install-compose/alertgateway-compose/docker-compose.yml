@@ -67,6 +67,19 @@ services:
     networks:
       - docker_netaxe
 
+  alertgateway-webhook:
+    image: registry.cn-hangzhou.aliyuncs.com/netaxe/alertgateway-backend:2.0
+    container_name: alertgateway-webhook
+    restart: always
+    command: python3 worker.py webhook
+    volumes:
+      - ./config.json:/app/config/config.json
+      - ./logs:/app/logs
+      - ./extensibles:/app/backend/plugins/extensibles
+    networks:
+      - docker_netaxe
+
+
   alertgateway-incident:
     image: registry.cn-hangzhou.aliyuncs.com/netaxe/alertgateway-backend:2.0
     container_name: alertgateway-incident

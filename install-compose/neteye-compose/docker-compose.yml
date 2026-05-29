@@ -282,7 +282,7 @@ services:
   # 监控模板  监控规则
   snmp-exporter:
     container_name: snmp-exporter
-    image: registry.cn-hangzhou.aliyuncs.com/netaxe/snmp-exporter:v0.27.0
+    image: registry.cn-hangzhou.aliyuncs.com/netaxe/snmp_exporter:1.0
     ports:
       - 9116:9116
     volumes:
@@ -296,7 +296,7 @@ services:
     restart: always
   
   regis:
-    image: registry.cn-hangzhou.aliyuncs.com/netaxe/regiscenter:2.3
+    image: registry.cn-hangzhou.aliyuncs.com/netaxe/regiscenter:2.5
     container_name: regis
     privileged: true
     volumes:
