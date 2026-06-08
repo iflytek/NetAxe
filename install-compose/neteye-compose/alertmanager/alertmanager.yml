@@ -1,7 +1,7 @@
 receivers:
   - name: 'default_webhook'
     webhook_configs:
-      - url: 'http://10.165.7.247:31122/alert_gateway/prometheus/KJaXUESUpRqPertdZSoL'
+      - url: 'http://alertgateway-backend:8000/alert_gateway/prometheus/NETAXE_ALERT_WEBHOOK'
         send_resolved: true
 
 route:
@@ -17,4 +17,3 @@ route:
   routes:
     # 其他告警会被发送到默认接收器
     - receiver: default_webhook
-

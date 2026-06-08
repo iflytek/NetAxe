@@ -23,9 +23,9 @@
   "queue": "alert_gateway",
   "routing_key": "alert_gateway",
   "project_name": "AlertGateway",
-  "prometheus": "prometheus:9090",
-  "prometheus_username": "admin",
-  "prometheus_password": "PROMETHEUS_PASSWORD",
+  "prometheus": "vmauth:8427/select/0/prometheus",
+  "prometheus_username": "",
+  "prometheus_password": "",
   "iam": {
     "url": "http://abac-nginx:80/abac-api",
     "urn_prefix": "netaxe:alert_gateway",

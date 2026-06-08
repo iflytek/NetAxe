@@ -1,0 +1,12 @@
+groups:
+- name: Merics_Relabel
+  rules:
+  - record: mtr_avg_short
+    expr: sum without (hop, host) (mtr_avg)
+
+  - record: otherPower
+    expr: otherPowermell{mellanoxlName="Power Supply"}/3
+
+  - record: otherFan
+    expr: otherFanmell{mellanoxlName="Fan Sensor"}
+

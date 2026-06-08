@@ -1,0 +1,349 @@
+groups:
+- name: blackbox-public-meta
+  interval: 30s
+  rules:
+  - alert: PublicTcpMonitorDataStale
+    expr: count(count by (monitor) (last_over_time(probe_success{job="tcp_connect_15s"}[10m])))
+      < 9
+    for: 5m0s
+    labels:
+      alert_channel: public_tcp
+      alertgroup: 公网探测告警
+      environment: public
+      severity: critical
+    annotations:
+      description: 公网TCP当前上报数据的探测点数少于9个，可能存在探测点、remote write 或 VictoriaMetrics 写入异常。
+      runbook_url: https://your-wiki/runbook/monitor-data-stale-public
+      summary: 公网TCP探测点数据缺失
+  - alert: PublicIcmpMonitorDataStale
+    expr: count(count by (monitor) (last_over_time(probe_success{job="icmp_connect_15s"}[10m])))
+      < 9
+    for: 5m0s
+    labels:
+      alert_channel: public_icmp
+      alertgroup: 公网探测告警
+      environment: public
+      severity: critical
+    annotations:
+      description: 公网ICMP当前上报数据的探测点数少于9个，可能存在探测点、remote write 或 VictoriaMetrics 写入异常。
+      runbook_url: https://your-wiki/runbook/monitor-data-stale-public
+      summary: 公网ICMP探测点数据缺失
+- name: blackbox-public-service
+  interval: 15s
+  rules:
+  - alert: TcpInstanceDown
+    expr: count by (instance, job, port, idc, type, code) (max_over_time(probe_success{job="tcp_connect_15s"}[2m])
+      == 0) >= 3
+    for: 30s
+    labels:
+      alert_channel: public_tcp
+      alertgroup: 公网TCP告警
+      environment: public
+      severity: page
+    annotations:
+      description: '{{ $labels.instance }}（业务机房={{ $labels.idc }}，资源类型={{ $labels.type
+        }}，端口={{ $labels.port }}，状态码={{ $labels.code }}）在至少3个公网探测点连续2分钟TCP探测失败。'
+      recovery_summary: 公网TCP服务恢复
+      runbook_url: https://your-wiki/runbook/tcp-instance-down
+      summary: 公网TCP服务不可达
+  - alert: IcmpInstanceDown
+    expr: count by (instance, job, port, idc, type) (max_over_time(probe_success{job="icmp_connect_15s"}[2m])
+      == 0) >= 3
+    for: 30s
+    labels:
+      alert_channel: public_icmp
+      alertgroup: 公网ICMP告警
+      environment: public
+      severity: page
+    annotations:
+      description: '{{ $labels.instance }}（业务机房={{ $labels.idc }}，资源类型={{ $labels.type
+        }}，端口={{ $labels.port }}）在至少3个公网探测点连续2分钟ICMP探测失败。'
+      recovery_summary: 公网ICMP服务恢复
+      runbook_url: https://your-wiki/runbook/icmp-instance-down
+      summary: 公网ICMP服务不可达
+  - alert: PublicTcpServiceFlapping
+    expr: count by (instance, job, port, idc, type, code) ((count by (monitor, instance,
+      job, port, idc, type, code) ((changes(probe_success{job="tcp_connect_15s"}[2m])
+      >= 2) and (avg_over_time(probe_success{job="tcp_connect_15s"}[2m]) <= 0.8) and
+      (min_over_time(probe_success{job="tcp_connect_15s"}[2m]) == 0) and (max_over_time(probe_success{job="tcp_connect_15s"}[2m])
+      == 1))) > 0) >= 3
+    for: 30s
+    labels:
+      alert_channel: public_tcp
+      alertgroup: 公网TCP告警
+      environment: public
+      severity: warning
+    annotations:
+      description: '{{ $labels.instance }}（业务机房={{ $labels.idc }}，资源类型={{ $labels.type
+        }}，端口={{ $labels.port }}，状态码={{ $labels.code }}）在至少3个公网探测点的最近2分钟内出现成功/失败切换且失败采样占比超过20%，存在公网TCP连通性抖动。'
+      summary: 公网TCP服务抖动
+  - alert: PublicIcmpServiceFlapping
+    expr: count by (instance, job, port, idc, type) ((changes(probe_success{job="icmp_connect_15s"}[2m])
+      >= 2) and (min_over_time(probe_success{job="icmp_connect_15s"}[2m]) == 0) and
+      (max_over_time(probe_success{job="icmp_connect_15s"}[2m]) == 1)) >= 3
+    for: 30s
+    labels:
+      alert_channel: public_icmp
+      alertgroup: 公网ICMP告警
+      environment: public
+      severity: warning
+    annotations:
+      description: '{{ $labels.instance }}（业务机房={{ $labels.idc }}，资源类型={{ $labels.type
+        }}，端口={{ $labels.port }}）在至少3个公网探测点的最近2分钟内出现2次及以上成功/失败切换，存在公网ICMP连通性抖动。'
+      summary: 公网ICMP服务抖动
+  - alert: PublicTcpServiceDegradationDetected
+    expr: count by (instance, job, port, idc, type, code) ((avg_over_time(probe_success{job="tcp_connect_15s"}[5m])
+      < 0.95) and (max_over_time(probe_success{job="tcp_connect_15s"}[2m]) == 1))
+      >= 3
+    for: 1m0s
+    labels:
+      alert_channel: public_tcp
+      alertgroup: 公网TCP告警
+      environment: public
+      severity: warning
+    annotations:
+      description: '{{ $labels.instance }}（业务机房={{ $labels.idc }}，资源类型={{ $labels.type
+        }}，端口={{ $labels.port }}，状态码={{ $labels.code }}）在至少3个公网探测点的最近5分钟TCP探测成功率低于95%。'
+      summary: 公网TCP服务成功率下降
+  - alert: PublicIcmpServiceDegradationDetected
+    expr: count by (instance, job, port, idc, type) ((avg_over_time(probe_success{job="icmp_connect_15s"}[5m])
+      < 0.95) and (max_over_time(probe_success{job="icmp_connect_15s"}[2m]) == 1))
+      >= 3
+    for: 1m0s
+    labels:
+      alert_channel: public_icmp
+      alertgroup: 公网ICMP告警
+      environment: public
+      severity: warning
+    annotations:
+      description: '{{ $labels.instance }}（业务机房={{ $labels.idc }}，资源类型={{ $labels.type
+        }}，端口={{ $labels.port }}）在至少3个公网探测点的最近5分钟ICMP探测成功率低于95%。'
+      summary: 公网ICMP服务成功率下降
+- name: blackbox-public-egress
+  interval: 30s
+  rules:
+  - alert: IDC_Egress_Failure_Rate_High
+    expr: |
+      count(count by (monitor) (last_over_time(probe_success{job="tcp_connect_15s"}[10m]))) >= 7
+      and
+      (
+        sum by (monitor) (last_over_time(probe_success{job="tcp_connect_15s"}[2m]) == bool 0)
+        /
+        count by (monitor) (last_over_time(probe_success{job="tcp_connect_15s"}[2m]))
+      ) > 0.12
+    for: 1m0s
+    labels:
+      alert_channel: public_tcp
+      alertgroup: 公网TCP告警
+      environment: public
+      severity: critical
+    annotations:
+      description: '{{ $labels.monitor }} 公网TCP探测失败率超过12%。'
+      runbook_url: https://your-wiki/runbook/idc-egress-failure-rate
+      summary: 公网数据中心出口异常
+  - alert: IDC_Egress_Failure_Spike
+    expr: |
+      count(count by (monitor) (last_over_time(probe_success{job="tcp_connect_15s"}[10m]))) >= 7
+      and
+      (
+        (
+          sum by (monitor) (last_over_time(probe_success{job="tcp_connect_15s"}[2m]) == bool 0)
+          -
+          sum by (monitor) (last_over_time(probe_success{job="tcp_connect_15s"}[2m] offset 5m) == bool 0)
+        ) > 30
+      )
+      and
+      (
+        sum by (monitor) (last_over_time(probe_success{job="tcp_connect_15s"}[2m]) == bool 0)
+        >
+        sum by (monitor) (last_over_time(probe_success{job="tcp_connect_15s"}[2m] offset 5m) == bool 0) * 1.5
+      )
+    for: 1m0s
+    labels:
+      alert_channel: public_tcp
+      alertgroup: 公网TCP告警
+      environment: public
+      severity: warning
+    annotations:
+      description: '{{ $labels.monitor }} 公网TCP探测失败数较5分钟前明显增加。'
+      summary: 公网数据中心出口波动
+  - alert: IDC_Egress_Outlier
+    expr: |
+      count(count by (monitor) (last_over_time(probe_success{job="tcp_connect_15s"}[10m]))) >= 7
+      and
+      (
+        sum by (monitor) (last_over_time(probe_success{job="tcp_connect_15s"}[2m]) == bool 0)
+        /
+        count by (monitor) (last_over_time(probe_success{job="tcp_connect_15s"}[2m]))
+      )
+      >
+      avg(
+        sum by (monitor) (last_over_time(probe_success{job="tcp_connect_15s"}[2m]) == bool 0)
+        /
+        count by (monitor) (last_over_time(probe_success{job="tcp_connect_15s"}[2m]))
+      ) * 3
+    for: 1m0s
+    labels:
+      alert_channel: public_tcp
+      alertgroup: 公网TCP告警
+      environment: public
+      severity: warning
+    annotations:
+      description: '{{ $labels.monitor }} 公网TCP探测失败率显著高于其他公网数据中心。'
+      summary: 公网数据中心出口异常（对比）
+- name: blackbox-lan-meta
+  interval: 30s
+  rules:
+  - alert: LanTcpMonitorDataStale
+    expr: count(count by (monitor) (last_over_time(probe_success{job="tcp_lan_15s"}[10m])))
+      < 5
+    for: 5m0s
+    labels:
+      alert_channel: internal_tcp
+      alertgroup: 内网探测告警
+      environment: internal
+      severity: critical
+    annotations:
+      description: 内网TCP当前上报数据的探测点数少于5个，可能存在探测点、remote write 或 VictoriaMetrics 写入异常。
+      runbook_url: https://your-wiki/runbook/monitor-data-stale-internal
+      summary: 内网TCP探测点数据缺失
+  - alert: LanIcmpMonitorDataStale
+    expr: count(count by (monitor) (last_over_time(probe_success{job="icmp_lan_15s"}[10m])))
+      < 5
+    for: 5m0s
+    labels:
+      alert_channel: internal_icmp
+      alertgroup: 内网探测告警
+      environment: internal
+      severity: critical
+    annotations:
+      description: 内网ICMP当前上报数据的探测点数少于5个，可能存在探测点、remote write 或 VictoriaMetrics 写入异常。
+      runbook_url: https://your-wiki/runbook/monitor-data-stale-internal
+      summary: 内网ICMP探测点数据缺失
+- name: blackbox-lan-service
+  interval: 15s
+  rules:
+  - alert: LanTcpInstanceDown
+    expr: count by (instance, job, port, bgbu, user) (max_over_time(probe_success{job="tcp_lan_15s"}[2m])
+      == 0) >= 2
+    for: 30s
+    labels:
+      alert_channel: internal_tcp
+      alertgroup: 内网TCP告警
+      environment: internal
+      severity: page
+    annotations:
+      description: '{{ $labels.instance }}（业务={{ $labels.bgbu }}，负责人={{ $labels.user
+        }}，端口={{ $labels.port }}）在至少2个内网探测点连续2分钟TCP探测失败。'
+      recovery_summary: 内网TCP服务恢复
+      runbook_url: https://your-wiki/runbook/lan-tcp-instance-down
+      summary: 内网TCP服务不可达
+  - alert: LanIcmpInstanceDown
+    expr: count by (instance, job, bgbu, user) (max_over_time(probe_success{job="icmp_lan_15s"}[2m])
+      == 0) >= 2
+    for: 30s
+    labels:
+      alert_channel: internal_icmp
+      alertgroup: 内网ICMP告警
+      environment: internal
+      severity: page
+    annotations:
+      description: '{{ $labels.instance }}（业务={{ $labels.bgbu }}，负责人={{ $labels.user
+        }}）在至少2个内网探测点连续2分钟ICMP探测失败。'
+      recovery_summary: 内网ICMP服务恢复
+      runbook_url: https://your-wiki/runbook/lan-icmp-instance-down
+      summary: 内网ICMP服务不可达
+  - alert: LanTcpServiceFlapping
+    expr: count by (instance, job, port, bgbu, user) ((count by (monitor, instance,
+      job, port, bgbu, user) ((changes(probe_success{job="tcp_lan_15s",proxy_node!="prometheus-tcp"}[2m])
+      >= 2) and (avg_over_time(probe_success{job="tcp_lan_15s",proxy_node!="prometheus-tcp"}[2m])
+      <= 0.8) and (min_over_time(probe_success{job="tcp_lan_15s",proxy_node!="prometheus-tcp"}[2m])
+      == 0) and (max_over_time(probe_success{job="tcp_lan_15s",proxy_node!="prometheus-tcp"}[2m])
+      == 1))) > 0) >= 2
+    for: 30s
+    labels:
+      alert_channel: internal_tcp
+      alertgroup: 内网TCP告警
+      environment: internal
+      severity: warning
+    annotations:
+      description: '{{ $labels.instance }}（业务={{ $labels.bgbu }}，负责人={{ $labels.user
+        }}，端口={{ $labels.port }}）在至少2个内网探测点的最近2分钟内出现成功/失败切换且失败采样占比超过20%，存在内网TCP连通性抖动。'
+      summary: 内网TCP服务抖动
+  - alert: LanIcmpServiceFlapping
+    expr: count by (instance, job, bgbu, user) ((changes(probe_success{job="icmp_lan_15s"}[2m])
+      >= 2) and (min_over_time(probe_success{job="icmp_lan_15s"}[2m]) == 0) and (max_over_time(probe_success{job="icmp_lan_15s"}[2m])
+      == 1)) >= 2
+    for: 30s
+    labels:
+      alert_channel: internal_icmp
+      alertgroup: 内网ICMP告警
+      environment: internal
+      severity: warning
+    annotations:
+      description: '{{ $labels.instance }}（业务={{ $labels.bgbu }}，负责人={{ $labels.user
+        }}）在至少2个内网探测点的最近2分钟内出现2次及以上成功/失败切换，存在内网ICMP连通性抖动。'
+      summary: 内网ICMP服务抖动
+  - alert: LanTcpServiceDegradationDetected
+    expr: count by (instance, job, port, bgbu, user) ((avg_over_time(probe_success{job="tcp_lan_15s"}[5m])
+      < 0.95) and (max_over_time(probe_success{job="tcp_lan_15s"}[2m]) == 1)) >= 2
+    for: 1m0s
+    labels:
+      alert_channel: internal_tcp
+      alertgroup: 内网TCP告警
+      environment: internal
+      severity: warning
+    annotations:
+      description: '{{ $labels.instance }}（业务={{ $labels.bgbu }}，负责人={{ $labels.user
+        }}，端口={{ $labels.port }}）在至少2个内网探测点的最近5分钟TCP探测成功率低于95%。'
+      summary: 内网TCP服务成功率下降
+  - alert: LanIcmpServiceDegradationDetected
+    expr: count by (instance, job, bgbu, user) ((avg_over_time(probe_success{job="icmp_lan_15s"}[5m])
+      < 0.95) and (max_over_time(probe_success{job="icmp_lan_15s"}[2m]) == 1)) >=
+      2
+    for: 1m0s
+    labels:
+      alert_channel: internal_icmp
+      alertgroup: 内网ICMP告警
+      environment: internal
+      severity: warning
+    annotations:
+      description: '{{ $labels.instance }}（业务={{ $labels.bgbu }}，负责人={{ $labels.user
+        }}）在至少2个内网探测点的最近5分钟ICMP探测成功率低于95%。'
+      summary: 内网ICMP服务成功率下降
+- name: vmagent-monitor-point
+  interval: 30s
+  rules:
+  - alert: VmagentMonitorPointDown
+    expr: max by (monitor, proxy_node) (max_over_time(up{job="vmagent", proxy_node!=""}[5m]))
+      == 0
+    for: 2m0s
+    labels:
+      alert_channel: vmagent_status
+      alertgroup: 监控点组件告警
+      environment: monitor-point
+      severity: critical
+    annotations:
+      description: '{{ $labels.monitor }} / {{ $labels.proxy_node }} 的 vmagent 最近5分钟没有任何一次成功抓取，并且该状态已持续2分钟。请检查监控点
+        vmagent 进程、/metrics 监听地址、网络连通性和本地 blackbox 抓取压力。'
+      recovery_summary: 监控点 vmagent 恢复
+      runbook_url: https://your-wiki/runbook/vmagent-monitor-point-down
+      summary: 监控点 vmagent 持续不可达
+  - alert: VmagentMonitorPointNoData
+    expr: |
+      absent_over_time(up{job="vmagent", monitor="beijing-dazu", proxy_node="vmagent-beijing-dazu-public"}[5m])
+      or absent_over_time(up{job="vmagent", monitor="beijing-dazu", proxy_node="vmagent-beijing-dazu-internal-0"}[5m])
+      or absent_over_time(up{job="vmagent", monitor="beijing-dazu", proxy_node="vmagent-beijing-dazu-internal-1"}[5m])
+      or absent_over_time(up{job="vmagent", monitor="beijing-dazu", proxy_node="vmagent-beijing-dazu-internal-2"}[5m])
+    for: 2m0s
+    labels:
+      alert_channel: vmagent_status
+      alertgroup: 监控点组件告警
+      environment: monitor-point
+      severity: critical
+    annotations:
+      description: '{{ $labels.monitor }} / {{ $labels.proxy_node }} 的 vmagent 最近5分钟没有上报自监控数据，并且该状态已持续2分钟。请检查该
+        shard 进程、监听地址、remote write 和本地 blackbox 抓取压力。'
+      recovery_summary: 监控点 vmagent 数据恢复
+      runbook_url: https://your-wiki/runbook/vmagent-monitor-point-no-data
+      summary: 监控点 vmagent 数据中断

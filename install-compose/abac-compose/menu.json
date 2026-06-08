@@ -17,7 +17,7 @@
                     "parent": null
                 },
                 {
-                    "name": "告警组",
+                    "name": "告警",
                     "path": "/alert-gateway/alert",
                     "sort": 1,
                     "icon": "",
@@ -26,31 +26,9 @@
                     "parent": null
                 },
                 {
-                    "name": "通知模板",
-                    "path": "/alert-gateway/notice_template",
-                    "sort": 2,
-                    "icon": "board",
-                    "key": "alert-gateway_notice_template",
-                    "type": "menu_type",
-                    "parent": {
-                        "key": "alert-gateway_config"
-                    }
-                },
-                {
-                    "name": "告警配置",
-                    "path": "/alert-gateway/incident-keyword",
-                    "sort": 3,
-                    "icon": "lsgj",
-                    "key": "alert-gateway_incident-keyword",
-                    "type": "menu_type",
-                    "parent": {
-                        "key": "alert-gateway_config"
-                    }
-                },
-                {
                     "name": "协作空间",
                     "path": "/alert-gateway/collaborative",
-                    "sort": 4,
+                    "sort": 1,
                     "icon": "board",
                     "key": "alert-gateway_collaborative",
                     "type": "menu_type",
@@ -59,7 +37,7 @@
                 {
                     "name": "全部告警",
                     "path": "/alert-gateway/all-alert",
-                    "sort": 5,
+                    "sort": 1,
                     "icon": "dqgj",
                     "key": "alert-gateway_all-alert",
                     "type": "menu_type",
@@ -70,67 +48,58 @@
                 {
                     "name": "值班管理",
                     "path": "/alert-gateway/duty",
-                    "sort": 6,
+                    "sort": 1,
                     "icon": "dqgj",
                     "key": "alert-gateway_duty-manage_duty",
                     "type": "menu_type",
-                    "parent": null
-                },
-                {
-                    "name": "事件组",
-                    "path": "/alert-gateway/event",
-                    "sort": 7,
-                    "icon": "",
-                    "key": "alert-gateway-event",
-                    "type": "group_type",
-                    "parent": null
-                },
-                {
-                    "name": "配置组",
-                    "path": "/alert-gateway/config",
-                    "sort": 8,
-                    "icon": "",
-                    "key": "alert-gateway_config",
-                    "type": "group_type",
-                    "parent": null
-                },
-                {
-                    "name": "当前告警",
-                    "path": "/alert-gateway/current-warn",
-                    "sort": 9,
-                    "icon": "dqgj",
-                    "key": "alert-gateway_current-warn",
-                    "type": "menu_type",
                     "parent": {
-                        "key": "alert-gateway_warn"
+                        "key": "alert-gateway_schedule"
                     }
                 },
                 {
-                    "name": "静默策略",
-                    "path": "/alert-gateway/silent-policy",
-                    "sort": 10,
-                    "icon": "memory",
-                    "key": "alert-gateway_silent-policy",
+                    "name": "通知模板",
+                    "path": "/alert-gateway/notice_template",
+                    "sort": 1,
+                    "icon": "zbwh",
+                    "key": "alert-gateway_notice_template",
                     "type": "menu_type",
                     "parent": {
                         "key": "alert-gateway_config"
                     }
                 },
                 {
-                    "name": "历史告警",
-                    "path": "/alert-gateway/history-warn",
-                    "sort": 11,
-                    "icon": "lsgj",
-                    "key": "alert-gateway_history-warn",
+                    "name": "告警配置",
+                    "path": "/alert-gateway/incident-keyword",
+                    "sort": 1,
+                    "icon": "board",
+                    "key": "alert-gateway_incident-keyword",
                     "type": "menu_type",
                     "parent": {
-                        "key": "alert-gateway_warn"
+                        "key": "alert-gateway_config"
                     }
+                },
+                {
+                    "name": "事件",
+                    "path": "/alert-gateway/event",
+                    "sort": 2,
+                    "icon": "",
+                    "key": "alert-gateway-event",
+                    "type": "group_type",
+                    "parent": null
+                },
+                {
+                    "name": "配置",
+                    "path": "/alert-gateway/config",
+                    "sort": 3,
+                    "icon": "",
+                    "key": "alert-gateway_config",
+                    "type": "group_type",
+                    "parent": null
                 },
                 {
                     "name": "事件中心",
                     "path": "/alert-gateway/event-center",
-                    "sort": 12,
+                    "sort": 7,
                     "icon": "lssj",
                     "key": "alert-gateway_event-center",
                     "type": "menu_type",
@@ -141,7 +110,7 @@
                 {
                     "name": "事件集成",
                     "path": "/alert-gateway/event-config",
-                    "sort": 13,
+                    "sort": 8,
                     "icon": "sjcll",
                     "key": "alert-gateway_event-config",
                     "type": "menu_type",
@@ -150,42 +119,9 @@
                     }
                 },
                 {
-                    "name": "告警规则",
-                    "path": "/alert-gateway/warn-rule",
-                    "sort": 14,
-                    "icon": "sjcll",
-                    "key": "alert-gateway_warn-rule",
-                    "type": "menu_type",
-                    "parent": {
-                        "key": "alert-gateway_config"
-                    }
-                },
-                {
-                    "name": "屏蔽规则",
-                    "path": "/alert-gateway/mask-rule",
-                    "sort": 15,
-                    "icon": "sjcll",
-                    "key": "alert-gateway_mask-rule",
-                    "type": "menu_type",
-                    "parent": {
-                        "key": "alert-gateway_config"
-                    }
-                },
-                {
-                    "name": "升级策略",
-                    "path": "/alert-gateway/update-rule",
-                    "sort": 16,
-                    "icon": "sjcll",
-                    "key": "alert-gateway_update-rule",
-                    "type": "menu_type",
-                    "parent": {
-                        "key": "alert-gateway_config"
-                    }
-                },
-                {
                     "name": "通知对象",
                     "path": "/alert-gateway/notice",
-                    "sort": 17,
+                    "sort": 12,
                     "icon": "sjcll",
                     "key": "alert-gateway_notice",
                     "type": "menu_type",
@@ -196,7 +132,7 @@
                 {
                     "name": "值班管理",
                     "path": "/alert-gateway/schedule",
-                    "sort": 18,
+                    "sort": 117,
                     "icon": "",
                     "key": "alert-gateway_schedule",
                     "type": "group_type",
@@ -301,29 +237,53 @@
                     "parent": null
                 },
                 {
-<<<<<<< HEAD
-                    "name": "执行总览",
-                    "path": "/base-platform/execution-overview",
+                    "name": "任务结果",
+                    "path": "/base-platform/task-result",
                     "sort": 1,
                     "icon": "sjcll",
-                    "key": "base-platform_execution-overview",
-=======
-                    "name": "地址寻觅",
-                    "path": "/base-platform/address-location",
-                    "sort": 1,
-                    "icon": "sjcll",
-                    "key": "base-platform_address-location",
->>>>>>> b77af795c1a7c932f49c8c38912f7da6292c36e4
+                    "key": "base-platform_task-result",
                     "type": "menu_type",
+                    "parent": {
+                        "key": "base-platform-task-center"
+                    }
+                },
+                {
+                    "name": "配置下发",
+                    "path": "/base-platform/config-deploy",
+                    "sort": 1,
+                    "icon": "VPN",
+                    "key": "base-platform_config-deploy",
+                    "type": "menu_type",
+                    "parent": {
+                        "key": "base-platform-automation"
+                    }
+                },
+                {
+                    "name": "自动化",
+                    "path": "/base-platform/automation",
+                    "sort": 1,
+                    "icon": "",
+                    "key": "base-platform-automation",
+                    "type": "group_type",
                     "parent": null
                 },
                 {
-<<<<<<< HEAD
-                    "name": "采集方案",
-                    "path": "/base-platform/collection-plan",
-                    "sort": 2,
-                    "icon": "sjcll",
-                    "key": "base-platform_collection-plan",
+                    "name": "变更治理",
+                    "path": "/base-platform/config-governance",
+                    "sort": 1,
+                    "icon": "board",
+                    "key": "base-platform_config-governance",
+                    "type": "menu_type",
+                    "parent": {
+                        "key": "config_manage"
+                    }
+                },
+                {
+                    "name": "执行总览",
+                    "path": "/base-platform/execution-overview",
+                    "sort": 1,
+                    "icon": "board",
+                    "key": "base-platform_execution-overview",
                     "type": "menu_type",
                     "parent": {
                         "key": "base-platform-plan"
@@ -332,59 +292,82 @@
                 {
                     "name": "设备画像",
                     "path": "/base-platform/device-profile",
-                    "sort": 3,
-                    "icon": "sjcll",
+                    "sort": 1,
+                    "icon": "board",
                     "key": "base-platform_device-profile",
-=======
+                    "type": "menu_type",
+                    "parent": {
+                        "key": "base-platform-plan"
+                    }
+                },
+                {
+                    "name": "采集方案",
+                    "path": "/base-platform/collection-plan",
+                    "sort": 1,
+                    "icon": "board",
+                    "key": "base-platform_collection-plan",
+                    "type": "menu_type",
+                    "parent": {
+                        "key": "base-platform-plan"
+                    }
+                },
+                {
                     "name": "图标管理",
                     "path": "/base-platform/topology-icon",
-                    "sort": 2,
+                    "sort": 1,
                     "icon": "VPN",
                     "key": "base-platform_topology-icon",
->>>>>>> b77af795c1a7c932f49c8c38912f7da6292c36e4
                     "type": "menu_type",
-                    "parent": null
+                    "parent": {
+                        "key": "base-platform-topology"
+                    }
                 },
                 {
                     "name": "网络拓扑",
                     "path": "/base-platform/topology-index",
-                    "sort": 3,
+                    "sort": 1,
                     "icon": "board",
                     "key": "base-platform_topology-index",
                     "type": "menu_type",
-                    "parent": null
+                    "parent": {
+                        "key": "base-platform-topology"
+                    }
                 },
                 {
                     "name": "地址定位",
                     "path": "/address",
-                    "sort": 4,
+                    "sort": 1,
                     "icon": "",
                     "key": "address",
                     "type": "group_type",
                     "parent": null
                 },
                 {
-                    "name": "任务结果",
-                    "path": "/base-platform/task-result",
-                    "sort": 5,
+                    "name": "地址寻觅",
+                    "path": "/base-platform/address-location",
+                    "sort": 1,
                     "icon": "sjcll",
-                    "key": "base-platform_task-result",
+                    "key": "base-platform_address-location",
                     "type": "menu_type",
-                    "parent": null
+                    "parent": {
+                        "key": "address"
+                    }
                 },
                 {
                     "name": "资源维护",
                     "path": "/base-platform/maintenance",
-                    "sort": 6,
+                    "sort": 1,
                     "icon": "sjcll",
                     "key": "base-platform_maintenance",
                     "type": "menu_type",
-                    "parent": null
+                    "parent": {
+                        "key": "resource"
+                    }
                 },
                 {
                     "name": "拓扑管理",
                     "path": "/base-platform-topology",
-                    "sort": 8,
+                    "sort": 23,
                     "icon": "",
                     "key": "base-platform-topology",
                     "type": "group_type",
@@ -393,7 +376,7 @@
                 {
                     "name": "资源管理",
                     "path": "/resource",
-                    "sort": 9,
+                    "sort": 25,
                     "icon": "",
                     "key": "resource",
                     "type": "group_type",
@@ -402,7 +385,7 @@
                 {
                     "name": "网络设备",
                     "path": "/base-platform/network",
-                    "sort": 10,
+                    "sort": 26,
                     "icon": "sjcll",
                     "key": "base-platform_network",
                     "type": "menu_type",
@@ -413,7 +396,7 @@
                 {
                     "name": "服务器管理",
                     "path": "/base-platform/server",
-                    "sort": 11,
+                    "sort": 27,
                     "icon": "sjcll",
                     "key": "base-platform_server",
                     "type": "menu_type",
@@ -424,7 +407,7 @@
                 {
                     "name": "登录日志",
                     "path": "/base-platform/login-log",
-                    "sort": 12,
+                    "sort": 28,
                     "icon": "sjcll",
                     "key": "base-platform_login-log",
                     "type": "menu_type",
@@ -435,7 +418,7 @@
                 {
                     "name": "配置管理",
                     "path": "/config_manage",
-                    "sort": 13,
+                    "sort": 29,
                     "icon": "",
                     "key": "config_manage",
                     "type": "group_type",
@@ -444,7 +427,7 @@
                 {
                     "name": "配置备份",
                     "path": "/base-platform/config-policy",
-                    "sort": 14,
+                    "sort": 30,
                     "icon": "sjcll",
                     "key": "base-platform_config-policy",
                     "type": "menu_type",
@@ -455,7 +438,7 @@
                 {
                     "name": "配置查询",
                     "path": "/base-platform/config-query",
-                    "sort": 15,
+                    "sort": 31,
                     "icon": "sjcll",
                     "key": "base-platform_config-query",
                     "type": "menu_type",
@@ -466,7 +449,7 @@
                 {
                     "name": "配置比对",
                     "path": "/base-platform/config-diff",
-                    "sort": 16,
+                    "sort": 32,
                     "icon": "sjcll",
                     "key": "base-platform_config-diff",
                     "type": "menu_type",
@@ -477,7 +460,7 @@
                 {
                     "name": "配置合规",
                     "path": "/base-platform/config-compliance",
-                    "sort": 17,
+                    "sort": 33,
                     "icon": "sjcll",
                     "key": "base-platform_config-compliance",
                     "type": "menu_type",
@@ -488,7 +471,7 @@
                 {
                     "name": "作业中心",
                     "path": "/base-platform-task-center",
-                    "sort": 18,
+                    "sort": 34,
                     "icon": "",
                     "key": "base-platform-task-center",
                     "type": "group_type",
@@ -497,7 +480,7 @@
                 {
                     "name": "设备采集",
                     "path": "/base-platform-plan",
-                    "sort": 19,
+                    "sort": 35,
                     "icon": "",
                     "key": "base-platform-plan",
                     "type": "group_type",
@@ -506,7 +489,7 @@
                 {
                     "name": "任务列表",
                     "path": "/base-platform/task-list",
-                    "sort": 20,
+                    "sort": 37,
                     "icon": "sjcll",
                     "key": "base-platform_task-list",
                     "type": "menu_type",
@@ -515,33 +498,22 @@
                     }
                 },
                 {
-                    "name": "执行总览",
-                    "path": "/base-platform/execution-overview",
-                    "sort": 21,
-                    "icon": "dlrz",
-                    "key": "base-platform_execution-overview",
-                    "type": "menu_type",
-                    "parent": {
-                        "key": "base-platform-plan"
-                    }
-                },
-                {
                     "name": "采集方案",
-                    "path": "/base-platform/collection-plan",
-                    "sort": 22,
+                    "path": "/base-platform/plan-summary",
+                    "sort": 180,
                     "icon": "dlrz",
-                    "key": "base-platform_collection-plan",
+                    "key": "base-platform_plan-summary",
                     "type": "menu_type",
                     "parent": {
                         "key": "base-platform-plan"
                     }
                 },
                 {
-                    "name": "设备画像",
-                    "path": "/base-platform/device-profile",
-                    "sort": 23,
+                    "name": "采集结果",
+                    "path": "/base-platform/plan-result",
+                    "sort": 181,
                     "icon": "chart",
-                    "key": "base-platform_device-profile",
+                    "key": "base-platform_plan-result",
                     "type": "menu_type",
                     "parent": {
                         "key": "base-platform-plan"
@@ -739,136 +711,198 @@
             "icon": "监控中心.png",
             "menus": [
                 {
-                    "name": "硬件配置组",
-                    "path": "neteye_device-config",
-                    "sort": 0,
-                    "icon": "",
-                    "key": "neteye_device-config",
-                    "type": "group_type",
-                    "parent": null
+                    "name": "告警规则",
+                    "path": "/neteye/alert-rule",
+                    "sort": 1,
+                    "icon": "lssj",
+                    "key": "neteye_alert-rule",
+                    "type": "menu_type",
+                    "parent": {
+                        "key": "neteye-v2-rules"
+                    }
                 },
                 {
                     "name": "监控规则",
                     "path": "/neteye/monitor-rule",
                     "sort": 1,
-                    "icon": "board",
+                    "icon": "gjgz",
                     "key": "neteye_monitor-rule",
                     "type": "menu_type",
                     "parent": {
-                        "key": "neteye_device-config"
+                        "key": "neteye-v2-rules"
                     }
                 },
                 {
-                    "name": "告警规则",
-                    "path": "/neteye/alert-rule",
-                    "sort": 2,
+                    "name": "Trap日志",
+                    "path": "/neteye/logs/snmptrap-logs",
+                    "sort": 1,
                     "icon": "board",
-                    "key": "neteye_alert-rule",
+                    "key": "neteye_snmptrap-logs",
                     "type": "menu_type",
                     "parent": {
-                        "key": "neteye_device-config"
+                        "key": "neteye-v2-log-system"
                     }
                 },
                 {
-                    "name": "概览",
+                    "name": "监控总览",
                     "path": "/neteye/dashboard",
-                    "sort": 3,
+                    "sort": 10,
                     "icon": "board",
                     "key": "neteye_dashboard",
                     "type": "menu_type",
                     "parent": null
                 },
                 {
-                    "name": "监控管理组",
-                    "path": "/neteye/monitor",
-                    "sort": 4,
-                    "icon": "board",
-                    "key": "neteye-monitor",
+                    "name": "资源纳管",
+                    "path": "/neteye/resource-management",
+                    "sort": 20,
+                    "icon": "",
+                    "key": "neteye-v2-resource-management",
                     "type": "group_type",
                     "parent": null
                 },
                 {
-                    "name": "硬件监控",
+                    "name": "网络设备",
                     "path": "/neteye/hardware-monitor",
-                    "sort": 5,
+                    "sort": 21,
                     "icon": "dqgj",
                     "key": "neteye_hardware-monitor",
                     "type": "menu_type",
                     "parent": {
-                        "key": "neteye-monitor"
+                        "key": "neteye-v2-resource-management"
                     }
                 },
                 {
-                    "name": "服务监控",
+                    "name": "服务实例",
                     "path": "/neteye/service-monitor",
-                    "sort": 6,
-                    "icon": "dqgj",
+                    "sort": 22,
+                    "icon": "lsgj",
                     "key": "neteye_service-monitor",
                     "type": "menu_type",
                     "parent": {
-                        "key": "neteye-monitor"
+                        "key": "neteye-v2-resource-management"
                     }
                 },
                 {
-                    "name": "数据维护组",
-                    "path": "/neteye/data",
-                    "sort": 7,
-                    "icon": "",
-                    "key": "neteye-data",
-                    "type": "group_type",
-                    "parent": null
-                },
-                {
-                    "name": "公网数据源",
+                    "name": "服务探测",
                     "path": "/neteye/public-resource",
-                    "sort": 8,
+                    "sort": 23,
                     "icon": "dqgj",
                     "key": "neteye_public-resource",
                     "type": "menu_type",
                     "parent": {
-                        "key": "neteye-data"
+                        "key": "neteye-v2-resource-management"
                     }
                 },
                 {
                     "name": "扫描记录",
                     "path": "/neteye/scan-record",
-                    "sort": 9,
-                    "icon": "dqgj",
+                    "sort": 24,
+                    "icon": "lsgj",
                     "key": "neteye_scan-record",
                     "type": "menu_type",
                     "parent": {
-                        "key": "neteye-data"
+                        "key": "neteye-v2-resource-management"
                     }
                 },
                 {
-                    "name": "系统设置组",
-                    "path": "/neteye/config",
-                    "sort": 10,
-                    "icon": "board",
-                    "key": "neteye-config",
+                    "name": "日志系统",
+                    "path": "/neteye/log-system",
+                    "sort": 40,
+                    "icon": "",
+                    "key": "neteye-v2-log-system",
                     "type": "group_type",
                     "parent": null
                 },
                 {
-                    "name": "注册中心",
-                    "path": "/neteye/register-centor",
-                    "sort": 11,
-                    "icon": "dqgj",
-                    "key": "neteye_register-centor",
+                    "name": "解析日志",
+                    "path": "/neteye/logs/parse-logs",
+                    "sort": 41,
+                    "icon": "lsgj",
+                    "key": "neteye_parse-logs",
                     "type": "menu_type",
                     "parent": {
-                        "key": "neteye-config"
+                        "key": "neteye-v2-log-system"
                     }
                 },
                 {
-                    "name": "扫描器",
-                    "path": "/neteye/scaner",
-                    "sort": 12,
+                    "name": "监控指标",
+                    "path": "/neteye/metrics",
+                    "sort": 50,
+                    "icon": "",
+                    "key": "neteye-v2-metrics",
+                    "type": "group_type",
+                    "parent": null
+                },
+                {
+                    "name": "指标目录",
+                    "path": "/neteye/metrics/metric-catalog",
+                    "sort": 51,
                     "icon": "dqgj",
-                    "key": "neteye_scaner",
+                    "key": "neteye_metric-catalog",
                     "type": "menu_type",
                     "parent": {
-                        "key": "neteye-config"
+                        "key": "neteye-v2-metrics"
+                    }
+                },
+                {
+                    "name": "规则管理",
+                    "path": "/neteye/rules",
+                    "sort": 60,
+                    "icon": "",
+                    "key": "neteye-v2-rules",
+                    "type": "group_type",
+                    "parent": null
+                },
+                {
+                    "name": "规则定义",
+                    "path": "/neteye/rules/rule-definitions",
+                    "sort": 61,
+                    "icon": "dqgj",
+                    "key": "neteye_rule-definitions",
+                    "type": "menu_type",
+                    "parent": {
+                        "key": "neteye-v2-rules"
+                    }
+                },
+                {
+                    "name": "组件运维",
+                    "path": "/neteye/components",
+                    "sort": 70,
+                    "icon": "",
+                    "key": "neteye-v2-components",
+                    "type": "group_type",
+                    "parent": null
+                },
+                {
+                    "name": "组件实例",
+                    "path": "/neteye/components/component-instances",
+                    "sort": 71,
+                    "icon": "board",
+                    "key": "neteye_component-instances",
+                    "type": "menu_type",
+                    "parent": {
+                        "key": "neteye-v2-components"
+                    }
+                },
+                {
+                    "name": "告警出口",
+                    "path": "/neteye/alert-outlet",
+                    "sort": 90,
+                    "icon": "",
+                    "key": "neteye-v2-alert-outlet",
+                    "type": "group_type",
+                    "parent": null
+                },
+                {
+                    "name": "推送记录",
+                    "path": "/neteye/alert-outlet/push-records",
+                    "sort": 91,
+                    "icon": "lsgj",
+                    "key": "neteye_push-records",
+                    "type": "menu_type",
+                    "parent": {
+                        "key": "neteye-v2-alert-outlet"
                     }
                 }
             ]

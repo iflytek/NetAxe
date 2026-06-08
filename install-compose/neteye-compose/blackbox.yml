@@ -1,0 +1,68 @@
+modules:
+  http_2xx:
+    prober: http
+    timeout: 5s
+    http:
+      preferred_ip_protocol: ip4
+      ip_protocol_fallback: true
+
+  http_post_2xx:
+    prober: http
+    timeout: 5s
+    http:
+      method: POST
+      preferred_ip_protocol: ip4
+      ip_protocol_fallback: true
+
+  icmp:
+    prober: icmp
+    timeout: 2s
+    icmp:
+      preferred_ip_protocol: ip4
+      ip_protocol_fallback: true
+
+  irc_banner:
+    prober: tcp
+    timeout: 5s
+    tcp:
+      preferred_ip_protocol: ip4
+      ip_protocol_fallback: true
+      query_response:
+        - send: NICK prober
+        - send: USER prober prober prober :prober
+        - expect: PING :([^ ]+)
+          send: PONG ${1}
+        - expect: ^:[^ ]+ 001
+
+  pop3s_banner:
+    prober: tcp
+    timeout: 5s
+    tcp:
+      preferred_ip_protocol: ip4
+      ip_protocol_fallback: true
+      query_response:
+        - expect: ^+OK
+      tls: true
+
+  ssh_banner:
+    prober: tcp
+    timeout: 5s
+    tcp:
+      preferred_ip_protocol: ip4
+      ip_protocol_fallback: true
+      query_response:
+        - expect: ^SSH-2.0-
+
+  tcp_connect:
+    prober: tcp
+    timeout: 5s
+    tcp:
+      preferred_ip_protocol: ip4
+      ip_protocol_fallback: true
+
+  dns_ipv4:
+    prober: dns
+    timeout: 3s
+    dns:
+      preferred_ip_protocol: ip4
+      transport_protocol: udp

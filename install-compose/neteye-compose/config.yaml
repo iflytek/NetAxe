@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 server:
-  mode: debug   # 可选值: debug, test, release
-  port: 8000      # 可选端口号配置
+  mode: debug
+  port: 8000
   log_directory: /var/log
 
   network_device:
@@ -12,9 +12,36 @@ server:
     registration:
       addr: http://SERVER_IP:31468/regis/servers/
       username: admin
-      password: MYSQL_PASSWD
+      password: REGIS_PASSWORD
       target_server: network_monitor
 
+  regiscenter:
+    targets:
+      - component_id: netaxe-register
+        endpoint: "http://register:4168"
+        username: admin
+        password: REGIS_PASSWORD
+        services:
+          - network_monitor
+        tags:
+          - 网络设备
+
+  component:
+    api_keys:
+      - component_id: vmagent-neteye-compose
+        key: X-API-KEY
+      - component_id: vmalert-neteye-compose
+        key: X-API-KEY
+    vmalert_runtime:
+      timeout_ms: 5000
+
+  snmptrap:
+    retention_days: 7
+    alert_gateway:
+      delivery_enabled: false
+      webhook_url: ""
+      timeout_ms: 3000
+      min_severity_level: "Info"
 
 mysqlconf:
   server: mysql-server

@@ -1,0 +1,321 @@
+groups:
+- name: hh3cCBQoSQueueMatchedBytes
+  rules:
+  - record: hh3cCBQoSQueueMatchedBytes_finally
+    expr: |
+      label_replace(
+        label_replace(
+          label_replace(
+            label_join(
+              label_replace(
+                label_join(
+                  (((((((
+                    hh3cCBQoSQueueMatchedBytes
+                    * on (hh3cCBQoSApplyObjectIndex, instance)
+                      group_left (hh3cCBQoSApplyObjectMainSite)
+                      hh3cCBQoSApplyObjectMainSite
+                  )
+                    * on (hh3cCBQoSApplyObjectMainSite, instance)
+                      group_left (ifName)
+                      ifName
+                  )
+                    * on (hh3cCBQoSApplyObjectMainSite, instance)
+                      group_left (ifAlias)
+                      ifAlias
+                  )
+                    * on (hh3cCBQoSApplyObjectMainSite, instance)
+                      group_left (hh3cCBQoSIfApplyPolicyName, hh3cCBQoSIfApplyPolicyDirection)
+                      hh3cCBQoSIfApplyPolicyName
+                  )
+                    * on (hh3cCBQoSIfApplyPolicyName, instance)
+                      group_left (hh3cCBQoSPolicyIndex)
+                      hh3cCBQoSPolicyName
+                  )
+                    * on (hh3cCBQoSPolicyIndex, hh3cCBQoSPolicyClassIndex, instance)
+                      group_left (hh3cCBQoSPolicyClassBehaviorName)
+                      hh3cCBQoSPolicyClassBehaviorName
+                  )
+                    * on (hh3cCBQoSPolicyIndex, hh3cCBQoSPolicyClassIndex, instance)
+                      group_left (hh3cCBQoSPolicyClassClassifierName)
+                      hh3cCBQoSPolicyClassClassifierName
+                  ),
+                  "interface", "【", "ifName", "ifAlias"
+                ),
+                "interface", "$1】", "interface", "(.+)"
+              ),
+              "qoscb", "【", "hh3cCBQoSPolicyClassClassifierName", "hh3cCBQoSPolicyClassBehaviorName"
+            ),
+            "qoscb", "$1】", "qoscb", "(.+)"
+          ),
+          "direction", "out", "hh3cCBQoSIfApplyPolicyDirection", "2"
+        ),
+        "direction", "in", "hh3cCBQoSIfApplyPolicyDirection", "1"
+      )
+
+- name: hh3cCBQoSQueueDiscardedBytes
+  rules:
+  - record: hh3cCBQoSQueueDiscardedBytes_finally
+    expr: |
+      label_replace(
+        label_replace(
+          label_replace(
+            label_join(
+              label_replace(
+                label_join(
+                  (((((((
+                    hh3cCBQoSQueueDiscardedBytes
+                    * on (hh3cCBQoSApplyObjectIndex, instance)
+                      group_left (hh3cCBQoSApplyObjectMainSite)
+                      hh3cCBQoSApplyObjectMainSite
+                  )
+                    * on (hh3cCBQoSApplyObjectMainSite, instance)
+                      group_left (ifName)
+                      ifName
+                  )
+                    * on (hh3cCBQoSApplyObjectMainSite, instance)
+                      group_left (ifAlias)
+                      ifAlias
+                  )
+                    * on (hh3cCBQoSApplyObjectMainSite, instance)
+                      group_left (hh3cCBQoSIfApplyPolicyName, hh3cCBQoSIfApplyPolicyDirection)
+                      hh3cCBQoSIfApplyPolicyName
+                  )
+                    * on (hh3cCBQoSIfApplyPolicyName, instance)
+                      group_left (hh3cCBQoSPolicyIndex)
+                      hh3cCBQoSPolicyName
+                  )
+                    * on (hh3cCBQoSPolicyIndex, hh3cCBQoSPolicyClassIndex, instance)
+                      group_left (hh3cCBQoSPolicyClassBehaviorName)
+                      hh3cCBQoSPolicyClassBehaviorName
+                  )
+                    * on (hh3cCBQoSPolicyIndex, hh3cCBQoSPolicyClassIndex, instance)
+                      group_left (hh3cCBQoSPolicyClassClassifierName)
+                      hh3cCBQoSPolicyClassClassifierName
+                  ),
+                  "interface", "【", "ifName", "ifAlias"
+                ),
+                "interface", "$1】", "interface", "(.+)"
+              ),
+              "qoscb", "【", "hh3cCBQoSPolicyClassClassifierName", "hh3cCBQoSPolicyClassBehaviorName"
+            ),
+            "qoscb", "$1】", "qoscb", "(.+)"
+          ),
+          "direction", "out", "hh3cCBQoSIfApplyPolicyDirection", "2"
+        ),
+        "direction", "in", "hh3cCBQoSIfApplyPolicyDirection", "1"
+      )
+
+- name: hh3cCBQoSAccountingPktbps
+  rules:
+  - record: hh3cCBQoSAccountingPktbps_finally
+    expr: |
+      label_replace(
+        label_replace(
+          label_replace(
+            label_join(
+              label_replace(
+                label_join(
+                  (((((((
+                    hh3cCBQoSAccountingPktbps
+                    * on (hh3cCBQoSApplyObjectIndex, instance)
+                      group_left (hh3cCBQoSApplyObjectMainSite)
+                      hh3cCBQoSApplyObjectMainSite
+                  )
+                    * on (hh3cCBQoSApplyObjectMainSite, instance)
+                      group_left (ifName)
+                      ifName
+                  )
+                    * on (hh3cCBQoSApplyObjectMainSite, instance)
+                      group_left (ifAlias)
+                      ifAlias
+                  )
+                    * on (hh3cCBQoSApplyObjectMainSite, instance)
+                      group_left (hh3cCBQoSIfApplyPolicyName, hh3cCBQoSIfApplyPolicyDirection)
+                      hh3cCBQoSIfApplyPolicyName
+                  )
+                    * on (hh3cCBQoSIfApplyPolicyName, instance)
+                      group_left (hh3cCBQoSPolicyIndex)
+                      hh3cCBQoSPolicyName
+                  )
+                    * on (hh3cCBQoSPolicyIndex, hh3cCBQoSPolicyClassIndex, instance)
+                      group_left (hh3cCBQoSPolicyClassBehaviorName)
+                      hh3cCBQoSPolicyClassBehaviorName
+                  )
+                    * on (hh3cCBQoSPolicyIndex, hh3cCBQoSPolicyClassIndex, instance)
+                      group_left (hh3cCBQoSPolicyClassClassifierName)
+                      hh3cCBQoSPolicyClassClassifierName
+                  ),
+                  "interface", "【", "ifName", "ifAlias"
+                ),
+                "interface", "$1】", "interface", "(.+)"
+              ),
+              "qoscb", "【", "hh3cCBQoSPolicyClassClassifierName", "hh3cCBQoSPolicyClassBehaviorName"
+            ),
+            "qoscb", "$1】", "qoscb", "(.+)"
+          ),
+          "direction", "out", "hh3cCBQoSIfApplyPolicyDirection", "2"
+        ),
+        "direction", "in", "hh3cCBQoSIfApplyPolicyDirection", "1"
+      )
+
+
+- name: hh3cCBQoSCarGreenBytes
+  rules:
+  - record: hh3cCBQoSCarGreenBytes_finally
+    expr: |
+      label_replace(
+        label_replace(
+          label_replace(
+            label_join(
+              label_replace(
+                label_join(
+                  (((((((
+                    hh3cCBQoSCarGreenBytes
+                    * on (hh3cCBQoSApplyObjectIndex, instance)
+                      group_left (hh3cCBQoSApplyObjectMainSite)
+                      hh3cCBQoSApplyObjectMainSite
+                  )
+                    * on (hh3cCBQoSApplyObjectMainSite, instance)
+                      group_left (ifName)
+                      ifName
+                  )
+                    * on (hh3cCBQoSApplyObjectMainSite, instance)
+                      group_left (ifAlias)
+                      ifAlias
+                  )
+                    * on (hh3cCBQoSApplyObjectMainSite, instance)
+                      group_left (hh3cCBQoSIfApplyPolicyName, hh3cCBQoSIfApplyPolicyDirection)
+                      hh3cCBQoSIfApplyPolicyName
+                  )
+                    * on (hh3cCBQoSIfApplyPolicyName, instance)
+                      group_left (hh3cCBQoSPolicyIndex)
+                      hh3cCBQoSPolicyName
+                  )
+                    * on (hh3cCBQoSPolicyIndex, hh3cCBQoSPolicyClassIndex, instance)
+                      group_left (hh3cCBQoSPolicyClassBehaviorName)
+                      hh3cCBQoSPolicyClassBehaviorName
+                  )
+                    * on (hh3cCBQoSPolicyIndex, hh3cCBQoSPolicyClassIndex, instance)
+                      group_left (hh3cCBQoSPolicyClassClassifierName)
+                      hh3cCBQoSPolicyClassClassifierName
+                  ),
+                  "interface", "【", "ifName", "ifAlias"
+                ),
+                "interface", "$1】", "interface", "(.+)"
+              ),
+              "qoscb", "【", "hh3cCBQoSPolicyClassClassifierName", "hh3cCBQoSPolicyClassBehaviorName"
+            ),
+            "qoscb", "$1】", "qoscb", "(.+)"
+          ),
+          "direction", "out", "hh3cCBQoSIfApplyPolicyDirection", "2"
+        ),
+        "direction", "in", "hh3cCBQoSIfApplyPolicyDirection", "1"
+      )
+
+
+- name: hh3cCBQoSCarRedBytes
+  rules:
+  - record: hh3cCBQoSCarRedBytes_finally
+    expr: |
+      label_replace(
+        label_replace(
+          label_replace(
+            label_join(
+              label_replace(
+                label_join(
+                  (((((((
+                    hh3cCBQoSCarRedBytes
+                    * on (hh3cCBQoSApplyObjectIndex, instance)
+                      group_left (hh3cCBQoSApplyObjectMainSite)
+                      hh3cCBQoSApplyObjectMainSite
+                  )
+                    * on (hh3cCBQoSApplyObjectMainSite, instance)
+                      group_left (ifName)
+                      ifName
+                  )
+                    * on (hh3cCBQoSApplyObjectMainSite, instance)
+                      group_left (ifAlias)
+                      ifAlias
+                  )
+                    * on (hh3cCBQoSApplyObjectMainSite, instance)
+                      group_left (hh3cCBQoSIfApplyPolicyName, hh3cCBQoSIfApplyPolicyDirection)
+                      hh3cCBQoSIfApplyPolicyName
+                  )
+                    * on (hh3cCBQoSIfApplyPolicyName, instance)
+                      group_left (hh3cCBQoSPolicyIndex)
+                      hh3cCBQoSPolicyName
+                  )
+                    * on (hh3cCBQoSPolicyIndex, hh3cCBQoSPolicyClassIndex, instance)
+                      group_left (hh3cCBQoSPolicyClassBehaviorName)
+                      hh3cCBQoSPolicyClassBehaviorName
+                  )
+                    * on (hh3cCBQoSPolicyIndex, hh3cCBQoSPolicyClassIndex, instance)
+                      group_left (hh3cCBQoSPolicyClassClassifierName)
+                      hh3cCBQoSPolicyClassClassifierName
+                  ),
+                  "interface", "【", "ifName", "ifAlias"
+                ),
+                "interface", "$1】", "interface", "(.+)"
+              ),
+              "qoscb", "【", "hh3cCBQoSPolicyClassClassifierName", "hh3cCBQoSPolicyClassBehaviorName"
+            ),
+            "qoscb", "$1】", "qoscb", "(.+)"
+          ),
+          "direction", "out", "hh3cCBQoSIfApplyPolicyDirection", "2"
+        ),
+        "direction", "in", "hh3cCBQoSIfApplyPolicyDirection", "1"
+      )
+
+
+- name: hh3cCBQoSCarYellowBytes
+  rules:
+  - record: hh3cCBQoSCarYellowBytes_finally
+    expr: |
+      label_replace(
+        label_replace(
+          label_replace(
+            label_join(
+              label_replace(
+                label_join(
+                  (((((((
+                    hh3cCBQoSCarYellowBytes
+                    * on (hh3cCBQoSApplyObjectIndex, instance)
+                      group_left (hh3cCBQoSApplyObjectMainSite)
+                      hh3cCBQoSApplyObjectMainSite
+                  )
+                    * on (hh3cCBQoSApplyObjectMainSite, instance)
+                      group_left (ifName)
+                      ifName
+                  )
+                    * on (hh3cCBQoSApplyObjectMainSite, instance)
+                      group_left (ifAlias)
+                      ifAlias
+                  )
+                    * on (hh3cCBQoSApplyObjectMainSite, instance)
+                      group_left (hh3cCBQoSIfApplyPolicyName, hh3cCBQoSIfApplyPolicyDirection)
+                      hh3cCBQoSIfApplyPolicyName
+                  )
+                    * on (hh3cCBQoSIfApplyPolicyName, instance)
+                      group_left (hh3cCBQoSPolicyIndex)
+                      hh3cCBQoSPolicyName
+                  )
+                    * on (hh3cCBQoSPolicyIndex, hh3cCBQoSPolicyClassIndex, instance)
+                      group_left (hh3cCBQoSPolicyClassBehaviorName)
+                      hh3cCBQoSPolicyClassBehaviorName
+                  )
+                    * on (hh3cCBQoSPolicyIndex, hh3cCBQoSPolicyClassIndex, instance)
+                      group_left (hh3cCBQoSPolicyClassClassifierName)
+                      hh3cCBQoSPolicyClassClassifierName
+                  ),
+                  "interface", "【", "ifName", "ifAlias"
+                ),
+                "interface", "$1】", "interface", "(.+)"
+              ),
+              "qoscb", "【", "hh3cCBQoSPolicyClassClassifierName", "hh3cCBQoSPolicyClassBehaviorName"
+            ),
+            "qoscb", "$1】", "qoscb", "(.+)"
+          ),
+          "direction", "out", "hh3cCBQoSIfApplyPolicyDirection", "2"
+        ),
+        "direction", "in", "hh3cCBQoSIfApplyPolicyDirection", "1"
+      )

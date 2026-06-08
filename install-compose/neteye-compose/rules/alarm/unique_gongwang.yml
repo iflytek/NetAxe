@@ -1,0 +1,566 @@
+groups:
+  - name: 公网流量预警
+    rules:
+
+
+#########################################  合肥A2  ##########################
+      # A2电信线路1流量超600M预警
+      - alert: A2电信线路1流量超600M预警
+        expr: max(0.000008 * label_replace(irate(ifHCInOctets{instance='10.254.6.21', ifName='Ten-GigabitEthernet1/0/9'}[5m]), "direction", "入方向", "", ""), 0.000008 * label_replace(irate(ifHCOutOctets{instance='10.254.6.21', ifName='Ten-GigabitEthernet1/0/9'}[5m]), "direction", "出方向", "", "")) by (instance, direction) * on(instance) group_left(sysName) sysName > 600
+        for: 0s
+        labels:
+          severity: 紧急
+        annotations:
+          summary: '{{ $labels.sysName}}【{{ $labels.instance}}】接口【{{ $labels.direction}}】A2电信线路1流量过大，当前流量为{{ printf "%.2f" $value }}Mbps'
+          description: 'A2电信线路1流量超600M预警'
+
+      # A2电信线路2流量超600M预警
+      - alert: A2电信线路2流量超600M预警
+        expr: max(0.000008 * label_replace(irate(ifHCInOctets{instance='10.254.6.21', ifName='Ten-GigabitEthernet2/0/2'}[5m]), "direction", "入方向", "", ""), 0.000008 * label_replace(irate(ifHCOutOctets{instance='10.254.6.21', ifName='Ten-GigabitEthernet2/0/2'}[5m]), "direction", "出方向", "", "")) by (instance, direction) * on(instance) group_left(sysName) sysName > 600
+        for: 0s
+        labels:
+          severity: 紧急
+        annotations:
+          summary: '{{ $labels.sysName}}【{{ $labels.instance}}】接口【{{ $labels.direction}}】A2电信线路2流量过大，当前流量为{{ printf "%.2f" $value }}Mbps'
+          description: 'A2电信线路2流量超600M预警'
+
+      # A2移动线路1流量超400M预警
+      - alert: A2移动线路1流量超400M预警
+        expr: max(0.000008 * label_replace(irate(ifHCInOctets{instance='10.254.6.21', ifName='Ten-GigabitEthernet1/0/2'}[5m]), "direction", "入方向", "", ""), 0.000008 * label_replace(irate(ifHCOutOctets{instance='10.254.6.21', ifName='Ten-GigabitEthernet1/0/2'}[5m]), "direction", "出方向", "", "")) by (instance, direction) * on(instance) group_left(sysName) sysName > 400
+        for: 0s
+        labels:
+          severity: 紧急
+        annotations:
+          summary: '{{ $labels.sysName}}【{{ $labels.instance}}】接口【{{ $labels.direction}}】A2移动线路1流量过大，当前流量为{{ printf "%.2f" $value }}Mbps'
+          description: 'A2移动线路1流量超400M预警'
+
+      # A2移动线路2流量超400M预警
+      - alert: A2移动线路2流量超400M预警
+        expr: max(0.000008 * label_replace(irate(ifHCInOctets{instance='10.254.6.21', ifName='Ten-GigabitEthernet2/0/1'}[5m]), "direction", "入方向", "", ""), 0.000008 * label_replace(irate(ifHCOutOctets{instance='10.254.6.21', ifName='Ten-GigabitEthernet2/0/1'}[5m]), "direction", "出方向", "", "")) by (instance, direction) * on(instance) group_left(sysName) sysName > 400
+        for: 0s
+        labels:
+          severity: 紧急
+        annotations:
+          summary: '{{ $labels.sysName}}【{{ $labels.instance}}】接口【{{ $labels.direction}}】A2移动线路2流量过大，当前流量为{{ printf "%.2f" $value }}Mbps'
+          description: 'A2移动线路2流量超400M预警'
+
+      # A2联通线路2流量超150M预警
+      - alert: A2联通线路2流量超150M预警
+        expr: max(0.000008 * label_replace(irate(ifHCInOctets{instance='10.254.6.21', ifName='Ten-GigabitEthernet1/0/3'}[5m]), "direction", "入方向", "", ""), 0.000008 * label_replace(irate(ifHCOutOctets{instance='10.254.6.21', ifName='Ten-GigabitEthernet1/0/3'}[5m]), "direction", "出方向", "", "")) by (instance, direction) * on(instance) group_left(sysName) sysName > 150
+        for: 0s
+        labels:
+          severity: 紧急
+        annotations:
+          summary: '{{ $labels.sysName}}【{{ $labels.instance}}】接口【{{ $labels.direction}}】A2联通线路2流量过大，当前流量为{{ printf "%.2f" $value }}Mbps'
+          description: 'A2联通线路2流量超150M预警'
+
+      # 合肥A2电信公网总流量超1.3G阈值
+      - alert: 大流量预警:合肥A2电信公网总流量超1.3G阈值
+        expr: max(0.000008 * sum(irate(ifHCInOctets{instance='10.254.6.21', ifName=~"Ten-GigabitEthernet1/0/9|Ten-GigabitEthernet2/0/2"}[5m])) by (instance), 0.000008 * sum(irate(ifHCOutOctets{instance='10.254.6.21', ifName=~"Ten-GigabitEthernet1/0/9|Ten-GigabitEthernet2/0/2"}[5m])) by (instance)) * on(instance) group_left(sysName) sysName > 1300
+        for: 0s
+        labels:
+          severity: 紧急
+        annotations:
+          summary: '{{ $labels.sysName}}【{{ $labels.instance}}】合肥A2公网出入口流量超1.3G，当前流量为{{ printf "%.2f" $value }}Mbps'
+          description: '大流量预警:合肥A2电信公网总流量超1.3G阈值'
+
+#########################################  合肥A2教育网流量预警  ###############################
+
+      # 合肥A2教育电信公网流量超500M预警
+      - alert: 合肥A2教育电信公网流量超500M预警
+        expr: max(0.000008 * label_replace(irate(ifHCInOctets{instance='10.254.6.22', ifName='GigabitEthernet1/0/12'}[5m]), "direction", "入方向", "", ""),
+                  0.000008 * label_replace(irate(ifHCOutOctets{instance='10.254.6.22', ifName='GigabitEthernet1/0/12'}[5m]), "direction", "出方向", "", ""))
+              by (instance, direction) * on(instance) group_left(sysName) sysName > 500
+        for: 0s
+        labels:
+          severity: 紧急
+        annotations:
+          summary: '{{ $labels.sysName}}【{{ $labels.instance}}】接口【{{ $labels.direction}}】流量过大，当前流量为{{ printf "%.2f" $value }}Mbps'
+          description: '合肥A2教育电信公网流量超500M预警'
+
+      # 合肥A2教育移动公网流量超250M预警
+      - alert: 合肥A2教育移动公网流量超250M预警
+        expr: max(0.000008 * label_replace(irate(ifHCInOctets{instance='10.254.6.22', ifName='GigabitEthernet1/0/39'}[5m]), "direction", "入方向", "", ""),
+                  0.000008 * label_replace(irate(ifHCOutOctets{instance='10.254.6.22', ifName='GigabitEthernet1/0/39'}[5m]), "direction", "出方向", "", ""))
+              by (instance, direction) * on(instance) group_left(sysName) sysName > 250
+        for: 0s
+        labels:
+          severity: 紧急
+        annotations:
+          summary: '{{ $labels.sysName}}【{{ $labels.instance}}】接口【{{ $labels.direction}}】流量过大，当前流量为{{ printf "%.2f" $value }}Mbps'
+          description: '合肥A2教育移动公网流量超250M预警'
+
+      # 合肥A2教育联通公网流量超250M预警
+      - alert: 合肥A2教育联通公网流量超250M预警
+        expr: max(0.000008 * label_replace(irate(ifHCInOctets{instance='10.254.6.22', ifName='GigabitEthernet1/0/30'}[5m]), "direction", "入方向", "", ""),
+                  0.000008 * label_replace(irate(ifHCOutOctets{instance='10.254.6.22', ifName='GigabitEthernet1/0/30'}[5m]), "direction", "出方向", "", ""))
+              by (instance, direction) * on(instance) group_left(sysName) sysName > 250
+        for: 0s
+        labels:
+          severity: 紧急
+        annotations:
+          summary: '{{ $labels.sysName}}【{{ $labels.instance}}】接口【{{ $labels.direction}}】流量过大，当前流量为{{ printf "%.2f" $value }}Mbps'
+          description: '合肥A2教育联通公网流量超250M预警'
+
+#########################################  合肥B3公网流量预警  ###############################
+
+      # 合肥B3科华BGP公网1流量超5G预警
+      - alert: 合肥B3科华BGP公网1流量超5G预警
+        expr: max(0.000008 * label_replace(irate(ifHCInOctets{instance='10.254.12.251', ifName='FortyGigE1/0/49'}[5m]), "direction", "入方向", "", ""),
+                  0.000008 * label_replace(irate(ifHCOutOctets{instance='10.254.12.251', ifName='FortyGigE1/0/49'}[5m]), "direction", "出方向", "", ""))
+              by (instance, direction) * on(instance) group_left(sysName) sysName > 5000
+        for: 0s
+        labels:
+          severity: 紧急
+        annotations:
+          summary: '{{ $labels.sysName}}【{{ $labels.instance}}】接口【{{ $labels.direction}}】，当前流量为{{ printf "%.2f" $value }}Mbps'
+          description: '合肥B3科华BGP公网1流量超5G预警，总带宽10G_B3.WAN.IN.DS.X00s1_FGE1/0/49'
+
+      # 合肥B3科华BGP公网2流量超5G预警
+      - alert: 合肥B3科华BGP公网2流量超5G预警
+        expr: max(0.000008 * label_replace(irate(ifHCInOctets{instance='10.254.12.251', ifName='FortyGigE1/0/50'}[5m]), "direction", "入方向", "", ""),
+                  0.000008 * label_replace(irate(ifHCOutOctets{instance='10.254.12.251', ifName='FortyGigE1/0/50'}[5m]), "direction", "出方向", "", ""))
+              by (instance, direction) * on(instance) group_left(sysName) sysName > 5000
+        for: 0s
+        labels:
+          severity: 紧急
+        annotations:
+          summary: '{{ $labels.sysName}}【{{ $labels.instance}}】接口【{{ $labels.direction}}】，当前流量为{{ printf "%.2f" $value }}Mbps'
+          description: '合肥B3科华BGP公网2流量超5G预警，总带宽10G_B3.WAN.IN.DS.X00s1_FGE1/0/50'
+
+      # 合肥B3联通大带宽公网1入方向流量超4G预警
+      - alert: 合肥B3联通大带宽公网1入方向流量超4G预警,该线路带宽为5G,总带宽为4*5G
+        expr: 0.000008 * irate(ifHCInOctets{instance='10.254.12.251', ifName='Ten-GigabitEthernet1/0/45'}[5m]) * on(instance) group_left(sysName) sysName > 4000
+        for: 0s
+        labels:
+          severity: 紧急
+        annotations:
+          summary: '{{ $labels.sysName}}【{{ $labels.instance}}】接口入方向流量过大，当前流量为{{ printf "%.2f" $value }}Mbps'
+          description: '合肥B3联通大带宽公网1入方向流量超4G预警，该线路带宽5G，联通大带宽入向总带宽为4*5G合计20G_B3.WAN.IN.DS.X01M1_XGE1/0/45'
+
+
+      # 合肥B3联通大带宽流量预警
+
+      # 合肥B3联通大带宽公网2入方向流量超4G预警
+      - alert: 合肥B3联通大带宽公网2入方向流量超4G预警,该线路带宽为5G,总带宽为4*5G
+        expr: 0.000008 * irate(ifHCInOctets{instance='10.254.12.251', ifName='Ten-GigabitEthernet1/0/46'}[5m]) * on(instance) group_left(sysName) sysName > 4000
+        for: 0s
+        labels:
+          severity: 紧急
+        annotations:
+          summary: '{{ $labels.sysName}}【{{ $labels.instance}}】接口入方向，当前流量为{{ printf "%.2f" $value }}Mbps'
+          description: '合肥B3联通大带宽公网2入方向流量超4G预警，该线路带宽5G，入向总带宽为4*5合计20G'
+
+      # 合肥B3联通大带宽公网1出方向流量超2.2G预警
+      - alert: 合肥B3联通大带宽公网1出方向流量超2.2G预警,该线路带宽为2.5G，总带宽为4*2.5G
+        expr: 0.000008 * irate(ifHCOutOctets{instance='10.254.12.251', ifName='Ten-GigabitEthernet1/0/45'}[5m]) * on(instance) group_left(sysName) sysName > 2200
+        for: 0s
+        labels:
+          severity: 紧急
+        annotations:
+          summary: '{{ $labels.sysName}}【{{ $labels.instance}}】接口出方向，当前流量为{{ printf "%.2f" $value }}Mbps'
+          description: '合肥B3联通大带宽公网1出方向流量超2.2G预警，该线路带宽2.5G，出向总带宽为4*2.5G合计10G'
+
+      # 合肥B3联通大带宽公网2出方向流量超2.2G预警
+      - alert: 合肥B3联通大带宽公网2出方向流量超2.2G预警,该线路带宽为2.5G，总带宽为4*2.5G
+        expr: 0.000008 * irate(ifHCOutOctets{instance='10.254.12.251', ifName='Ten-GigabitEthernet1/0/46'}[5m]) * on(instance) group_left(sysName) sysName > 2200
+        for: 0s
+        labels:
+          severity: 紧急
+        annotations:
+          summary: '{{ $labels.sysName}}【{{ $labels.instance}}】接口出方向，当前流量为{{ printf "%.2f" $value }}Mbps'
+          description: '合肥B3联通大带宽公网2出方向流量超2.2G预警，该线路带宽2.5G，出向总带宽为4*2.5合计10G'
+
+
+      # 合肥B3_联通3G固定带宽流量超2.9G预警(总带宽:3G，VLAN:34) 描述:合肥B3_联通3G固定带宽流量超2.9G预警(总带宽:3G，VLAN:34)
+     # - alert: 合肥B3_联通3G固定带宽流量超2.9G预警(总带宽:3G，VLAN:34) 描述:合肥B3_联通3G固定带宽流量超2.9G预警(总带宽:3G，VLAN:34)
+     #   expr: 0.000008 * irate(ifHCOutOctets{instance='10.254.12.251', ifName='Ten-GigabitEthernet1/0/34'}[5m]) * on(instance) group_left(sysName) sysName > 2900
+     #   for: 0s
+     #   labels:
+     #     severity: 紧急
+     #     time_stamp: current_time_seconds
+     #     value: '{{ printf "%.2f" $value }}Mbps'
+     #   annotations:
+     #     summary: '{{ $labels.sysName}}【{{ $labels.instance}}】接口出方向，当前流量为{{ printf "%.2f" $value }}Mbps'
+     #     description: '合肥B3_联通3G固定带宽流量超2.9G预警(总带宽:3G，VLAN:34) 描述:合肥B3_联通3G固定带宽流量超2.9G预警(总带宽:3G，VLAN:34)'
+
+      # 合肥B3科华BGP公网流量预警
+
+      # 合肥B3科华BGP公网1流量超5G预警
+      - alert: 合肥B3科华BGP公网1流量超5G预警
+        expr: max(0.000008 * label_replace(irate(ifHCInOctets{instance='10.254.12.252', ifName='FortyGigE1/0/49'}[5m]), "direction", "入方向", "", ""),
+                  0.000008 * label_replace(irate(ifHCOutOctets{instance='10.254.12.252', ifName='FortyGigE1/0/49'}[5m]), "direction", "出方向", "", ""))
+              by (instance, ifName, direction) * on(instance) group_left(sysName) sysName > 5000
+        for: 0s
+        labels:
+          severity: 紧急
+        annotations:
+          summary: '{{ $labels.sysName}}【{{ $labels.instance}}】接口【{{ $labels.ifName}} - {{ $labels.direction}}】，当前流量为{{ printf "%.2f" $value }}Mbps'
+          description: '合肥B3科华BGP公网1流量超5G预警，总带宽10G'
+
+      # 合肥B3科华BGP公网2流量超5G预警
+      - alert: 合肥B3科华BGP公网2流量超5G预警
+        expr: max(0.000008 * label_replace(irate(ifHCInOctets{instance='10.254.12.252', ifName='FortyGigE1/0/50'}[5m]), "direction", "入方向", "", ""),
+                  0.000008 * label_replace(irate(ifHCOutOctets{instance='10.254.12.252', ifName='FortyGigE1/0/50'}[5m]), "direction", "出方向", "", ""))
+              by (instance, ifName, direction) * on(instance) group_left(sysName) sysName > 5000
+        for: 0s
+        labels:
+          severity: 紧急
+        annotations:
+          summary: '{{ $labels.sysName}}【{{ $labels.instance}}】接口【{{ $labels.ifName}} - {{ $labels.direction}}】，当前流量为{{ printf "%.2f" $value }}Mbps'
+          description: '合肥B3科华BGP公网2流量超5G预警，总带宽10G'
+
+
+
+      # 合肥B3联通大带宽公网2入方向流量超4G预警
+      - alert: 合肥B3联通大带宽公网2入方向流量超4G预警,该线路带宽为5G,总带宽为4*5G
+        expr: 0.000008 * irate(ifHCInOctets{instance='10.254.12.252',ifName='Ten-GigabitEthernet1/0/45'}[5m]) * on(instance) group_left(sysName) sysName > 4000
+        for: 0s
+        labels:
+          severity: 紧急
+        annotations:
+          summary: '{{ $labels.sysName}}【{{ $labels.instance}}】接口【{{ $labels.interface}}】，当前流量为{{ printf "%.2f" $value }}Mbps'
+          description: '合肥B3联通大带宽公网2入方向流量超4G预警，该线路带宽5G，入向总带宽为4*5G合计20G'
+
+      # 合肥B3联通大带宽公网2入方向流量超4G预警
+      - alert: 合肥B3联通大带宽公网2入方向流量超4G预警,该线路带宽为5G,总带宽为4*5G
+        expr: 0.000008 * irate(ifHCInOctets{instance='10.254.12.252',ifName='Ten-GigabitEthernet1/0/46'}[5m]) * on(instance) group_left(sysName) sysName > 4000
+        for: 0s
+        labels:
+          severity: 紧急
+        annotations:
+          summary: '{{ $labels.sysName}}【{{ $labels.instance}}】接口【{{ $labels.interface}}】，当前流量为{{ printf "%.2f" $value }}Mbps'
+          description: '合肥B3联通大带宽公网2入方向流量超4G预警，该线路带宽5G，入向总带宽为4*5G合计20G'
+
+      # 合肥B3联通大带宽公网1出方向流量超2.2G预警
+      - alert: 合肥B3联通大带宽公网1出方向流量超2.2G预警,该线路带宽2.5G,总带宽4*2.5G
+        expr: 0.000008 * irate(ifHCOutOctets{instance='10.254.12.252',ifName='Ten-GigabitEthernet1/0/45'}[5m]) * on(instance) group_left(sysName) sysName > 2200
+        for: 0s
+        labels:
+          severity: 紧急
+        annotations:
+          summary: '{{ $labels.sysName}}【{{ $labels.instance}}】接口【{{ $labels.interface}}】，当前流量为{{ printf "%.2f" $value }}Mbps'
+          description: '合肥B3联通大带宽公网1出方向流量超2.2G预警，该线路带宽2.5G，出向总带宽为4*2.5合计10G'
+
+      # 合肥B3联通大带宽公网2出方向流量超2.2G预警
+      - alert: 合肥B3联通大带宽公网2出方向流量超2.2G预警,该线路带宽2.5G,总带宽4*2.5G
+        expr: 0.000008 * irate(ifHCOutOctets{instance='10.254.12.252',ifName='Ten-GigabitEthernet1/0/46'}[5m]) * on(instance) group_left(sysName) sysName > 2200
+        for: 0s
+        labels:
+          severity: 紧急
+        annotations:
+          summary: '{{ $labels.sysName}}【{{ $labels.instance}}】接口【{{ $labels.interface}}】，当前流量为{{ printf "%.2f" $value }}Mbps'
+          description: '合肥B3联通大带宽公网2出方向流量超2.2G预警，该线路带宽2.5G，出向总带宽为4*2.5合计10G'
+
+
+      # 合肥B3电信公网流量超600M预警
+      - alert: 合肥B3电信公网1流量超600M预警
+        expr: max(
+                0.000008 * label_replace(irate(ifHCOutOctets{instance='10.254.12.10', ifName='Ten-GigabitEthernet1/0/1'}[5m]), "direction", "出方向", "", ""),
+                0.000008 * label_replace(irate(ifHCInOctets{instance='10.254.12.10', ifName='Ten-GigabitEthernet1/0/1'}[5m]), "direction", "入方向", "", "")
+              ) by (instance, ifName, direction)
+              * on(instance) group_left(sysName) sysName > 600
+        for: 0s
+        labels:
+          severity: 紧急
+        annotations:
+          summary: '{{ $labels.sysName}}【{{ $labels.instance}}】接口【{{ $labels.ifName}} - {{ $labels.direction}}】，当前流量为{{ printf "%.2f" $value }}Mbps'
+          description: '合肥B3电信公网1流量超600M预警，该线路带宽700M，总带宽为2*700合计1.4G'
+
+      # 合肥B3电信公网流量超600M预警
+      - alert: 合肥B3电信公网2流量超600M预警
+        expr: max(
+                0.000008 * label_replace(irate(ifHCOutOctets{instance='10.254.12.20', ifName='Ten-GigabitEthernet1/0/1'}[5m]), "direction", "出方向", "", ""),
+                0.000008 * label_replace(irate(ifHCInOctets{instance='10.254.12.20', ifName='Ten-GigabitEthernet1/0/1'}[5m]), "direction", "入方向", "", "")
+              ) by (instance, ifName, direction)
+              * on(instance) group_left(sysName) sysName > 600
+        for: 0s
+        labels:
+          severity: 紧急
+        annotations:
+          summary: '{{ $labels.sysName}}【{{ $labels.instance}}】接口【{{ $labels.ifName}} - {{ $labels.direction}}】，当前流量为{{ printf "%.2f" $value }}Mbps'
+          description: '合肥B3电信公网2流量超600M预警，该线路带宽700M，总带宽为2*700合计1.4G'
+
+
+
+      # 合肥B3教育云公网流量超400M预警
+      - alert: 合肥B3教育云公网流量超400M预警
+        expr: max(0.000008 * label_replace(irate(ifHCInOctets{instance='10.254.22.91', ifName='aggregate1.150'}[5m]), "direction", "入方向", "", ""),
+                  0.000008 * label_replace(irate(ifHCOutOctets{instance='10.254.22.91', ifName='aggregate1.150'}[5m]), "direction", "出方向", "", ""))
+              by (instance, ifName, direction) * on(instance) group_left(sysName) sysName > 400
+        for: 0s
+        labels:
+          severity: 紧急
+        annotations:
+          summary: '{{ $labels.sysName}}【{{ $labels.instance}}】接口【{{ $labels.ifName}} - {{ $labels.direction}}】，当前流量为{{ printf "%.2f" $value }}Mbps'
+          description: '合肥B3教育云公网流量超400M预警，该线路总带宽500M'
+
+      # 合肥教育云A2电信公网流量超250M预警
+      - alert: 合肥教育云A2电信公网流量超250M预警
+        expr: max(0.000008 * label_replace(irate(ifHCInOctets{instance='10.254.22.91', ifName='xethernet1/2.3006'}[5m]), "direction", "入方向", "", ""),
+                  0.000008 * label_replace(irate(ifHCOutOctets{instance='10.254.22.91', ifName='xethernet1/2.3006'}[5m]), "direction", "出方向", "", ""))
+              by (instance, ifName, direction) * on(instance) group_left(sysName) sysName > 250
+        for: 0s
+        labels:
+          severity: 紧急
+        annotations:
+          summary: '{{ $labels.sysName}}【{{ $labels.instance}}】接口【{{ $labels.ifName}} - {{ $labels.direction}}】，当前流量为{{ printf "%.2f" $value }}Mbps'
+          description: '合肥教育云A2电信公网流量超250M预警，线路总带宽为500M'
+
+
+#########################################  广州华新园BGP流量预警  ###############################
+
+      # 广州华新园新bgp流量预警超400M，单线总带宽1000M，总带宽限速4G
+      - alert: 广州华新园新bgp流量预警超800M
+        expr:  max(0.000008 * label_replace(sum(irate(ifHCInOctets{instance='10.254.7.221', ifName=~'Ten-GigabitEthernet1/0/47|Ten-GigabitEthernet1/0/48'}[5m])) by (instance) , "direction", "入方向", "", ""), 0.000008 * label_replace(sum(irate(ifHCOutOctets{instance='10.254.7.221', ifName=~'Ten-GigabitEthernet1/0/47|Ten-GigabitEthernet1/0/48'}[5m])) by (instance) , "direction", "出方向", "", "")) by (instance, direction) * on(instance) group_left(sysName) sysName > 800
+        for: 0s
+        labels:
+          severity: 紧急
+        annotations:
+          summary: '{{ $labels.sysName}} 公网流量【{{ $labels.direction}}】预警，当前【{{ $labels.direction}}】流量为{{ printf "%.2f" $value }}Mbps'
+          description: '广州华新园新bgp流量超800M预警，线路总带宽为1000M'
+
+      # 广州华新园新bgp流量预警（备用实例）
+
+      - alert: 广州华新园新bgp流量预警超800M
+        expr:  max(0.000008 * label_replace(sum(irate(ifHCInOctets{instance='10.254.7.222', ifName=~'Ten-GigabitEthernet1/0/47|Ten-GigabitEthernet1/0/48'}[5m])) by (instance) , "direction", "入方向", "", ""), 0.000008 * label_replace(sum(irate(ifHCOutOctets{instance='10.254.7.222', ifName=~'Ten-GigabitEthernet1/0/47|Ten-GigabitEthernet1/0/48'}[5m])) by (instance) , "direction", "出方向", "", "")) by (instance, direction) * on(instance) group_left(sysName) sysName > 800
+        for: 0s
+        labels:
+          severity: 紧急
+        annotations:
+          summary: '{{ $labels.sysName}} 公网流量【{{ $labels.direction}}】预警，当前【{{ $labels.direction}}】流量为{{ printf "%.2f" $value }}Mbps'
+          description: '广州华新园新bgp流量超800M预警，线路总带宽为1000M'
+
+      # 广州华新园新bgp流量预警（备用实例）
+
+
+
+#########################################  北京鲁谷公网流量预警  ###############################
+
+      # 鲁谷教育智学公网流量超2G预警
+      - alert: 鲁谷教育智学公网流量超2G预警
+        expr:  max(0.000008 * label_replace(sum(irate(ifHCInOctets{instance='10.254.4.87', ifName=~'Ten-GigabitEthernet1/0/2|Ten-GigabitEthernet2/0/2'}[5m])) by (instance) , "direction", "入方向", "", ""), 0.000008 * label_replace(sum(irate(ifHCOutOctets{instance='10.254.4.87', ifName=~'Ten-GigabitEthernet1/0/2|Ten-GigabitEthernet2/0/2'}[5m])) by (instance) , "direction", "出方向", "", "")) by (instance, direction) * on(instance) group_left(sysName) sysName > 2000
+        for: 0s
+        labels:
+          severity: 紧急
+        annotations:
+          summary: '{{ $labels.sysName}} 公网流量【{{ $labels.direction}}】预警，当前【{{ $labels.direction}}】流量为{{ printf "%.2f" $value }}Mbps'
+          description: '鲁谷教育智学公网流量超2G预警，线路总带宽为3G'
+
+      # 鲁谷教育联通总出口流量超5G预警
+      - alert: 鲁谷教育联通总出口流量超5G预警
+        expr: max(0.000008 * label_replace(sum(irate(ifHCInOctets{instance='10.254.4.87', ifName=~'Ten-GigabitEthernet1/0/39|Ten-GigabitEthernet2/0/40'}[5m])) by (instance) , "direction", "入方向", "", ""), 0.000008 * label_replace(sum(irate(ifHCOutOctets{instance='10.254.4.87', ifName=~'Ten-GigabitEthernet1/0/39|Ten-GigabitEthernet2/0/40'}[5m])) by (instance) , "direction", "出方向", "", "")) by (instance, direction) * on(instance) group_left(sysName) sysName > 5000
+        for: 0s
+        labels:
+          severity: 紧急
+        annotations:
+          summary: '{{ $labels.sysName}} 公网流量【{{ $labels.direction}}】预警，当前【{{ $labels.direction}}】流量为{{ printf "%.2f" $value }}Mbps'
+          description: '鲁谷教育联通总出口流量超5G预警'
+
+
+      # 鲁谷教育中台公网流量超2G预警
+      - alert: 鲁谷教育中台公网流量超2G预警
+        expr: max(
+                0.000008 * label_replace(irate(ifHCInOctets{instance='10.254.4.231', ifName='aggregate1.10'}[5m]), "direction", "入方向", "", ""),
+                0.000008 * label_replace(irate(ifHCOutOctets{instance='10.254.4.231', ifName='aggregate1.10'}[5m]), "direction", "出方向", "", "")
+              ) by (instance, ifName, direction) * on(instance) group_left(sysName) sysName > 2000
+        for: 0s
+        labels:
+          severity: 紧急
+        annotations:
+          summary: '{{ $labels.sysName}}【{{ $labels.instance}}】接口【{{ $labels.ifName}} - {{ $labels.direction}}】，当前流量为{{ printf "%.2f" $value }}Mbps'
+          description: '鲁谷教育中台公网流量超2G预警'
+
+      # 鲁谷教育课堂云公网流量超300M预警
+      - alert: 鲁谷教育课堂云公网流量超300M预警
+        expr: max(
+                0.000008 * label_replace(irate(ifHCInOctets{instance='172.22.57.203', ifName='xethernet2/0'}[5m]), "direction", "入方向", "", ""),
+                0.000008 * label_replace(irate(ifHCOutOctets{instance='172.22.57.203', ifName='xethernet2/0'}[5m]), "direction", "出方向", "", "")
+              ) by (instance, ifName, direction) * on(instance) group_left(sysName) sysName > 300
+        for: 0s
+        labels:
+          severity: 紧急
+        annotations:
+          summary: '{{ $labels.sysName}}【{{ $labels.instance}}】接口【{{ $labels.ifName}} - {{ $labels.direction}}】，当前流量为{{ printf "%.2f" $value }}Mbps'
+          description: '鲁谷教育课堂云公网流量超300M预警'
+
+
+
+
+
+#########################################  北京大族公网流量预警  ###############################
+
+
+      # 北京森华公网流量超过15G预警
+      - alert: 北京森华公网流量超15G预警
+        expr: max(
+                0.000008 * label_replace(irate(ifHCInOctets{instance='10.254.5.8', ifName='Eth-Trunk101'}[5m]), "direction", "入方向", "", ""),
+                0.000008 * label_replace(irate(ifHCOutOctets{instance='10.254.5.8', ifName='Eth-Trunk101'}[5m]), "direction", "出方向", "", "")
+              ) by (instance, ifName, direction) * on(instance) group_left(sysName) sysName > 15000
+        for: 0s
+        labels:
+          severity: 紧急
+        annotations:
+          summary: '{{ $labels.sysName}}【{{ $labels.instance}}】接口【{{ $labels.ifName}} - {{ $labels.direction}}】，当前流量为{{ printf "%.2f" $value }}Mbps'
+          description: '北京森华公网流量超过15G预警'
+
+      # 北京大族JSZX接口Reth20.96流量超5Mb预警
+      - alert: 大族JSZX接口Reth20.96流量超4.5Mb预警,总带宽5M
+        expr: max(
+                0.000008 * label_replace(irate(ifHCInOctets{instance='10.254.5.224', ifName='Reth20.96'}[5m]), "direction", "入方向", "", ""),
+                0.000008 * label_replace(irate(ifHCOutOctets{instance='10.254.5.224', ifName='Reth20.96'}[5m]), "direction", "出方向", "", "")
+              ) by (instance, ifName, direction) * on(instance) group_left(sysName) sysName > 4.5
+        for: 0s
+        labels:
+          severity: 紧急
+        annotations:
+          summary: '{{ $labels.sysName}}【{{ $labels.instance}}】接口【{{ $labels.ifName}} - {{ $labels.direction}}】，当前流量为{{ printf "%.2f" $value }}Mbps'
+          description: '大族JSZX接口Reth20.96流量超4.5Mb预警'
+
+      # 北京大族JSZX接口Reth30流量超6.5Mb预警
+      - alert: 大族JSZX接口Reth30流量超6.5Mb预警,总带宽7M
+        expr: max(
+                0.000008 * label_replace(irate(ifHCInOctets{instance='10.254.5.224', ifName='Reth30'}[5m]), "direction", "入方向", "", ""),
+                0.000008 * label_replace(irate(ifHCOutOctets{instance='10.254.5.224', ifName='Reth30'}[5m]), "direction", "出方向", "", "")
+              ) by (instance, ifName, direction) * on(instance) group_left(sysName) sysName > 6.5
+        for: 5m
+        labels:
+          severity: 紧急
+        annotations:
+          summary: '{{ $labels.sysName}}【{{ $labels.instance}}】接口【{{ $labels.ifName}} - {{ $labels.direction}}】，当前流量为{{ printf "%.2f" $value }}Mbps'
+          description: '大族JSZX接口Reth30流量超6.5Mb预警'
+
+
+
+
+
+
+#########################################  北京酒仙桥公网流量预警  ###############################
+
+      # 北京酒仙桥公网出入口实时流量超9.5G预警
+      - alert: 北京酒仙桥公网出入口流量超9.5G预警
+        expr: max(0.000008 * label_replace(sum(irate(ifHCInOctets{instance='10.254.3.6', ifName=~'Ten-GigabitEthernet1/0/3|Ten-GigabitEthernet1/0/4|Ten-GigabitEthernet2/0/3|Ten-GigabitEthernet2/0/4'}[5m])) by (instance) , "direction", "入方向", "", ""), 0.000008 * label_replace(sum(irate(ifHCOutOctets{instance='10.254.3.6', ifName=~'Ten-GigabitEthernet1/0/3|Ten-GigabitEthernet1/0/4|Ten-GigabitEthernet2/0/3|Ten-GigabitEthernet2/0/4'}[5m])) by (instance) , "direction", "出方向", "", "")) by (instance, direction) * on(instance) group_left(sysName) sysName > 9500
+        for: 0s
+        labels:
+          severity: 紧急
+        annotations:
+          summary: '{{ $labels.sysName}} 公网流量【{{ $labels.direction}}】预警，当前【{{ $labels.direction}}】流量为{{ printf "%.2f" $value }}Mbps'
+          description: '北京酒仙桥公网出入口流量超9.5G预警'
+
+      # 酒仙桥教育外地交付公网流量超100M预警
+      - alert: 酒仙桥教育外地交付公网流量超100M预警
+        expr: max(0.000008 * label_replace(sum(irate(ifHCInOctets{instance='10.254.3.78', ifName=~'Reth10.3001|Reth10.3002'}[5m])) by (instance) , "direction", "入方向", "", ""), 0.000008 * label_replace(sum(irate(ifHCOutOctets{instance='10.254.3.78', ifName=~'Reth10.3001|Reth10.3002'}[5m])) by (instance) , "direction", "出方向", "", "")) by (instance, direction) * on(instance) group_left(sysName) sysName > 100
+        for: 0s
+        labels:
+          severity: 紧急
+        annotations:
+          summary: '{{ $labels.sysName}} 公网流量【{{ $labels.direction}}】预警，当前【{{ $labels.direction}}】流量为{{ printf "%.2f" $value }}Mbps'
+          description: '酒仙桥教育外地交付公网流量超100M预警'
+
+      # 酒仙桥教育业务公网流量超700M预警
+      - alert: 酒仙桥教育业务公网流量超700M预警
+        expr: max(0.000008 * label_replace(sum(irate(ifHCInOctets{instance='10.254.3.95', ifName=~'Reth10.3001|Reth10.3002'}[5m])) by (instance) , "direction", "入方向", "", ""), 0.000008 * label_replace(sum(irate(ifHCOutOctets{instance='10.254.3.95', ifName=~'Reth10.3001|Reth10.3002'}[5m])) by (instance) , "direction", "出方向", "", "")) by (instance, direction) * on(instance) group_left(sysName) sysName > 700
+        for: 0s
+        labels:
+          severity: 紧急
+        annotations:
+          summary: '{{ $labels.sysName}} 公网流量【{{ $labels.direction}}】预警，当前【{{ $labels.direction}}】流量为{{ printf "%.2f" $value }}Mbps'
+          description: '酒仙桥教育业务公网流量超700M预警'
+
+
+#########################################  上海嘉定公网流量预警  ###############################
+
+      # 上海嘉定公网出入口实时流量超5G预警
+      - alert: 上海嘉定公网出入口流量超7G预警
+        expr: max(0.000008 * label_replace(sum(irate(ifHCInOctets{instance='10.254.2.253', ifName=~'Ten-GigabitEthernet1/0/45|Ten-GigabitEthernet1/0/46|Ten-GigabitEthernet2/0/45|Ten-GigabitEthernet2/0/46'}[5m])) by (instance) , "direction", "入方向", "", ""), 0.000008 * label_replace(sum(irate(ifHCOutOctets{instance='10.254.2.253', ifName=~'Ten-GigabitEthernet1/0/45|Ten-GigabitEthernet1/0/46|Ten-GigabitEthernet2/0/45|Ten-GigabitEthernet2/0/46'}[5m])) by (instance) , "direction", "出方向", "", "")) by (instance, direction) * on(instance) group_left(sysName) sysName > 7000
+        for: 0s
+        labels:
+          severity: 紧急
+        annotations:
+          summary: '{{ $labels.sysName}} 公网流量【{{ $labels.direction}}】预警，当前【{{ $labels.direction}}】流量为{{ printf "%.2f" $value }}Mbps'
+          description: '上海嘉定公网出入口流量超7G预警'
+
+
+
+      - alert: 北京大族淘云科技公网IP-42.62.25.122 流量超32M预警
+        expr:  max(0.000008 * label_replace(irate(ifHCInOctets{instance='10.254.5.6',ifName='GigabitEthernet1/0/22'}[5m]),"direction", "入方向", "", ""),0.000008 * label_replace(irate(ifHCOutOctets{instance='10.254.5.6',ifName='GigabitEthernet1/0/22'}[5m]),"direction", "出方向", "", "")) by (instance, interface, direction)* on(instance) group_left(sysName) sysName > 32
+        for: 0s
+        labels:
+          severity: 紧急
+        annotations:
+          summary: '{{ $labels.sysName}}【{{ $labels.instance}}】{{ $labels.interface}}接口【{{ $labels.direction}}】流量过大，当前流量为{{ printf "%.2f" $value }}Mbps'
+          description: '北京大族-淘云科技公网IP-42.62.25.122 流量超32M预警'
+
+      - alert: 北京大族淘云科技公网IP-42.62.25.122 流量超32M预警
+        expr:  max(0.000008 * label_replace(irate(ifHCInOctets{instance='10.254.5.6',ifName='GigabitEthernet2/0/22'}[5m]),"direction", "入方向", "", ""),0.000008 * label_replace(irate(ifHCOutOctets{instance='10.254.5.6',ifName='GigabitEthernet2/0/22'}[5m]),"direction", "出方向", "", "")) by (instance, interface, direction)* on(instance) group_left(sysName) sysName > 32
+        for: 0s
+        labels:
+          severity: 紧急
+        annotations:
+          summary: '{{ $labels.sysName}}【{{ $labels.instance}}】{{ $labels.interface}}接口【{{ $labels.direction}}】流量过大，当前流量为{{ printf "%.2f" $value }}Mbps'
+          description: '北京大族-淘云科技公网IP-42.62.25.122 流量超32M预警'
+
+      - alert: 北京大族淘云科技公网IP-42.62.25.123 流量超32M预警
+        expr:  max(0.000008 * label_replace(irate(ifHCInOctets{instance='10.254.5.6',ifName='GigabitEthernet1/0/21'}[5m]),"direction", "入方向", "", ""),0.000008 * label_replace(irate(ifHCOutOctets{instance='10.254.5.6',ifName='GigabitEthernet1/0/21'}[5m]),"direction", "出方向", "", "")) by (instance, interface, direction)* on(instance) group_left(sysName) sysName > 32
+        for: 0s
+        labels:
+          severity: 紧急
+        annotations:
+          summary: '{{ $labels.sysName}}【{{ $labels.instance}}】{{ $labels.interface}}接口【{{ $labels.direction}}】流量过大，当前流量为{{ printf "%.2f" $value }}Mbps'
+          description: '北京大族-淘云科技公网IP-42.62.25.123 流量超32M预警'
+
+      - alert: 北京大族淘云科技公网IP-42.62.25.123 流量超32M预警
+        expr:  max(0.000008 * label_replace(irate(ifHCInOctets{instance='10.254.5.6',ifName='GigabitEthernet2/0/21'}[5m]),"direction", "入方向", "", ""),0.000008 * label_replace(irate(ifHCOutOctets{instance='10.254.5.6',ifName='GigabitEthernet2/0/21'}[5m]),"direction", "出方向", "", "")) by (instance, interface, direction)* on(instance) group_left(sysName) sysName > 32
+        for: 0s
+        labels:
+          severity: 紧急
+        annotations:
+          summary: '{{ $labels.sysName}}【{{ $labels.instance}}】{{ $labels.interface}}接口【{{ $labels.direction}}】流量过大，当前流量为{{ printf "%.2f" $value }}Mbps'
+          description: '北京大族-淘云科技公网IP-42.62.25.123 流量超32M预警'
+
+      - alert: 酒仙桥公网线路带宽超8G预警，总带宽4*10G
+        expr:  max(0.000008 * label_replace(irate(ifHCInOctets{instance='10.254.3.193',ifName='100GE1/0/7'}[5m]),"direction", "入方向", "", ""),0.000008 * label_replace(irate(ifHCOutOctets{instance='10.254.3.193',ifName='100GE1/0/7'}[5m]),"direction", "出方向", "", "")) by (instance, interface, direction)* on(instance) group_left(sysName) sysName > 8000
+        for: 0s
+        labels:
+          severity: 紧急
+        annotations:
+          summary: '{{ $labels.sysName}}【{{ $labels.instance}}】{{ $labels.interface}}接口【{{ $labels.direction}}】流量过大，当前流量为{{ printf "%.2f" $value }}Mbps'
+          description: '酒仙桥公网线路带宽超8G预警，总带宽4*10G'
+
+      - alert: 酒仙桥公网线路带宽超8G预警，总带宽4*10G
+        expr:  max(0.000008 * label_replace(irate(ifHCInOctets{instance='10.254.3.194',ifName='100GE1/0/7'}[5m]),"direction", "入方向", "", ""),0.000008 * label_replace(irate(ifHCOutOctets{instance='10.254.3.194',ifName='100GE1/0/7'}[5m]),"direction", "出方向", "", "")) by (instance, interface, direction)* on(instance) group_left(sysName) sysName > 8000
+        for: 0s
+        labels:
+          severity: 紧急
+        annotations:
+          summary: '{{ $labels.sysName}}【{{ $labels.instance}}】{{ $labels.interface}}接口【{{ $labels.direction}}】流量过大，当前流量为{{ printf "%.2f" $value }}Mbps'
+          description: '酒仙桥公网线路带宽超8G预警，总带宽4*10G'
+
+      - alert: 酒仙桥公网线路带宽超8G预警，总带宽4*10G
+        expr:  max(0.000008 * label_replace(irate(ifHCInOctets{instance='10.254.3.193',ifName='100GE1/0/8'}[5m]),"direction", "入方向", "", ""),0.000008 * label_replace(irate(ifHCOutOctets{instance='10.254.3.193',ifName='100GE1/0/8'}[5m]),"direction", "出方向", "", "")) by (instance, interface, direction)* on(instance) group_left(sysName) sysName > 8000
+        for: 0s
+        labels:
+          severity: 紧急
+        annotations:
+          summary: '{{ $labels.sysName}}【{{ $labels.instance}}】{{ $labels.interface}}接口【{{ $labels.direction}}】流量过大，当前流量为{{ printf "%.2f" $value }}Mbps'
+          description: '酒仙桥公网线路带宽超8G预警，总带宽4*10G'
+
+      - alert: 酒仙桥公网线路带宽超8G预警，总带宽4*10G
+        expr:  max(0.000008 * label_replace(irate(ifHCInOctets{instance='10.254.3.194',ifName='100GE1/0/8'}[5m]),"direction", "入方向", "", ""),0.000008 * label_replace(irate(ifHCOutOctets{instance='10.254.3.194',ifName='100GE1/0/8'}[5m]),"direction", "出方向", "", "")) by (instance, interface, direction)* on(instance) group_left(sysName) sysName > 8000
+        for: 0s
+        labels:
+          severity: 紧急
+        annotations:
+          summary: '{{ $labels.sysName}}【{{ $labels.instance}}】{{ $labels.interface}}接口【{{ $labels.direction}}】流量过大，当前流量为{{ printf "%.2f" $value }}Mbps'
+          description: '酒仙桥公网线路带宽超8G预警，总带宽4*10G'
+
+
+
+      - alert: 北京大族机房_森华电信IPv6公网_流量超90%_90M预警(总带宽:30M保底_100M端口,业务地址段：240e:0904:0801:0002:0000:0000:0000:0000/64)
+        expr:  max(0.000008 * label_replace(irate(ifHCInOctets{instance='10.254.5.13',ifName='Eth-Trunk1'}[5m]),"direction", "入方向", "", ""),0.000008 * label_replace(irate(ifHCOutOctets{instance='10.254.5.13',ifName='Eth-Trunk1'}[5m]),"direction", "出方向", "", "")) by (instance, interface, direction)* on(instance) group_left(sysName) sysName > 90
+        for: 0s
+        labels:
+          severity: 紧急
+        annotations:
+          summary: '{{ $labels.sysName}}【{{ $labels.instance}}】{{ $labels.interface}}接口【{{ $labels.direction}}】流量过大，当前流量为{{ printf "%.2f" $value }}Mbps'
+          description: '北京大族机房_森华电信IPv6公网_流量超90%_90M预警(总带宽:30M保底_100M端口,业务地址段：240e:0904:0801:0002:0000:0000:0000:0000/64)'

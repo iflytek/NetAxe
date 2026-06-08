@@ -1,0 +1,61 @@
+groups:
+  - name: 设备接口告警
+    rules:
+      - alert: 设备接口变化
+        expr: (ifOperStatus != 100  and changes_prometheus(ifOperStatus[5m]) > 0)* on(instance) group_left(sysName) sysName{sysName!~".*(LF|AS).*"}
+        for: 0s
+        labels:
+          severity: 紧急
+          value: '{{ if eq (printf "%v" $value) "1" }}UP{{ else if eq (printf "%v" $value) "2" }}DOWN{{ else }}UNKNOWN{{ end }}'
+        annotations:
+          summary: '{{ $labels.sysName }}【{{ $labels.instance }}】主机接口{{$labels.interface}}变化，当前状态: {{ if eq (printf "%v" $value) "1" }}UP{{ else if eq (printf "%v" $value) "2" }}DOWN{{ else }}UNKNOWN{{ end }}'
+          description: '设备接口变化'
+
+
+      - alert: 带宽利用率高
+        expr:  (((irate(ifHCInOctets{brand!='山石网科',ifName!~".*(NULL|InLoop|Vlan|Vsi|Loo|NU|SSL).*",ifHighSpeed!~"^(0|-)$"}[5m])*800)/(ifHighSpeed{ifName!~".*(NULL|InLoop|Vlan|Vsi|Loo|NU|SSL).*"}*1000000) > 80) or ((irate(ifHCOutOctets{brand!='山石网科',ifName!~".*(NULL|InLoop|Vlan|Vsi|Loo|NU|SSL).*",ifHighSpeed!~"^(0|-)$"}[5m])*800)/(ifHighSpeed{ifName!~".*(NULL|InLoop|Vlan|Vsi|Loo|NU|SSL).*"}*1000000) > 80) ) * on(instance) group_left(sysName) sysName{sysName!~".*(LF|AS).*"}
+        for: 0s
+        labels:
+          severity: 紧急
+          value: '{{ printf "%.2f" $value }}%'
+        annotations:
+          summary: '{{ $labels.sysName}}【{{ $labels.instance}}】 {{ $labels.interface}}接口带宽利用率已经超过80%，接口最大带宽为{{ $labels.ifHighSpeed}}Mbps。'
+          description: '带宽利用率高'
+
+
+      - alert: 接口错包告警
+        expr: (increase(ifInErrors{ifName!~".*(NULL|InLoop|vlan|Vsi|Loo|NU|SSL).*",ifHighSpeed!~"^(0|-)$"}[5m]) and  increase(ifOutErrors{ifName!~".*(NULL|InLoop|vlan|Vsi|Loo|NU|SSL).*",ifHighSpeed!~"^(0|-)$"}[5m])  ) * on(instance) group_left(sysName) sysName > 5000
+        for: 0s
+        labels:
+          severity: 紧急
+          value: '{{ printf "%.2f" $value }}'
+        annotations:
+          summary: '{{ $labels.sysName}}【{{ $labels.instance}}】 {{ $labels.interface}}接口错包超过5000'
+          description: '接口错包告警'
+
+
+
+
+
+      - alert: 接口缓存告警
+        expr: (increase(hh3cifPktBufInDrop{ifName!~".*(NULL|InLoop|vlan|Vsi|Loo|NU|SSL).*",ifHighSpeed!~"^(0|-)$"}[5m]) and  increase(hh3cifPktBufEgDrop{ifName!~".*(NULL|InLoop|vlan|Vsi|Loo|NU|SSL).*",ifHighSpeed!~"^(0|-)$"}[5m])  ) * on(instance) group_left(sysName) sysName  > 3000
+        for: 0s
+        labels:
+          severity: 紧急
+          value: '{{ printf "%.2f" $value }}'
+        annotations:
+          summary: '{{ $labels.sysName}}【{{ $labels.instance}}】 {{ $labels.interface}}接口缓存丢包超过5000'
+          description: '接口缓存告警'
+
+
+
+
+      - alert: QoS红色流量队列溢出(red discard)
+        expr: 0.000008 * irate(hh3cCBQoSCarRedBytes_finally[5m]) * on(instance) group_left(sysName) sysName > 20
+        for: 4m
+        labels:
+          severity: 紧急
+          value: '当前丢弃速率{{ printf "%.2f" $value }}Mbps'
+        annotations:
+          summary: '{{ $labels.sysName }}【{{ $labels.instance }}】 Qos策略:{{ $labels.qoscb }} 关联接口:{{ $labels.interface }} 触发红色管道流量强制丢弃'
+          description: 'QoS红色流量队列溢出(red discard)'

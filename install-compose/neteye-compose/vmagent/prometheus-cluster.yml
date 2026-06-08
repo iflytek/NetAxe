@@ -21,6 +21,87 @@ scrape_configs:
   - job_name: 'vmstorage'
     static_configs:
       - targets: ['vmstorage-1:8482', 'vmstorage-2:8482', 'vmstorage-3:8482']
+  - job_name: 'snmp-exporter'
+    static_configs:
+      - targets: ['snmp-exporter:9116']
+  - job_name: 'blackbox-exporter'
+    static_configs:
+      - targets: ['blackbox-exporter:9115']
+
+  - job_name: 'icmp_connect_15s'
+    scrape_interval: 1m
+    metrics_path: /probe
+    params:
+      module: [icmp]
+    http_sd_configs:
+      - url: http://register:4168/regis/services
+        basic_auth:
+          username: admin
+          password: REGIS_PASSWORD
+    relabel_configs:
+    - source_labels: ['__address__']
+      target_label: __param_target
+    - source_labels: ['__address__']
+      target_label: instance
+    - target_label: __address__
+      replacement: blackbox-exporter:9115
+    - source_labels: [env]
+      regex: .*icmp_15s.*
+      action: keep
+
+  - job_name: 'tcp_connect_15s'
+    scrape_interval: 1m
+    metrics_path: /probe
+    params:
+      module: [tcp_connect]
+    http_sd_configs:
+      - url: http://register:4168/regis/services
+        basic_auth:
+          username: admin
+          password: REGIS_PASSWORD
+    relabel_configs:
+    - source_labels: ['__address__','port']
+      target_label: __param_target
+      regex: "(.*);(.*)"
+      replacement: "$1:$2"
+      action: replace
+    - source_labels: ['__address__','port']
+      target_label: instance
+      regex: "(.*);(.*)"
+      replacement: "$1:$2"
+      action: replace
+    - target_label: __address__
+      replacement: blackbox-exporter:9115
+    - source_labels: [env]
+      regex: .*tcp_connect_15s.*
+      action: keep
+
+  - job_name: 'tcp_connect_all'
+    scrape_interval: 1m
+    metrics_path: /probe
+    params:
+      module: [tcp_connect]
+    http_sd_configs:
+      - url: http://register:4168/regis/services
+        basic_auth:
+          username: admin
+          password: REGIS_PASSWORD
+    relabel_configs:
+    - source_labels: ['__address__','port']
+      target_label: __param_target
+      regex: "(.*);(.*)"
+      replacement: "$1:$2"
+      action: replace
+    - source_labels: ['__address__','port']
+      target_label: instance
+      regex: "(.*);(.*)"
+      replacement: "$1:$2"
+      action: replace
+    - target_label: __address__
+      replacement: blackbox-exporter:9115
+    - source_labels: [env]
+      regex: .*tcp_connect_all.*
+      action: keep
 
   - job_name: "h3c_devices"
     scrape_interval: 60s

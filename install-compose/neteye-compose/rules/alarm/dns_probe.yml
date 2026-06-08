@@ -1,0 +1,113 @@
+groups:
+  - name: DNS告警
+    rules:
+      - alert: DNS解析异常
+        expr: probe_dns_answer_rrs{domain!="who.are.you",job=~"dns.*.probe"} == 0
+        for: 1m
+        labels:
+          id: 156
+          type: DNS解析异常
+          time_range: 24
+          severity: 紧急
+          time_stamp: current_time_seconds
+        annotations:
+          summary: '{{ $labels.instance}}拨测点，{{ $labels.domain }}域名解析失败，解析DNS为{{ $labels.dns }}'
+          description: '{{ $labels.instance}}拨测点，{{ $labels.domain }}域名解析失败，解析DNS为{{ $labels.dns }}'
+
+      - alert: 监控组件异常
+        expr: up{job="dns_process_exporter"} == 0
+        for: 2m
+        labels:
+          id: 118
+          type: 监控组件异常
+          time_range: 12
+          severity: 重要
+        annotations:
+          summary: test
+          description: '{{ $labels.job }}|{{ $labels.instance }}|组件:{{ $labels.exporter_name }}|Down'
+
+
+      - alert: 主机分区使用量超过阈值
+        expr: round((1-node_filesystem_avail_bytes{device=~"/dev/.*",job=~'.*'}/node_filesystem_size_bytes{device=~"/dev/.*",job=~'.*'})*100) > 80
+        for: 2m
+        labels:
+          id: 104
+          type: 主机分区使用量超过阈值
+          time_range: 24
+          severity: 紧急
+        annotations:
+          summary: '{{ $labels.job }}|{{ $labels.instance }}|{{ $labels.device }} on {{ $labels.mountpoint }}容量:{{ $value }}% > 80%'
+          description: '联系值班人'
+          value: '{{ $value }}'
+
+      - alert: 主机bond0网络接收流量超过阈值
+        expr: round(irate(node_network_receive_bytes_total{device='bond0',job=~'.*'}[3m])/1024/1024) > 1250
+        for: 5m
+        labels:
+          id: 110
+          type: 网卡流量较大
+          time_range: 12
+          severity: 重要
+        annotations:
+          summary: '{{ $labels.job }}|{{ $labels.instance }}|{{ $labels.device }}接收流量{{ $value }}MB/s'
+          description: '联系值班人'
+      - alert: 主机bond0网络发送流量超过阈值
+        expr: round(irate(node_network_transmit_bytes_total{device='bond0',job=~'.*'}[3m])/1024/1024) > 1250
+        for: 5m
+        labels:
+          id: 110
+          type: 网卡流量较大
+          time_range: 12
+          severity: 重要
+        annotations:
+          summary: '{{ $labels.job }}||{{ $labels.instance }}|{{ $labels.device }}发送流量{{ $value }}MB/s'
+          description: '联系值班人'
+
+      - alert: 主机CPU负载较高
+        expr: 100 - round((avg by (instance,job) (irate(node_cpu_seconds_total{ mode="idle"}[5m])) * 100)) > 50
+        for: 5m
+        labels:
+          id: 114
+          type: CPU负载较高
+          time_range: 12
+          severity: 重要
+        annotations:
+          summary: '{{ $labels.job }}|{{ $labels.instance }}|负载量:{{ $value }}%>50%'
+          description: '联系值班人'
+
+      - alert: 主机内存超过阈值
+        expr: round((node_memory_MemTotal_bytes - node_memory_MemAvailable_bytes) / node_memory_MemTotal_bytes * 100) > 50
+        for: 2m
+        labels:
+          id: 115
+          type: 内存超阈值
+          time_range: 12
+          severity: 重要
+        annotations:
+          summary: '{{ $labels.job }}|{{ $labels.instance }}|内存:{{ $value }}%>50%'
+          description: '联系值班人'
+
+
+      - alert: 主机网卡bond0异常
+        expr: node_bonding_active{job=~'.*'} < 2
+        for: 3m
+        labels:
+          id: 117
+          type: 网卡状态异常
+          time_range: 24
+          severity: 紧急
+        annotations:
+          summary: '{{ $labels.job }}|{{ $labels.instance }}|{{ $labels.master }}异常'
+          description: '联系值班人'
+
+      - alert: 主机运行时间异常
+        expr: time()-node_boot_time_seconds{job=~'.*'} < 600
+        labels:
+          id: 128
+          type: 时钟状态异常
+          time_range: 24
+          severity: 紧急
+          sendtype: emailonly
+        annotations:
+          summary: '{{ $labels.job }}|{{ $labels.instance }}|Uptime<10Min'
+          description: '联系值班人'

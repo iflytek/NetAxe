@@ -1,0 +1,13 @@
+modules:
+  snmp_up:
+    get:
+    - 1.3.6.1.2.1.1.5.0
+    metrics:
+    - name: sysNameUP
+      oid: 1.3.6.1.2.1.1.5
+      type: DisplayString
+      help: An administratively-assigned name for this managed node - 1.3.6.1.2.1.1.5
+
+    max_repetitions: 20
+    retries: 3
+    timeout: 5s

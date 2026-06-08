@@ -1,0 +1,506 @@
+modules:
+  hillstone_common:
+    walk:
+    - 1.3.6.1.2.1.2.2.1.1
+    - 1.3.6.1.2.1.2.2.1.14
+    - 1.3.6.1.2.1.2.2.1.2
+    - 1.3.6.1.2.1.2.2.1.20
+    - 1.3.6.1.2.1.2.2.1.3
+    - 1.3.6.1.2.1.2.2.1.5
+    - 1.3.6.1.2.1.2.2.1.7
+    - 1.3.6.1.2.1.2.2.1.8
+    - 1.3.6.1.4.1.28557.2.25.1.2.1.1
+    - 1.3.6.1.4.1.28557.2.25.1.2.1.3
+    - 1.3.6.1.4.1.28557.2.25.1.2.1.4
+    - 1.3.6.1.4.1.28557.2.25.1.2.1.8
+    - 1.3.6.1.4.1.28557.2.25.1.2.1.10
+    - 1.3.6.1.4.1.28557.2.25.1.2.1.12
+    - 1.3.6.1.2.1.31.1.1.1.1
+    - 1.3.6.1.2.1.31.1.1.1.10
+    - 1.3.6.1.2.1.31.1.1.1.15
+    - 1.3.6.1.2.1.31.1.1.1.18
+    - 1.3.6.1.2.1.31.1.1.1.6
+    - 1.3.6.1.4.1.28557.2.26.1.2.1.1
+    - 1.3.6.1.4.1.28557.2.26.1.2.1.2
+    - 1.3.6.1.4.1.28557.2.26.1.2.1.3
+    - 1.3.6.1.4.1.28557.2.26.1.2.1.4
+    - 1.3.6.1.4.1.28557.2.26.1.2.1.5
+    - 1.3.6.1.4.1.28557.2.27.1.2.1.1
+    - 1.3.6.1.4.1.28557.2.27.1.2.1.2
+    - 1.3.6.1.4.1.28557.2.27.1.2.1.3
+    - 1.3.6.1.4.1.28557.2.28.1.2.1.1
+    - 1.3.6.1.4.1.28557.2.28.1.2.1.2
+    - 1.3.6.1.4.1.28557.2.28.1.2.1.3
+    get:
+    - 1.3.6.1.2.1.1.1.0
+    - 1.3.6.1.2.1.1.3.0
+    - 1.3.6.1.2.1.1.5.0
+    - 1.3.6.1.2.1.2.1.0
+    - 1.3.6.1.4.1.28557.2.2.1.21.0
+    - 1.3.6.1.4.1.28557.2.2.1.3.0
+    - 1.3.6.1.4.1.28557.2.2.1.6.0
+    - 1.3.6.1.4.1.28557.2.2.1.7.0
+    - 1.3.6.1.4.1.28557.2.2.1.8.0
+    - 1.3.6.1.4.1.28557.2.2.1.4.0
+    - 1.3.6.1.4.1.28557.2.2.1.5.0
+    metrics:
+    - name: hillstoneModuleMemCPUseRate
+      oid: 1.3.6.1.4.1.28557.2.25.1.2.1.10
+      type: gauge
+      help: Serial number of the interface. - 1.3.6.1.4.1.25506.2.70.1.1.1.5
+      indexes:
+      - labelname: hillstoneSlotIndex
+        type: gauge
+      lookups:
+      - labels:
+        - hillstoneSlotIndex
+        labelname: hillstoneSlotDescr
+        oid: 1.3.6.1.4.1.28557.2.25.1.2.1.3
+        type: DisplayString
+    - name: hillstoneModuleMemDPUseRate
+      oid: 1.3.6.1.4.1.28557.2.25.1.2.1.12
+      type: gauge
+      help: Serial number of the interface. - 1.3.6.1.4.1.25506.2.70.1.1.1.5
+      indexes:
+      - labelname: hillstoneSlotIndex
+        type: gauge
+      lookups:
+      - labels:
+        - hillstoneSlotIndex
+        labelname: hillstoneSlotDescr
+        oid: 1.3.6.1.4.1.28557.2.25.1.2.1.3
+        type: DisplayString
+    - name: hillstoneSlotState
+      oid: 1.3.6.1.4.1.28557.2.25.1.2.1.4
+      type: gauge
+      help: Serial number of the interface. - 1.3.6.1.4.1.25506.2.70.1.1.1.5
+      indexes:
+      - labelname: hillstoneSlotIndex
+        type: gauge
+      lookups:
+      - labels:
+        - hillstoneSlotIndex
+        labelname: hillstoneSlotDescr
+        oid: 1.3.6.1.4.1.28557.2.25.1.2.1.3
+        type: DisplayString
+    - name: hillstoneModuleCpuCur
+      oid: 1.3.6.1.4.1.28557.2.25.1.2.1.8
+      type: gauge
+      help: A unique value for each interface - 1.3.6.1.2.1.2.2.1.1
+      indexes:
+      - labelname: hillstoneSlotIndex
+        type: gauge
+      lookups:
+      - labels:
+        - hillstoneSlotIndex
+        labelname: hillstoneSlotDescr
+        oid: 1.3.6.1.4.1.28557.2.25.1.2.1.3
+        type: DisplayString
+    - name: memtotal
+      oid: 1.3.6.1.4.1.28557.2.2.1.4.0
+      type: gauge
+      help: ' - 1.3.6.1.4.1.28557.2.2.1.4.0'
+    - name: memused
+      oid: 1.3.6.1.4.1.28557.2.2.1.5.0
+      type: gauge
+      help: ' - 1.3.6.1.4.1.28557.2.2.1.5.0'
+    - name: sysDescr
+      oid: 1.3.6.1.2.1.1.1
+      type: DisplayString
+      help: A textual description of the entity - 1.3.6.1.2.1.1.1
+    - name: sysUpTime
+      oid: 1.3.6.1.2.1.1.3
+      type: gauge
+      help: The time (in hundredths of a second) since the network management portion
+        of the system was last re-initialized. - 1.3.6.1.2.1.1.3
+    - name: sysName
+      oid: 1.3.6.1.2.1.1.5
+      type: DisplayString
+      help: An administratively-assigned name for this managed node - 1.3.6.1.2.1.1.5
+    - name: ifNumber
+      oid: 1.3.6.1.2.1.2.1
+      type: gauge
+      help: The number of network interfaces (regardless of their current state) present
+        on this system. - 1.3.6.1.2.1.2.1
+    - name: ifIndex
+      oid: 1.3.6.1.2.1.2.2.1.1
+      type: gauge
+      help: A unique value for each interface - 1.3.6.1.2.1.2.2.1.1
+      indexes:
+      - labelname: ifIndex
+        type: gauge
+      lookups:
+      - labels:
+        - ifIndex
+        labelname: ifDescr
+        oid: 1.3.6.1.2.1.2.2.1.2
+        type: DisplayString
+      - labels:
+        - ifIndex
+        labelname: ifName
+        oid: 1.3.6.1.2.1.31.1.1.1.1
+        type: DisplayString
+      - labels:
+        - ifIndex
+        labelname: ifAlias
+        oid: 1.3.6.1.2.1.31.1.1.1.18
+        type: DisplayString
+    - name: ifSpeed
+      oid: 1.3.6.1.2.1.2.2.1.5
+      type: gauge
+      help: An estimate of the interface's current bandwidth in bits per second -
+        1.3.6.1.2.1.2.2.1.5
+      indexes:
+      - labelname: ifIndex
+        type: gauge
+      lookups:
+      - labels:
+        - ifIndex
+        labelname: ifDescr
+        oid: 1.3.6.1.2.1.2.2.1.2
+        type: DisplayString
+      - labels:
+        - ifIndex
+        labelname: ifName
+        oid: 1.3.6.1.2.1.31.1.1.1.1
+        type: DisplayString
+      - labels:
+        - ifIndex
+        labelname: ifAlias
+        oid: 1.3.6.1.2.1.31.1.1.1.18
+        type: DisplayString
+    - name: ifAdminStatus
+      oid: 1.3.6.1.2.1.2.2.1.7
+      type: gauge
+      help: The desired state of the interface - 1.3.6.1.2.1.2.2.1.7
+      indexes:
+      - labelname: ifIndex
+        type: gauge
+      lookups:
+      - labels:
+        - ifIndex
+        labelname: ifDescr
+        oid: 1.3.6.1.2.1.2.2.1.2
+        type: DisplayString
+      - labels:
+        - ifIndex
+        labelname: ifName
+        oid: 1.3.6.1.2.1.31.1.1.1.1
+        type: DisplayString
+      - labels:
+        - ifIndex
+        labelname: ifAlias
+        oid: 1.3.6.1.2.1.31.1.1.1.18
+        type: DisplayString
+      enum_values:
+        1: up
+        2: down
+        3: testing
+    - name: ifOperStatus
+      oid: 1.3.6.1.2.1.2.2.1.8
+      type: gauge
+      help: The current operational state of the interface - 1.3.6.1.2.1.2.2.1.8
+      indexes:
+      - labelname: ifIndex
+        type: gauge
+      lookups:
+      - labels:
+        - ifIndex
+        labelname: ifDescr
+        oid: 1.3.6.1.2.1.2.2.1.2
+        type: DisplayString
+      - labels:
+        - ifIndex
+        labelname: ifName
+        oid: 1.3.6.1.2.1.31.1.1.1.1
+        type: DisplayString
+      - labels:
+        - ifIndex
+        labelname: ifAlias
+        oid: 1.3.6.1.2.1.31.1.1.1.18
+        type: DisplayString
+      enum_values:
+        1: up
+        2: down
+        3: testing
+    - name: ifHCOutOctets
+      oid: 1.3.6.1.2.1.31.1.1.1.10
+      type: counter
+      help: The total number of octets transmitted out of the interface, including
+        framing characters - 1.3.6.1.2.1.31.1.1.1.10
+      indexes:
+      - labelname: ifIndex
+        type: gauge
+      lookups:
+      - labels:
+        - ifIndex
+        labelname: ifDescr
+        oid: 1.3.6.1.2.1.2.2.1.2
+        type: DisplayString
+      - labels:
+        - ifIndex
+        labelname: ifName
+        oid: 1.3.6.1.2.1.31.1.1.1.1
+        type: DisplayString
+      - labels:
+        - ifIndex
+        labelname: ifAlias
+        oid: 1.3.6.1.2.1.31.1.1.1.18
+        type: DisplayString
+    - name: ifHighSpeed
+      oid: 1.3.6.1.2.1.31.1.1.1.15
+      type: gauge
+      help: An estimate of the interface's current bandwidth in units of 1,000,000
+        bits per second - 1.3.6.1.2.1.31.1.1.1.15
+      indexes:
+      - labelname: ifIndex
+        type: gauge
+      lookups:
+      - labels:
+        - ifIndex
+        labelname: ifDescr
+        oid: 1.3.6.1.2.1.2.2.1.2
+        type: DisplayString
+      - labels:
+        - ifIndex
+        labelname: ifName
+        oid: 1.3.6.1.2.1.31.1.1.1.1
+        type: DisplayString
+      - labels:
+        - ifIndex
+        labelname: ifAlias
+        oid: 1.3.6.1.2.1.31.1.1.1.18
+        type: DisplayString
+    - name: ifHCInOctets
+      oid: 1.3.6.1.2.1.31.1.1.1.6
+      type: counter
+      help: The total number of octets received on the interface, including framing
+        characters - 1.3.6.1.2.1.31.1.1.1.6
+      indexes:
+      - labelname: ifIndex
+        type: gauge
+      lookups:
+      - labels:
+        - ifIndex
+        labelname: ifDescr
+        oid: 1.3.6.1.2.1.2.2.1.2
+        type: DisplayString
+      - labels:
+        - ifIndex
+        labelname: ifName
+        oid: 1.3.6.1.2.1.31.1.1.1.1
+        type: DisplayString
+      - labels:
+        - ifIndex
+        labelname: ifAlias
+        oid: 1.3.6.1.2.1.31.1.1.1.18
+        type: DisplayString
+    - name: sysRampupRate
+      oid: 1.3.6.1.4.1.28557.2.2.1.21
+      type: gauge
+      help: ' - 1.3.6.1.4.1.28557.2.2.1.21'
+    - name: sysCPU
+      oid: 1.3.6.1.4.1.28557.2.2.1.3
+      type: gauge
+      help: ' - 1.3.6.1.4.1.28557.2.2.1.3'
+    - name: sysTotalSession
+      oid: 1.3.6.1.4.1.28557.2.2.1.6
+      type: counter
+      help: ' - 1.3.6.1.4.1.28557.2.2.1.6'
+    - name: sysCurSession
+      oid: 1.3.6.1.4.1.28557.2.2.1.7
+      type: gauge
+      help: ' - 1.3.6.1.4.1.28557.2.2.1.7'
+    - name: sysHAStatus
+      oid: 1.3.6.1.4.1.28557.2.2.1.8
+      type: gauge
+      help: ' - 1.3.6.1.4.1.28557.2.2.1.8'
+      enum_values:
+        0: none
+        1: init
+        2: hello
+        3: backup
+        4: master
+        5: slase
+        6: AA-mode
+    - name: hillstoneFanIndex
+      oid: 1.3.6.1.4.1.28557.2.26.1.2.1.1
+      type: gauge
+      help: The slot index of the FAN. - 1.3.6.1.4.1.28557.2.26.1.2.1.1
+      indexes:
+      - labelname: hillstoneFanIndex
+        type: gauge
+      lookups:
+      - labels:
+        - hillstoneFanIndex
+        labelname: hillstoneFanDescr
+        oid: 1.3.6.1.4.1.28557.2.26.1.2.1.2
+        type: DisplayString
+      - labels:
+        - hillstoneFanIndex
+        labelname: hillstoneFanType
+        oid: 1.3.6.1.4.1.28557.2.26.1.2.1.3
+        type: gauge
+    - name: hillstoneFanDescr
+      oid: 1.3.6.1.4.1.28557.2.26.1.2.1.2
+      type: DisplayString
+      help: The slot description of the FAN. - 1.3.6.1.4.1.28557.2.26.1.2.1.2
+      indexes:
+      - labelname: hillstoneFanIndex
+        type: gauge
+      lookups:
+      - labels:
+        - hillstoneFanIndex
+        labelname: hillstoneFanDescr
+        oid: 1.3.6.1.4.1.28557.2.26.1.2.1.2
+        type: DisplayString
+      - labels:
+        - hillstoneFanIndex
+        labelname: hillstoneFanType
+        oid: 1.3.6.1.4.1.28557.2.26.1.2.1.3
+        type: gauge
+    - name: hillstoneFanType
+      oid: 1.3.6.1.4.1.28557.2.26.1.2.1.3
+      type: gauge
+      help: The slot type of the FAN.When type is 0,please watch hillstoneFanSpeed.When
+        type is 1,please watch hillstoneFanState.. - 1.3.6.1.4.1.28557.2.26.1.2.1.3
+      indexes:
+      - labelname: hillstoneFanIndex
+        type: gauge
+      lookups:
+      - labels:
+        - hillstoneFanIndex
+        labelname: hillstoneFanDescr
+        oid: 1.3.6.1.4.1.28557.2.26.1.2.1.2
+        type: DisplayString
+      - labels:
+        - hillstoneFanIndex
+        labelname: hillstoneFanType
+        oid: 1.3.6.1.4.1.28557.2.26.1.2.1.3
+        type: gauge
+      enum_values:
+        0: speed
+        1: state
+    - name: hillstoneFanSpeed
+      oid: 1.3.6.1.4.1.28557.2.26.1.2.1.4
+      type: gauge
+      help: The slot speed of the FAN. - 1.3.6.1.4.1.28557.2.26.1.2.1.4
+      indexes:
+      - labelname: hillstoneFanIndex
+        type: gauge
+      lookups:
+      - labels:
+        - hillstoneFanIndex
+        labelname: hillstoneFanDescr
+        oid: 1.3.6.1.4.1.28557.2.26.1.2.1.2
+        type: DisplayString
+      - labels:
+        - hillstoneFanIndex
+        labelname: hillstoneFanType
+        oid: 1.3.6.1.4.1.28557.2.26.1.2.1.3
+        type: gauge
+    - name: hillstoneFanState
+      oid: 1.3.6.1.4.1.28557.2.26.1.2.1.5
+      type: gauge
+      help: The FAN state. - 1.3.6.1.4.1.28557.2.26.1.2.1.5
+      indexes:
+      - labelname: hillstoneFanIndex
+        type: gauge
+      lookups:
+      - labels:
+        - hillstoneFanIndex
+        labelname: hillstoneFanDescr
+        oid: 1.3.6.1.4.1.28557.2.26.1.2.1.2
+        type: DisplayString
+      - labels:
+        - hillstoneFanIndex
+        labelname: hillstoneFanType
+        oid: 1.3.6.1.4.1.28557.2.26.1.2.1.3
+        type: gauge
+    - name: hillstonePowerIndex
+      oid: 1.3.6.1.4.1.28557.2.27.1.2.1.1
+      type: gauge
+      help: The power index . - 1.3.6.1.4.1.28557.2.27.1.2.1.1
+      indexes:
+      - labelname: hillstonePowerIndex
+        type: gauge
+      lookups:
+      - labels:
+        - hillstonePowerIndex
+        labelname: hillstonePowerDescr
+        oid: 1.3.6.1.4.1.28557.2.27.1.2.1.2
+        type: DisplayString
+      - labels:
+        - hillstonePowerIndex
+        labelname: hillstonePowerState
+        oid: 1.3.6.1.4.1.28557.2.27.1.2.1.3
+        type: gauge
+    - name: hillstonePowerDescr
+      oid: 1.3.6.1.4.1.28557.2.27.1.2.1.2
+      type: DisplayString
+      help: The power description . - 1.3.6.1.4.1.28557.2.27.1.2.1.2
+      indexes:
+      - labelname: hillstonePowerIndex
+        type: gauge
+      lookups:
+      - labels:
+        - hillstonePowerIndex
+        labelname: hillstonePowerDescr
+        oid: 1.3.6.1.4.1.28557.2.27.1.2.1.2
+        type: DisplayString
+      - labels:
+        - hillstonePowerIndex
+        labelname: hillstonePowerState
+        oid: 1.3.6.1.4.1.28557.2.27.1.2.1.3
+        type: gauge
+    - name: hillstonePowerState
+      oid: 1.3.6.1.4.1.28557.2.27.1.2.1.3
+      type: gauge
+      help: The power state . - 1.3.6.1.4.1.28557.2.27.1.2.1.3
+      indexes:
+      - labelname: hillstonePowerIndex
+        type: gauge
+      lookups:
+      - labels:
+        - hillstonePowerIndex
+        labelname: hillstonePowerDescr
+        oid: 1.3.6.1.4.1.28557.2.27.1.2.1.2
+        type: DisplayString
+      - labels:
+        - hillstonePowerIndex
+        labelname: hillstonePowerState
+        oid: 1.3.6.1.4.1.28557.2.27.1.2.1.3
+        type: gauge
+    - name: hillstoneTemperatureValue
+      oid: 1.3.6.1.4.1.28557.2.28.1.2.1.3
+      type: gauge
+      help: The TEMPERATURE value . - 1.3.6.1.4.1.28557.2.28.1.2.1.3
+      indexes:
+      - labelname: hillstoneTemperatureIndex
+        type: gauge
+      lookups:
+      - labels:
+        - hillstoneTemperatureIndex
+        labelname: hillstoneTemperatureDescr
+        oid: 1.3.6.1.4.1.28557.2.28.1.2.1.2
+        type: DisplayString
+      - labels:
+        - hillstoneTemperatureIndex
+        labelname: hillstoneTemperatureValue
+        oid: 1.3.6.1.4.1.28557.2.28.1.2.1.3
+        type: gauge
+    max_repetitions: 3
+    retries: 3
+    timeout: 25s
+    filters:
+    - oid: 1.3.6.1.2.1.2.2.1.8
+      targets:
+      - 1.3.6.1.2.1.2.2.1.7
+      - 1.3.6.1.2.1.31.1.1.1.6
+      - 1.3.6.1.2.1.31.1.1.1.10
+      - 1.3.6.1.2.1.2.2.1.13
+      - 1.3.6.1.2.1.2.2.1.19
+      - 1.3.6.1.2.1.2.2.1.14
+      - 1.3.6.1.2.1.2.2.1.20
+      values:
+      - '1'
