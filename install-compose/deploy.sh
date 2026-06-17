@@ -83,7 +83,7 @@ check_required_commands() {
     done
 
     if [ -n "${missing_commands}" ]; then
-        fail "当前服务器缺少必要命令:${missing_commands}"
+        fail "当前服务器缺少必要命令:${missing_commands} 请通过 yum install httpd-tools 安装后重试"
         return 1
     fi
 }
