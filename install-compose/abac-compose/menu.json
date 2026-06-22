@@ -228,7 +228,7 @@
             "icon": "管控平台.png",
             "menus": [
                 {
-                    "name": "管控首页",
+                    "name": "概览",
                     "path": "/base-platform/dashboard",
                     "sort": 0,
                     "icon": "board",
@@ -237,21 +237,105 @@
                     "parent": null
                 },
                 {
-                    "name": "任务结果",
-                    "path": "/base-platform/task-result",
-                    "sort": 1,
-                    "icon": "sjcll",
-                    "key": "base-platform_task-result",
+                    "name": "资源管理",
+                    "path": "/base-platform-resource",
+                    "sort": 10,
+                    "icon": "",
+                    "key": "base-platform-resource",
+                    "type": "group_type",
+                    "parent": null
+                },
+                {
+                    "name": "网络设备",
+                    "path": "/base-platform/network",
+                    "sort": 11,
+                    "icon": "dqgj",
+                    "key": "base-platform_network",
                     "type": "menu_type",
                     "parent": {
-                        "key": "base-platform-task-center"
+                        "key": "base-platform-resource"
+                    }
+                },
+                {
+                    "name": "资源维护",
+                    "path": "/base-platform/maintenance",
+                    "sort": 12,
+                    "icon": "dqgj",
+                    "key": "base-platform_maintenance",
+                    "type": "menu_type",
+                    "parent": {
+                        "key": "base-platform-resource"
+                    }
+                },
+                {
+                    "name": "服务器管理",
+                    "path": "/base-platform/server",
+                    "sort": 13,
+                    "icon": "lsgj",
+                    "key": "base-platform_server",
+                    "type": "menu_type",
+                    "parent": {
+                        "key": "base-platform-resource"
+                    }
+                },
+                {
+                    "name": "登录日志",
+                    "path": "/base-platform/login-log",
+                    "sort": 14,
+                    "icon": "lsgj",
+                    "key": "base-platform_login-log",
+                    "type": "menu_type",
+                    "parent": {
+                        "key": "base-platform-resource"
+                    }
+                },
+                {
+                    "name": "自动化",
+                    "path": "/base-platform/automation",
+                    "sort": 20,
+                    "icon": "",
+                    "key": "base-platform-automation",
+                    "type": "group_type",
+                    "parent": null
+                },
+                {
+                    "name": "地址寻觅",
+                    "path": "/base-platform/address-location",
+                    "sort": 21,
+                    "icon": "sjcll",
+                    "key": "base-platform_address-location",
+                    "type": "menu_type",
+                    "parent": {
+                        "key": "base-platform-automation"
+                    }
+                },
+                {
+                    "name": "接口列表",
+                    "path": "/base-platform/interfaceused",
+                    "sort": 22,
+                    "icon": "sjcll",
+                    "key": "base-platform_interfaceused",
+                    "type": "menu_type",
+                    "parent": {
+                        "key": "base-platform-automation"
+                    }
+                },
+                {
+                    "name": "诊断中心",
+                    "path": "/base-platform/automation-diagnose",
+                    "sort": 23,
+                    "icon": "sjcll",
+                    "key": "base-platform_automation-diagnose",
+                    "type": "menu_type",
+                    "parent": {
+                        "key": "base-platform-automation"
                     }
                 },
                 {
                     "name": "配置下发",
                     "path": "/base-platform/config-deploy",
-                    "sort": 1,
-                    "icon": "VPN",
+                    "sort": 24,
+                    "icon": "sjcll",
                     "key": "base-platform_config-deploy",
                     "type": "menu_type",
                     "parent": {
@@ -259,237 +343,82 @@
                     }
                 },
                 {
-                    "name": "自动化",
-                    "path": "/base-platform/automation",
-                    "sort": 1,
-                    "icon": "",
-                    "key": "base-platform-automation",
-                    "type": "group_type",
-                    "parent": null
-                },
-                {
-                    "name": "变更治理",
-                    "path": "/base-platform/config-governance",
-                    "sort": 1,
-                    "icon": "board",
-                    "key": "base-platform_config-governance",
-                    "type": "menu_type",
-                    "parent": {
-                        "key": "config_manage"
-                    }
-                },
-                {
-                    "name": "执行总览",
-                    "path": "/base-platform/execution-overview",
-                    "sort": 1,
-                    "icon": "board",
-                    "key": "base-platform_execution-overview",
-                    "type": "menu_type",
-                    "parent": {
-                        "key": "base-platform-plan"
-                    }
-                },
-                {
-                    "name": "设备画像",
-                    "path": "/base-platform/device-profile",
-                    "sort": 1,
-                    "icon": "board",
-                    "key": "base-platform_device-profile",
-                    "type": "menu_type",
-                    "parent": {
-                        "key": "base-platform-plan"
-                    }
-                },
-                {
-                    "name": "采集方案",
-                    "path": "/base-platform/collection-plan",
-                    "sort": 1,
-                    "icon": "board",
-                    "key": "base-platform_collection-plan",
-                    "type": "menu_type",
-                    "parent": {
-                        "key": "base-platform-plan"
-                    }
-                },
-                {
-                    "name": "图标管理",
-                    "path": "/base-platform/topology-icon",
-                    "sort": 1,
-                    "icon": "VPN",
-                    "key": "base-platform_topology-icon",
-                    "type": "menu_type",
-                    "parent": {
-                        "key": "base-platform-topology"
-                    }
-                },
-                {
-                    "name": "网络拓扑",
-                    "path": "/base-platform/topology-index",
-                    "sort": 1,
-                    "icon": "board",
-                    "key": "base-platform_topology-index",
-                    "type": "menu_type",
-                    "parent": {
-                        "key": "base-platform-topology"
-                    }
-                },
-                {
-                    "name": "地址定位",
-                    "path": "/address",
-                    "sort": 1,
-                    "icon": "",
-                    "key": "address",
-                    "type": "group_type",
-                    "parent": null
-                },
-                {
-                    "name": "地址寻觅",
-                    "path": "/base-platform/address-location",
-                    "sort": 1,
-                    "icon": "sjcll",
-                    "key": "base-platform_address-location",
-                    "type": "menu_type",
-                    "parent": {
-                        "key": "address"
-                    }
-                },
-                {
-                    "name": "资源维护",
-                    "path": "/base-platform/maintenance",
-                    "sort": 1,
-                    "icon": "sjcll",
-                    "key": "base-platform_maintenance",
-                    "type": "menu_type",
-                    "parent": {
-                        "key": "resource"
-                    }
-                },
-                {
-                    "name": "拓扑管理",
-                    "path": "/base-platform-topology",
-                    "sort": 23,
-                    "icon": "",
-                    "key": "base-platform-topology",
-                    "type": "group_type",
-                    "parent": null
-                },
-                {
-                    "name": "资源管理",
-                    "path": "/resource",
-                    "sort": 25,
-                    "icon": "",
-                    "key": "resource",
-                    "type": "group_type",
-                    "parent": null
-                },
-                {
-                    "name": "网络设备",
-                    "path": "/base-platform/network",
-                    "sort": 26,
-                    "icon": "sjcll",
-                    "key": "base-platform_network",
-                    "type": "menu_type",
-                    "parent": {
-                        "key": "resource"
-                    }
-                },
-                {
-                    "name": "服务器管理",
-                    "path": "/base-platform/server",
-                    "sort": 27,
-                    "icon": "sjcll",
-                    "key": "base-platform_server",
-                    "type": "menu_type",
-                    "parent": {
-                        "key": "resource"
-                    }
-                },
-                {
-                    "name": "登录日志",
-                    "path": "/base-platform/login-log",
-                    "sort": 28,
-                    "icon": "sjcll",
-                    "key": "base-platform_login-log",
-                    "type": "menu_type",
-                    "parent": {
-                        "key": "resource"
-                    }
-                },
-                {
                     "name": "配置管理",
-                    "path": "/config_manage",
-                    "sort": 29,
+                    "path": "/base-platform-config",
+                    "sort": 30,
                     "icon": "",
-                    "key": "config_manage",
+                    "key": "base-platform-config",
                     "type": "group_type",
                     "parent": null
                 },
                 {
-                    "name": "配置备份",
+                    "name": "备份策略",
                     "path": "/base-platform/config-policy",
-                    "sort": 30,
+                    "sort": 31,
                     "icon": "sjcll",
                     "key": "base-platform_config-policy",
                     "type": "menu_type",
                     "parent": {
-                        "key": "config_manage"
+                        "key": "base-platform-config"
                     }
                 },
                 {
                     "name": "配置查询",
                     "path": "/base-platform/config-query",
-                    "sort": 31,
+                    "sort": 32,
                     "icon": "sjcll",
                     "key": "base-platform_config-query",
                     "type": "menu_type",
                     "parent": {
-                        "key": "config_manage"
+                        "key": "base-platform-config"
                     }
                 },
                 {
-                    "name": "配置比对",
+                    "name": "配置对比",
                     "path": "/base-platform/config-diff",
-                    "sort": 32,
+                    "sort": 33,
                     "icon": "sjcll",
                     "key": "base-platform_config-diff",
                     "type": "menu_type",
                     "parent": {
-                        "key": "config_manage"
+                        "key": "base-platform-config"
                     }
                 },
                 {
                     "name": "配置合规",
-                    "path": "/base-platform/config-compliance",
-                    "sort": 33,
+                    "path": "/base-platform/config-center/compliance-v2",
+                    "sort": 34,
                     "icon": "sjcll",
                     "key": "base-platform_config-compliance",
                     "type": "menu_type",
                     "parent": {
-                        "key": "config_manage"
+                        "key": "base-platform-config"
+                    }
+                },
+                {
+                    "name": "变更治理",
+                    "path": "/base-platform/config-governance",
+                    "sort": 35,
+                    "icon": "sjcll",
+                    "key": "base-platform_config-governance",
+                    "type": "menu_type",
+                    "parent": {
+                        "key": "base-platform-config"
                     }
                 },
                 {
                     "name": "作业中心",
                     "path": "/base-platform-task-center",
-                    "sort": 34,
+                    "sort": 40,
                     "icon": "",
                     "key": "base-platform-task-center",
                     "type": "group_type",
                     "parent": null
                 },
                 {
-                    "name": "设备采集",
-                    "path": "/base-platform-plan",
-                    "sort": 35,
-                    "icon": "",
-                    "key": "base-platform-plan",
-                    "type": "group_type",
-                    "parent": null
-                },
-                {
                     "name": "任务列表",
                     "path": "/base-platform/task-list",
-                    "sort": 37,
+                    "sort": 41,
                     "icon": "sjcll",
                     "key": "base-platform_task-list",
                     "type": "menu_type",
@@ -498,25 +427,98 @@
                     }
                 },
                 {
-                    "name": "采集方案",
-                    "path": "/base-platform/plan-summary",
-                    "sort": 180,
-                    "icon": "dlrz",
-                    "key": "base-platform_plan-summary",
+                    "name": "任务结果",
+                    "path": "/base-platform/task-result",
+                    "sort": 42,
+                    "icon": "sjcll",
+                    "key": "base-platform_task-result",
                     "type": "menu_type",
                     "parent": {
-                        "key": "base-platform-plan"
+                        "key": "base-platform-task-center"
                     }
                 },
                 {
-                    "name": "采集结果",
-                    "path": "/base-platform/plan-result",
-                    "sort": 181,
-                    "icon": "chart",
-                    "key": "base-platform_plan-result",
+                    "name": "拓扑管理",
+                    "path": "/base-platform-topology",
+                    "sort": 50,
+                    "icon": "",
+                    "key": "base-platform-topology",
+                    "type": "group_type",
+                    "parent": null
+                },
+                {
+                    "name": "路由计算",
+                    "path": "/base-platform/route-calculator",
+                    "sort": 51,
+                    "icon": "sjcll",
+                    "key": "base-platform_route-calculator",
                     "type": "menu_type",
                     "parent": {
-                        "key": "base-platform-plan"
+                        "key": "base-platform-topology"
+                    }
+                },
+                {
+                    "name": "网络拓扑",
+                    "path": "/base-platform/topology-index",
+                    "sort": 52,
+                    "icon": "sjcll",
+                    "key": "base-platform_topology-index",
+                    "type": "menu_type",
+                    "parent": {
+                        "key": "base-platform-topology"
+                    }
+                },
+                {
+                    "name": "图标库",
+                    "path": "/base-platform/topology-icon",
+                    "sort": 53,
+                    "icon": "sjcll",
+                    "key": "base-platform_topology-icon",
+                    "type": "menu_type",
+                    "parent": {
+                        "key": "base-platform-topology"
+                    }
+                },
+                {
+                    "name": "设备采集",
+                    "path": "/base-platform-device-collection",
+                    "sort": 60,
+                    "icon": "",
+                    "key": "base-platform-device-collection",
+                    "type": "group_type",
+                    "parent": null
+                },
+                {
+                    "name": "执行总览",
+                    "path": "/base-platform/execution-overview",
+                    "sort": 61,
+                    "icon": "sjcll",
+                    "key": "base-platform_execution-overview",
+                    "type": "menu_type",
+                    "parent": {
+                        "key": "base-platform-device-collection"
+                    }
+                },
+                {
+                    "name": "设备画像",
+                    "path": "/base-platform/device-profile",
+                    "sort": 62,
+                    "icon": "sjcll",
+                    "key": "base-platform_device-profile",
+                    "type": "menu_type",
+                    "parent": {
+                        "key": "base-platform-device-collection"
+                    }
+                },
+                {
+                    "name": "采集方案",
+                    "path": "/base-platform/collection-plan",
+                    "sort": 63,
+                    "icon": "sjcll",
+                    "key": "base-platform_collection-plan",
+                    "type": "menu_type",
+                    "parent": {
+                        "key": "base-platform-device-collection"
                     }
                 }
             ]
